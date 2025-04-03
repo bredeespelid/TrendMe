@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO Optimalisert Tittel og Beskrivelse for Bloggen -->
+    <meta name="description" content="TrendMe Blogg: Innsikt og artikler om Microsoft Fabric, Power BI, dataanalyse og business intelligence.">
+    <title>TrendMe Blogg | Microsoft Fabric & Power BI Innsikt</title>
+
+    <!-- === FAVICON (Samme som hovedsiden) === -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/bredeespelid/TrendMe/main/icon.png">
+    <!-- === END FAVICON === -->
+
+    <!-- === FONTS (Samme som hovedsiden) === -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- === CSS STILER START (Kopiert fra index.html) === -->
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --primary-fabric-dark: #6a0dad;
+            --primary-fabric-light: #9370db;
+            --secondary-accent: #00c6ff;
+            --glow-color: rgba(0, 198, 255, 0.5);
+            --text-light: #e0e0e0;
+            --text-medium: #b0b0b0;
+            --text-dark: #1f1f1f;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Poppins', sans-serif;
+            --transition-speed: 0.3s;
+            --transition-slow: 0.5s; /* For accordion */
+        }
+        /* --- Grunnleggende og Hjelpeklasser --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--secondary-accent) var(--dark-bg); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark-bg); }
+        ::-webkit-scrollbar-thumb { background-color: var(--secondary-accent); border-radius: 10px; border: 2px solid var(--dark-bg); }
+        body { font-family: var(--font-primary); line-height: 1.7; color: var(--text-light); background-color: var(--dark-bg); overflow-x: hidden; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+        .container { max-width: 1200px; margin: auto; padding: 0 25px; }
+        .fade-in { opacity: 0; transition: opacity 1s ease-out, transform 0.8s ease-out; }
+        .slide-up { transform: translateY(40px); }
+        .slide-left { transform: translateX(-40px); }
+        .slide-right { transform: translateX(40px); }
+        .visible { opacity: 1; transform: translate(0, 0) !important; }
+
+        /* --- Header & Navigasjon --- */
+        header { background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text-light); padding: 0.8rem 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease; }
+        header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
+        header .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; text-decoration: none; /* Added */ }
+        header ul { list-style: none; display: flex; align-items: center; }
+        header ul li { margin-left: 20px; }
+        header ul li a { display: flex; align-items: center; color: var(--text-medium); text-decoration: none; padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px; font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative; overflow: hidden; }
+        header ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); transition: width var(--transition-speed) ease, left var(--transition-speed) ease; transform: translateX(-50%); }
+        header ul li a:hover { color: var(--text-light); }
+        header ul li a:hover::after { width: 70%; left: 50%; }
+
+        /* --- Hero & Generell Seksjon Styling (Kan gjenbrukes/tilpasses for blogg) --- */
+        .hero { min-height: 40vh; /* Justert høyde for blogg-header */ display: flex; align-items: center; justify-content: center; text-align: center; padding: 4rem 0 2rem 0; position: relative; overflow: hidden; background: linear-gradient(160deg, rgba(106, 13, 173, 0.2) 0%, rgba(18, 18, 18, 0.7) 60%), url('fabric-background.jpg') no-repeat center center/cover; background-color: #1a1a2e; background-attachment: fixed; /* Kan gi en fin effekt */ }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top left, rgba(147, 112, 219, 0.05), transparent 30%), radial-gradient(circle at bottom right, rgba(0, 198, 255, 0.08), transparent 40%); animation: pulse-glow 10s infinite alternate ease-in-out; z-index: 1; }
+        @keyframes pulse-glow { from { opacity: 0.5; } to { opacity: 1; } }
+        .hero .container { position: relative; z-index: 2; }
+        .hero h1 { font-size: 3rem; /* Litt mindre enn hovedsiden */ font-weight: 700; margin-bottom: 1rem; line-height: 1.2; background: linear-gradient(90deg, var(--text-light), var(--secondary-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both; }
+        .hero p.subtitle { /* Ny klasse for undertittel */ font-size: 1.3rem; color: var(--text-medium); margin-top: 0.5rem; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+        .section { padding: 4rem 0; /* Litt mindre padding enn hovedsiden */ overflow: hidden; }
+        .blog-content-area { /* Egen klasse for bloggområdet */ max-width: 900px; /* Begrenser bredden for lesbarhet */ margin: 0 auto; }
+
+        /* --- Styling for Blogginnlegg (<article>) --- */
+        .blog-post {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            margin-bottom: 3rem; /* God avstand mellom innlegg */
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+        .blog-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        .blog-post h2 { /* Tittel på innlegget */
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 0.75rem;
+        }
+        .blog-post h2 a { /* Gjør tittelen til en lenke (hvis du vil lage egne sider per innlegg senere) */
+             color: inherit; /* Arver farge */
+             text-decoration: none;
+             transition: color var(--transition-speed) ease;
+        }
+         .blog-post h2 a:hover {
+             color: var(--secondary-accent);
+         }
+        .post-meta { /* For dato og evt. forfatter */
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            margin-bottom: 1.5rem;
+            display: block; /* Sikrer at den tar full bredde */
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 0.75rem;
+        }
+        .post-content p {
+            margin-bottom: 1rem;
+            color: var(--text-medium); /* Juster om du vil ha lysere brødtekst */
+            font-size: 1.05rem; /* Litt større for lesbarhet */
+            line-height: 1.8;
+        }
+        .post-content h3 { /* Underseksjoner i et innlegg */
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+         .post-content h4 {
+             font-size: 1.2rem;
+             color: var(--text-light);
+             margin-top: 1.5rem;
+             margin-bottom: 0.8rem;
+             font-weight: 600;
+         }
+        .post-content ul, .post-content ol {
+            margin-left: 25px;
+            margin-bottom: 1rem;
+        }
+        .post-content li {
+            margin-bottom: 0.5rem;
+            color: var(--text-medium);
+        }
+        .post-content blockquote {
+             border-left: 4px solid var(--secondary-accent);
+             margin: 1.5rem 0;
+             padding: 0.5rem 1.5rem;
+             background-color: rgba(0, 198, 255, 0.05);
+             color: var(--text-light);
+             font-style: italic;
+        }
+        .post-content code { /* Inline code */
+             background-color: rgba(255, 255, 255, 0.1);
+             padding: 0.2em 0.4em;
+             border-radius: 4px;
+             font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+             font-size: 0.9em;
+        }
+        .post-content pre { /* Code block */
+             background-color: rgba(0, 0, 0, 0.3);
+             border: 1px solid var(--card-border);
+             border-radius: 8px;
+             padding: 1rem;
+             overflow-x: auto; /* For lange kodelinjer */
+             margin: 1.5rem 0;
+             font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+             font-size: 0.9em;
+             line-height: 1.5;
+        }
+         .post-content pre code {
+             background-color: transparent;
+             padding: 0;
+             border-radius: 0;
+         }
+        .post-content img {
+             max-width: 100%;
+             height: auto;
+             border-radius: 8px;
+             margin: 1.5rem 0;
+             border: 1px solid var(--card-border);
+        }
+
+        /* --- Alle andre stiler (accordion, forms, footer etc.) kopiert fra index.html --- */
+        /* [ ... LIM INN RESTEN AV CSS-KODEN DIN HER ... inkludert @media queries ... ] */
+         /* --- Service Card Styling (Beholdt for referanse, ikke direkte brukt på bloggsiden) --- */
+        #hvorfor-fabric .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .feature-item { text-align: center; background: var(--card-bg); padding: 2rem 1.5rem; border-radius: 10px; border: 1px solid var(--card-border); transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
+        .feature-item:hover { transform: translateY(-8px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); }
+        .feature-icon { font-size: 3rem; margin-bottom: 1rem; color: var(--secondary-accent); display: inline-block; width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-fabric-light), var(--secondary-accent)); border-radius: 50%; line-height: 60px; color: var(--dark-bg); font-weight: bold; }
+        .feature-item h3 { font-size: 1.4rem; margin-bottom: 0.8rem; color: var(--text-light); }
+        .feature-item p { font-size: 0.95rem; color: var(--text-medium); }
+        .services-bg { background: linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.95)), url('tech-pattern.png'); background-color: #16161d; }
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
+        .service-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 2.5rem 2rem; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease; overflow: hidden; position: relative; }
+        .service-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, var(--glow-color) 0%, transparent 50%); transform: rotate(0deg); transition: opacity 0.8s ease, transform 1s ease; opacity: 0; z-index: 0; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); border-color: var(--secondary-accent); }
+        .service-card:hover::before { opacity: 1; }
+        .service-card > * { position: relative; z-index: 1; }
+        .service-icon-container { margin-bottom: 1.5rem; text-align: center; min-height: 65px; display: flex; justify-content: center; align-items: center; }
+        .service-icon { width: auto; max-width: 55px; height: 55px; object-fit: contain; filter: drop-shadow(0 0 5px var(--glow-color)); }
+        .service-icon.pbi-logo { max-width: 80px; height: auto; max-height: 55px; }
+        .service-card h3 { font-size: 1.6rem; margin-bottom: 1rem; color: var(--text-light); text-align: center; }
+        .service-card ul { list-style: none; padding: 0; margin-top: 1.5rem; }
+        .service-card ul li { margin-bottom: 0.8rem; position: relative; padding-left: 25px; color: var(--text-medium); font-size: 0.95rem; }
+        .service-card ul li::before { content: '>'; position: absolute; left: 0; color: var(--secondary-accent); font-weight: bold; font-size: 1.2rem; line-height: 1; top: 2px; transition: transform var(--transition-speed) ease; }
+        .service-card:hover ul li::before { transform: translateX(3px); }
+         /* --- Styling for Accordion --- */
+        .accordion-list { max-width: 900px; margin: 2rem auto 0 auto; }
+        .accordion-item { border-bottom: 1px solid var(--card-border); margin-bottom: 1rem; }
+        .accordion-title { background: none; border: none; color: var(--text-light); cursor: pointer; padding: 1.5rem 1rem; width: 100%; text-align: left; font-size: 1.3rem; font-weight: 600; font-family: inherit; display: flex; justify-content: space-between; align-items: center; transition: background-color var(--transition-speed) ease; }
+        .accordion-title:hover, .accordion-title.aktiv { color: var(--secondary-accent); }
+        .accordion-title span.tittel-tekst { flex-grow: 1; margin-right: 1rem; }
+        .accordion-title span.ikon { font-size: 1.5rem; transition: transform var(--transition-slow) ease; transform-origin: center; display: inline-block; }
+        .accordion-title.aktiv span.ikon { transform: rotate(45deg); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height var(--transition-slow) ease-out, padding var(--transition-slow) ease-out; padding: 0 1.5rem; color: var(--text-medium); font-size: 1rem; line-height: 1.8; }
+        .accordion-content.aktiv { padding: 1.5rem 1.5rem 2.5rem 1.5rem; /* max-height settes av JS */ }
+        .accordion-content img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 1.5rem; border: 1px solid var(--card-border); }
+        .accordion-content h4 { color: var(--text-light); margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.1rem; }
+        .accordion-content ul { list-style: disc; padding-left: 25px; margin-top: 1rem; margin-bottom: 1rem; }
+        .accordion-content ul li { margin-bottom: 0.5rem; padding-left: 0; color: var(--text-medium); }
+        .accordion-content ul li::before { content: none; }
+        /* --- Om Oss Styling --- */
+        #om .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 4rem; }
+        .team-member { flex: 1; min-width: 300px; max-width: 450px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .team-member .om-image { margin-bottom: 1.5rem; flex-shrink: 0; }
+        .team-member .om-image img { width: 200px; height: 200px; object-fit: cover; border-radius: 50%; border: 5px solid var(--card-border); box-shadow: 0 0 25px rgba(147, 112, 219, 0.3); }
+        .team-member .om-text { }
+        .team-member .om-text h3 { font-size: 1.6rem; color: var(--text-light); margin-bottom: 1rem; font-weight: 600; }
+        .team-member .om-text p { color: var(--text-medium); margin-bottom: 1rem; font-size: 1rem; }
+        .team-member .om-text strong { color: var(--text-light); }
+        /* --- Kontakt & Footer Styling --- */
+        #kontakt { position: relative; background: linear-gradient(rgba(18,18,18,0.95), rgba(18,18,18,0.98)), url('contact-bg.jpg') no-repeat center center/cover; background-color: var(--dark-bg); }
+        #contact-form { max-width: 700px; margin: 0 auto; background: var(--card-bg); padding: 3rem; border-radius: 15px; border: 1px solid var(--card-border); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+        .form-group { margin-bottom: 1.8rem; position: relative; }
+        .form-group label { display: block; margin-bottom: 0.7rem; font-weight: 600; color: var(--text-medium); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group textarea { width: 100%; padding: 1rem; border: 1px solid var(--card-border); border-radius: 8px; font-family: inherit; font-size: 1rem; background-color: rgba(50, 50, 50, 0.5); color: var(--text-light); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--secondary-accent); box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.2); }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        #contact-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; }
+        footer { background-color: #0a0a0a; color: var(--text-medium); text-align: center; padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border); }
+        footer p { margin-bottom: 1rem; font-size: 0.9rem; }
+        .footer-links { margin-bottom: 1.5rem; }
+        .footer-links a { display: inline-block; margin: 0 12px; transition: transform var(--transition-speed) ease, opacity var(--transition-speed) ease; opacity: 0.7; }
+        .footer-links img { width: 28px; height: 28px; vertical-align: middle; filter: none; transition: filter var(--transition-speed) ease; }
+        .footer-links a:hover { transform: scale(1.15); opacity: 1; }
+
+        /* --- Responsivitet (Justerte fontstørrelser og Om Oss) --- */
+        @media (max-width: 992px) {
+             .hero h1 { font-size: 2.5rem; /* Justert for blogg */ } .hero p.subtitle { font-size: 1.1rem; } .section-header h2 { font-size: 2.4rem; } .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); } header ul li { margin-left: 15px; } header ul li a { padding: 10px 10px;} .blog-post h2 { font-size: 1.8rem; }
+             #om .container { gap: 3rem; }
+             .team-member { max-width: 400px; }
+        }
+        @media (max-width: 768px) {
+             header nav { flex-direction: column; align-items: center; } header .logo { margin-bottom: 15px; } header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; } header ul li { margin: 5px 8px; } header ul li a { font-size: 0.9rem; padding: 8px 12px; } .hero { min-height: 30vh; padding: 4rem 0 2rem 0; } .hero h1 { font-size: 2.2rem; } .hero p.subtitle { font-size: 1rem; } .cta-button { padding: 12px 30px; font-size: 1rem; } .section { padding: 3rem 0; } .section-header h2 { font-size: 2rem; } .section-header p { font-size: 1rem; } #contact-form { padding: 2rem; } .service-grid { grid-template-columns: 1fr; } .feature-grid { grid-template-columns: 1fr; } .blog-post { padding: 2rem 1.5rem; } .blog-post h2 { font-size: 1.6rem; }
+            .accordion-title { font-size: 1.1rem; padding: 1.2rem 0.8rem; }
+            .accordion-content { padding: 0 1rem; font-size: 0.95rem;}
+            .accordion-content.aktiv { padding: 1rem 1rem 2rem 1rem; }
+            #om .container { flex-direction: column; align-items: center; gap: 3rem; }
+            .team-member { min-width: unset; width: 90%; max-width: 400px; flex: none; }
+            .team-member .om-image img { width: 180px; height: 180px; }
+        }
+        @media (max-width: 480px) {
+             .hero h1 { font-size: 1.8rem; } header .logo { font-size: 1.5rem; } .section-header h2 { font-size: 1.8rem; } header ul li { margin: 3px 5px;} header ul li a { padding: 6px 8px; font-size: 0.85rem;} .footer-links img { width: 24px; height: 24px;} .footer-links a { margin: 0 8px;} .blog-post h2 { font-size: 1.4rem; }
+             .team-member .om-image img { width: 150px; height: 150px; }
+             .team-member .om-text h3 { font-size: 1.4rem; }
+             .team-member .om-text p { font-size: 0.95rem; }
+        }
+    </style>
+    <!-- === CSS STILER SLUTT === -->
+
+</head>
+<body>
+
+    <!-- === HEADER (Kopiert fra index.html, justerte lenker) === -->
+    <header id="main-header">
+        <nav class="container">
+            <!-- Logoen lenker nå til hovedsiden -->
+            <a href="/" class="logo">TrendMe</a>
+            <ul>
+                <!-- Lenker til hovedsiden, og til selve bloggsiden -->
+                <li><a href="/">Hjem</a></li>
+                <li><a href="/blogg">Blogg</a></li>
+                <!-- Du kan legge til flere lenker her om ønskelig, f.eks. til Kontakt på hovedsiden -->
+                <li><a href="/#kontakt">Kontakt Oss</a></li>
+                 <li><a href="/#om">Om Oss</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- === BLOGG HERO SEKSJON (Tilpasset for bloggen) === -->
+     <section id="blogg-hero" class="hero">
+        <div class="container">
+            <h1 class="fade-in">TrendMe Blogg</h1>
+            <p class="subtitle fade-in" style="animation-delay: 0.3s;">Artikler og innsikt om Microsoft Fabric, Power BI og Dataanalyse</p>
+        </div>
+    </section>
+
+    <!-- === BLOGGINNLEGG SEKSJON === -->
+    <main class="section">
+        <div class="blog-content-area">
+
+            <!-- =============================================================== -->
+            <!-- === NYTT BLOGGINNLEGG LEGGES INN HER (OVER DET FORRIGE) === -->
+            <!-- =============================================================== -->
+
+             <!-- EKSEMPEL PÅ ET NYTT BLOGGINNLEGG (Plassert øverst) -->
+             <article class="blog-post fade-in slide-up">
+                <h2><a href="#">Tittel på det Aller Nyeste Blogginnlegget</a></h2>
+                <span class="post-meta">Publisert: 24. Juli 2024</span>
+                <div class="post-content">
+                    <p>Dette er introduksjonen til det aller nyeste blogginnlegget. Her skriver du om det siste du vil dele, for eksempel en ny funksjon i Fabric, en case study, eller tips og triks.</p>
+                    <p>Du kan bruke standard HTML-elementer som <strong>sterk tekst</strong>, <em>kursiv</em>, og selvfølgelig lister:</p>
+                    <ul>
+                        <li>Punkt 1 om det nye temaet.</li>
+                        <li>Punkt 2 som utdyper.</li>
+                        <li>Punkt 3 med konklusjon.</li>
+                    </ul>
+                    <h3>En Underoverskrift</h3>
+                    <p>Mer detaljert innhold kan følge her. Du kan også inkludere bilder:</p>
+                    <img src="placeholder-bilde-nytt-innlegg.png" alt="Beskrivende tekst for bildet">
+                    <p>Og kodeblokker hvis det er relevant:</p>
+                    <pre><code class="language-python">
+# Eksempel på Python-kode
+import pandas as pd
+
+def process_data(df):
+    # Gjør noe spennende med dataen
+    print("Processing data...")
+    return df.dropna()
+                    </code></pre>
+                    <p>Avslutt gjerne med en oppsummering eller en call-to-action.</p>
+                </div>
+            </article>
+            <!-- === SLUTT PÅ NYTT BLOGGINNLEGG === -->
+
+
+            <!-- EKSEMPEL PÅ ET ELDRE BLOGGINNLEGG -->
+            <article class="blog-post fade-in slide-up" style="transition-delay: 0.2s;">
+                <h2><a href="#">Velkommen til TrendMe Bloggen!</a></h2>
+                <span class="post-meta">Publisert: 20. Juli 2024</span>
+                <div class="post-content">
+                    <p>Velkommen til vår nye blogg! Her hos TrendMe brenner vi for dataanalyse og hvordan verktøy som <strong>Microsoft Fabric</strong> og <strong>Power BI</strong> kan transformere bedrifter.</p>
+                    <p>I denne bloggen vil vi dele innsikt, erfaringer, veiledninger og nyheter relatert til:</p>
+                    <ul>
+                        <li>Strategisk bruk av Microsoft Fabric</li>
+                        <li>Effektiv datamodellering og visualisering i Power BI</li>
+                        <li>Data engineering og migrering til skyen</li>
+                        <li>AI og maskinlæring i dataanalyse</li>
+                        <li>Praktiske tips og beste praksis</li>
+                    </ul>
+                     <blockquote>Dette er et eksempel på et sitatblokk, som kan brukes til å fremheve viktig informasjon eller et sitat.</blockquote>
+                    <p>Vi håper du finner innholdet nyttig og inspirerende. Følg med for flere oppdateringer!</p>
+                </div>
+            </article>
+            <!-- === SLUTT PÅ ELDRE BLOGGINNLEGG === -->
+
+             <!-- Legg til enda eldre innlegg under her ved behov -->
+
+        </div>
+    </main>
+    <!-- === SLUTT PÅ BLOGGINNLEGG SEKSJON === -->
+
+    <!-- === FOOTER (Kopiert fra index.html) === -->
+    <footer>
+        <div class="container">
+             <div class="footer-links">
+                 <a href="https://www.linkedin.com/in/brede-espelid/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profil for Brede Espelid">
+                     <img src="https://brandlogos.net/wp-content/uploads/2016/06/linkedin-logo-512x512.png" alt="LinkedIn logo">
+                 </a>
+                 <a href="https://github.com/bredeespelid" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profil for Brede Espelid">
+                      <img src="https://images.icon-icons.com/3685/PNG/512/github_logo_icon_229278.png" alt="GitHub logo">
+                 </a>
+                 <a href="mailto:brede.espelid@gmail.com" aria-label="Send e-post til Brede Espelid">
+                      <img src="https://cdn-icons-png.flaticon.com/512/8898/8898833.png" alt="E-post ikon">
+                 </a>
+                  <!-- TODO: Legg til link til partnerens LinkedIn hvis ønskelig -->
+             </div>
+            <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
+            <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
+        </div>
+    </footer>
+    <!-- === SLUTT FOOTER === -->
+
+
+    <!-- === JAVASCRIPT START (Kopiert fra index.html, fjernet/justert spesifikk kode) === -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // --- Intersection Observer for animasjoner (Beholdt) ---
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            const observerCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+            const elementsToAnimate = document.querySelectorAll('.fade-in, .slide-up, .slide-left, .slide-right');
+            elementsToAnimate.forEach(el => {
+                 if (el.classList.contains('slide-up') || el.classList.contains('slide-left') || el.classList.contains('slide-right')) {
+                    if (!el.classList.contains('fade-in')) { el.classList.add('fade-in'); }
+                 }
+                observer.observe(el);
+            });
+
+            // --- Smooth scrolling for interne lenker (f.eks. hvis du lager innholdsfortegnelse i et innlegg) ---
+            // Beholdt logikken, men den vil primært gjelde for #-lenker INNENFOR bloggsiden.
+             const navLinksInternal = document.querySelectorAll('a[href^="#"]'); // Generell selektor for interne lenker
+             const header = document.getElementById('main-header');
+             navLinksInternal.forEach(link => {
+                // Unngå å legge lytter på header-lenker som går til hovedsiden
+                 if (!link.closest('header nav ul')) {
+                    link.addEventListener('click', function(e) {
+                         let targetId = this.getAttribute('href');
+                         if (targetId === '#' || targetId.startsWith('/#')) return; // Ignorer tomme hash eller lenker til hovedsiden
+
+                         try {
+                            let targetElement = document.querySelector(targetId);
+                            if (targetElement) {
+                                 e.preventDefault(); // Kun preventDefault hvis målet finnes på *denne* siden
+                                 const headerOffset = header ? header.offsetHeight : 0;
+                                 const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                                 const offsetPosition = elementPosition - headerOffset - 20; // 20px buffer
+                                 window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                             }
+                         } catch (error) {
+                             console.error(`Error finding element for smooth scroll: ${targetId}`, error);
+                         }
+                     });
+                 }
+             });
+
+
+             // --- Skrivemaskineffekt (Fjernet - ikke relevant for blogglisten) ---
+             // const typingTextElement = document.getElementById('typing-text'); ...
+
+             // --- Generell Accordion Logikk (Beholdt - hvis du vil bruke accordion i innlegg) ---
+            const accordionTitles = document.querySelectorAll('.accordion-title');
+            accordionTitles.forEach(title => {
+                title.addEventListener('click', function() {
+                    // ... (samme accordion-logikk som før) ...
+                     const parentList = this.closest('.accordion-list');
+                    if (parentList) {
+                         parentList.querySelectorAll('.accordion-item').forEach(otherItem => {
+                            const otherTitle = otherItem.querySelector('.accordion-title');
+                            const otherContent = otherItem.querySelector('.accordion-content');
+                            if (otherTitle !== this && otherTitle.classList.contains('aktiv')) {
+                                otherTitle.classList.remove('aktiv');
+                                if(otherContent) otherContent.style.maxHeight = null;
+                                if(otherContent) otherContent.classList.remove('aktiv');
+                                const otherIcon = otherTitle.querySelector('.ikon');
+                                if(otherIcon) otherIcon.textContent = '+';
+                            }
+                        });
+                    }
+
+                    this.classList.toggle('aktiv');
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('.ikon');
+
+                    if (content && content.classList.contains('accordion-content')) {
+                        if (content.style.maxHeight) {
+                            content.style.maxHeight = null;
+                            content.classList.remove('aktiv');
+                            if(icon) icon.textContent = '+';
+                        } else {
+                            content.classList.add('aktiv');
+                            content.style.maxHeight = content.scrollHeight + "px";
+                            if(icon) icon.textContent = '−';
+                        }
+                    } else {
+                         console.warn("Accordion content not found immediately after title:", this);
+                    }
+                });
+            });
+
+            // --- Footer årstall (Beholdt) ---
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+        });
+    </script>
+    <!-- === JAVASCRIPT SLUTT === -->
+
+</body>
+</html>
