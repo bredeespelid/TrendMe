@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TrendMe - Ledende ekspertise innen Microsoft Fabric. Transformer din datahåndtering med fremtidens analyseplattform. Også ekspert på Power BI.">
-    <title>TrendMe - Microsoft Fabric & Data Ekspert</title>
+    <meta name="description" content="TrendMe - Microsoft Fabric. Transformer din datahåndtering med fremtidens analyseplattform. Også ekspert på Power BI.">
+    <title>TrendMe - Microsoft Fabric & Data Rådgivning</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -444,7 +444,7 @@
             </div>
         </section>
 
-        <!-- Kontakt Seksjon -->
+<!-- Kontakt Seksjon -->
         <section id="kontakt" class="section">
             <div class="container">
                  <div class="section-header fade-in">
@@ -452,23 +452,38 @@
                     <h2>Klar for å Transformere Dine Data?</h2>
                     <p>Fyll ut skjemaet under, så tar jeg kontakt for en uforpliktende samtale om hvordan TrendMe kan hjelpe din bedrift.</p>
                 </div>
-                <form id="contact-form" class="fade-in" style="transition-delay: 0.3s;">
+
+                <!-- OPPdatert form-tag med action og method -->
+                <form id="contact-form"
+                      action="https://formspree.io/f/movekndq"
+                      method="POST"
+                      class="fade-in"
+                      style="transition-delay: 0.3s;">
+
                     <div class="form-group">
                         <label for="name">Navn:</label>
+                        <!-- Har name="name" -->
                         <input type="text" id="name" name="name" required>
                     </div>
+
                     <div class="form-group">
                         <label for="email">E-post:</label>
+                         <!-- Har name="email" -->
                         <input type="email" id="email" name="email" required>
                     </div>
+
                      <div class="form-group">
                         <label for="company">Bedrift (valgfritt):</label>
+                         <!-- Har name="company" -->
                         <input type="text" id="company" name="company">
                     </div>
+
                     <div class="form-group">
                         <label for="message">Hva kan jeg hjelpe deg med?</label>
+                         <!-- Har name="message" -->
                         <textarea id="message" name="message" rows="6" required></textarea>
                     </div>
+
                     <button type="submit" class="cta-button">Send Forespørsel</button>
                 </form>
             </div>
@@ -551,16 +566,6 @@
                  console.error("Element with ID 'typing-text' not found for typing effect.");
              }
 
-            // --- Kontaktskjema (kun melding) ---
-            const contactForm = document.getElementById('contact-form');
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const name = document.getElementById('name').value;
-                    alert(`Takk, ${name}! Din forespørsel til TrendMe er (nesten) mottatt.\n\nNB: Dette er en demo. Bruk ikonene i bunnen for reell kontakt.`);
-                    contactForm.reset();
-                });
-            }
 
             // --- Prosjekt Accordion ---
             const prosjektTitler = document.querySelectorAll('.prosjekt-tittel');
