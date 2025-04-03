@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TrendMe - Ledende ekspertise innen Microsoft Fabric. Transformer din datahåndtering med fremtidens analyseplattform. Også ekspert på Power BI.">
+    <title>TrendMe - Microsoft Fabric & Data Ekspert</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- === CSS STILER START === -->
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --primary-fabric-dark: #6a0dad;
+            --primary-fabric-light: #9370db;
+            --secondary-accent: #00c6ff;
+            --glow-color: rgba(0, 198, 255, 0.5);
+            --text-light: #e0e0e0;
+            --text-medium: #b0b0b0;
+            --text-dark: #1f1f1f;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Poppins', sans-serif;
+            --transition-speed: 0.3s;
+            --transition-slow: 0.5s; /* For accordion */
+        }
+
+        /* --- Grunnleggende og Hjelpeklasser (uendret) --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--secondary-accent) var(--dark-bg); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark-bg); }
+        ::-webkit-scrollbar-thumb { background-color: var(--secondary-accent); border-radius: 10px; border: 2px solid var(--dark-bg); }
+        body { font-family: var(--font-primary); line-height: 1.7; color: var(--text-light); background-color: var(--dark-bg); overflow-x: hidden; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+        .container { max-width: 1200px; margin: auto; padding: 0 25px; }
+        .fade-in { opacity: 0; transition: opacity 1s ease-out, transform 0.8s ease-out; }
+        .slide-up { transform: translateY(40px); }
+        .slide-left { transform: translateX(-40px); }
+        .slide-right { transform: translateX(40px); }
+        .visible { opacity: 1; transform: translate(0, 0) !important; }
+
+        /* --- Header & Navigasjon (uendret) --- */
+        header { background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text-light); padding: 0.8rem 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease; }
+        header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
+        header .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        header ul { list-style: none; display: flex; align-items: center; }
+        header ul li { margin-left: 20px; }
+        header ul li a { display: flex; align-items: center; color: var(--text-medium); text-decoration: none; padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px; font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative; overflow: hidden; }
+        header ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); transition: width var(--transition-speed) ease, left var(--transition-speed) ease; transform: translateX(-50%); }
+        header ul li a:hover { color: var(--text-light); }
+        header ul li a:hover::after { width: 70%; left: 50%; }
+
+        /* --- Hero & Generell Seksjon Styling (uendret) --- */
+        .hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 0 4rem 0; position: relative; overflow: hidden; background: linear-gradient(160deg, rgba(106, 13, 173, 0.3) 0%, rgba(18, 18, 18, 0.8) 70%), url('fabric-background.jpg') no-repeat center center/cover; background-color: #1a1a2e; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top left, rgba(147, 112, 219, 0.1), transparent 40%), radial-gradient(circle at bottom right, rgba(0, 198, 255, 0.1), transparent 50%); animation: pulse-glow 10s infinite alternate ease-in-out; z-index: 1; }
+        @keyframes pulse-glow { from { opacity: 0.5; } to { opacity: 1; } }
+        .hero .container { position: relative; z-index: 2; }
+        .hero h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; background: linear-gradient(90deg, var(--text-light), var(--secondary-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; animation: text-focus-in 1.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both; }
+        @keyframes text-focus-in { 0% { filter: blur(12px); opacity: 0; } 100% { filter: blur(0px); opacity: 1; } }
+        .hero .typing-container { font-size: 1.4rem; color: var(--text-medium); margin-bottom: 2.5rem; min-height: 1.8em; }
+        .typing-cursor { display: inline-block; width: 10px; height: 1.4rem; background-color: var(--secondary-accent); margin-left: 5px; animation: blink 0.7s infinite; vertical-align: bottom; }
+        @keyframes blink { 50% { opacity: 0; } }
+        .cta-button { display: inline-block; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); color: var(--text-dark); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3); }
+        .cta-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px var(--glow-color); }
+        .section { padding: 6rem 0; overflow: hidden; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header span { display: block; font-size: 1rem; color: var(--secondary-accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 600; }
+        .section-header h2 { font-size: 2.8rem; font-weight: 700; color: var(--text-light); margin-bottom: 1rem; position: relative; display: inline-block; }
+        .section-header h2::after { content: ''; position: absolute; width: 60px; height: 4px; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); bottom: -15px; left: 50%; transform: translateX(-50%); border-radius: 2px; }
+        .section-header p { max-width: 700px; margin: 1.5rem auto 0 auto; color: var(--text-medium); font-size: 1.1rem; }
+
+        /* --- Feature & Service Card Styling (uendret) --- */
+        #hvorfor-fabric .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .feature-item { text-align: center; background: var(--card-bg); padding: 2rem 1.5rem; border-radius: 10px; border: 1px solid var(--card-border); transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
+        .feature-item:hover { transform: translateY(-8px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); }
+        .feature-icon { font-size: 3rem; margin-bottom: 1rem; color: var(--secondary-accent); display: inline-block; width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-fabric-light), var(--secondary-accent)); border-radius: 50%; line-height: 60px; color: var(--dark-bg); font-weight: bold; }
+        .feature-item h3 { font-size: 1.4rem; margin-bottom: 0.8rem; color: var(--text-light); }
+        .feature-item p { font-size: 0.95rem; color: var(--text-medium); }
+        .services-bg { background: linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.95)), url('tech-pattern.png'); background-color: #16161d; }
+        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
+        .service-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 2.5rem 2rem; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease; overflow: hidden; position: relative; }
+        .service-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, var(--glow-color) 0%, transparent 50%); transform: rotate(0deg); transition: opacity 0.8s ease, transform 1s ease; opacity: 0; z-index: 0; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); border-color: var(--secondary-accent); }
+        .service-card:hover::before { opacity: 1; }
+        .service-card > * { position: relative; z-index: 1; }
+        .service-icon-container { margin-bottom: 1.5rem; text-align: center; min-height: 65px; display: flex; justify-content: center; align-items: center; }
+        .service-icon { width: auto; max-width: 55px; height: 55px; object-fit: contain; filter: drop-shadow(0 0 5px var(--glow-color)); }
+        .service-icon.pbi-logo { max-width: 80px; height: auto; max-height: 55px; }
+        .service-card h3 { font-size: 1.6rem; margin-bottom: 1rem; color: var(--text-light); text-align: center; }
+        .service-card ul { list-style: none; padding: 0; margin-top: 1.5rem; }
+        .service-card ul li { margin-bottom: 0.8rem; position: relative; padding-left: 25px; color: var(--text-medium); font-size: 0.95rem; }
+        .service-card ul li::before { content: '>'; position: absolute; left: 0; color: var(--secondary-accent); font-weight: bold; font-size: 1.2rem; line-height: 1; top: 2px; transition: transform var(--transition-speed) ease; }
+        .service-card:hover ul li::before { transform: translateX(3px); }
+
+        /* --- Styling for Prosjekter Accordion --- */
+        .prosjekter-liste {
+             max-width: 900px; /* Begrenser bredden for lesbarhet */
+             margin: 2rem auto 0 auto; /* Sentrerer listen */
+        }
+        .prosjekt-item {
+            border-bottom: 1px solid var(--card-border);
+            margin-bottom: 1rem;
+        }
+        .prosjekt-tittel {
+            background: none; /* Fjern standard knappestil */
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 1.5rem 1rem; /* God klikkflate */
+            width: 100%;
+            text-align: left;
+            font-size: 1.3rem; /* Tydelig tittelstørrelse */
+            font-weight: 600;
+            font-family: inherit;
+            display: flex; /* For å justere tittel og ikon */
+            justify-content: space-between; /* Ikon til høyre */
+            align-items: center;
+            transition: background-color var(--transition-speed) ease;
+        }
+        .prosjekt-tittel:hover,
+        .prosjekt-tittel.aktiv {
+             /* background-color: rgba(255, 255, 255, 0.05); */ /* Subtil hover/aktiv bakgrunn */
+             color: var(--secondary-accent); /* Uthev aktiv tittel */
+        }
+        .prosjekt-tittel span.tittel-tekst {
+             flex-grow: 1; /* La teksten ta plassen */
+             margin-right: 1rem; /* Avstand til ikon */
+        }
+        .prosjekt-tittel span.ikon {
+            font-size: 1.5rem;
+            transition: transform var(--transition-slow) ease;
+            transform-origin: center;
+             display: inline-block; /* Nødvendig for transform */
+        }
+        .prosjekt-tittel.aktiv span.ikon {
+            transform: rotate(45deg); /* Roter + til x */
+        }
+        .prosjekt-innhold {
+            max-height: 0; /* Start skjult */
+            overflow: hidden;
+            transition: max-height var(--transition-slow) ease-out, padding var(--transition-slow) ease-out; /* Jevn overgang */
+            padding: 0 1.5rem; /* Padding når åpen (tas med i animasjon) */
+            color: var(--text-medium);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+        .prosjekt-innhold.aktiv {
+            /* max-height settes av JS */
+             padding: 1.5rem 1.5rem 2.5rem 1.5rem; /* Padding når åpen */
+        }
+        .prosjekt-innhold img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            border: 1px solid var(--card-border);
+        }
+        .prosjekt-innhold h4 { /* For undertitler inne i prosjekt */
+            color: var(--text-light);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        /* --- Slutt Styling for Prosjekter Accordion --- */
+
+
+        /* --- Om Meg Styling (uendret) --- */
+        #om { background: var(--dark-bg); }
+        #om .container { display: flex; flex-wrap: wrap; align-items: center; gap: 3rem; }
+        #om .om-text { flex: 1; min-width: 300px; }
+        #om .om-image { flex: 0 0 300px; text-align: center; }
+        #om .om-image img { max-width: 100%; height: auto; width: 250px; border-radius: 50%; border: 5px solid var(--card-border); box-shadow: 0 0 25px rgba(147, 112, 219, 0.3); object-fit: cover; }
+        #om h2 { font-size: 2.5rem; color: var(--text-light); margin-bottom: 1.5rem; text-align: left; }
+        #om p { color: var(--text-medium); margin-bottom: 1rem; font-size: 1.05rem; }
+        #om strong { color: var(--text-light); }
+
+        /* --- Kontakt & Footer Styling (uendret) --- */
+        #kontakt { position: relative; background: linear-gradient(rgba(18,18,18,0.95), rgba(18,18,18,0.98)), url('contact-bg.jpg') no-repeat center center/cover; background-color: var(--dark-bg); }
+        #contact-form { max-width: 700px; margin: 0 auto; background: var(--card-bg); padding: 3rem; border-radius: 15px; border: 1px solid var(--card-border); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+        .form-group { margin-bottom: 1.8rem; position: relative; }
+        .form-group label { display: block; margin-bottom: 0.7rem; font-weight: 600; color: var(--text-medium); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input[type="text"], .form-group input[type="email"], .form-group textarea { width: 100%; padding: 1rem; border: 1px solid var(--card-border); border-radius: 8px; font-family: inherit; font-size: 1rem; background-color: rgba(50, 50, 50, 0.5); color: var(--text-light); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--secondary-accent); box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.2); }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        #contact-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; }
+        footer { background-color: #0a0a0a; color: var(--text-medium); text-align: center; padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border); }
+        footer p { margin-bottom: 1rem; font-size: 0.9rem; }
+        .footer-links { margin-bottom: 1.5rem; }
+        .footer-links a { display: inline-block; margin: 0 12px; transition: transform var(--transition-speed) ease, opacity var(--transition-speed) ease; opacity: 0.7; }
+        .footer-links img { width: 28px; height: 28px; vertical-align: middle; filter: none; transition: filter var(--transition-speed) ease; }
+        .footer-links a:hover { transform: scale(1.15); opacity: 1; }
+
+        /* --- Responsivitet (uendret) --- */
+        @media (max-width: 992px) { .hero h1 { font-size: 3rem; } .hero .typing-container { font-size: 1.2rem; } .section-header h2 { font-size: 2.4rem; } .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); } header ul li { margin-left: 15px; } header ul li a { padding: 10px 10px;} }
+        @media (max-width: 768px) { header nav { flex-direction: column; align-items: center; } header .logo { margin-bottom: 15px; } header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; } header ul li { margin: 5px 8px; } header ul li a { font-size: 0.9rem; padding: 8px 12px; } .hero { min-height: 70vh; padding: 6rem 0 3rem 0; } .hero h1 { font-size: 2.5rem; } .hero .typing-container { font-size: 1.1rem; } .cta-button { padding: 12px 30px; font-size: 1rem; } .section { padding: 4rem 0; } .section-header h2 { font-size: 2rem; } .section-header p { font-size: 1rem; } #om .container { flex-direction: column; text-align: center;} #om .om-image { flex: 0 0 auto; margin-bottom: 2rem; width: 200px; } #om h2 { text-align: center; } #contact-form { padding: 2rem; } .service-grid { grid-template-columns: 1fr; } .feature-grid { grid-template-columns: 1fr; } .prosjekt-tittel { font-size: 1.1rem; padding: 1.2rem 0.8rem; } .prosjekt-innhold { padding: 0 1rem; font-size: 0.95rem;} .prosjekt-innhold.aktiv { padding: 1rem 1rem 2rem 1rem; } }
+        @media (max-width: 480px) { .hero h1 { font-size: 2rem; } header .logo { font-size: 1.5rem; } .section-header h2 { font-size: 1.8rem; } header ul li { margin: 3px 5px;} header ul li a { padding: 6px 8px; font-size: 0.85rem;} #om .om-image { width: 150px; } .footer-links img { width: 24px; height: 24px;} .footer-links a { margin: 0 8px;} }
+
+    </style>
+    <!-- === CSS STILER SLUTT === -->
+
+</head>
+<body>
+
+    <header id="main-header">
+        <nav class="container">
+            <div class="logo">TrendMe</div>
+            <ul>
+                <li><a href="#hjem">Hjem</a></li>
+                <li><a href="#hvorfor-fabric">Hvorfor Fabric</a></li>
+                <li><a href="#fabric-tjenester">Fabric Tjenester</a></li>
+                <li><a href="#powerbi-tjenester">Power BI</a></li>
+                <li><a href="#prosjekter">Prosjekter</a></li>
+                <li><a href="#om">Om Meg</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Seksjon -->
+        <section id="hjem" class="hero">
+            <div class="container">
+                <h1 class="fade-in">Forløs Kraften i Dine Data med Microsoft Fabric</h1>
+                <div class="typing-container fade-in" style="animation-delay: 0.5s;">
+                    <span id="typing-text"></span><span class="typing-cursor"></span>
+                </div>
+                <a href="#kontakt" class="cta-button fade-in" style="animation-delay: 1s;">Start Din Datareise</a>
+            </div>
+        </section>
+
+        <!-- Hvorfor Fabric Seksjon -->
+        <section id="hvorfor-fabric" class="section">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <span>Fremtiden er Samlet</span>
+                    <h2>Hvorfor Velge Microsoft Fabric?</h2>
+                    <p>Gå utover tradisjonell analyse. Fabric er en ende-til-ende, AI-drevet analyseplattform som samler all data og analyse på ett sted.</p>
+                </div>
+                <div class="feature-grid">
+                    <div class="feature-item fade-in slide-up" style="transition-delay: 0.2s;">
+                        <div class="feature-icon">✓</div>
+                        <h3>Alt-i-ett Plattform</h3>
+                        <p>Integrerer Data Factory, Synapse Data Engineering, Data Warehouse, Real-Time Analytics og Power BI sømløst.</p>
+                    </div>
+                    <div class="feature-item fade-in slide-up" style="transition-delay: 0.4s;">
+                         <div class="feature-icon">⚡</div>
+                        <h3>AI-drevet Innsikt</h3>
+                        <p>Utnytt innebygd Copilot og AI-kapabiliteter for raskere innsikt og automatisering.</p>
+                    </div>
+                     <div class="feature-item fade-in slide-up" style="transition-delay: 0.6s;">
+                         <div class="feature-icon">🔗</div>
+                        <h3>OneLake Sentrert</h3>
+                        <p>En felles, logisk datasjø for hele organisasjonen - ingen flere datasiloer.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fabric Tjenester Seksjon -->
+        <section id="fabric-tjenester" class="section services-bg">
+            <div class="container">
+                 <div class="section-header fade-in">
+                    <span>Mine Spesialiteter</span>
+                    <h2>Microsoft Fabric Tjenester</h2>
+                    <p>Jeg hjelper deg med å designe, implementere og optimalisere din Fabric-løsning for maksimal verdi.</p>
+                </div>
+                <div class="service-grid">
+                    <div class="service-card fade-in slide-left" style="transition-delay: 0.2s;">
+                         <div class="service-icon-container">
+                             <img src="https://debruyn.dev/2024/all-microsoft-fabric-icons-for-diagramming/lakehouse.png" alt="Lakehouse Ikon" class="service-icon">
+                         </div>
+                        <h3>Strategi & Lakehouse Design</h3>
+                        <ul>
+                            <li>Utvikling av Fabric-strategi og veikart</li>
+                            <li>Design og implementering av OneLake og Lakehouse</li>
+                            <li>Datamodellering for Delta/Parquet</li>
+                            <li>Shortcuts og datadeling</li>
+                            <li>Sikkerhet og Governance i Fabric</li>
+                        </ul>
+                    </div>
+                    <div class="service-card fade-in" style="transition-delay: 0.4s;">
+                         <div class="service-icon-container">
+                             <img src="https://debruyn.dev/2023/all-microsoft-fabric-icons-for-diagramming-old-version/data_factory_512_color.png" alt="Data Factory Ikon" class="service-icon">
+                         </div>
+                        <h3>Data Integrasjon & Engineering</h3>
+                        <ul>
+                            <li>Oppsett av Data Factory Pipelines (Dataflows Gen2)</li>
+                            <li>Spark Notebooks for datatransformasjon (Python/Scala/SQL)</li>
+                            <li>Optimalisering av data-pipelines</li>
+                            <li>Implementering av Data Warehouse i Fabric</li>
+                             <li>Orkestrering og overvåkning</li>
+                        </ul>
+                    </div>
+                    <div class="service-card fade-in slide-right" style="transition-delay: 0.6s;">
+                         <div class="service-icon-container">
+                             <img src="https://debruyn.dev/2023/all-microsoft-fabric-icons-for-diagramming-old-version/synapse_real_time_analytics_512_color.png" alt="Real-time Analytics Ikon" class="service-icon">
+                         </div>
+                        <h3>Sanntidsanalyse & AI</h3>
+                        <ul>
+                            <li>Implementering av Eventstreams</li>
+                            <li>KQL for analyse av strømmedata</li>
+                            <li>Bruk av Data Activator for hendelsesdrevet handling</li>
+                            <li>Integrasjon med Azure AI / Machine Learning</li>
+                            <li>Utnyttelse av Copilot i Fabric</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <!-- Power BI Tjenester Seksjon -->
+         <section id="powerbi-tjenester" class="section">
+             <div class="container">
+                  <div class="section-header fade-in">
+                     <span>Visualisering & Innsikt</span>
+                     <h2>Power BI Ekspertise</h2>
+                     <p>Selv om Fabric er fremtiden, er Power BI fortsatt kjernen for visualisering. Jeg leverer førsteklasses Power BI-løsninger, optimalisert for Fabric.</p>
+                 </div>
+                  <div class="service-grid">
+                     <div class="service-card fade-in slide-left" style="transition-delay: 0.2s;">
+                         <div class="service-icon-container">
+                              <img src="https://1000logos.net/wp-content/uploads/2022/08/Microsoft-Power-BI-Logo.png" alt="Power BI Rapport Ikon" class="service-icon pbi-logo">
+                          </div>
+                         <h3>Rapportering & Dashboards</h3>
+                         <ul>
+                             <li>Design av engasjerende og intuitive rapporter</li>
+                             <li>Utvikling av avanserte dashboards</li>
+                             <li>Bruk av DirectLake modus mot Fabric Lakehouse</li>
+                             <li>Optimalisering av rapportytelse</li>
+                             <li>Mobilvennlige rapporter</li>
+                         </ul>
+                     </div>
+                     <div class="service-card fade-in" style="transition-delay: 0.4s;">
+                         <div class="service-icon-container">
+                              <img src="https://img.icons8.com/color/512/power-bi.png" alt="Power BI Model Ikon" class="service-icon">
+                          </div>
+                         <h3>Datamodellering & DAX</h3>
+                         <ul>
+                             <li>Robust datamodellering (Stjerneskjema)</li>
+                             <li>Avansert DAX for komplekse beregninger</li>
+                             <li>Optimalisering av datamodeller for ytelse og skalerbarhet</li>
+                             <li>Implementering av RLS (Row-Level Security)</li>
+                             <li>Beste praksis for Power BI utvikling</li>
+                         </ul>
+                     </div>
+                      <div class="service-card fade-in slide-right" style="transition-delay: 0.6s;">
+                         <div class="service-icon-container">
+                              <img src="https://powerbihelper.org/wp-content/uploads/2019/07/PbiHIcon.png" alt="Power BI Admin Ikon" class="service-icon">
+                          </div>
+                         <h3>Administrasjon & Opplæring</h3>
+                         <ul>
+                             <li>Power BI Governance og administrasjon</li>
+                             <li>Oppsett av Premium kapasiteter / Fabric kapasiteter</li>
+                             <li>Datasett-sertifisering og promotering</li>
+                             <li>Skreddersydd opplæring og workshops</li>
+                             <li>Brukerstøtte og veiledning</li>
+                         </ul>
+                     </div>
+                  </div>
+             </div>
+         </section>
+
+        <!-- Ny Prosjekter Seksjon med Accordion -->
+        <section id="prosjekter" class="section">
+            <div class="container">
+                <div class="section-header fade-in">
+                    <span>Mitt Arbeid</span>
+                    <h2>Utvalgte Prosjekter</h2>
+                    <p>Se eksempler på hvordan TrendMe har levert verdi gjennom data.</p>
+                </div>
+
+                <div class="prosjekter-liste fade-in" style="transition-delay: 0.3s;">
+                    <!-- Mock Prosjekt 1 -->
+                    <div class="prosjekt-item">
+                        <button class="prosjekt-tittel">
+                            <span class="tittel-tekst">Fabric Migrering & Optimalisering for Retail-aktør</span>
+                            <span class="ikon">+</span>
+                        </button>
+                        <div class="prosjekt-innhold">
+                            <p>Ledet full migrering av eksisterende rapporteringsløsning til Microsoft Fabric for en ledende retail-kjede. Fokuset var på å bygge en skalerbar, kostnadseffektiv og pålitelig plattform for fremtiden.</p>
+                            <h4>Nøkkelpunkter:</h4>
+                            <ul>
+                                <li>Design og implementering av Medallion-arkitektur i OneLake.</li>
+                                <li>Automatisert datainnhenting fra diverse kilder via API-integrasjoner og Data Factory Pipelines.</li>
+                                <li>Utvikling av inkrementell logikk for å minimere databehandling og lagringskostnader.</li>
+                                <li>Optimalisering av Spark Notebooks (PySpark) for effektiv datatransformasjon.</li>
+                                <li>Strukturert feilhåndtering og dokumentasjon for økt pålitelighet.</li>
+                                <li>Bruk av Azure DevOps for versjonskontroll og CI/CD.</li>
+                            </ul>
+                            <img src="prosjekt-bilde-1.jpg" alt="Illustrasjon av Fabric arkitektur"> <!-- ERSTATT MED RELEVANT BILDE -->
+                            <h4>Resultater:</h4>
+                            <p>Oppnådde betydelig reduksjon i kjøretid for rapporter, reduserte driftskostnader og etablerte en robust plattform klar for fremtidig vekst og AI-initiativer.</p>
+                        </div>
+                    </div>
+
+                    <!-- Mock Prosjekt 2 -->
+                    <div class="prosjekt-item">
+                        <button class="prosjekt-tittel">
+                             <span class="tittel-tekst">AI-drevet Prognosemodell for Bemanning</span>
+                             <span class="ikon">+</span>
+                        </button>
+                        <div class="prosjekt-innhold">
+                            <p>Utviklet en avansert AI-modell for å predikere transaksjonsvolum og bemanningsbehov for en retail-kjede (Godt Brød). Modellen integrerte interne salgsdata med eksterne faktorer som vær, trafikk og lokale hendelser.</p>
+                            <h4>Teknologi og Metoder:</h4>
+                             <ul>
+                                <li>Maskinlæringsmodeller (Random Forest, XGBoost, LightGBM) og Deep Learning (CNN-LSTM, GRU).</li>
+                                <li>Omfattende Exploratory Data Analysis (EDA) for å identifisere mønstre og sesongvariasjoner.</li>
+                                <li>Automatisert datapipline med PySpark og Microsoft Fabric for kontinuerlig oppdatering.</li>
+                                <li>Visualisering av prediksjoner i Power BI-dashboard for beslutningsstøtte.</li>
+                             </ul>
+                             <img src="prosjekt-bilde-2.jpg" alt="Illustrasjon av AI modell eller dashboard"> <!-- ERSTATT MED RELEVANT BILDE -->
+                             <h4>Resultater:</h4>
+                             <p>Leverte en nøyaktig prognosemodell som muliggjorde mer effektiv bemanningsplanlegging og ressursallokering.</p>
+                        </div>
+                    </div>
+
+                    <!-- Legg til flere .prosjekt-item her etter behov -->
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Om Meg Seksjon -->
+        <section id="om" class="section">
+            <div class="container">
+                 <div class="om-image fade-in slide-left" style="transition-delay: 0.4s;">
+                       <img src="https://avatars.githubusercontent.com/u/39888226?v=4" alt="Brede Nicolai Espelid, TrendMe">
+                 </div>
+                <div class="om-text fade-in slide-right" style="transition-delay: 0.2s;">
+                    <h2>Din Partner i Datatransformasjon</h2>
+                    <p>
+                        Hei, jeg er Brede Nicolai Espelid, grunnlegger av TrendMe. Med en mastergrad i Business Analytics fra NHH kombinerer jeg dyp teknisk innsikt med praktisk forretningsforståelse, blant annet fra min tid hos Godt Brød.
+                    </p>
+                    <p>
+                        Der jobbet jeg først som regnskapsassistent med fokus på prosessautomatisering (Python) og effektivisering av finansielle rutiner. Senere, som Data Analyst, ledet jeg migrering av rapporteringsløsninger til Microsoft Fabric, hvor jeg designet og implementerte en skalerbar Medallion-arkitektur med automatisert datafangst via API-er – alt med fokus på kostnadseffektivitet og pålitelig drift.
+                    </p>
+                     <p>
+                        Jeg brenner for å bruke verktøy som Fabric, Power BI, Python og Spark til å bygge robuste, innsiktsdrevne løsninger som gir reell verdi og hjelper din bedrift å ta smartere beslutninger.
+                    </p>
+                    <p><strong>Sertifiseringer:</strong> Microsoft Certified: Fabric Analytics Engineer Associate (DP-600)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kontakt Seksjon -->
+        <section id="kontakt" class="section">
+            <div class="container">
+                 <div class="section-header fade-in">
+                     <span>La Oss Snakkes</span>
+                    <h2>Klar for å Transformere Dine Data?</h2>
+                    <p>Fyll ut skjemaet under, så tar jeg kontakt for en uforpliktende samtale om hvordan TrendMe kan hjelpe din bedrift.</p>
+                </div>
+                <form id="contact-form" class="fade-in" style="transition-delay: 0.3s;">
+                    <div class="form-group">
+                        <label for="name">Navn:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-post:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="company">Bedrift (valgfritt):</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Hva kan jeg hjelpe deg med?</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+                    <button type="submit" class="cta-button">Send Forespørsel</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+             <div class="footer-links">
+                 <a href="https://www.linkedin.com/in/brede-espelid/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                     <img src="https://brandlogos.net/wp-content/uploads/2016/06/linkedin-logo-512x512.png" alt="LinkedIn">
+                 </a>
+                 <a href="https://github.com/bredeespelid" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                      <img src="https://images.icon-icons.com/3685/PNG/512/github_logo_icon_229278.png" alt="GitHub">
+                 </a>
+                 <a href="mailto:brede.espelid@gmail.com" aria-label="E-post">
+                      <img src="https://cdn-icons-png.flaticon.com/512/8898/8898833.png" alt="E-post">
+                 </a>
+             </div>
+            <p>&copy; <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
+            <p>Bygget med lidenskap for data.</p>
+        </div>
+    </footer>
+
+    <!-- === JAVASCRIPT START === -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // --- Intersection Observer for animasjoner ---
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            const observerCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+            const observer = new IntersectionObserver(observerCallback, observerOptions);
+            const elementsToAnimate = document.querySelectorAll('.fade-in, .slide-up, .slide-left, .slide-right');
+            elementsToAnimate.forEach(el => {
+                 if (el.classList.contains('slide-up') || el.classList.contains('slide-left') || el.classList.contains('slide-right')) {
+                    if (!el.classList.contains('fade-in')) { el.classList.add('fade-in'); }
+                 }
+                observer.observe(el);
+            });
+
+            // --- Smooth scrolling justert for header ---
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+            const header = document.getElementById('main-header');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    let targetId = this.getAttribute('href');
+                    let targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const headerOffset = header.offsetHeight;
+                        const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                        const offsetPosition = elementPosition - headerOffset - 20;
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    }
+                });
+            });
+
+             // --- Skrivemaskineffekt ---
+             const typingTextElement = document.getElementById('typing-text');
+             if (typingTextElement) {
+                 const textToType = "Få innsikt. Ta beslutninger. Veks med data.";
+                 let charIndex = 0;
+                 function typeChar() {
+                     if (charIndex < textToType.length) {
+                         if (charIndex === 0) typingTextElement.textContent = '';
+                         typingTextElement.textContent += textToType.charAt(charIndex);
+                         charIndex++;
+                         setTimeout(typeChar, 100);
+                     }
+                 }
+                 setTimeout(typeChar, 1600);
+             } else {
+                 console.error("Element with ID 'typing-text' not found for typing effect.");
+             }
+
+            // --- Kontaktskjema (kun melding) ---
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const name = document.getElementById('name').value;
+                    alert(`Takk, ${name}! Din forespørsel til TrendMe er (nesten) mottatt.\n\nNB: Dette er en demo. Bruk ikonene i bunnen for reell kontakt.`);
+                    contactForm.reset();
+                });
+            }
+
+            // --- Prosjekt Accordion ---
+            const prosjektTitler = document.querySelectorAll('.prosjekt-tittel');
+            prosjektTitler.forEach(tittel => {
+                tittel.addEventListener('click', function() {
+                    // Lukk andre åpne prosjekter (valgfritt, fjerner muligheten for flere åpne samtidig)
+                    /*
+                    prosjektTitler.forEach(andreTittel => {
+                        if (andreTittel !== this && andreTittel.classList.contains('aktiv')) {
+                            andreTittel.classList.remove('aktiv');
+                            andreTittel.nextElementSibling.style.maxHeight = null;
+                            andreTittel.nextElementSibling.classList.remove('aktiv');
+                            andreTittel.querySelector('.ikon').textContent = '+';
+                        }
+                    });
+                    */
+
+                    // Toggle det klikkede prosjektet
+                    this.classList.toggle('aktiv');
+                    const innhold = this.nextElementSibling; // Finner neste element (som bør være innholds-diven)
+                    const ikon = this.querySelector('.ikon');
+
+                    if (innhold.style.maxHeight) {
+                        // Hvis den har en max-height (er åpen eller i ferd med å lukkes), lukk den
+                        innhold.style.maxHeight = null;
+                        innhold.classList.remove('aktiv');
+                         if(ikon) ikon.textContent = '+'; // Endre ikon til +
+                    } else {
+                        // Hvis den ikke har max-height (er lukket), åpne den
+                        innhold.classList.add('aktiv');
+                        innhold.style.maxHeight = innhold.scrollHeight + "px"; // Sett max-height til innholdets faktiske høyde
+                         if(ikon) ikon.textContent = '−'; // Endre ikon til - (minus)
+                    }
+                });
+            });
+
+
+            // --- Footer årstall ---
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+        });
+    </script>
+    <!-- === JAVASCRIPT SLUTT === -->
+
+</body>
+</html>
