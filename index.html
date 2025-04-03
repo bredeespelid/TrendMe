@@ -11,12 +11,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/bredeespelid/TrendMe/main/icon.png">
     <!-- === END FAVICON === -->
 
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <!-- === CSS STILER START (Beholdt som før) === -->
+    <!-- === CSS STILER START === -->
     <style>
         :root {
             --dark-bg: #121212;
@@ -106,100 +106,75 @@
         .service-card:hover ul li::before { transform: translateX(3px); }
 
         /* --- Styling for Accordion (Brukes for Prosjekter & Om Fabric) --- */
-        .accordion-list { /* Renamed from prosjekter-liste for generisk bruk */
-             max-width: 900px;
-             margin: 2rem auto 0 auto;
-        }
-        .accordion-item { /* Renamed from prosjekt-item */
-            border-bottom: 1px solid var(--card-border);
-            margin-bottom: 1rem;
-        }
-        .accordion-title { /* Renamed from prosjekt-tittel */
-            background: none;
-            border: none;
-            color: var(--text-light);
-            cursor: pointer;
-            padding: 1.5rem 1rem;
-            width: 100%;
-            text-align: left;
-            font-size: 1.3rem;
-            font-weight: 600;
-            font-family: inherit;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background-color var(--transition-speed) ease;
-        }
-        .accordion-title:hover,
-        .accordion-title.aktiv {
-             color: var(--secondary-accent);
-        }
-        .accordion-title span.tittel-tekst {
-             flex-grow: 1;
-             margin-right: 1rem;
-        }
-        .accordion-title span.ikon {
-            font-size: 1.5rem;
-            transition: transform var(--transition-slow) ease;
-            transform-origin: center;
-             display: inline-block;
-        }
-        .accordion-title.aktiv span.ikon {
-            transform: rotate(45deg); /* Roter + til x eller annen indikator */
-        }
-        .accordion-content { /* Renamed from prosjekt-innhold */
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height var(--transition-slow) ease-out, padding var(--transition-slow) ease-out;
-            padding: 0 1.5rem;
-            color: var(--text-medium);
-            font-size: 1rem;
-            line-height: 1.8;
-        }
-        .accordion-content.aktiv {
-             padding: 1.5rem 1.5rem 2.5rem 1.5rem;
-             /* max-height settes av JS */
-        }
-        .accordion-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-top: 1.5rem;
-            border: 1px solid var(--card-border);
-        }
-        .accordion-content h4 {
-            color: var(--text-light);
-            margin-top: 1.5rem;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
+        .accordion-list { max-width: 900px; margin: 2rem auto 0 auto; }
+        .accordion-item { border-bottom: 1px solid var(--card-border); margin-bottom: 1rem; }
+        .accordion-title { background: none; border: none; color: var(--text-light); cursor: pointer; padding: 1.5rem 1rem; width: 100%; text-align: left; font-size: 1.3rem; font-weight: 600; font-family: inherit; display: flex; justify-content: space-between; align-items: center; transition: background-color var(--transition-speed) ease; }
+        .accordion-title:hover, .accordion-title.aktiv { color: var(--secondary-accent); }
+        .accordion-title span.tittel-tekst { flex-grow: 1; margin-right: 1rem; }
+        .accordion-title span.ikon { font-size: 1.5rem; transition: transform var(--transition-slow) ease; transform-origin: center; display: inline-block; }
+        .accordion-title.aktiv span.ikon { transform: rotate(45deg); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height var(--transition-slow) ease-out, padding var(--transition-slow) ease-out; padding: 0 1.5rem; color: var(--text-medium); font-size: 1rem; line-height: 1.8; }
+        .accordion-content.aktiv { padding: 1.5rem 1.5rem 2.5rem 1.5rem; /* max-height settes av JS */ }
+        .accordion-content img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 1.5rem; border: 1px solid var(--card-border); }
+        .accordion-content h4 { color: var(--text-light); margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.1rem; }
          /* Sørger for at lister inni accordion ser bra ut */
-        .accordion-content ul {
-            list-style: disc; /* Eller annen ønsket stil */
-            padding-left: 25px; /* Innrykk for listen */
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-        }
-        .accordion-content ul li {
-            margin-bottom: 0.5rem;
-            padding-left: 0; /* Nullstill padding fra service-card hvis den arves */
-            color: var(--text-medium); /* Sikre tekstfarge */
-        }
-        .accordion-content ul li::before {
-            content: none; /* Fjern '>' fra service-card */
-        }
+        .accordion-content ul { list-style: disc; padding-left: 25px; margin-top: 1rem; margin-bottom: 1rem; }
+        .accordion-content ul li { margin-bottom: 0.5rem; padding-left: 0; color: var(--text-medium); }
+        .accordion-content ul li::before { content: none; }
         /* --- Slutt Styling for Accordion --- */
 
 
-        /* --- Om Meg Styling --- */
+        /* --- Om Oss Styling (Oppdatert for to personer) --- */
         #om { background: var(--dark-bg); }
-        #om .container { display: flex; flex-wrap: wrap; align-items: center; gap: 3rem; }
-        #om .om-text { flex: 1; min-width: 300px; }
-        #om .om-image { flex: 0 0 300px; text-align: center; }
-        #om .om-image img { max-width: 100%; height: auto; width: 250px; border-radius: 50%; border: 5px solid var(--card-border); box-shadow: 0 0 25px rgba(147, 112, 219, 0.3); object-fit: cover; }
-        #om h2 { font-size: 2.5rem; color: var(--text-light); margin-bottom: 1.5rem; text-align: left; }
-        #om p { color: var(--text-medium); margin-bottom: 1rem; font-size: 1.05rem; }
-        #om strong { color: var(--text-light); }
+        #om .container {
+            display: flex;
+            flex-wrap: wrap; /* Viktig for responsivitet */
+            justify-content: center; /* Sentrerer innholdet når det er plass */
+            gap: 4rem; /* Økt mellomrom mellom teammedlemmer */
+        }
+        /* Ny klasse for hvert teammedlem */
+        .team-member {
+            flex: 1; /* Lar elementene vokse */
+            min-width: 300px; /* Minimum bredde før wrapping */
+            max-width: 450px; /* Maks bredde per medlem */
+            display: flex;
+            flex-direction: column; /* Stabler bilde og tekst vertikalt */
+            align-items: center; /* Sentrerer innholdet (bilde, tekst) */
+            text-align: center; /* Sentrerer teksten */
+        }
+        /* Bruker .om-image innenfor .team-member */
+        .team-member .om-image {
+            margin-bottom: 1.5rem; /* Avstand mellom bilde og tekst */
+            flex-shrink: 0; /* Forhindrer at bildet krymper for mye */
+        }
+        .team-member .om-image img {
+            width: 200px; /* Justert størrelse */
+            height: 200px; /* Sørger for at bildet er kvadratisk før runding */
+            object-fit: cover; /* Dekker området uten å strekke */
+            border-radius: 50%;
+            border: 5px solid var(--card-border);
+            box-shadow: 0 0 25px rgba(147, 112, 219, 0.3);
+        }
+        /* Bruker .om-text innenfor .team-member */
+        .team-member .om-text {
+            /* Trenger ikke spesifikk flex-styling her lenger */
+        }
+        .team-member .om-text h3 { /* Styling for navn/tittel */
+            font-size: 1.6rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .team-member .om-text p {
+            color: var(--text-medium);
+            margin-bottom: 1rem;
+            font-size: 1rem; /* Litt mindre font for beskrivelse */
+        }
+        .team-member .om-text strong {
+             color: var(--text-light);
+        }
+        /* --- Slutt Om Oss Styling --- */
+
 
         /* --- Kontakt & Footer Styling --- */
         #kontakt { position: relative; background: linear-gradient(rgba(18,18,18,0.95), rgba(18,18,18,0.98)), url('contact-bg.jpg') no-repeat center center/cover; background-color: var(--dark-bg); }
@@ -217,15 +192,40 @@
         .footer-links img { width: 28px; height: 28px; vertical-align: middle; filter: none; transition: filter var(--transition-speed) ease; }
         .footer-links a:hover { transform: scale(1.15); opacity: 1; }
 
-        /* --- Responsivitet (Justerte fontstørrelser for accordion) --- */
-        @media (max-width: 992px) { .hero h1 { font-size: 3rem; } .hero .typing-container { font-size: 1.2rem; } .section-header h2 { font-size: 2.4rem; } .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); } header ul li { margin-left: 15px; } header ul li a { padding: 10px 10px;} }
-        @media (max-width: 768px) { header nav { flex-direction: column; align-items: center; } header .logo { margin-bottom: 15px; } header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; } header ul li { margin: 5px 8px; } header ul li a { font-size: 0.9rem; padding: 8px 12px; } .hero { min-height: 70vh; padding: 6rem 0 3rem 0; } .hero h1 { font-size: 2.5rem; } .hero .typing-container { font-size: 1.1rem; } .cta-button { padding: 12px 30px; font-size: 1rem; } .section { padding: 4rem 0; } .section-header h2 { font-size: 2rem; } .section-header p { font-size: 1rem; } #om .container { flex-direction: column; text-align: center;} #om .om-image { flex: 0 0 auto; margin-bottom: 2rem; width: 200px; } #om h2 { text-align: center; } #contact-form { padding: 2rem; } .service-grid { grid-template-columns: 1fr; } .feature-grid { grid-template-columns: 1fr; }
+        /* --- Responsivitet (Justerte fontstørrelser og Om Oss) --- */
+        @media (max-width: 992px) {
+             .hero h1 { font-size: 3rem; } .hero .typing-container { font-size: 1.2rem; } .section-header h2 { font-size: 2.4rem; } .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); } header ul li { margin-left: 15px; } header ul li a { padding: 10px 10px;}
+             /* Om Oss Justering */
+             #om .container { gap: 3rem; } /* Litt mindre gap */
+             .team-member { max-width: 400px; } /* Juster maks bredde */
+        }
+        @media (max-width: 768px) {
+             header nav { flex-direction: column; align-items: center; } header .logo { margin-bottom: 15px; } header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; } header ul li { margin: 5px 8px; } header ul li a { font-size: 0.9rem; padding: 8px 12px; } .hero { min-height: 70vh; padding: 6rem 0 3rem 0; } .hero h1 { font-size: 2.5rem; } .hero .typing-container { font-size: 1.1rem; } .cta-button { padding: 12px 30px; font-size: 1rem; } .section { padding: 4rem 0; } .section-header h2 { font-size: 2rem; } .section-header p { font-size: 1rem; } #contact-form { padding: 2rem; } .service-grid { grid-template-columns: 1fr; } .feature-grid { grid-template-columns: 1fr; }
             /* Juster accordion fontstørrelser */
             .accordion-title { font-size: 1.1rem; padding: 1.2rem 0.8rem; }
             .accordion-content { padding: 0 1rem; font-size: 0.95rem;}
             .accordion-content.aktiv { padding: 1rem 1rem 2rem 1rem; }
+            /* Om Oss Justering for mobil */
+            #om .container {
+                flex-direction: column; /* Stabler vertikalt */
+                align-items: center; /* Sentrerer stabelen */
+                gap: 3rem;
+            }
+            .team-member {
+                 min-width: unset; /* Fjerner min-width */
+                 width: 90%; /* Tar opp mesteparten av bredden */
+                 max-width: 400px; /* Holder en fornuftig maks bredde */
+                 flex: none; /* Fjerner flex-grow */
+            }
+            .team-member .om-image img { width: 180px; height: 180px; } /* Litt mindre bilde */
         }
-        @media (max-width: 480px) { .hero h1 { font-size: 2rem; } header .logo { font-size: 1.5rem; } .section-header h2 { font-size: 1.8rem; } header ul li { margin: 3px 5px;} header ul li a { padding: 6px 8px; font-size: 0.85rem;} #om .om-image { width: 150px; } .footer-links img { width: 24px; height: 24px;} .footer-links a { margin: 0 8px;} }
+        @media (max-width: 480px) {
+             .hero h1 { font-size: 2rem; } header .logo { font-size: 1.5rem; } .section-header h2 { font-size: 1.8rem; } header ul li { margin: 3px 5px;} header ul li a { padding: 6px 8px; font-size: 0.85rem;} .footer-links img { width: 24px; height: 24px;} .footer-links a { margin: 0 8px;}
+             /* Om Oss Justering for små skjermer */
+             .team-member .om-image img { width: 150px; height: 150px; }
+             .team-member .om-text h3 { font-size: 1.4rem; }
+             .team-member .om-text p { font-size: 0.95rem; }
+        }
 
     </style>
     <!-- === CSS STILER SLUTT === -->
@@ -564,29 +564,65 @@
             </div>
         </section>
 
-        <!-- Om Meg Seksjon (SEO Optimalisert - Fokus på Ekspertise) -->
+        <!-- Om Oss Seksjon (Oppdatert med to personer) -->
         <section id="om" class="section">
             <div class="container">
-                 <div class="om-image fade-in slide-left" style="transition-delay: 0.4s;">
-                       <!-- SEO: Beskrivende alt-tekst -->
-                       <img src="https://avatars.githubusercontent.com/u/39888226?v=4" alt="Brede Nicolai Espelid, Microsoft Fabric & Power BI Konsulent hos TrendMe">
-                 </div>
-                <div class="om-text fade-in slide-right" style="transition-delay: 0.2s;">
-                     <!-- SEO: Tydelig H2 om rollen -->
-                    <h2>Din Partner innen Microsoft Fabric & Dataanalyse</h2>
-                     <!-- SEO: Profesjonalisert tekst, fokus på erfaring og verdi -->
-                    <p>
-                        Hei, jeg er Brede, grunnlegger av TrendMe. Med en mastergrad i Business Analytics (NHH) og praktisk erfaring innenfor Regnskap og Analysearbeid kombinerer jeg dyp teknisk ekspertise i <strong>Microsoft Fabric</strong> og <strong>Power BI</strong> med en solid forståelse for forretningsprosesser.
-                    </p>
-                    <p>
-                        Jeg har ledet vellykkede <strong>migreringer til Fabric</strong>, designet skalerbare Medallion-arkitekturer i OneLake, og implementert automatiserte dataløsninger med Data Factory og Spark som leverer konkrete resultater. Min erfaring med <strong>Python</strong>, <strong>PySpark</strong> og <strong>AI/ML</strong>, kombinert med fokus på kostnadseffektivitet og pålitelighet, sikrer at du får en løsning som møter dine forretningsmål.
-                    </p>
-                     <p>
-                         Dette er i all hovedsak et sideprosjekt ved siden av studiene for å lære. Men jeg trives med å hjelpe bedrifter å transformere data til strategisk innsikt og ta smartere, datadrevne beslutninger ved hjelp av Microsofts analyseplattform. 
-                    </p>
-                     <!-- SEO: Fremhever relevant sertifisering -->
-                    <p><strong>Sertifiseringer:</strong> Microsoft Certified: Fabric Analytics Engineer Associate (DP-600)</p>
+                <!-- Flyttet Section Header hit for en generell introduksjon -->
+                <div class="section-header fade-in" style="margin-bottom: 5rem;"> <!-- Økt margin for bedre separasjon -->
+                    <span>Vårt Team</span>
+                    <h2>Møt Dine Partnere i Dataanalyse</h2>
+                    <p>Vi kombinerer teknisk dybde i Microsoft Fabric og Power BI med solid forretningsforståelse for å levere løsninger som skaper reell verdi.</p>
                 </div>
+
+                <!-- Teammedlem 1: Brede -->
+                <div class="team-member fade-in slide-left" style="transition-delay: 0.2s;">
+                    <div class="om-image">
+                           <!-- SEO: Beskrivende alt-tekst -->
+                           <!-- OPPPDATERT BILDEADRESSE -->
+                           <img src="https://media.licdn.com/dms/image/v2/D4E03AQEzDL3DwinHsw/profile-displayphoto-shrink_800_800/B4EZTi4yn.HgAc-/0/1738973326268?e=1749081600&v=beta&t=mRh6teubVc--vQG_DcSCQgRVt_3ye7Xi9AJFqhuh-pU" alt="Brede Nicolai Espelid, Grunnlegger & Microsoft Fabric Konsulent hos TrendMe">
+                    </div>
+                    <div class="om-text">
+                         <!-- SEO: Tydelig H3 om rollen -->
+                        <h3>Brede</h3>
+                         <!-- SEO: Profesjonalisert tekst, fokus på erfaring og verdi -->
+                        <p>
+                            Grunnlegger av TrendMe. Student og tar master i Business Analytics ved NHH og praktisk erfaring innen regnskap og analyse, kombinerert teknisk ekspertise i <strong>Microsoft Fabric</strong> og <strong>Power BI</strong> med en solid forståelse for forretningsprosesser.
+                        </p>
+                        <p>
+                            Har ledet vellykkede <strong>migreringer til Fabric</strong>, designet skalerbare arkitekturer i OneLake, og implementert automatiserte dataløsninger med Data Factory og Spark. Erfaring med <strong>Python</strong>, <strong>PySpark</strong> og <strong>AI/ML</strong> sikrer løsninger som møter forretningsmål.
+                        </p>
+                         <p>
+                             TrendMe er et sideprosjekt ved siden av studiene, drevet av ønsket om å hjelpe bedrifter transformere data til strategisk innsikt.
+                        </p>
+                         <!-- SEO: Fremhever relevant sertifisering -->
+                        <p><strong>Sertifiseringer:</strong> Microsoft Certified: Fabric Analytics Engineer Associate (DP-600)</p>
+                    </div>
+                </div>
+
+                <!-- Teammedlem 2: Partner -->
+                <div class="team-member fade-in slide-right" style="transition-delay: 0.4s;">
+                    <div class="om-image">
+                        <!-- SEO: Beskrivende alt-tekst -->
+                        <!-- PARTNERENS BILDEADRESSE -->
+                        <img src="https://media.licdn.com/dms/image/v2/D4D03AQEW-QLXtdJGrA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1718370433252?e=1749081600&v=beta&t=jrkhW3MPx2ot6jbw4lJFDNuXjxK0bPGFB_GUifGvBUY" alt="[Partnerens Navn], Partner & Power BI Spesialist hos TrendMe">
+                    </div>
+                    <div class="om-text">
+                        <!-- SEO: Tydelig H3 om rollen -->
+                        <!-- VIKTIG: Erstatt [Partnerens Navn] med faktisk navn -->
+                        <h3>Ulrik</h3>
+                        <p>
+                            Ulrik er partner og vår spesialist innen <strong>Power BI</strong>. Han har hovedansvaret for å omsette data og innsikt til konkret forretningsverdi gjennom <strong>utvikling av effektive og innsiktsgivende dashboards</strong>.
+                        </p>
+                        <p>
+                            Han er dyktig til å kartlegge bedriftens reelle behov og visualisere data på en måte som gir klarhet og støtter gode beslutninger. Hans bakgrunn fra <strong>økonomiroller</strong> (bl.a. Wiersholm og TMC Compressors) og <strong>salgsledelse</strong> gir ham en verdifull kommersiell forståelse som sikrer at dashboardene ikke bare er teknisk gode, men også forretningsmessig relevante.
+                        </p>
+                        <p>
+                            Hans fokus er å bygge bro mellom data og beslutningstakere, og sikre at Power BI-løsningene gir maksimal effekt.
+                        </p>
+                        <!-- Kan legge til sertifiseringer e.l. her hvis relevant -->
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -602,7 +638,7 @@
                 </div>
 
                 <form id="contact-form"
-                      action="https://formspree.io/f/movekndq"
+                      action="https://formspree.io/f/xqapydgw"
                       method="POST"
                       class="fade-in"
                       style="transition-delay: 0.3s;">
@@ -625,7 +661,7 @@
                         <input type="tel" id="phone" name="phone">
                     </div>
                     <div class="form-group">
-                        <label for="message">Hva kan jeg hjelpe deg med?</label>
+                        <label for="message">Hva kan vi hjelpe deg med?</label>
                         <textarea id="message" name="message" rows="6" required placeholder="F.eks. behov for Fabric strategi, migrering fra Synapse, Power BI optimalisering..."></textarea>
                     </div>
                     <!-- SEO: Tydelig CTA på knappen -->
@@ -648,13 +684,14 @@
                  <a href="mailto:brede.espelid@gmail.com" aria-label="Send e-post til Brede Espelid">
                       <img src="https://cdn-icons-png.flaticon.com/512/8898/8898833.png" alt="E-post ikon">
                  </a>
+                  <!-- TODO: Legg til link til partnerens LinkedIn hvis ønskelig -->
              </div>
             <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
             <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
         </div>
     </footer>
 
-    <!-- === JAVASCRIPT START (Oppdatert for å håndtere generell accordion) === -->
+    <!-- === JAVASCRIPT START (Uendret - men inkluderer nå accordion JS) === -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
@@ -721,17 +758,14 @@
              }
 
             // --- Generell Accordion Logikk ---
-            // Bruker de nye klassenavnene '.accordion-title'
             const accordionTitles = document.querySelectorAll('.accordion-title');
             accordionTitles.forEach(title => {
                 title.addEventListener('click', function() {
-                    // Valgfritt: Lukk andre åpne items i SAMME liste (hvis ønskelig)
-                    const parentList = this.closest('.accordion-list'); // Finn nærmeste forelder-liste
+                    const parentList = this.closest('.accordion-list');
                     if (parentList) {
                          parentList.querySelectorAll('.accordion-item').forEach(otherItem => {
                             const otherTitle = otherItem.querySelector('.accordion-title');
                             const otherContent = otherItem.querySelector('.accordion-content');
-                            // Lukk andre elementer enn det som ble klikket
                             if (otherTitle !== this && otherTitle.classList.contains('aktiv')) {
                                 otherTitle.classList.remove('aktiv');
                                 if(otherContent) otherContent.style.maxHeight = null;
@@ -742,19 +776,16 @@
                         });
                     }
 
-                    // Toggle det klikkede item
                     this.classList.toggle('aktiv');
-                    const content = this.nextElementSibling; // Finner .accordion-content
+                    const content = this.nextElementSibling;
                     const icon = this.querySelector('.ikon');
 
                     if (content && content.classList.contains('accordion-content')) {
                         if (content.style.maxHeight) {
-                            // Lukk
                             content.style.maxHeight = null;
                             content.classList.remove('aktiv');
                             if(icon) icon.textContent = '+';
                         } else {
-                            // Åpne
                             content.classList.add('aktiv');
                             content.style.maxHeight = content.scrollHeight + "px";
                             if(icon) icon.textContent = '−'; // Bruk minus for åpen
