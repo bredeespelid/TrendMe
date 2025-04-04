@@ -1,0 +1,75 @@
+<!-- Innhold for artikkel om RLS og CLS i Fabric -->
+<h2>Sikre Dine Data i Fabric: En Introduksjon til RLS og CLS</h2>
+<!-- Sett korrekt publiseringsdato -->
+<span class="post-meta">Publisert: 04. April 2025</span>
+<div class="post-content">
+    <p>Når du jobber med data i Microsoft Fabric, enten det er i et Warehouse eller via SQL Endpoint i et Lakehouse, er det avgjørende å ha kontroll på hvem som ser hva. Ikke alle brukere skal ha tilgang til all informasjon. Hvordan kan du effektivt begrense tilgangen på en sikker og robust måte?</p>
+    <p>Svaret ligger ofte i to kraftige sikkerhetsfunksjoner: <strong>Row-Level Security (RLS)</strong> og <strong>Column-Level Security (CLS)</strong>. Hos TrendMe hjelper vi bedrifter med å implementere nettopp slike mekanismer for å beskytte sensitive data. La oss se nærmere på hva RLS og CLS er og hvordan de fungerer i Fabric.</p>
+
+    <!-- Bildeplassholder: Bytt ut src og alt -->
+    <!-- Forslag: En illustrasjon som viser rader og kolonner som blir filtrert/maskert -->
+    <img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS0zOTQzMDM2LTUxMjc3MGlEREZBQjJGNjcyNzQwNzA1?image-dimensions=750x750&revision=42" alt="Konseptuell illustrasjon av radnivå- og kolonnenivåsikkerhet">
+    <!-- Sørg for at bildet /images/rls-cls-konsept.png finnes, eller bruk en annen relevant bildesti -->
+
+    <h3>Utfordringen: Kontrollert Datadeling</h3>
+    <p>Moderne dataanalyse handler om å gjøre data tilgjengelig for beslutningstakere. Men dette må balanseres mot behovet for sikkerhet og personvern (compliance). Ulike roller og avdelinger har ofte legitime behov for å se ulike deler av det samme datasettet:</p>
+    <ul>
+        <li>En selger trenger kun å se salgsdata for sine egne kunder.</li>
+        <li>En regionsjef trenger å se data for alle selgere i sin region, men ikke andre regioner.</li>
+        <li>HR-avdelingen trenger kanskje å se ansattinformasjon, men lønnskolonner skal kun være synlige for lønnsansvarlige.</li>
+        <li>Finansavdelingen trenger tilgang til økonomiske nøkkeltall, men ikke nødvendigvis detaljerte produksjonslogger.</li>
+    </ul>
+    <p>Å administrere dette manuelt med ulike rapporter eller visninger for hver brukergruppe kan fort bli uhåndterlig og feilutsatt.</p>
+
+    <h3>Hva er Row-Level Security (RLS)?</h3>
+    <p>Row-Level Security (RLS), eller radnivåsikkerhet, lar deg definere regler som <strong>filtrerer hvilke rader</strong> en bruker får se i en tabell, basert på hvem brukeren er eller hvilken rolle de tilhører.</p>
+    <p>Tenk deg en stor salgstabell med data fra alle selgere. Med RLS kan du sette opp en regel som sier: "Hvis brukeren som logger på er 'selger@firma.no', vis kun radene der kolonnen 'SelgerEpost' er lik 'selger@firma.no'". En salgssjef kan ha en annen regel som gir tilgang til alle rader.</p>
+    <p>Logikken ligger sentralt i databasen (Warehouse/SQL Endpoint), så filtreringen skjer automatisk uansett hvordan brukeren kobler seg til dataene (f.eks. via Power BI, SQL-klienter).</p>
+
+    <h3>Hva er Column-Level Security (CLS)?</h3>
+    <p>Column-Level Security (CLS), eller kolonnenivåsikkerhet, lar deg kontrollere hvilke <strong>spesifikke kolonner</strong> i en tabell en bruker har lov til å se.</p>
+    <p>Hvis du har en tabell med kundeinformasjon som inkluderer sensitive data som personnummer eller kredittkortdetaljer, kan du bruke CLS til å skjule disse kolonnene for brukere som ikke trenger å se dem (f.eks. markedsføringsavdelingen), mens autoriserte brukere (f.eks. i finansavdelingen) fortsatt har tilgang.</p>
+    <p>Igjen, dette håndteres i databasen, noe som gir en robust og konsistent sikkerhetsmodell.</p>
+
+    <h3>Fordeler med RLS og CLS i Fabric:</h3>
+    <ul>
+        <li><strong>Granulær Kontroll:</strong> Gir presis styring over datatilgang ned på rad- og kolonnenivå.</li>
+        <li><strong>Sentralisert Logikk:</strong> Sikkerhetsreglene defineres og håndheves i databaselaget (Warehouse/SQL Endpoint), ikke i hver enkelt rapport eller applikasjon.</li>
+        <li><strong>Robust Sikkerhet:</strong> Reduserer risikoen for utilsiktet datalekkasje, da reglene anvendes konsistent.</li>
+        <li><strong>Forenklet Design:</strong> Kan redusere behovet for å lage mange separate visninger eller rapporter for ulike brukergrupper. Én rapport kan tjene flere formål.</li>
+        <li><strong>Compliance:</strong> Hjelper med å møte krav til personvern og dataminimering (f.eks. GDPR).</li>
+    </ul>
+
+    <h3>Hvordan Implementeres RLS og CLS i Fabric (Forenklet)?</h3>
+    <p>Både RLS og CLS konfigureres ved hjelp av T-SQL-kommandoer direkte mot ditt Fabric Warehouse eller Lakehouse SQL Endpoint.</p>
+    <ul>
+        <li><strong>For RLS:</strong>
+            <ol>
+                <li>Man lager en liten T-SQL-funksjon (en "inline table-valued function") som fungerer som en sjekk (predikat). Funksjonen returnerer typisk 'sant' hvis brukeren (identifisert via funksjoner som <code>SUSER_SNAME()</code> eller <code>USER_NAME()</code>) skal ha tilgang til en gitt rad, og 'usant' ellers.</li>
+                <li>Man oppretter en "Security Policy" (sikkerhetspolicy) med <code>CREATE SECURITY POLICY</code> som knytter denne funksjonen til den aktuelle tabellen.</li>
+                <li>Tilgang styres ofte ved å legge brukere inn i spesifikke Workspace-roller (f.eks. Viewer, Member) eller Microsoft Entra ID (tidligere Azure AD) sikkerhetsgrupper, som funksjonen kan sjekke mot.</li>
+            </ol>
+        </li>
+        <li><strong>For CLS:</strong>
+            <ol>
+                <li>Man bruker den vanlige T-SQL <code>GRANT</code>-kommandoen.</li>
+                <li>I stedet for å gi <code>SELECT</code>-tilgang til hele tabellen, gir man <code>SELECT</code>-tilgang kun på de *spesifikke kolonnene* brukeren eller gruppen skal få se: <code>GRANT SELECT ON DinTabell (Kolonne1, Kolonne3) TO [BrukerEllerGruppeNavn]</code>.</li>
+                <li>Tilgang styres typisk ved å gi brukere/grupper tilgang via Microsoft Entra ID sikkerhetsgrupper og dele SQL Endpoint med dem (pass på å *ikke* gi unødvendige "Additional Permissions" under deling som kan overstyre CLS).</li>
+            </ol>
+        </li>
+    </ul>
+    <p>Selv om det krever litt T-SQL, er konseptene relativt enkle når man forstår prinsippene.</p>
+
+    <h3>Når Bruke Hva? RLS vs. CLS</h3>
+    <ul>
+        <li>Bruk <strong>RLS</strong> når ulike brukere skal se <strong>forskjellige rader</strong> fra den samme tabellen basert på deres rolle eller tilhørighet (f.eks. selgere ser egne salg, avdelingsledere ser sin avdelings data).</li>
+        <li>Bruk <strong>CLS</strong> når du trenger å <strong>skjule sensitive kolonner</strong> for visse brukere, selv om de har tilgang til andre kolonner i de samme radene (f.eks. skjule lønn, personnummer).</li>
+    </ul>
+    <p>Det er også fullt mulig og ofte nyttig å bruke RLS og CLS <strong>sammen</strong> på samme tabell for enda mer finmasket kontroll.</p>
+
+    <h3>TrendMe Kan Hjelpe Med Datasikkerhet i Fabric</h3>
+    <p>Å sette opp RLS og CLS korrekt er essensielt for god dataforvaltning og sikkerhet. Hos TrendMe har vi ekspertisen til å hjelpe deg med å designe og implementere robuste sikkerhetsmodeller i Microsoft Fabric Warehouse og Lakehouse SQL Endpoints.</p>
+    <p>Enten du trenger hjelp med strategi, implementering eller optimalisering av datasikkerheten din, <a href="/#kontakt">ta kontakt med oss i TrendMe</a> for en uforpliktende samtale.</p>
+
+    <p>Sørg for at dine verdifulle data er både tilgjengelige og sikre!</p>
+</div>
