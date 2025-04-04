@@ -27,7 +27,7 @@
     <ul>
         <li><strong>Alle typer data:</strong> Kan lagre og behandle både strukturert (tabeller) og ustrukturert data (filer som CSV, JSON, Parquet, bilder etc.) i OneLake.</li>
         <li><strong>Data Engineers og Data Scientists:</strong> Hovedverktøyene er ofte Spark (med Python, Scala, R, Spark SQL) for datatransformasjon, engineering og maskinlæring.</li>
-        <li><strong>Fleksibilitet:</strong> Gir større frihet til å organisere data (f.eks. i en <a href="https://learn.microsoft.com/fabric/lakehouse/lakehouse-medallion-architecture-overview" target="_blank" rel="noopener">Medallion-arkitektur</a> med Bronze, Silver, Gold-lag).</li>
+        <li><strong>Fleksibilitet:</strong> Gir større frihet til å organisere data (f.eks. i en Medallion-arkitektur med Bronze, Silver, Gold-lag).</li>
         <li><strong>Åpenhet:</strong> Data lagres i åpent Delta Lake-format, tilgjengelig for ulike verktøy.</li>
     </ul>
 
@@ -96,8 +96,8 @@
     <h3>Konklusjon: Hva Bør Du Velge?</h3>
     <p>Valget avhenger av dine behov:</p>
     <ul>
-        <li>Trenger du en klassisk datavarehusløsning med full T-SQL-støtte, transaksjoner og primært strukturert data for BI? Da er **Warehouse** et godt utgangspunkt.</li>
-        <li>Trenger du fleksibilitet til å håndtere ulike datatyper (også ustrukturerte), jobber mye med Spark/Python, og trenger et staging-område eller en plattform for data science? Da er **Lakehouse** veien å gå. Husk begrensningene i SQL-endepunktet for skriving.</li>
+        <li>Trenger du en klassisk datavarehusløsning med full T-SQL-støtte, transaksjoner og primært strukturert data for BI? Da er Warehouse et godt utgangspunkt.</li>
+        <li>Trenger du fleksibilitet til å håndtere ulike datatyper (også ustrukturerte), jobber mye med Spark/Python, og trenger et staging-område eller en plattform for data science? Da er Lakehouse veien å gå. Husk begrensningene i SQL-endepunktet for skriving.</li>
         <li>Har du komplekse behov og vil bygge en moderne dataplattform fra rådata til ferdige rapporter? Da er en **kombinasjon av Lakehouse og Warehouse** ofte den beste løsningen.</li>
     </ul>
     <p>Det kan være utfordrende å navigere i de ulike alternativene. Vi i TrendMe har erfaring med å designe og implementere effektive dataløsninger i Microsoft Fabric og kan hjelpe deg med å velge riktig arkitektur for din bedrift.</p>
