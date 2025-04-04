@@ -19,29 +19,29 @@
         <li>Justert for inflasjon</li>
         <li>...og så videre.</li>
     </ul>
-    <p>Den tradisjonelle måten å løse dette på er å lage separate mål for *hver eneste kombinasjon*: `Salg YOY`, `Salg YTD`, `Kostnad YOY`, `Kostnad YTD`, `Antall YOY`, `Antall YTD`, osv. Dette fører raskt til:</p>
+    <p>Den tradisjonelle måten å løse dette på er å lage separate mål for hver eneste kombinasjon: `Salg YOY`, `Salg YTD`, `Kostnad YOY`, `Kostnad YTD`, `Antall YOY`, `Antall YTD`, osv. Dette fører raskt til:</p>
     <ul>
         <li>Enorme mengder mål: Modellen blir uoversiktlig og vanskelig å navigere i.</li>
         <li>Repetitiv DAX-kode: Samme logikk (f.eks. YOY-beregningen) kopieres og limes inn i mange mål.</li>
-        <li>Vedlikeholdsmareritt: Hvis logikken for YOY må endres, må du oppdatere *alle* YOY-målene.</li>
+        <li>Vedlikeholdsmareritt: Hvis logikken for YOY må endres, må du oppdatere alle YOY-målene.</li>
         <li>Inkonsistens: Risiko for små feil eller ulikheter når man kopierer kode.</li>
     </ul>
     <p>Calculation Groups tilbyr en mye smartere løsning.</p>
 
     <h3>Hva er Egentlig en Calculation Group?</h3>
-    <p>Tenk på en Calculation Group som en samling av gjenbrukbare beregningsformler (eller formateringer) som kan brukes på *alle eksisterende mål* i modellen din.</p>
+    <p>Tenk på en Calculation Group som en samling av gjenbrukbare beregningsformler (eller formateringer) som kan brukes på alle eksisterende mål i modellen din.</p>
     <p>I stedet for å lage `Salg YOY` og `Kostnad YOY` separat, lager du:</p>
     <ol>
         <li>Dine grunnleggende mål: `[Salg]` og `[Kostnad]` (som du sannsynligvis allerede har).</li>
         <li>Én Calculation Group (f.eks. kalt "Tidsberegninger").</li>
-        <li>Inne i denne gruppen lager du "Calculation Items", som `YOY` og `YTD`. Hver av disse inneholder DAX-logikken for *hvordan* den respektive tidsberegningen skal gjøres.</li>
+        <li>Inne i denne gruppen lager du "Calculation Items", som `YOY` og `YTD`. Hver av disse inneholder DAX-logikken for hvordan den respektive tidsberegningen skal gjøres.</li>
     </ol>
     <p>Magien ligger i en spesiell DAX-funksjon: <code>SELECTEDMEASURE()</code>. Når du definerer Calculation Item for `YOY`, bruker du <code>SELECTEDMEASURE()</code> som en plassholder for det målet brukeren har valgt i rapporten (f.eks. `[Salg]` eller `[Kostnad]`). Calculation Item-et tar dette målet, utfører YOY-logikken på det, og returnerer resultatet.</p>
 
     <h3>De Store Fordelene (Hvorfor du bør bruke dem):</h3>
     <ul>
-        <li>Drastisk reduksjon i antall mål: Dette er hovedgevinsten! I stedet for N * M mål (N grunnmål * M beregningstyper), trenger du bare N + M (N grunnmål + M calculation items). Modellen blir mye renere og enklere.</li>
-        <li>Enklere vedlikehold: Trenger du å justere YOY-logikken? Du endrer den kun på *ett* sted (i YOY Calculation Item), og endringen gjelder automatisk for alle mål den brukes på.</li>
+        <li>Drastisk reduksjon i antall mål: Dette er hovedgevinsten! I stedet for N  M mål (N grunnmål  M beregningstyper), trenger du bare N + M (N grunnmål + M calculation items). Modellen blir mye renere og enklere.</li>
+        <li>Enklere vedlikehold: Trenger du å justere YOY-logikken? Du endrer den kun på ett sted (i YOY Calculation Item), og endringen gjelder automatisk for alle mål den brukes på.</li>
         <li>Konsistent logikk: Sikrer at f.eks. YTD beregnes på nøyaktig samme måte for Salg, Kostnad, og Antall.</li>
         <li>Dynamisk Formatering: Du kan definere formatstrenger (f.eks. prosent, valuta) som en del av et Calculation Item. `YOY%` kan automatisk vises som en prosent, uavhengig av formatet til det underliggende målet.</li>
         <li>Fleksibilitet for brukere: Brukere kan enkelt velge hvilken beregning (f.eks. YOY, YTD, vanlig verdi) de vil se for et mål ved hjelp av en slicer eller filter i rapporten.</li>
@@ -78,7 +78,7 @@ CALCULATE(
     [Salg],
     'Time Intelligence'[Tidsberegning] = "YOY%" -- Bruk DITT gruppe- og kolonnenavn
 )</code></pre>
-            Dette er nyttig hvis du *alltid* vil vise en spesifikk beregning i et KPI-kort e.l., men det reduserer ikke antall mål like mye som de andre metodene.</li>
+            Dette er nyttig hvis du alltid vil vise en spesifikk beregning i et KPI-kort e.l., men det reduserer ikke antall mål like mye som de andre metodene.</li>
     </ul>
 
     <h3>Når Bør Du Vurdere Calculation Groups?</h3>
