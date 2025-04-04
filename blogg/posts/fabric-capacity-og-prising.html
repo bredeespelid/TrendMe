@@ -1,4 +1,4 @@
-<!-- Innhold for artikkel om Fabric Capacity og Prising - Kun Innholdsblokk -->
+<!-- Innhold for artikkel om Fabric Capacity og Prising - Kun Innholdsblokk med border="1" på alle tabeller -->
 <h2>Forstå Microsoft Fabric Capacity og Prising: En Komplett Guide</h2>
 <!-- Sett korrekt publiseringsdato -->
 <span class="post-meta">Publisert: 04. April 2025</span>
@@ -81,7 +81,7 @@
     <h3>Betalingsmodeller for Fabric Capacity (F-SKU)</h3>
      <p>Du kan betale for F-SKU-kapasiteten på to hovedmåter, begge administrert via Azure Portal:</p>
     <!-- PAYG vs Reservation Table -->
-    <table>
+    <table border="1">  <!-- Lagt til border="1" -->
         <thead><tr><th>Modell</th><th>Beskrivelse</th><th>Fordeler</th><th>Ulemper</th><th>Best for</th></tr></thead>
         <tbody>
             <tr>
@@ -105,7 +105,7 @@
     <h3>Priseksempler: Fabric Capacity (NOK, Norway East, April 2025, ekskl. MVA)</h3>
     <p><em>NB: Dette er listepriser og kan variere. Bruk Azure Pricing Calculator for nøyaktige estimater.</em></p>
     <!-- Price Table -->
-    <table>
+    <table border="1"> <!-- Lagt til border="1" -->
         <thead><tr><th>SKU</th><th>Capacity Units (CU)</th><th>Pay-as-you-go (ca. kr/mnd ved <strong>24/7 drift</strong>)</th><th>Reservation (1 år, ca. kr/mnd)</th><th>Rabatt (ca.)</th></tr></thead>
         <tbody>
             <tr><td>F2</td><td>2</td><td>kr 2.762</td><td>kr 1.643</td><td>~41%</td></tr>
@@ -176,7 +176,7 @@
     <h4>Brukerrettigheter Oppsummert</h4>
     <p>Tabellen under viser hva en bruker kan gjøre basert på sin lisens og kapasiteten til arbeidsområdet:</p>
     <!-- User Capabilities Table -->
-    <table>
+    <table border="1"> <!-- Lagt til border="1" -->
         <thead>
             <tr>
                 <th>Brukers Lisens</th>
@@ -218,7 +218,7 @@
     <h3>Hvordan Velge Riktig Kapasitet og Modell? Strategier og Anbefalinger</h3>
     <p>Dette er en strategisk beslutning basert på behov, brukere og budsjett. Her er noen typiske scenarier og anbefalte modeller:</p>
     <!-- Recommended Pricing Models Table -->
-    <table>
+    <table border="1"> <!-- Lagt til border="1" -->
          <thead>
             <tr>
                 <th>Scenario / Bedriftstype</th>
@@ -283,47 +283,47 @@
     <ul>
         <li><strong>Liten Bedrift (Ref Modell 1):</strong>
             <ul>
-                <li>F-SKU: F4 PAYG (Antar <strong>175 timer kjøretid/mnd</strong>, resten pauset): 8.00 kr/t  175t = <strong>1400 kr</strong></li>
+                <li>F-SKU: F4 PAYG (Antar <strong>175 timer kjøretid/mnd</strong>, resten pauset): 8.00 kr/t * 175t = <strong>1400 kr</strong></li>
                 <li>PBI Lisens: 5 x Pro: 525 kr</li>
                 <li><strong>Total ca: 1925 kr/mnd</strong> (+ lagring)</li>
             </ul>
         </li>
-         <li><strong>Middels Bedrift (Ref Modell 2 - Kontorbruk):
+         <li><strong>Middels Bedrift (Ref Modell 2 - Kontorbruk):**
             <ul>
-                <li>F-SKU: F16 PAYG (Antar <strong>360 timer kjøretid/mnd</strong>, ~12t  30d): 32.00 kr/t  360t = <strong>11520 kr</strong></li>
+                <li>F-SKU: F16 PAYG (Antar <strong>360 timer kjøretid/mnd</strong>, ~12t * 30d): 32.00 kr/t * 360t = <strong>11520 kr</strong></li>
                 <li>PBI Lisens: 30 x Pro: 3150 kr</li>
-                <li><strong>Total ca: 14670 kr/mnd</strong> (+ lagring) - Billigere enn F16 Reservation (~13594 kr).</li>
+                <li><strong>Total ca: 14670 kr/mnd</strong> (+ lagring) - *Billigere enn F16 Reservation (~13594 kr).*</li>
              </ul>
          </li>
-        <li><strong>Stor Bedrift (Ref Modell 3 - 24/7 Behov):
+        <li><strong>Stor Bedrift (Ref Modell 3 - 24/7 Behov):**
             <ul>
-                <li>F-SKU: F64 Reservation: ~54374 kr</li>
+                <li>F-SKU: F64 Reservation: **~54374 kr**</li>
                 <li>PBI Lisens: 50 x Pro (skapere): 5250 kr + 450 x Free (seere): 0 kr</li>
-                <li><strong>Total ca: 59624 kr/mnd (+ lagring)</li>
+                <li><strong>Total ca: 59624 kr/mnd** (+ lagring)</li>
             </ul>
         </li>
-         <li><strong>Data Engineering Fokus (Ref Modell 4 - Nattlig):
+         <li><strong>Data Engineering Fokus (Ref Modell 4 - Nattlig):**
             <ul>
-                <li>F-SKU: F32 PAYG (Antar <strong>180 timer kjøretid/mnd</strong>, ~6t  30d): 64.00 kr/t  180t = 11520 kr</li>
+                <li>F-SKU: F32 PAYG (Antar <strong>180 timer kjøretid/mnd</strong>, ~6t * 30d): 64.00 kr/t * 180t = **11520 kr**</li>
                  <li>PBI Lisens: 10 x Pro: 1050 kr</li>
-                <li><strong>Total ca: 12570 kr/mnd (+ lagring)</li>
+                <li><strong>Total ca: 12570 kr/mnd** (+ lagring)</li>
              </ul>
          </li>
     </ul>
 
     <h3>Overvåking er Essensielt</h3>
-    <p>Bruk Fabric Capacity Metrics App (en gratis Power BI-app installert fra AppSource) for å forstå CU-bruk, identifisere flaskehalser og optimalisere kostnader. <strong>Selv om prisen per time/måned er fast for en gitt SKU, er overvåking av CU-forbruket avgjørende for å:</strong></p>
+    <p>Bruk **Fabric Capacity Metrics App** (en gratis Power BI-app installert fra AppSource) for å forstå CU-bruk, identifisere flaskehalser og optimalisere kostnader. <strong>Selv om prisen per time/måned er fast for en gitt SKU, er overvåking av CU-forbruket avgjørende for å:</strong></p>
     <ul>
         <li>Identifisere <em>hva</em> som driver bruken (hvilke jobber, rapporter, brukere).</li>
         <li>Finne ineffektive prosesser som kan optimaliseres (og dermed redusere belastningen).</li>
         <li>Ta informerte beslutninger om <strong>riktig SKU-størrelse</strong> (kan vi gå ned?).</li>
-        <li>Vurdere om bruksmønsteret tilsier bytte mellom PAYG og Reservasjon.</li>
+        <li>Vurdere om bruksmønsteret tilsier bytte mellom **PAYG og Reservasjon**.</li>
     </ul>
     <!-- Bildeplassholder -->
-    <img src="https://miro.medium.com/v2/resize:fit:1400/0Ppe0dKGGvAlUrbIx" alt="Skjermbilde av Microsoft Fabric Capacity Metrics App">
+    <img src="https://miro.medium.com/v2/resize:fit:1400/0*Ppe0dKGGvAlUrbIx" alt="Skjermbilde av Microsoft Fabric Capacity Metrics App">
 
     <h3>Oppsummering og Veien Videre</h3>
-    <p>Microsoft Fabric Capacity tilbyr en kraftig og fleksibel prismodell, men krever forståelse. Nøkkelen ligger i å forstå CU-forbruk, smoothing/bursting, og de distinkte forskjellene mellom betalingsmodellene: PAYG (betal for aktiv tid, krever pausing for sparing, billigst <59% oppetid) og Reservasjon (betal for en pool av CUer, gir rabatt ved høy bruk >59% oppetid). Samspillet med Power BI-lisenser (spesielt F64-regelen) og overgangen fra Power BI Premium (med tilhørende overgangsperiode) er også kritisk. Aktiv styring (spesielt for PAYG, evt. via Power BI-knapper), sjekk av kvoter, og kontinuerlig optimalisering er avgjørende for kostnadskontroll og vellykket bruk.</p>
+    <p>Microsoft Fabric Capacity tilbyr en kraftig og fleksibel prismodell, men krever forståelse. Nøkkelen ligger i å forstå CU-forbruk, smoothing/bursting, og de distinkte forskjellene mellom betalingsmodellene: **PAYG (betal for aktiv tid, krever pausing for sparing, billigst <59% oppetid)** og **Reservasjon (betal for en pool av CUer, gir rabatt ved høy bruk >59% oppetid)**. Samspillet med Power BI-lisenser (spesielt F64-regelen) og overgangen fra Power BI Premium (med tilhørende overgangsperiode) er også kritisk. Aktiv styring (spesielt for PAYG, evt. via Power BI-knapper), sjekk av kvoter, og kontinuerlig optimalisering er avgjørende for kostnadskontroll og vellykket bruk.</p>
     <p>Synes du dette virker komplisert? Det kan det være! Hos TrendMe har vi ekspertisen til å hjelpe deg med å analysere dine behov, estimere kostnader, velge riktig kapasitet og strategi, og optimalisere bruken av Microsoft Fabric.</p>
     <p><a href="/#kontakt">Ta kontakt med oss i TrendMe</a> for en prat om hvordan din bedrift best kan utnytte kraften i Fabric på en kostnadseffektiv måte.</p>
 </div>
