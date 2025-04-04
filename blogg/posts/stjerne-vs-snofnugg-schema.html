@@ -3,16 +3,16 @@
 <!-- Sett korrekt publiseringsdato -->
 <span class="post-meta">Publisert: 04. April 2025</span>
 <div class="post-content">
-    <p>Når du bygger dataløsninger i Microsoft Fabric, enten det er et Warehouse, et Lakehouse, eller en Power BI-datamodell (semantisk modell), er måten du strukturerer dataene på helt avgjørende for både ytelse og brukervennlighet. To svært vanlige designmønstre du vil støte på er **Stjerneskjema (Star Schema)** og **Snøfnuggskjema (Snowflake Schema)**.</p>
+    <p>Når du bygger dataløsninger i Microsoft Fabric, enten det er et Warehouse, et Lakehouse, eller en Power BI-datamodell (semantisk modell), er måten du strukturerer dataene på helt avgjørende for både ytelse og brukervennlighet. To svært vanlige designmønstre du vil støte på er Stjerneskjema (Star Schema) og Snøfnuggskjema (Snowflake Schema).</p>
     <p>Men hva er egentlig forskjellen, og hvilken bør du velge for dine Fabric- og Power BI-løsninger? Hos TrendMe ser vi at dette valget har stor betydning. La oss bryte ned disse konseptene.</p>
 
     <h3>Hva er et Stjerneskjema? Enkelt og Effektivt</h3>
     <p>Et stjerneskjema er den mest brukte og anbefalte modellen for datavarehus og BI-løsninger. Det har en enkel struktur:</p>
     <ul>
         <li><strong>Faktatabell (Fact Table):</strong> Én sentral tabell som inneholder målinger (metrics) eller hendelser (f.eks. salgstransaksjoner, loggføringer). Den inneholder numeriske verdier som kan aggregeres (summeres, telles, etc.) og nøkler som kobler til dimensjonstabellene.</li>
-        <li><strong>Dimensjonstabeller (Dimension Tables):</strong> Flere tabeller som "stråler ut" fra faktatabellen (derav navnet "stjerne"). Hver dimensjonstabell beskriver forretningsenheter – *hvem, hva, hvor, når, hvorfor* – knyttet til faktaene (f.eks. Kunder, Produkter, Datoer, Steder). De inneholder beskrivende attributter som brukes for filtrering og gruppering.</li>
+        <li><strong>Dimensjonstabeller (Dimension Tables):</strong> Flere tabeller som "stråler ut" fra faktatabellen (derav navnet "stjerne"). Hver dimensjonstabell beskriver forretningsenheter – hvem, hva, hvor, når, hvorfor – knyttet til faktaene (f.eks. Kunder, Produkter, Datoer, Steder). De inneholder beskrivende attributter som brukes for filtrering og gruppering.</li>
     </ul>
-    <p>Kjennetegnet på et rent stjerneskjema er at hver dimensjonstabell er direkte koblet til faktatabellen, og dimensjonstabellene er typisk **denormaliserte**. Det betyr at en dimensjonstabell (f.eks. Produkt) kan inneholde både produktnavn, kategori og underkategori i samme tabell, selv om det teknisk sett er en viss redundans (kategorinavnet gjentas for hvert produkt i den kategorien).</p>
+    <p>Kjennetegnet på et rent stjerneskjema er at hver dimensjonstabell er direkte koblet til faktatabellen, og dimensjonstabellene er typisk denormaliserte. Det betyr at en dimensjonstabell (f.eks. Produkt) kan inneholde både produktnavn, kategori og underkategori i samme tabell, selv om det teknisk sett er en viss redundans (kategorinavnet gjentas for hvert produkt i den kategorien).</p>
 
     <!-- Bildeplassholder: Bytt ut src og alt -->
     <!-- Forslag: Et enkelt diagram som viser en sentral faktatabell med direkte linker til 3-4 dimensjonstabeller -->
@@ -20,7 +20,7 @@
     <!-- Sørg for at bildet /images/star-schema-diagram.png finnes, eller bruk en annen relevant bildesti -->
 
     <h3>Hva er et Snøfnuggskjema? Mer Normalisert, Mer Komplekst</h3>
-    <p>Et snøfnuggskjema ligner på et stjerneskjema, men med en viktig forskjell: dimensjonstabellene er **normaliserte**. Det betyr at en dimensjon kan være brutt ned i flere relaterte tabeller for å redusere redundans.</p>
+    <p>Et snøfnuggskjema ligner på et stjerneskjema, men med en viktig forskjell: dimensjonstabellene er normaliserte. Det betyr at en dimensjon kan være brutt ned i flere relaterte tabeller for å redusere redundans.</p>
     <p>For eksempel, i stedet for én Produkt-dimensjon, kan et snøfnuggskjema ha:</p>
     <ul>
         <li>En Produkttabell (med produktnavn, nøkkel til underkategori).</li>
@@ -85,18 +85,18 @@
     <br>
 
     <h3>Hvorfor er Stjerneskjemaet Anbefalt for Fabric og Power BI?</h3>
-    <p>Selv om snøfnuggskjemaet kan virke mer "korrekt" fra et tradisjonelt databasenormaliseringsperspektiv og kan spare litt lagringsplass, er det en nesten universell anbefaling å bruke **stjerneskjemaet** for datamodeller i Power BI (semantiske modeller) og for rapporteringslag (Gull-laget) i Fabric Lakehouses/Warehouses. Hvorfor?</p>
+    <p>Selv om snøfnuggskjemaet kan virke mer "korrekt" fra et tradisjonelt databasenormaliseringsperspektiv og kan spare litt lagringsplass, er det en nesten universell anbefaling å bruke stjerneskjemaet for datamodeller i Power BI (semantiske modeller) og for rapporteringslag (Gull-laget) i Fabric Lakehouses/Warehouses. Hvorfor?</p>
     <ol>
         <li><strong>Ytelse:</strong> Power BI's VertiPaq-motor er høyt optimalisert for stjerneskjemaer. Færre JOINs mellom tabeller betyr nesten alltid raskere spørringer og mer responsive rapporter. Ytelsesgevinsten ved færre JOINs veier vanligvis tyngre enn den lille lagringsbesparelsen ved normalisering.</li>
         <li><strong>Brukervennlighet:</strong> En enklere modell med færre tabeller er mye lettere for rapportutviklere og sluttbrukere å forstå og navigere i. Det blir enklere å finne de riktige feltene for filtrering og analyse i Power BI's Data-panel.</li>
         <li><strong>Enkelhet i DAX:</strong> Beregninger i DAX (språket for Power BI-mål) blir ofte enklere å skrive og feilsøke i et stjerneskjema.</li>
         <li><strong>Hierarkier i Power BI:</strong> Det er ikke mulig å lage et Power BI-hierarki som spenner over flere tabeller (som man ville trengt i et snøfnuggskjema for f.eks. Kategori -> Underkategori -> Produkt). Ved å denormalisere til én Produkttabell kan man enkelt lage et slikt hierarki.</li>
     </ol>
-    <p>Derfor er den klare anbefalingen: **Design dine Power BI semantiske modeller og rapporteringslag i Fabric som stjerneskjemaer.**</p>
+    <p>Derfor er den klare anbefalingen: Design dine Power BI semantiske modeller og rapporteringslag i Fabric som stjerneskjemaer.</p>
 
     <h3>Men Hva Om Kildedataene Mine Er Et Snøfnugg?</h3>
     <p>Det er vanlig at kildedatasystemer (spesielt operasjonelle databaser, OLTP) er høyt normaliserte og ligner på snøfnugg. Hva gjør du da?</p>
-    <p>Svaret er å **transformere dataene** på veien inn til rapporteringslaget. Bruk verktøyene i Fabric til å *denormalisere* dimensjonene før de når Power BI-modellen eller Gull-laget ditt:</p>
+    <p>Svaret er å transformere dataene på veien inn til rapporteringslaget. Bruk verktøyene i Fabric til å denormalisere dimensjonene før de når Power BI-modellen eller Gull-laget ditt:</p>
     <ul>
         <li><strong>I Power Query (Dataflows Gen2 / Power BI Desktop):</strong> Bruk "Merge Queries" (Slå sammen spørringer) for å kombinere de normaliserte dimensjonstabellene (f.eks. Produkt, Underkategori, Kategori) til én enkelt, flat dimensjonstabell (f.eks. en Produkt-dimensjon som inneholder alle tre nivåene).</li>
         <li><strong>I Lakehouse/Warehouse (Spark eller T-SQL):</strong> Gjør tilsvarende JOINs når du transformerer data fra Sølv-laget til Gull-laget for å skape denormaliserte dimensjonstabeller klare for rapportering.</li>
@@ -104,8 +104,8 @@
     <p>Målet er at sluttproduktet (Power BI-modellen / Gull-laget) har en stjernestruktur, selv om kildene ikke hadde det.</p>
 
     <h3>Finnes Det Unntak?</h3>
-    <p>Som med alle regler, finnes det sjeldne unntak. I noen svært spesifikke, avanserte DAX-scenarier (som å unngå "auto-exist"-oppførsel) kan en snøfnugg-lignende struktur noen ganger være nødvendig. Men dette er avanserte tilfeller og bør unngås med mindre man har en *veldig* god grunn og forstår konsekvensene for ytelse og brukervennlighet.</p>
-    <p>For 99% av tilfellene: **Hold deg til stjerneskjemaet.**</p>
+    <p>Som med alle regler, finnes det sjeldne unntak. I noen svært spesifikke, avanserte DAX-scenarier (som å unngå "auto-exist"-oppførsel) kan en snøfnugg-lignende struktur noen ganger være nødvendig. Men dette er avanserte tilfeller og bør unngås med mindre man har en veldig god grunn og forstår konsekvensene for ytelse og brukervennlighet.</p>
+    <p>For 99% av tilfellene: Hold deg til stjerneskjemaet.</p>
 
     <h3>Oppsummering: Stjernen Skinner Klarest for Analyse</h3>
     <p>Både stjerne- og snøfnuggskjemaer er metoder for å organisere data. Mens snøfnuggskjemaet reduserer redundans gjennom normalisering, gir stjerneskjemaets enkelhet og denormaliserte dimensjoner betydelige fordeler for ytelse og brukervennlighet i analyseverktøy som Microsoft Fabric og Power BI.</p>
