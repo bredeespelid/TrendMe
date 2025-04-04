@@ -1,4 +1,3 @@
-<!-- Innhold for artikkel om Fabric Capacity og Prising - Omfattende Versjon m/ P-SKU note -->
 <h2>Forstå Microsoft Fabric Capacity og Prising: En Komplett Guide</h2>
 <!-- Sett korrekt publiseringsdato -->
 <span class="post-meta">Publisert: 04. April 2025</span>
@@ -7,7 +6,7 @@
     <p>For å få mest mulig ut av Power BI og Fabric, er det viktig å forstå at hva du faktisk kan gjøre avhenger av tre ting:</p>
     <ol>
         <li><strong>Typen lisens du har</strong> (f.eks. Free, Pro, PPU).</li>
-        <li><strong>Typen arbeidsområde</strong> innholdet er lagret i, og hvilken kapasitet det er knyttet til (f.eks. delt kapasitet eller en dedikert Fabric F-SKU).</li>
+        <li><strong>Typen arbeidsområde</strong> innholdet er lagret i, og hvilken **kapasitet** det er knyttet til (f.eks. delt kapasitet eller en dedikert Fabric F-SKU kjøpt i en spesifikk region).</li>
         <li><strong>Rollene og tillatelsene</strong> du er tildelt i det spesifikke arbeidsområdet.</li>
     </ol>
     <p>Denne artikkelen fokuserer primært på de to første punktene: lisenser og kapasitet/prising, for å gi deg en komplett oversikt. Hos TrendMe hjelper vi bedrifter med å forstå og optimalisere sine skykostnader, slik at du kan ta informerte beslutninger for din organisasjon.</p>
@@ -16,27 +15,42 @@
     <img src="https://community.fabric.microsoft.com/t5/image/serverpage/image-id/1054257i814DD44A6F202195?v=v2" alt="Illustrasjon av Microsoft Fabric Capacity som driver ulike workloads">
 
     <h3>Power BI Lisenser – Grunnlaget for Brukerrettigheter</h3>
-    <p>Før vi dykker ned i Fabric Capacity, la oss se på de grunnleggende Power BI-lisensene som gir individuelle brukere rettigheter:</p>
-    <ul>
-        <li><strong>Power BI Free:</strong> Ideell for personlig bruk eller for å kun se innhold delt i spesielle arbeidsområder (mer om dette senere). Kan ikke dele eller samarbeide i felles arbeidsområder.</li>
-        <li><strong>Power BI Pro:</strong> Nødvendig for de fleste som lager, publiserer, deler eller samarbeider på Power BI-innhold i felles arbeidsområder. Også nødvendig for å se innhold med mindre det ligger i F64+ kapasitet. Koster ca. 105 kr/bruker/måned (listepris ekskl. MVA, Norway East).</li>
-        <li><strong>Power BI Premium Per User (PPU):</strong> For brukere som trenger avanserte Premium-funksjoner (større datasett, AI etc.) uten å kjøpe stor kapasitet. Kan dele/samarbeide, men krever ofte PPU-lisens hos mottaker også. Koster ca. 210 kr/bruker/måned.</li>
+    <!-- ... (Lisensbeskrivelser som før) ... -->
+     <ul>
+        <li><strong>Power BI Free:</strong> Ideell for personlig bruk eller for å *kun se* (konsumere) innhold delt i spesielle arbeidsområder (mer om dette senere). Kan ikke dele eller samarbeide i felles arbeidsområder.</li>
+        <li><strong>Power BI Pro:</strong> Nødvendig for de fleste som *lager, publiserer, deler* eller *samarbeider* på Power BI-innhold i felles arbeidsområder. Også nødvendig for å *se* innhold med mindre det ligger i F64+ kapasitet. Koster ca. **105 kr/bruker/måned** (listepris ekskl. MVA, Norway East).</li>
+        <li><strong>Power BI Premium Per User (PPU):</strong> For brukere som trenger avanserte Premium-funksjoner (større datasett, AI etc.) uten å kjøpe stor kapasitet. Kan dele/samarbeide, men krever ofte PPU-lisens hos mottaker også. Koster ca. **210 kr/bruker/måned**.</li>
     </ul>
-    <p><strong>Hvordan ser jeg hvilken lisens jeg har?</strong> Logg inn på Power BI-tjenesten (app.powerbi.com), klikk på profilbildet ditt øverst til høyre, og velg 'Vis konto' > 'Abonnementer'.</p>
+    <p><strong>Hvordan ser jeg hvilken lisens jeg har?</strong> Logg inn på Power BI-tjenesten (<code>app.powerbi.com</code>), klikk på profilbildet ditt øverst til høyre, og velg 'Vis konto' > 'Abonnementer'.</p>
 
-    <h3>Overgangen til Microsoft Fabric: En Ny Æra for Kapasitet</h3>
-    <p>Tidligere kjøpte man dedikert Power BI-kapasitet gjennom "Power BI Premium" (P-SKUer). Dette fases nå ut til fordel for Microsoft Fabric, en større, samlet plattform som inkluderer Power BI pluss mange andre dataverktøy. Power BI er nå én av flere 'opplevelser' tilgjengelig innenfor Fabric.</p>
-    <p>Fabric bruker en ny kapasitetsmodell basert på F-SKUer, som erstatter de gamle P-SKUene. Alle organisasjoner som trenger dedikert kapasitet må etter hvert gå over til denne modellen. For selskaper som migrerer, er det verdt å merke seg at Microsoft anser F-SKUer som en erstatning for tilsvarende P-SKUer (f.eks. anses F64 ofte som den nærmeste ekvivalenten til den gamle P1).</p>
-
+    <h3>Overgangen til Microsoft Fabric: Utfasing av P-SKUer og Ny Kapasitetsmodell</h3>
+    <p>Tidligere kjøpte man dedikert Power BI-kapasitet gjennom "Power BI Premium" (P-SKUer). Med lanseringen av **Microsoft Fabric** – en større, samlet plattform som inkluderer Power BI pluss mange andre dataverktøy – fases P-SKUene nå ut.</p>
+    <p>Fabric bruker en ny kapasitetsmodell basert på **F-SKUer**, som erstatter de gamle P-SKUene. Alle organisasjoner som trenger dedikert kapasitet må etter hvert gå over til denne modellen.</p>
+    <h4>Tidslinje for Overgang (Utfasing av P-SKU):</h4>
+    <ul>
+        <li><strong>Nye kunder:</strong> Kan ikke lenger kjøpe P-SKUer.</li>
+        <li><strong>Eksisterende kunder (uten EA):</strong> Måtte bytte til F-SKU ved første fornyelse etter 1. januar 2025.</li>
+        <li><strong>Eksisterende kunder (med EA):</strong> Kan fornye P-SKU årlig til EA-avtalen utløper, deretter må de bytte til F-SKU.</li>
+    </ul>
+    <h4>Overgangsperiode ("Grace Period") etter P-SKU Utløp:</h4>
+    <p>For å sikre en smidig overgang når P-SKU-abonnementet ditt utløper, tilbyr Microsoft følgende:</p>
+    <ul>
+        <li><strong>30 Dager Gratis Kapasitet:</strong> Du får automatisk tilgang til gratis Fabric-kapasitet som tilsvarer din utgåtte P-SKU i 30 dager. Dette reduserer behovet for å betale dobbelt under selve migreringen.</li>
+        <li><strong>90 Dager Tilgang (med Throttling):</strong> Etter de 30 gratis dagene, vil driften på den gamle (nå utgåtte) P-SKU-kapasiteten begynne å bli strupet (throttled). Nye interaktive operasjoner kan bli forsinket (f.eks. 20 sekunder). Du har fortsatt tilgang til arbeidsområder og data i denne perioden.</li>
+        <li><strong>Potensielt Tap av Tilgang etter 90 Dager:</strong> Etter totalt 90 dager etter utløp, kan tilgangen til data på den gamle P-SKU-kapasiteten gå tapt, og kapasiteten kan bli frosset og etter hvert slettet. Kontakt Microsoft hvis du trenger mer tid enn 90 dager for migrering.</li>
+    </ul>
+    <h4>Migreringsprosess:</h4>
+    <p>Overgangen innebærer primært å **tilordne dine eksisterende arbeidsområder** fra den gamle P-SKU-kapasiteten til den nye F-SKU-kapasiteten du har kjøpt. Microsoft tilbyr et **automatisert migreringsverktøy** (basert på Fabric REST APIer) for å hjelpe med dette, spesielt nyttig for organisasjoner med mange arbeidsområder.</p>
 
     <h3>Hva er Microsoft Fabric Capacity (F-SKU)? Kjernen i Systemet</h3>
-    <p>Fabric Capacity (F-SKU) er den delte "motoren" (regnekraften) som driver alle operasjoner i Fabric – inkludert Power BI. Den kjøpes i ulike størrelser (F2 til F2048), målt i Capacity Units (CU) per sekund. Én CU representerer en blanding av CPU, minne og I/O.</p>
+    <!-- ... (F-SKU beskrivelse, diamantikon som før) ... -->
+     <p>Fabric Capacity (F-SKU) er den delte "motoren" (regnekraften) som driver *alle* operasjoner i Fabric – inkludert Power BI. Denne kapasiteten kjøpes via **Azure Portal** for en spesifikk **Azure-region** (f.eks. Norway East). Den kjøpes i ulike størrelser (F2 til F2048), målt i **Capacity Units (CU)** per sekund. Én CU representerer en blanding av CPU, minne og I/O.</p>
     <p>Fordelene er enkelhet, fleksibilitet og kostnadseffektivitet.</p>
-     <p>Arbeidsområder knyttet til en Fabric Capacity er merket med et diamantikon <span style="color: #00b0f0;">♦</span>, som signaliserer spesielle regler for deling og tilgang.</p>
+     <p>Arbeidsområder knyttet til en Fabric Capacity er merket med et **diamantikon <span class="diamond-icon">♦</span>**, som signaliserer spesielle regler for deling og tilgang.</p>
 
     <h3>Sammenligning: Lisenser og Kapasitet</h3>
+    <!-- ... (Sammenligning Lisenser vs Kapasitet Table som før) ... -->
     <p>Denne tabellen gir en detaljert oversikt over de ulike lisensene og hvordan Fabric Capacity påvirker dem:</p>
-    <!-- Sammenligning Lisenser vs Kapasitet Table -->
     <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: smaller;">
         <thead>
             <tr>
@@ -49,37 +63,50 @@
             </tr>
         </thead>
         <tbody>
-            <tr><td>Hva er det?</td><td>Gratis brukernøkkel</td><td>Standard betalt brukernøkkel</td><td>Avansert betalt brukernøkkel</td><td>"Liten/middels motor" (Regnekraft)</td><td>"Stor motor" (Regnekraft)</td></tr>
-            <tr><td>Kostnad (ca)</td><td>Gratis</td><td>105 kr/bruker/mnd</td><td>210 kr/bruker/mnd</td><td>Variabel (se pristabell)</td><td>Variabel, høyere (se pristabell)</td></tr>
-            <tr><td>Målgruppe</td><td>Personlig, Seer (F64+/PPU)</td><td>Skaper/Deler, Seer (<F64)</td><td>Skaper/Seer (avansert)</td><td>Organisasjon (Compute)</td><td>Organisasjon (Compute)</td></tr>
-            <tr><td>Lage/Publisere PBI?</td><td>Nei (kun "My Workspace")</td><td><strong>Ja</strong></td><td><strong>Ja</strong> (premium-funksjoner)</td><td>Ikke relevant (er motoren)</td><td>Ikke relevant (er motoren)</td></tr>
-            <tr><td>Dele/Samarbeide PBI?</td><td>Nei</td><td><strong>Ja</strong></td><td><strong>Ja</strong> (primært med PPU)</td><td>-</td><td>-</td></tr>
-            <tr><td>Se Delt PBI?</td><td>Kun hvis i F64+/PPU¹</td><td><strong>Ja</strong></td><td><strong>Ja</strong></td><td>-</td><td>-</td></tr>
-            <tr><td>Lisensfordel for Seere?</td><td>-</td><td>Nei</td><td>Nei (krever PPU for alle i PPU workspace)</td><td><strong>Nei</strong> (Seere trenger Pro/PPU)</td><td><strong>JA!</strong> (Seere trenger kun Free)</td></tr>
-            <tr><td>Maks Modellstørrelse</td><td>1 GB</td><td>1 GB</td><td>100 GB</td><td>Avgjør CU-bruk</td><td>Avgjør CU-bruk (Opptil 400GB)</td></tr>
-            <tr><td>Dataoppdateringer/dag</td><td>8</td><td>8</td><td>48</td><td>Avgjør CU-bruk</td><td>Avgjør CU-bruk (Opptil 48)</td></tr>
-            <tr><td>AI-funksjoner</td><td>Nei</td><td>Visualiseringer</td><td>Avansert AI</td><td>Muliggjør (via CU)</td><td>Muliggjør (via CU, Copilot fra F64)</td></tr>
-            <tr><td>Compute-kraft?</td><td>Nei</td><td>Nei</td><td>Nei</td><td><strong>Ja (Betaler CU-bruk)</strong></td><td><strong>Ja (Betaler CU-bruk)</strong></td></tr>
+            <tr><td>**Hva er det?**</td><td>Gratis brukernøkkel</td><td>Standard betalt brukernøkkel</td><td>Avansert betalt brukernøkkel</td><td>"Liten/middels motor" (Regnekraft)</td><td>"Stor motor" (Regnekraft)</td></tr>
+            <tr><td>**Kostnad (ca)**</td><td>Gratis</td><td>105 kr/bruker/mnd</td><td>210 kr/bruker/mnd</td><td>Variabel (se pristabell)</td><td>Variabel, høyere (se pristabell)</td></tr>
+            <tr><td>**Målgruppe**</td><td>Personlig, Seer (F64+/PPU)</td><td>Skaper/Deler, Seer (<F64)</td><td>Skaper/Seer (avansert)</td><td>Organisasjon (Compute)</td><td>Organisasjon (Compute)</td></tr>
+            <tr><td>**Lage/Publisere PBI?**</td><td>Nei (kun "My Workspace")</td><td><strong>Ja</strong></td><td><strong>Ja</strong> (premium-funksjoner)</td><td>Ikke relevant (er motoren)</td><td>Ikke relevant (er motoren)</td></tr>
+            <tr><td>**Dele/Samarbeide PBI?**</td><td>Nei</td><td><strong>Ja</strong></td><td><strong>Ja</strong> (primært med PPU)</td><td>-</td><td>-</td></tr>
+            <tr><td>**Se Delt PBI?**</td><td>Kun hvis i F64+/PPU¹</td><td><strong>Ja</strong></td><td><strong>Ja</strong></td><td>-</td><td>-</td></tr>
+            <tr><td>**Lisensfordel for Seere?**</td><td>-</td><td>Nei</td><td>Nei (krever PPU for alle i PPU workspace)</td><td><strong>Nei</strong> (Seere trenger Pro/PPU)</td><td><strong>JA!</strong> (Seere trenger kun Free)</td></tr>
+            <tr><td>**Maks Modellstørrelse**</td><td>1 GB</td><td>1 GB</td><td>100 GB</td><td>Avgjør CU-bruk</td><td>Avgjør CU-bruk (Opptil 400GB)</td></tr>
+            <tr><td>**Dataoppdateringer/dag**</td><td>8</td><td>8</td><td>48</td><td>Avgjør CU-bruk</td><td>Avgjør CU-bruk (Opptil 48)</td></tr>
+            <tr><td>**AI-funksjoner**</td><td>Nei</td><td>Visualiseringer</td><td>Avansert AI</td><td>Muliggjør (via CU)</td><td>Muliggjør (via CU, Copilot fra F64)</td></tr>
+            <tr><td>**Compute-kraft?**</td><td>Nei</td><td>Nei</td><td>Nei</td><td><strong>Ja (Betaler CU-bruk)</strong></td><td><strong>Ja (Betaler CU-bruk)</strong></td></tr>
         </tbody>
     </table>
-     <p style="font-size: smaller;">¹ <em>PPU Spesialregel: Hvis innhold er i et PPU Workspace, må alle (skapere og seere) ha PPU-lisens.</em></p>
+     <p class="note">¹ <em>PPU Spesialregel: Hvis innhold er i et PPU Workspace, må alle (skapere og seere) ha PPU-lisens.</em></p>
 
     <h3>Betalingsmodeller for Fabric Capacity (F-SKU)</h3>
-    <p>Du kan betale for F-SKU-kapasiteten på to hovedmåter:</p>
-    <!-- PAYG vs Reservation Table -->
-    <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+    <!-- ... (PAYG vs Reservation Table som før) ... -->
+     <p>Du kan betale for F-SKU-kapasiteten på to hovedmåter, begge administrert via Azure Portal:</p>
+    <table>
         <thead><tr><th>Modell</th><th>Beskrivelse</th><th>Fordeler</th><th>Ulemper</th><th>Best for</th></tr></thead>
         <tbody>
-            <tr><td><strong>Pay-as-you-go (PAYG)</strong></td><td>Betal per time for aktivert kapasitet. Minimum 1 minutt.</td><td>Maksimal fleksibilitet (pause, skalere)</td><td>Høyere timepris</td><td>Variabel bruk, testing, pilotering</td></tr>
-            <tr><td><strong>Reservation (1 år)</strong></td><td>Forplikt deg til en SKU for 1 år. Betales månedlig eller på forskudd.</td><td>Betydelig rabatt (ca. 41%), forutsigbar</td><td>Mindre fleksibel (kan ikke pauses)</td><td>Jevn, høy bruk (> ca. 18-19t/dag), TCO-fokus</td></tr>
+            <tr>
+                <td><strong>Pay-as-you-go (PAYG)</strong></td>
+                <td>Kjøpes via "Microsoft Fabric" i Azure. Betal per time for den tiden kapasiteten er <strong>aktiv (ikke pauset)</strong>. Du betaler full timepris uavhengig av faktisk CU-bruk.</td>
+                <td>Maksimal fleksibilitet (<strong>Pause for å stoppe kost</strong>, skalere SKU opp/ned). Mulighet for kostnadsoptimalisering.</td>
+                <td>Høyere timepris enn Reservation. Krever <strong>aktiv styring (pause/resume)</strong> for kostnadsoptimalisering. Ingen automatisk dvale.</td>
+                <td>Variabel bruk, testing, pilotering, planlagte jobber hvor kapasiteten kan pauses utenom kjøring. Typisk billigere enn Reservasjon hvis total aktiv tid er **under 59%** (ca. 14t 9m per dag).</td>
+            </tr>
+            <tr>
+                <td><strong>Reservation (1 år)</strong></td>
+                <td>Kjøpes via "Reservations" i Azure. Forplikt deg til et visst antall CUer for 1 år (betalt mnd/forskudd). <strong>Reserverte CUer danner en pool</strong> som kan dekke flere kjørende F-SKUer samtidig.</td>
+                <td>Betydelig rabatt (ca. 41% vs 24/7 PAYG). Forutsigbar kostnad. Fleksibel bruk av reserverte CUer på tvers av F-SKUer.</td>
+                <td>Mindre fleksibel (kan ikke pauses for å spare kost). <strong>"Use it or lose it"</strong> per time for ubrukte reserverte CUer. Krever forpliktelse (kan refunderes som Azure credits).</td>
+                <td>Jevn, høy bruk (**over 59%** av tiden), TCO-fokus, behov for konstant tilgjengelighet, ønske om å dekke flere mindre SKUer med én reservasjon.</td>
+            </tr>
         </tbody>
     </table>
+     <p class="note"><em>Viktig skille: PAYG betaler for <strong>tiden motoren er PÅ</strong>, mens Reservasjon betaler for <strong>retten til å bruke en pool av CUer</strong> i ett år. Fabric har per i dag ingen "serverless"-kapasitetsmodell hvor du kun betaler for utført CU-arbeid.</em></p>
 
     <h3>Priseksempler: Fabric Capacity (NOK, Norway East, April 2025, ekskl. MVA)</h3>
+    <!-- ... (Price Table som før) ... -->
     <p><em>NB: Dette er listepriser og kan variere. Bruk Azure Pricing Calculator for nøyaktige estimater.</em></p>
-    <!-- Price Table -->
-    <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">
-        <thead><tr><th>SKU</th><th>Capacity Units (CU)</th><th>Pay-as-you-go (ca. kr/mnd ved 24/7)</th><th>Reservation (1 år, ca. kr/mnd)</th><th>Rabatt (ca.)</th></tr></thead>
+    <table>
+        <thead><tr><th>SKU</th><th>Capacity Units (CU)</th><th>Pay-as-you-go (ca. kr/mnd ved <strong>24/7 drift</strong>)</th><th>Reservation (1 år, ca. kr/mnd)</th><th>Rabatt (ca.)</th></tr></thead>
         <tbody>
             <tr><td>F2</td><td>2</td><td>kr 2.762</td><td>kr 1.643</td><td>~41%</td></tr>
             <tr><td>F4</td><td>4</td><td>kr 5.524</td><td>kr 3.286</td><td>~41%</td></tr>
@@ -94,67 +121,90 @@
             <tr><td>F2048</td><td>2048</td><td>kr 2.828.276</td><td>kr 1.682.473</td><td>~41%</td></tr>
         </tbody>
     </table>
+     <p class="note"><em>Merk: PAYG-kolonnen viser kostnaden hvis kapasiteten kjører 24/7. Reell PAYG-kostnad vil være lavere hvis du aktivt pauser kapasiteten. Tipping point: Reservasjon blir billigere enn PAYG ved ca. <strong>59% oppetid (rundt 14t 9m per dag)</strong>.</em></p>
 
     <h3>Magi Bak Kulissene: Smoothing og Bursting</h3>
-    <p>Fabric håndterer varierende last smart:</p>
+     <!-- ... (Smoothing/Bursting forklaring som før) ... -->
+     <p>Fabric håndterer varierende last smart for å jevne ut forbruket og forbedre ytelsen:</p>
     <ul>
-        <li><strong>Smoothing (Utjevning):</strong> Fordeler CU-kostnaden for jobber over tid (24t for bakgrunn, ca. 5min for interaktivt).</li>
-        <li><strong>Bursting (Kapasitetsøkning):</strong> Tillater midlertidig bruk av mer CU/sek enn din SKU normalt gir.</li>
+        <li><strong>Smoothing (Utjevning):</strong> Fordeler CU-kostnaden for jobber over tid (24t for bakgrunnsjobber, ca. 5min for interaktive jobber). Dette hindrer at kortvarige topper krever unødig stor kapasitet og jevner ut belastningen på kapasiteten din.</li>
+        <li><strong>Bursting (Kapasitetsøkning):</strong> Tillater midlertidig bruk av *mer* CU/sek enn din SKU normalt gir, ved å "låne" fra fremtidig ledig kapasitet innenfor smoothing-vinduene. Gjør at jobber kan fullføres raskere.</li>
     </ul>
 
     <h3>Hva Skjer Hvis Du Bruker For Mye? Throttling (Struping)</h3>
-    <p>Vedvarende overforbruk fører til struping: 1) Forsinkelse -> 2) Avvisning av interaktive jobber -> 3) Avvisning av bakgrunnsjobber.</p>
+    <!-- ... (Throttling forklaring som før) ... -->
+     <p>Vedvarende overforbruk, selv med smoothing/bursting tatt i betraktning, kan føre til at systemet struper nye forespørsler for å beskytte kapasitetens stabilitet. Dette skjer i faser:</p>
+    <ol>
+        <li><strong>Interactive Delay:</strong> Nye interaktive jobber (f.eks. rapportåpning) forsinkes.</li>
+        <li><strong>Interactive Rejection:</strong> Nye interaktive jobber avvises helt.</li>
+        <li><strong>Background Rejection:</strong> Nye bakgrunnsjobber avvises også.</li>
+    </ol>
+    <p class="note"><em>Merk også: Selv om det ikke er vanlig throttling, kan det i spesielle tilfeller ved PAYG oppstå kostnader for overforbruk hvis du bruker mye 'bursting' og deretter pauser kapasiteten før 'smoothing' rekker å jevne ut forbruket innenfor normalen.</em></p>
 
     <h3>Styring og Optimalisering</h3>
+    <!-- ... (Styring/Optimalisering som før, inkludert PBI Knapper, men lagt til Quotas) ... -->
+    <p>Du har flere verktøy for å administrere kapasiteten og kostnadene:</p>
     <ul>
-        <li><strong>Manuell Skalering (PAYG):</strong> Endre F-SKU-størrelse ved behov.</li>
-        <li><strong>Pause/Resume (PAYG):</strong> Stopp fakturering ved å pause kapasiteten.</li>
-        <li><strong>Autoscaling (Valgfritt tillegg):</strong> Legger automatisk til midlertidig ekstra kapasitet mot ekstra kostnad.</li>
+        <li><strong>Fabric Quotas:** Før du kjøper din første F-SKU (eller flere), sjekk dine **Fabric CU-kvoter** i Azure Portal. Kvotene begrenser totalt antall CUer du kan provisjonere per abonnement/region. Sørg for at du har tilstrekkelig kvote, og registrer Fabric Resource Provider hvis nødvendig.</li>
+        <li><strong>Manuell Skalering (PAYG):</strong> Endre F-SKU-størrelse ved behov via Azure Portal.</li>
+        <li><strong>Pause/Resume (PAYG):</strong> <strong>Avgjørende verktøy</strong> for å stoppe fakturering. Kan utføres manuelt i Azure Portal, automatiseres via APIer/scripts, eller trigges manuelt via Power BI-knapper.</li>
+        <li><strong>Avansert Styring via Power BI-knapper:** Bygg en brukervennlig løsning med knapper i Power BI Service som lar sluttbrukere pause/resume PAYG-kapasitet ved behov. Dette krever oppsett med Azure Function App, PowerShell, Managed Identity, Power Automate og Power BI Visual.</li>
+        <li><strong>Autoscaling (Valgfritt tillegg):</strong> Legger automatisk til midlertidig ekstra kapasitet mot ekstra kostnad for å unngå throttling.</li>
+        <li><strong class="warning">Advarsel ved PAYG & Pausing etter Bursting:</strong> Unngå å pause kapasiteten umiddelbart etter svært intensive jobber. La den kjøre litt til for å la 'smoothing' håndtere overforbruket.</li>
+        <li><strong>Region:</strong> Kapasiteten er bundet til den Azure-regionen den ble opprettet i.</li>
     </ul>
 
-    <h3>Power BI Lisenser og Fabric Capacity: F64-Regelen Forklart</h3>
-    <p>Hvordan påvirker F-SKUen behovet for Power BI-lisenser? Det avhenger av om arbeidsområdet er tilknyttet kapasiteten (har diamantikon <span style="color: #00b0f0;">♦</span>) og størrelsen:</p>
+    <h3>Ytterligere Fordeler med Fabric Kapasitet (F-SKU)</h3>
+    <p>Utover å drive Fabric- og Power BI-workloads, gir F-SKUer noen fordeler sammenlignet med de gamle P-SKUene:</p>
     <ul>
-        <li>Skapere/Delere: Trenger alltid Power BI Pro eller PPU.</li>
-        <li>Seere (Konsumenter):
+        <li><strong>Azure Fordeler:** Kvalifiserer for **Microsoft Azure Consumption Commitment (MACC)**. Gir tilgang til Azure-native sikkerhetsfunksjoner som **Trusted Workspace Access** og **Managed Private Endpoints**.</li>
+        <li><strong>Power BI Embedded:** F-SKUer er fullt kompatible og kan brukes til å kjøre all Power BI Embedded-aktivitet.</li>
+        <li><strong>Power BI Report Server:** Lisensnøkkel for Power BI Report Server er nå inkludert ved kjøp av **F64 eller høyere med Reservasjon (Reserved Instance)**. Nøkkelen finnes i Fabric Admin Portal under Capacity Settings.</li>
+    </ul>
+
+    <h3>Power BI Lisenser i Fabric-verdenen: F64-Regelen Forklart</h3>
+    <!-- ... (F64-regel forklaring og Brukerrettigheter tabell som før) ... -->
+     <p>Hvordan påvirker Fabric Capacity (F-SKU) behovet for Power BI-lisenser? Det avhenger av om arbeidsområdet er tilknyttet kapasiteten (har diamantikon <span class="diamond-icon">♦</span>) og størrelsen på F-SKUen:</p>
+    <ul>
+        <li>**Skapere/Delere:** Trenger **alltid** en Power BI Pro eller PPU-lisens for å publisere og dele i felles arbeidsområder. Dette kravet gjelder også i Fabric.</li>
+        <li>**Seere (Konsumenter):**
             <ul>
-                <li>I arbeidsområde uten F64+ (eller ikke tilknyttet): Trenger Power BI Pro (eller PPU).</li>
-                <li>I arbeidsområde med F64+ (har diamantikon): Trenger kun Power BI Free.</li>
+                <li>I arbeidsområde **uten** F64+ (eller ikke tilknyttet): Trenger **Power BI Pro** (eller PPU).</li>
+                <li>I arbeidsområde **med F64+** (har diamantikon): Trenger **kun Power BI Free**!</li>
             </ul>
         </li>
-        <li>Viktig: Kun F64 eller høyere gir denne lisensfordelen for gratisbrukere.</li>
-        <li>PPU Arbeidsområder: Følger egne regler; alle trenger normalt PPU.</li>
+        <li>**Viktig:** Det er kun F-SKUer tilsvarende eller høyere enn F64 som gir denne lisensfordelen for gratisbrukere. Mindre F-SKUer krever betalt lisens for seere.</li>
+        <li>**PPU Arbeidsområder:** Følger egne regler; alle trenger normalt PPU, uavhengig av F-SKU.</li>
     </ul>
-
     <h4>Brukerrettigheter Oppsummert</h4>
     <p>Tabellen under viser hva en bruker kan gjøre basert på sin lisens og kapasiteten til arbeidsområdet:</p>
-    <!-- User Capabilities Table -->
-    <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%;">
-        <thead><tr><th>Brukers Lisens</th><th>Innhold i Vanlig/Delt Kapasitet (eller Fabric < F64)</th><th>Innhold i Fabric F64+ Kapasitet (med diamantikon)</th></tr></thead>
+    <table>
+        <thead><tr><th>Brukers Lisens</th><th>Innhold i Vanlig/Delt Kapasitet (eller Fabric < F64)</th><th>Innhold i Fabric F64+ Kapasitet (med diamantikon <span class="diamond-icon">♦</span>)</th></tr></thead>
         <tbody>
             <tr><td><strong>Power BI Free</strong></td><td>Kan <u>ikke</u> se delt innhold. Kun "My Workspace".</td><td><strong>Kan se</strong> delt innhold.</td></tr>
             <tr><td><strong>Power BI Pro</strong></td><td><strong>Kan se</strong> og <strong>dele/lage</strong>¹ (med andre Pro/PPU).</td><td><strong>Kan se</strong> og <strong>dele/lage</strong>¹ (med alle lisenser).</td></tr>
              <tr><td><strong>Power BI PPU</strong></td><td><strong>Kan se</strong> og <strong>dele/lage</strong>¹ (med andre Pro/PPU). Eget PPU-område krever PPU.</td><td><strong>Kan se</strong> og <strong>dele/lage</strong>¹ (med alle lisenser). Eget PPU-område krever PPU.</td></tr>
         </tbody>
     </table>
-     <p style="font-size: smaller;">¹ <em>Forutsatt roller/tillatelser i arbeidsområdet.</em></p>
-
+     <p class="note">¹ <em>Forutsatt roller/tillatelser i arbeidsområdet.</em></p>
     <h4>Slik fungerer det i praksis:</h4>
-    <p>En analytiker med Pro publiserer en rapport. Hvis den publiseres i et vanlig arbeidsområde, trenger seere også Pro. Hvis den publiseres i et arbeidsområde med F64+ kapasitet (diamantikon), kan kolleger med Free-lisens se rapporten.</p>
+    <p>En analytiker med Pro publiserer en rapport. Hvis den publiseres i et vanlig arbeidsområde, trenger seere også Pro. Hvis den publiseres i et arbeidsområde med **F64+ kapasitet (diamantikon <span class="diamond-icon">♦</span>)**, kan kolleger med **Free-lisens** se rapporten.</p>
 
     <h3>Hva Med Lagring (OneLake)?</h3>
-    <p>Lagring faktureres separat:</p>
+    <!-- ... (OneLake som før) ... -->
+      <p>Lagring faktureres separat og er typisk en mindre del av totalkostnaden:</p>
     <ul>
-        <li>OneLake Storage: Ca. 0,24 kr per GB/mnd (Norway East, LRS Hot).</li>
-        <li>Power BI Import-modeller: Lagring inkludert i PBI-lisens.</li>
-        <li>Mirroring: Gratis lagring opp til en grense basert på F-SKU (F64 gir 64 TB gratis).</li>
+        <li><strong>OneLake Storage:** Generell lagring koster ca. **0,24 kr per GB/mnd** (Norway East, LRS Hot).</li>
+        <li>**Power BI Import-modeller:** Lagring for disse (innenfor lisensgrenser) er inkludert i PBI-lisensen, belastes ikke OneLake-kostnaden.</li>
+        <li>**Mirroring:** Gir gratis lagring for replikerte data opp til en grense basert på F-SKU (f.eks. F64 gir 64 TB gratis Mirroring-lagring).</li>
+        <li>**Cache:** Mellomlagring for KQL og Data Activator har egen pris (ca. 2,59 kr/GB/mnd).</li>
     </ul>
 
     <h3>Hvordan Velge Riktig Kapasitet og Modell? Strategier og Anbefalinger</h3>
+    <!-- ... (Recommended Pricing Models Table som før) ... -->
     <p>Dette er en strategisk beslutning basert på behov, brukere og budsjett. Her er noen typiske scenarier og anbefalte modeller:</p>
-    <!-- Recommended Pricing Models Table -->
     <table border="1" cellpadding="5" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: smaller;">
-        <thead>
+         <thead>
             <tr>
                 <th>Scenario / Bedriftstype</th>
                 <th>Anbefalt Fabric Capacity (F-SKU) Modell</th>
@@ -164,81 +214,103 @@
         </thead>
         <tbody>
             <tr>
-                <td><strong>1. Liten Bedrift / Pilot / Eksperimentering</strong><br>(Få brukere, usikker bruk)</td>
-                <td>F-SKU: PAYG (Start Smått: F2-F8)</td>
-                <td>Pro: For alle (skapere & seere).</td>
-                <td>Minimere startkostnad, fleksibilitet (pause/skalere). <F64 krever Pro for seere. Lær bruksmønster.</td>
+                <td><strong>1. Liten Bedrift / Pilot / Eksperimentering</strong><br>(Få brukere, usikker/variabel bruk)</td>
+                <td>**F-SKU: PAYG (Start Smått: F2-F8)**</td>
+                <td>**Pro:** For alle (skapere & seere).</td>
+                <td>Minimere startkostnad, fleksibilitet (pause/skalere for å kontrollere kost). Vurder PBI-knapper for enkel pausing. <F64 krever Pro for seere. Lær bruksmønster. Sjekk Fabric Quota!</td>
             </tr>
             <tr>
-                <td><strong>2. Middels Bedrift (Etablert BI-bruk)</strong><br>(Moderat antall brukere, en del seere)</td>
-                <td>Alt A: PAYG (F8-F32) (Variabel bruk)<br>Alt B: Reservation (F8-F32) (Stabil bruk >18-19t/dag)</td>
-                <td>Pro: For alle (skapere & seere).<br>(Vurder PPU for spesifikke behov).</td>
-                <td>Balanse kostnad/ytelse. PAYG for fleksibilitet, Reservation for lavere pris ved høy/stabil bruk. Fortsatt <F64, så Pro for seere.</td>
+                <td><strong>2. Middels Bedrift (Etablert BI-bruk)</strong><br>(Moderat antall brukere, behov primært i arbeidstid)</td>
+                <td>**Alt A: PAYG (F8-F32)** (Pause utenom arbeidstid via script/PBI-knapp)<br>**Alt B: Reservation (F8-F32)** (Kun hvis total bruk >14t 9m/dag *hver* dag)</td>
+                <td>**Pro:** For alle (skapere & seere).<br>(Vurder PPU for spesifikke behov).</td>
+                <td>Balanse kostnad/ytelse. PAYG med aktiv pausing er ofte mest lønnsomt ved typisk kontorbruk. Reservation KUN ved nesten kontinuerlig behov (>59% oppetid). Fortsatt <F64, så Pro for seere.</td>
             </tr>
             <tr>
-                <td><strong>3. Stor Bedrift (Mange PBI Seere)</strong><br>(Fokus på bred distribusjon)</td>
-                <td>F-SKU: Reservation (F64 eller Høyere)</td>
-                <td>Pro/PPU: For skapere/delere.<br>Free: For alle rene seere.</td>
-                <td>Total Cost of Ownership (TCO). Høyere F-SKU kostnad (med rabatt) veies opp av store besparelser på Pro-lisenser for seere. Forutsigbarhet.</td>
+                <td><strong>3. Stor Bedrift (Mange PBI Seere)</strong><br>(Fokus på bred distribusjon, høy/jevnt behov)</td>
+                <td>**F-SKU: Reservation (F64 eller Høyere)**</td>
+                <td>**Pro/PPU:** For skapere/delere.<br>**Free:** For alle *rene seere*.</td>
+                <td>**Total Cost of Ownership (TCO).** Høyere F-SKU kostnad (med rabatt) veies opp av *store besparelser* på Pro-lisenser for seere. Forutsigbarhet ved høy/jevnt behov (>59% oppetid).</td>
             </tr>
             <tr>
-                <td><strong>4. Fokus på Data Engineering / Backend</strong><br>(Tunge datajobber, få PBI-brukere)</td>
-                <td>PAYG (F16-F128+): For uregelmessige jobber.<br>Reservation (F16-F128+): For regelmessige batch-jobber.</td>
-                <td>Pro/PPU: Kun for de som lager/ser PBI.</td>
-                <td>Effektiv kjøring av tunge datajobber. Kapasitetsvalg styres av CU-behov for jobbene. PBI-lisenser er sekundært.</td>
+                <td><strong>4. Fokus på Data Engineering / Backend</strong><br>(Tunge, planlagte jobber, f.eks. nattlig)</td>
+                <td>**PAYG (F16-F128+):** (Start/stopp via script/automatisering)</td>
+                <td>**Pro/PPU:** Kun for de som lager/ser PBI.</td>
+                <td>Effektiv kjøring av tunge datajobber. PAYG er ideelt for å kun betale for de timene jobben(e) faktisk kjører.</td>
+            </tr>
+             <tr>
+                <td><strong>5. Flere Små/Middels Kapasiteter</strong><br>(Behov for flere miljøer, totalt >14t 9m/dag bruk)</td>
+                <td>**F-SKU: Reservation (passende total CU)**</td>
+                 <td>Avhenger av F64-regel per kapasitet.</td>
+                <td>Utnytte <strong>Reservasjons-poolen</strong> for å dekke flere SKUer samtidig, billigere enn 24/7 PAYG for alle.</td>
             </tr>
             <tr>
-                <td><strong>5. Behov for Premium PBI-funksjoner</strong><br>(Uten behov for F64-lisensfordel)</td>
-                <td>F-SKU: Valgfri størrelse (PAYG/Reservation)</td>
-                <td>PPU: For alle brukere i PPU-arbeidsområder.<br>Pro: For andre PBI-brukere.</td>
-                <td>Tilfredsstille PPU-krav. PPU-lisensiering overstyrer F64-regelen for PPU-innhold. Velg F-SKU basert på total CU-last.</td>
+                <td><strong>6. Behov for Premium PBI-funksjoner</strong><br>(Uten behov for F64-lisensfordel)</td>
+                <td>**F-SKU: Valgfri størrelse (PAYG/Reservation)**</td>
+                <td>**PPU:** For *alle* brukere i PPU-arbeidsområder.<br>**Pro:** For andre PBI-brukere.</td>
+                <td>Tilfredsstille PPU-krav. Velg F-SKU (og modell PAYG/Res) basert på *total* CU-last og bruksmønster.</td>
             </tr>
         </tbody>
     </table>
 
     <p><strong>Generelle Tips for Valg:</strong></p>
     <ol>
-        <li><strong>Gratis Prøveperiode: Bruk 60-dagers F64-prøven til å måle faktisk CU-behov med Metrics App.</li>
-        <li><strong>Analyser Bruksmønster: Når er toppen? Hvor mye CU brukes?</li>
-        <li><strong>Start Smått (PAYG): Vurder en mindre F-SKU på PAYG og overvåk nøye. Skaler opp ved behov.</li>
-        <li><strong>Faktor inn Lisenskostnader (F64-regelen): Regn på totalkostnaden (<F64 + Pro for alle vs >=F64 + Pro for skapere/Free for seere).</li>
-        <li><strong>Vurder Reservasjon: Hvis bruken er jevn og >18-19 timer per dag.</li>
-        <li><strong>Optimaliser! Effektive datajobber bruker færre CUs.</li>
+        <li><strong>Sjekk Kvoter Først:** Verifiser at du har tilstrekkelig Fabric CU-kvote i Azure før du kjøper kapasitet.</li>
+        <li><strong>Gratis Prøveperiode:** Mål faktisk CU-behov.</li>
+        <li><strong>Analyser Bruksmønster:** Når er toppen? Hvor mye CU? <strong>Hvor mange timer *trenger* kapasiteten(e) å være aktiv per dag/uke?</strong></li>
+        <li><strong>Start Smått (PAYG):** Implementer rutiner for **pause/resume** og overvåk kostnader nøye.</li>
+        <li><strong>Faktor inn Lisenskostnader (F64-regelen).</strong></li>
+        <li><strong>Vurder Reservasjon:** Hvis total nødvendig kjøretid er > **59% (ca. 14t 9m per dag)**, og/eller pooling-effekten er gunstig.</li>
+        <li><strong>Optimaliser!** Reduser CU-bruk.</li>
     </ol>
 
     <h3>Kostnadseksempler (Illustrerer Anbefalte Modeller, NOK, Norway East, ekskl. MVA)</h3>
-    <p>Disse eksemplene viser hvordan modellene kan slå ut i praksis:</p>
+    <!-- ... (Cost Examples som før) ... -->
+     <p>Disse eksemplene viser hvordan modellene kan slå ut, med presiserte PAYG-antagelser:</p>
     <ul>
-        <li><strong>Liten Bedrift (Ref Modell 1):
+        <li><strong>Liten Bedrift (Ref Modell 1):**
             <ul>
-                <li>F-SKU: F4 PAYG (175t/mnd): ~1400 kr</li>
+                <li>F-SKU: F4 PAYG (Antar **175 timer kjøretid/mnd**, resten pauset): 8.00 kr/t * 175t = **1400 kr**</li>
                 <li>PBI Lisens: 5 x Pro: 525 kr</li>
-                <li>Total ca: 1925 kr/mnd (+ lagring)</li>
+                <li>**Total ca: 1925 kr/mnd** (+ lagring)</li>
             </ul>
         </li>
-         <li><strong>Middels Bedrift (Ref Modell 2 - Antar stabil bruk):
+         <li><strong>Middels Bedrift (Ref Modell 2 - Kontorbruk):**
             <ul>
-                <li>F-SKU: F16 Reservation: ~13594 kr</li>
+                <li>F-SKU: F16 PAYG (Antar **360 timer kjøretid/mnd**, ~12t * 30d): 32.00 kr/t * 360t = **11520 kr**</li>
                 <li>PBI Lisens: 30 x Pro: 3150 kr</li>
-                <li>Total ca: 16744 kr/mnd (+ lagring)</li>
+                <li>**Total ca: 14670 kr/mnd** (+ lagring) - *Billigere enn F16 Reservation (~13594 kr hvis vi brukte den prisen, men den reelle er ~16744 kr om vi antar 24/7 behov for reservasjon)*</li>
              </ul>
          </li>
-        <li><strong>Stor Bedrift (Ref Modell 3):
+        <li><strong>Stor Bedrift (Ref Modell 3 - 24/7 Behov):**
             <ul>
-                <li>F-SKU: F64 Reservation: ~54374 kr</li>
+                <li>F-SKU: F64 Reservation: **~54374 kr**</li>
                 <li>PBI Lisens: 50 x Pro (skapere): 5250 kr + 450 x Free (seere): 0 kr</li>
-                <li>Total ca: 59624 kr/mnd (+ lagring) - Mye billigere enn alternativet med F32 Res + 500 Pro (~78789 kr)</li>
+                <li>**Total ca: 59624 kr/mnd** (+ lagring)</li>
             </ul>
         </li>
+         <li><strong>Data Engineering Fokus (Ref Modell 4 - Nattlig):**
+            <ul>
+                <li>F-SKU: F32 PAYG (Antar **180 timer kjøretid/mnd**, ~6t * 30d): 64.00 kr/t * 180t = **11520 kr**</li>
+                 <li>PBI Lisens: 10 x Pro: 1050 kr</li>
+                <li>**Total ca: 12570 kr/mnd** (+ lagring)</li>
+             </ul>
+         </li>
     </ul>
 
     <h3>Overvåking er Essensielt</h3>
-    <p>Bruk Fabric Capacity Metrics App (en gratis Power BI-app installert fra AppSource) for å forstå CU-bruk, identifisere flaskehalser og optimalisere kostnader.</p>
+    <!-- ... (Monitoring section som før) ... -->
+    <p>Bruk **Fabric Capacity Metrics App** (en gratis Power BI-app installert fra AppSource) for å forstå CU-bruk, identifisere flaskehalser og optimalisere kostnader. <strong>Selv om prisen per time/måned er fast for en gitt SKU, er overvåking av CU-forbruket avgjørende for å:</strong></p>
+    <ul>
+        <li>Identifisere *hva* som driver bruken (hvilke jobber, rapporter, brukere).</li>
+        <li>Finne ineffektive prosesser som kan optimaliseres (og dermed redusere belastningen).</li>
+        <li>Ta informerte beslutninger om **riktig SKU-størrelse** (kan vi gå ned?).</li>
+        <li>Vurdere om bruksmønsteret tilsier bytte mellom **PAYG og Reservasjon**.</li>
+    </ul>
     <!-- Bildeplassholder -->
-    <img src="https://miro.medium.com/v2/resize:fit:1400/0Ppe0dKGGvAlUrbIx" alt="Skjermbilde av Microsoft Fabric Capacity Metrics App">
+    <img src="https://miro.medium.com/v2/resize:fit:1400/0*Ppe0dKGGvAlUrbIx" alt="Skjermbilde av Microsoft Fabric Capacity Metrics App">
 
     <h3>Oppsummering og Veien Videre</h3>
-    <p>Microsoft Fabric Capacity tilbyr en kraftig og fleksibel, men kompleks, prismodell. For å ta gode valg, må du forstå CU-forbruk, smoothing/bursting, betalingsmodellene (PAYG/Reservasjon), og samspillet med Power BI-lisenser (spesielt F64-regelen og diamantikonet). Overvåking og kontinuerlig optimalisering er nøkkelen til kostnadskontroll.</p>
+    <p>Microsoft Fabric Capacity tilbyr en kraftig og fleksibel prismodell, men krever forståelse. Nøkkelen ligger i å forstå CU-forbruk, smoothing/bursting, og de distinkte forskjellene mellom betalingsmodellene: **PAYG (betal for aktiv tid, krever pausing for sparing, billigst <59% oppetid)** og **Reservasjon (betal for en pool av CUer, gir rabatt ved høy bruk >59% oppetid)**. Samspillet med Power BI-lisenser (spesielt F64-regelen) og overgangen fra Power BI Premium (med tilhørende overgangsperiode) er også kritisk. Aktiv styring (spesielt for PAYG, evt. via Power BI-knapper), sjekk av kvoter, og kontinuerlig optimalisering er avgjørende for kostnadskontroll og vellykket bruk.</p>
     <p>Synes du dette virker komplisert? Det kan det være! Hos TrendMe har vi ekspertisen til å hjelpe deg med å analysere dine behov, estimere kostnader, velge riktig kapasitet og strategi, og optimalisere bruken av Microsoft Fabric.</p>
     <p><a href="/#kontakt">Ta kontakt med oss i TrendMe</a> for en prat om hvordan din bedrift best kan utnytte kraften i Fabric på en kostnadseffektiv måte.</p>
 </div>
