@@ -271,31 +271,145 @@
              #om .container { gap: 3rem; }
              .team-member { max-width: 400px; }
         }
-	@media (max-width: 768px) {
-	    header nav { flex-direction: column; align-items: center; min-height: auto;}
-	    header .logo { margin-bottom: 15px; }
-	    header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; }
-	    header ul li { margin: 4px 6px; }
-	    header ul li a { font-size: 0.85rem; padding: 6px 10px; white-space: nowrap; }
-	    .hero { min-height: 70vh; padding: 6rem 0 3rem 0; }
-	    .hero h1 { font-size: 2.5rem; }
-	    .hero .typing-container { font-size: 1.1rem; }
-	    .cta-button { padding: 12px 30px; font-size: 1rem; }
-	    .section { padding: 4rem 0; }
-	    .section-header h2 { font-size: 2rem; }
-	    .section-header p { font-size: 1rem; }
-	    #contact-form { padding: 2rem; }
-	    .service-grid { grid-template-columns: 1fr; }
-	    .feature-grid { grid-template-columns: 1fr; }
-	    .accordion-title { font-size: 1.1rem; padding: 1.2rem 0.8rem; }
-	    .accordion-content { padding: 0 1rem; font-size: 0.95rem; }
-	    .accordion-content.aktiv { padding: 1rem 1rem 2rem 1rem; }
-	    #om .container { flex-direction: column; align-items: center; gap: 3rem; }
-	    .team-member { min-width: unset; width: 90%; max-width: 400px; flex: none; }
-	    .team-member .om-image img { width: 180px; height: 180px; }
-	    #paper { width: 90%; max-width: 280px; height: auto; min-height: 350px; }
-	    #thank-you-message { font-size: 1.2rem; }
-	}
+	 @media (max-width: 768px) {
+	     /* --- Header & Navigasjon for mindre skjermer --- */
+	     header nav {
+	         flex-direction: column; /* Stacker logo og nav-liste vertikalt */
+	         align-items: center;    /* Sentrerer innholdet i nav */
+	         min-height: auto;       /* Lar høyden justeres automatisk basert på innhold */
+	     }
+	     header .logo {
+	         margin-bottom: 15px; /* Litt avstand mellom logo og meny */
+	     }
+	     header ul {
+	         list-style: none;         /* Fjerner kulepunkter (allerede satt, men greit å ha her) */
+	         display: flex;            /* Bruker flexbox for knappelisten */
+	         align-items: center;      /* Vertikal sentrering av knapper (hvis de wrapper) */
+	         margin-top: 10px;         /* Avstand fra logoen */
+	         flex-wrap: wrap;          /* **VIKTIG: Lar knappene gå til neste linje** */
+	         justify-content: center;  /* Sentrerer knappene horisontalt */
+	         padding: 0;               /* Fjerner eventuell default padding */
+	     }
+	     header ul li {
+	         margin: 4px 6px;          /* Litt luft rundt hver knapp */
+	     }
+	     header ul li a {
+	         display: flex;
+	         align-items: center;
+	         color: var(--text-medium);
+	         text-decoration: none;
+	         padding: 6px 10px;        /* Mindre padding på små skjermer */
+	         transition: color var(--transition-speed) ease;
+	         border-radius: 5px;
+	         font-weight: 400;
+	         font-size: 0.85rem;       /* Mindre skriftstørrelse */
+	         letter-spacing: 0.5px;
+	         position: relative;
+	         overflow: hidden;
+	         /* **VIKTIG ENDRING:** */
+	         white-space: normal;      /* Lar teksten i knappen bryte om nødvendig, hjelper wrapping */
+	     }
+	      /* Styling for hover-effekt (strek under) på små skjermer */
+	     header ul li a::after {
+	         content: '';
+	         position: absolute;
+	         width: 0;
+	         height: 2px;
+	         bottom: 3px; /* Justert litt pga mindre padding */
+	         left: 50%;
+	         background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+	         transition: width var(--transition-speed) ease, left var(--transition-speed) ease;
+	         transform: translateX(-50%);
+	     }
+	     header ul li a:hover {
+	         color: var(--text-light); /* Gjør teksten lysere ved hover */
+	     }
+	     header ul li a:hover::after {
+	         width: 60%; /* Litt kortere strek på små skjermer kanskje? Kan justeres */
+	         left: 50%;
+	     }
+	
+	     /* --- Justeringer for Hero Seksjon --- */
+	     .hero {
+	         min-height: 70vh;         /* Litt lavere hero-seksjon */
+	         padding: 6rem 0 3rem 0;   /* Justert padding */
+	     }
+	     .hero h1 {
+	         font-size: 2.5rem;        /* Mindre hovedtittel */
+	     }
+	     .hero .typing-container {
+	         font-size: 1.1rem;        /* Mindre skrivemaskintekst */
+	     }
+	     .cta-button {
+	         padding: 12px 30px;       /* Litt mindre knapp */
+	         font-size: 1rem;
+	     }
+	
+	     /* --- Justeringer for Seksjoner --- */
+	     .section {
+	         padding: 4rem 0;          /* Mindre padding for seksjoner */
+	     }
+	     .section-header h2 {
+	         font-size: 2rem;          /* Mindre seksjonstitler */
+	     }
+	     .section-header p {
+	         font-size: 1rem;          /* Litt mindre brødtekst i header */
+	     }
+	
+	     /* --- Justeringer for Kontaktskjema --- */
+	     #contact-form {
+	         padding: 2rem;            /* Mindre padding i skjemaet */
+	     }
+	
+	     /* --- Justeringer for Grid-Layouts --- */
+	     .service-grid {
+	         grid-template-columns: 1fr; /* Én kolonne for tjenester */
+	     }
+	     .feature-grid {
+	         grid-template-columns: 1fr; /* Én kolonne for features */
+	     }
+	
+	     /* --- Justeringer for Accordion --- */
+	     .accordion-title {
+	         font-size: 1.1rem;        /* Mindre tittel i accordion */
+	         padding: 1.2rem 0.8rem;   /* Justert padding */
+	     }
+	     .accordion-content {
+	         padding: 0 1rem;          /* Justert padding for innhold (når lukket) */
+	         font-size: 0.95rem;       /* Litt mindre tekst */
+	     }
+	     .accordion-content.aktiv {
+	         padding: 1rem 1rem 2rem 1rem; /* Padding når åpen */
+	     }
+	
+	     /* --- Justeringer for Om Oss Seksjon --- */
+	     #om .container {
+	         flex-direction: column;    /* Stacker teammedlemmer vertikalt */
+	         align-items: center;       /* Sentrerer teammedlemmene */
+	         gap: 3rem;
+	     }
+	     .team-member {
+	         min-width: unset;          /* Fjerner min-width */
+	         width: 90%;                /* Setter bredde i prosent */
+	         max-width: 400px;          /* Begrenser maks bredde */
+	         flex: none;                /* Fjerner flex-grow/shrink */
+	     }
+	     .team-member .om-image img {
+	         width: 180px;              /* Mindre bilder */
+	         height: 180px;
+	     }
+	
+	     /* --- Justeringer for Animasjonspapir --- */
+	     #paper {
+	         width: 90%;                /* Papir tar mindre plass */
+	         max-width: 280px;
+	         height: auto;              /* Høyde basert på innhold */
+	         min-height: 350px;
+	     }
+	     #thank-you-message {
+	         font-size: 1.2rem;        /* Mindre takkemelding */
+	     }
+	 }
 
         @media (max-width: 480px) {
              .hero h1 { font-size: 2rem; } header .logo { font-size: 1.5rem; } .section-header h2 { font-size: 1.8rem; } header ul li { margin: 3px 5px;} header ul li a { padding: 6px 8px; font-size: 0.85rem;} .footer-links img { width: 24px; height: 24px;} .footer-links a { margin: 0 8px;}
