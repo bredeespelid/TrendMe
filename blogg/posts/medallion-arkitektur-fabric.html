@@ -1,92 +1,354 @@
-<!-- Innhold for artikkel om Medallion-arkitektur i Fabric -->
-<h2>Bygg en Solid Datagrunnmur: Medallion-arkitektur i Microsoft Fabric</h2>
-<!-- Sett korrekt publiseringsdato -->
-<span class="post-meta">Publisert: 04. April 2025</span>
-<div class="post-content">
-    <p>Har du hørt om "datasjøer" som ender opp som "datasumper"? Ustrukturert, uorganisert og upålitelig data kan fort bli et hinder fremfor en ressurs. For å virkelig utnytte verdien i dataene dine, trenger du struktur. Her kommer Medallion-arkitekturen inn som en anerkjent og effektiv metode for å organisere data i et moderne datalager, spesielt i en plattform som Microsoft Fabric.</p>
-    <p>Hos TrendMe ser vi Medallion-arkitekturen som en nøkkel til å bygge robuste, skalerbare og pålitelige dataløsninger i Fabric. La oss utforske hva denne arkitekturen innebærer og hvorfor den er så verdifull.</p>
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Bildeplassholder: Bytt ut src og alt -->
-    <!-- Forslag: En visuell fremstilling av Bronze -> Silver -> Gold lagene -->
-    <img src="https://learn.microsoft.com/en-us/fabric/onelake/media/onelake-medallion-lakehouse-architecture/onelake-medallion-lakehouse-architecture-example.png" alt="Diagram som viser Medallion-arkitekturen med Bronse, Sølv og Gull-lag">
-    <!-- Sørg for at bildet /images/medallion-arkitektur-diagram.png finnes, eller bruk en annen relevant bildesti -->
+    <!-- === Spesifikk Metadata for denne posten === -->
+    <title>Bygg en Solid Datagrunnmur: Medallion-arkitektur i Microsoft Fabric | TrendMe Blogg</title>
+    <meta name="description" content="Lær om Medallion-arkitekturen (Bronse, Sølv, Gull) for å organisere og forbedre datakvaliteten i Microsoft Fabric Lakehouse og Warehouse.">
+    <!-- === SLUTT Spesifikk Metadata === -->
 
-    <h3>Problemet: Fra Data Sump til Strukturert Innsikt</h3>
-    <p>Uten en klar struktur kan et datalager fort bli kaotisk. Data fra ulike kilder blandes sammen, kvaliteten varierer, og det blir vanskelig å vite hvilke data man kan stole på for analyser og rapportering. Dette fører til:</p>
-    <ul>
-        <li><strong>Lav datakvalitet og pålitelighet.</strong></li>
-        <li><strong>Duplisering av data og innsats.</strong></li>
-        <li><strong>Vanskeligheter med å finne og bruke relevante data.</strong></li>
-        <li><strong>Utfordringer med styring (governance) og sikkerhet.</strong></li>
-    </ul>
-    <p>Medallion-arkitekturen adresserer disse utfordringene ved å introdusere en logisk og progressiv struktur for dataene dine.</p>
+    <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png"> <!-- Antar icon er i rot -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <h3>Hva er Medallion-Arkitekturen? Tre Lag for Kvalitet</h3>
-    <p>Medallion-arkitekturen er en designpattern som organiserer data i et Lakehouse (eller Data Lake) i tre logiske lag, ofte referert til som soner, basert på dataens kvalitet og grad av transformasjon:</p>
-    <ol>
-        <li><strong>Bronze (Bronse - Rådata):</strong>
+    <style>
+        /* === ALLE STILER (Fra blogg-oversikt + artikkel-spesifikke) === */
+        :root {
+            --dark-bg: #121212;
+            --primary-fabric-dark: #6a0dad;
+            --primary-fabric-light: #9370db;
+            --secondary-accent: #00c6ff;
+            /* Definer RGB-versjon for bruk med alpha/gjennomsiktighet */
+            --secondary-accent-rgb: 0, 198, 255;
+            --glow-color: rgba(0, 198, 255, 0.5);
+            --text-light: #e0e0e0;
+            --text-medium: #b0b0b0;
+            --text-dark: #1f1f1f;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --card-bg-hover: rgba(55, 55, 55, 0.9);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Poppins', sans-serif;
+            --transition-speed: 0.3s;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.7;
+            color: var(--text-light);
+            background-color: var(--dark-bg);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        .container { max-width: 1200px; margin: auto; padding: 0 25px; }
+        .section { padding: 4rem 0; } /* Brukes for main */
+
+        /* === HEADER === */
+        header {
+            background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); color: var(--text-light);
+            padding: 0.8rem 0; position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease;
+        }
+        header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
+        header .logo a {
+            font-size: 1.8rem; font-weight: 700; letter-spacing: 1px;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            text-decoration: none;
+        }
+        header ul { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; }
+        header ul li { margin-left: 20px; }
+        header ul li a {
+            display: flex; align-items: center; color: var(--text-medium); text-decoration: none;
+            padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px;
+            font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative;
+            overflow: hidden; white-space: nowrap;
+        }
+        header ul li a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            transition: width var(--transition-speed) ease, left var(--transition-speed) ease;
+            transform: translateX(-50%);
+        }
+        header ul li a:hover { color: var(--text-light); }
+        header ul li a:hover::after { width: 70%; left: 50%; }
+
+        /* === ARTIKKEL-SPESIFIKKE STILER === */
+        .article-section { padding: 3rem 0 4rem 0; }
+        .article-container { max-width: 800px; margin: auto; padding: 0 25px; }
+        .article-container h1 {
+            font-size: 2.8rem; font-weight: 700; color: var(--text-light);
+            margin-bottom: 1rem; line-height: 1.3;
+            background: linear-gradient(90deg, var(--text-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .post-meta {
+            font-size: 0.9rem; color: var(--text-medium); margin-bottom: 2.5rem;
+            display: block; border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem;
+        }
+        .article-body h2 {
+            font-size: 2rem; color: var(--text-light); margin-top: 3rem; margin-bottom: 1.5rem;
+            font-weight: 600; border-bottom: 2px solid var(--primary-fabric-light);
+            padding-bottom: 0.5rem; display: inline-block;
+        }
+        .article-body h3 {
+            font-size: 1.6rem; color: var(--text-light); margin-top: 2.5rem; margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .article-body p {
+            margin-bottom: 1.2rem; color: var(--text-medium); font-size: 1.05rem; line-height: 1.8;
+        }
+        .article-body strong { color: var(--text-light); font-weight: 600; }
+        .article-body a { /* Kun for CTA lenke */
+             color: var(--secondary-accent); text-decoration: none;
+             border-bottom: 1px dotted var(--secondary-accent);
+             transition: color 0.3s ease, border-bottom-color 0.3s ease;
+        }
+        .article-body a:hover {
+             color: var(--primary-fabric-light); border-bottom-color: var(--primary-fabric-light);
+        }
+        .article-body ul, .article-body ol {
+            margin-left: 25px; margin-bottom: 1.5rem; padding-left: 1rem;
+        }
+        .article-body li { margin-bottom: 0.7rem; color: var(--text-medium); line-height: 1.7; }
+        .article-body ul li::marker { color: var(--secondary-accent); font-size: 1.2em; }
+        .article-body ol { list-style-type: decimal; }
+        .article-body ol li::marker { color: var(--secondary-accent); font-weight: bold; }
+        .article-body blockquote { /* Ikke brukt i denne posten, men beholdes for mal */
+            border-left: 4px solid var(--secondary-accent); margin: 2rem 0; padding: 1rem 1.5rem;
+            background-color: rgba(var(--secondary-accent-rgb), 0.05); color: var(--text-light);
+            font-style: italic; border-radius: 0 8px 8px 0;
+        }
+        .article-body blockquote p { margin-bottom: 0; }
+        .article-body code { /* Inline code */
+            background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.5em; border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.9em; color: var(--text-light);
+        }
+        .article-body pre { /* Ikke brukt i denne posten, men beholdes for mal */
+            background-color: rgba(0, 0, 0, 0.5); border: 1px solid var(--card-border);
+            border-radius: 8px; padding: 1.5rem; overflow-x: auto; margin: 2rem 0;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.95em; line-height: 1.6; color: #c5c8c6;
+        }
+        .article-body pre code {
+            background-color: transparent; padding: 0; border-radius: 0;
+            color: inherit; font-size: inherit;
+        }
+        .article-body img {
+            max-width: 100%; height: auto; border-radius: 8px;
+            margin: 2rem auto; border: 1px solid var(--card-border); display: block;
+        }
+        .article-body figure { margin: 2rem 0; }
+        .article-body figcaption {
+            text-align: center; font-size: 0.9rem;
+            color: var(--text-medium); margin-top: 0.5rem;
+        }
+        .back-to-blog-link {
+            display: inline-block; margin-top: 3rem; color: var(--secondary-accent);
+            text-decoration: none; font-weight: 600; transition: color 0.3s ease;
+        }
+        .back-to-blog-link:hover { color: var(--primary-fabric-light); }
+
+        /* === FOOTER === */
+        footer {
+            background-color: #0a0a0a; color: var(--text-medium); text-align: center;
+            padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border);
+        }
+        footer p { margin-bottom: 1rem; font-size: 0.9rem; }
+
+         /* === RESPONSIVITET === */
+         @media (max-width: 768px) {
+             header nav { flex-direction: column; align-items: center; }
+             header .logo { margin-bottom: 15px; }
+             header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+             header ul li { margin: 5px 8px; }
+             .article-container h1 { font-size: 2.2rem; }
+             .article-body h2 { font-size: 1.7rem; }
+             .article-body h3 { font-size: 1.4rem; }
+             .article-body p { font-size: 1rem; }
+         }
+         @media (max-width: 500px) {
+              .article-container h1 { font-size: 1.8rem; }
+              .article-body h2 { font-size: 1.5rem; }
+              .article-body h3 { font-size: 1.3rem; }
+         }
+
+    </style>
+
+    <!-- === Schema.org Markup (JSON-LD) - VIKTIG FOR SEO === -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Bygg en Solid Datagrunnmur: Medallion-arkitektur i Microsoft Fabric",
+      "description": "Lær om Medallion-arkitekturen (Bronse, Sølv, Gull) for å organisere og forbedre datakvaliteten i Microsoft Fabric Lakehouse og Warehouse.",
+      "image": "https://learn.microsoft.com/en-us/fabric/onelake/media/onelake-medallion-lakehouse-architecture/onelake-medallion-lakehouse-architecture-example.png", // Bruker URL fra input. Bytt ut hvis du har et bedre bilde.
+      "author": {
+        "@type": "Organization", // Eller Person
+        "name": "TrendMe"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "TrendMe",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png" // URL til din logo
+        }
+      },
+      "datePublished": "2024-04-04", // Sett faktisk publiseringsdato
+      "dateModified": "2024-04-04" // Sett faktisk dato for siste endring
+    }
+    </script>
+    <!-- === SLUTT SCHEMA MARKUP === -->
+
+</head>
+<body>
+
+    <header id="main-header">
+        <nav class="container">
+            <div class="logo"><a href="/">TrendMe</a></div> <!-- Lenke til hovedside -->
             <ul>
-                <li>Dette er landingssonen for rådata hentet direkte fra kildesystemene.</li>
-                <li>Dataene lagres i sitt opprinnelige format (eller så nært som mulig).</li>
-                <li>Minimal transformasjon utføres her (kanskje bare typekonvertering eller tillegg av metadata som lastetidspunkt).</li>
-                <li>Laget er ofte append-only (kun tilføying) og immutable (uforanderlig) for å bevare historikk og sporbarhet.</li>
-                <li>Tenk på det som arkivet for rådata.</li>
+                <!-- Relative stier fra /posts/ mappen -->
+                <li><a href="../">Tilbake til Bloggen</a></li> <!-- Går ett nivå opp til /blogg/ -->
+                <li><a href="/">Til TrendMe Hovedside</a></li> <!-- Går til roten -->
             </ul>
-        </li>
-        <li><strong>Silver (Sølv - Validert & Beriket):</strong>
-            <ul>
-                <li>Data fra Bronse-laget blir renset, validert, standardisert og kombinert.</li>
-                <li>Inkonsistenser, manglende verdier og feil håndteres.</li>
-                <li>Data fra ulike kilder kan slås sammen for å skape en mer helhetlig "enterprise view" av forretningsenheter (f.eks. en felles kundetabell, produkttabell).</li>
-                <li>Dataene lagres typisk i et strukturert format (som Delta Lake-tabeller i Fabric).</li>
-                <li>Dette laget fungerer som en pålitelig kilde for de fleste analytiske formål – sannhetslaget.</li>
-            </ul>
-        </li>
-        <li><strong>Gold (Gull - Kuratert & Optimalisert):</strong>
-            <ul>
-                <li>Data fra Sølv-laget blir videre transformert og aggregert for spesifikke forretningsbehov og sluttbruker-scenarier.</li>
-                <li>Dataene organiseres ofte i datamodeller optimalisert for rapportering og analyse (f.eks. stjerneskjemaer).</li>
-                <li>Inneholder forretningslogikk, nøkkeltall (KPIer) og aggregerte data.</li>
-                <li>Dette er laget som typisk brukes direkte av BI-verktøy (som Power BI) og forretningsbrukere.</li>
-                <li>Tenk på det som den ferdige butikken for data-produkter.</li>
-            </ul>
-        </li>
-    </ol>
-    <p>Denne trinnvise raffineringen sikrer at datakvaliteten øker for hvert lag, og at brukere kan velge det laget som best passer deres behov – fra rådatautforskning (Bronse) til ferdige rapporter (Gull).</p>
+        </nav>
+    </header>
 
-    <h3>Implementering i Microsoft Fabric: Lakehouse som Byggekloss</h3>
-    <p>Microsoft Fabric er ideelt egnet for å implementere Medallion-arkitekturen:</p>
-    <ul>
-        <li><strong>OneLake som Fundament:</strong> Alt starter med OneLake, den enhetlige, logiske datasjøen for hele organisasjonen. Dette eliminerer datasiloer.</li>
-        <li><strong>Lakehouse per Sone:</strong> Den vanligste tilnærmingen er å opprette ett Fabric Lakehouse for hvert Medallion-lag (Bronse Lakehouse, Sølv Lakehouse, Gull Lakehouse). Dette gir god logisk separasjon og mulighet for sone-spesifikk styring.</li>
-        <li><strong>Delta Lake som Standard:</strong> Fabric bruker Delta Lake-formatet som standard. Dette åpne formatet gir ACID-transaksjoner (pålitelighet), tidsreiser (historikk) og ytelsesfordeler, noe som er essensielt i Medallion-flyten. Fabric optimaliserer også skriving med V-Order for raskere lesing.</li>
-        <li><strong>Fleksible Verktøy for Transformasjon:</strong> Du kan bruke verktøyene som passer best for hvert steg:
-            <ul>
-                <li>Data Factory Pipelines / Dataflows Gen2: For å hente data inn i Bronse-laget og orkestrere flyten mellom lagene.</li>
-                <li>Spark Notebooks (Python/SQL/Scala/R): For komplekse transformasjoner og rensing fra Bronse til Sølv, og fra Sølv til Gull.</li>
-                <li>T-SQL: Fabric Lakehouses har et innebygd SQL Analyse-endepunkt, slik at du kan bruke SQL til å spørre og transformere data, spesielt i Sølv- og Gull-lagene.</li>
-            </ul>
-        </li>
-        <li><strong>Warehouse som Alternativ for Gull:</strong> For Gull-laget kan du også velge å bruke et Fabric Warehouse i stedet for et Lakehouse. Dette er et godt valg hvis teamet ditt har sterk T-SQL-kompetanse og foretrekker en mer tradisjonell datavarehus-opplevelse for det kuraterte laget. Du kan enkelt flytte data fra Sølv Lakehouse til Gull Warehouse med T-SQL.</li>
-        <li><strong>Shortcuts for Mindre Kopiering:</strong> Hvis rådataene dine allerede finnes i støttede kilder (som ADLS Gen2 eller S3), kan du bruke Fabric Shortcuts i Bronse-laget for å referere til dataene uten å fysisk kopiere dem inn.</li>
-    </ul>
-    <p>Fabric gjør det sømløst å jobbe på tvers av disse verktøyene og lagene, siden alt hviler på den samme OneLake-lagringen.</p>
+    <!-- Artikkelinnhold -->
+    <main class="section article-section">
+        <div class="article-container">
 
-    <h3>Fordeler med Medallion i Fabric</h3>
-    <ul>
-        <li><strong>Bedre Datakvalitet og Pålitelighet:</strong> Den trinnvise prosessen sikrer grundig validering og rensing.</li>
-        <li><strong>Økt Gjenbrukbarhet:</strong> Sølv-laget blir en pålitelig kilde for mange ulike analyser og rapporter.</li>
-        <li><strong>Forbedret Ytelse:</strong> Optimaliserte data i Gull-laget gir raskere rapportering.</li>
-        <li><strong>Enklere Styring (Governance):</strong> Klar struktur gjør det lettere å administrere tilganger og spore dataflyt (lineage).</li>
-        <li><strong>Støtter Ulike Brukerbehov:</strong> Data Engineers kan jobbe med rådata i Bronse, Data Scientists og Analytikere kan bruke Sølv, og Forretningsbrukere får tilgang til kuraterte data i Gull.</li>
-        <li><strong>Skalerbarhet:</strong> Arkitekturen skalerer godt med økende datamengder og kompleksitet.</li>
-    </ul>
+            <h1>Bygg en Solid Datagrunnmur: Medallion-arkitektur i Microsoft Fabric</h1>
 
-    <h3>Data Mesh og Medallion</h3>
-    <p>Medallion-arkitekturen passer også godt inn i et Data Mesh-konsept. I Fabric kan du definere forretningsdomener (f.eks. Salg, Marked, HR). Innenfor hvert domene kan du så implementere en Medallion-struktur for å organisere og levere domenets "datprodukter".</p>
+            <p class="post-meta">
+                Publisert: <time datetime="2024-04-04">04. April 2024</time>
+                <!-- Valgfritt: by <span class="author">Ditt Navn</span> -->
+            </p>
 
-    <h3>Oppsummering: Bygg Riktig fra Starten</h3>
-    <p>Medallion-arkitekturen er ikke bare en teknisk implementering; det er en strategi for å sikre at data blir en pålitelig og verdifull ressurs for organisasjonen. Microsoft Fabric gir verktøyene og plattformen for å implementere denne strategien effektivt.</p>
-    <p>Å designe og implementere en god Medallion-arkitektur krever planlegging og forståelse for både forretningsbehov og tekniske muligheter. Hos TrendMe har vi erfaringen som trengs for å hjelpe deg med å bygge din data-grunnmur i Fabric.</p>
-    <p><a href="/#kontakt">Ta kontakt med oss i TrendMe</a> for å diskutere hvordan Medallion-arkitekturen kan gi struktur og kvalitet til dine data i Microsoft Fabric.</p>
-</div>
+            <!-- Fjernet <div class="post-content"> wrapper -->
+            <div class="article-body">
+                <p>Har du hørt om "datasjøer" som ender opp som "datasumper"? Ustrukturert, uorganisert og upålitelig data kan fort bli et hinder fremfor en ressurs. For å virkelig utnytte verdien i dataene dine, trenger du struktur. Her kommer <strong>Medallion-arkitekturen</strong> inn som en anerkjent og effektiv metode for å organisere data i et moderne datalager, spesielt i en plattform som Microsoft Fabric.</p>
+                <p>Hos TrendMe ser vi Medallion-arkitekturen som en nøkkel til å bygge robuste, skalerbare og pålitelige dataløsninger i Fabric. La oss utforske hva denne arkitekturen innebærer og hvorfor den er så verdifull.</p>
+
+                <figure>
+                     <!-- Kommentar: Vurder SVG her -->
+                    <img src="https://learn.microsoft.com/en-us/fabric/onelake/media/onelake-medallion-lakehouse-architecture/onelake-medallion-lakehouse-architecture-example.png" alt="Diagram som viser Medallion-arkitekturen med Bronse, Sølv og Gull-lag">
+                    <figcaption>Medallion-arkitekturen deler dataflyten inn i Bronse, Sølv og Gull-lag.</figcaption>
+                </figure>
+
+                <h2>Problemet: Fra Data Sump til Strukturert Innsikt</h2>
+                <p>Uten en klar struktur kan et datalager fort bli kaotisk. Data fra ulike kilder blandes sammen, kvaliteten varierer, og det blir vanskelig å vite hvilke data man kan stole på for analyser og rapportering. Dette fører til:</p>
+                <ul>
+                    <li><strong>Lav datakvalitet og pålitelighet.</strong></li>
+                    <li><strong>Duplisering av data og innsats.</strong></li>
+                    <li><strong>Vanskeligheter med å finne og bruke relevante data.</strong></li>
+                    <li><strong>Utfordringer med styring (governance) og sikkerhet.</strong></li>
+                </ul>
+                <p>Medallion-arkitekturen adresserer disse utfordringene ved å introdusere en logisk og progressiv struktur for dataene dine.</p>
+
+                <h2>Hva er Medallion-Arkitekturen? Tre Lag for Kvalitet</h2>
+                <p>Medallion-arkitekturen er en designpattern som organiserer data i et Lakehouse (eller Data Lake) i tre logiske lag, ofte referert til som soner, basert på dataens kvalitet og grad av transformasjon:</p>
+                <ol>
+                    <li>
+                        <h3>Bronze (Bronse - Rådata)</h3>
+                        <ul>
+                            <li>Dette er landingssonen for <strong>rådata</strong> hentet direkte fra kildesystemene.</li>
+                            <li>Dataene lagres i sitt opprinnelige format (eller så nært som mulig).</li>
+                            <li>Minimal transformasjon utføres her (kanskje bare typekonvertering eller tillegg av metadata som lastetidspunkt).</li>
+                            <li>Laget er ofte append-only (kun tilføying) og immutable (uforanderlig) for å bevare historikk og sporbarhet.</li>
+                            <li>Tenk på det som <strong>arkivet</strong> for rådata.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h3>Silver (Sølv - Validert & Beriket)</h3>
+                        <ul>
+                            <li>Data fra Bronse-laget blir renset, validert, standardisert og kombinert.</li>
+                            <li>Inkonsistenser, manglende verdier og feil håndteres.</li>
+                            <li>Data fra ulike kilder kan slås sammen for å skape en mer helhetlig "enterprise view" av forretningsenheter (f.eks. en felles kundetabell, produkttabell).</li>
+                            <li>Dataene lagres typisk i et strukturert format (som <code>Delta Lake</code>-tabeller i Fabric).</li>
+                            <li>Dette laget fungerer som en pålitelig kilde for de fleste analytiske formål – <strong>sannhetslaget</strong>.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h3>Gold (Gull - Kuratert & Optimalisert)</h3>
+                        <ul>
+                            <li>Data fra Sølv-laget blir videre transformert og aggregert for spesifikke forretningsbehov og sluttbruker-scenarier.</li>
+                            <li>Dataene organiseres ofte i datamodeller optimalisert for rapportering og analyse (f.eks. stjerneskjemaer).</li>
+                            <li>Inneholder forretningslogikk, nøkkeltall (KPIer) og aggregerte data.</li>
+                            <li>Dette er laget som typisk brukes direkte av BI-verktøy (som Power BI) og forretningsbrukere.</li>
+                            <li>Tenk på det som den ferdige <strong>butikken for data-produkter</strong>.</li>
+                        </ul>
+                    </li>
+                </ol>
+                <p>Denne trinnvise raffineringen sikrer at datakvaliteten øker for hvert lag, og at brukere kan velge det laget som best passer deres behov – fra rådatautforskning (Bronse) til ferdige rapporter (Gull).</p>
+
+                <h2>Implementering i Microsoft Fabric: Lakehouse som Byggekloss</h2>
+                <p>Microsoft Fabric er ideelt egnet for å implementere Medallion-arkitekturen:</p>
+                <ul>
+                    <li><strong>OneLake som Fundament:</strong> Alt starter med OneLake, den enhetlige, logiske datasjøen for hele organisasjonen. Dette eliminerer datasiloer.</li>
+                    <li><strong>Lakehouse per Sone:</strong> Den vanligste tilnærmingen er å opprette ett Fabric Lakehouse for hvert Medallion-lag (Bronse Lakehouse, Sølv Lakehouse, Gull Lakehouse). Dette gir god logisk separasjon og mulighet for sone-spesifikk styring.</li>
+                    <li><strong>Delta Lake som Standard:</strong> Fabric bruker <code>Delta Lake</code>-formatet som standard. Dette åpne formatet gir ACID-transaksjoner (pålitelighet), tidsreiser (historikk) og ytelsesfordeler, noe som er essensielt i Medallion-flyten. Fabric optimaliserer også skriving med <code>V-Order</code> for raskere lesing.</li>
+                    <li><strong>Fleksible Verktøy for Transformasjon:</strong> Du kan bruke verktøyene som passer best for hvert steg:
+                        <ul>
+                            <li>Data Factory Pipelines / Dataflows Gen2: For å hente data inn i Bronse-laget og orkestrere flyten mellom lagene.</li>
+                            <li>Spark Notebooks (Python/SQL/Scala/R): For komplekse transformasjoner og rensing fra Bronse til Sølv, og fra Sølv til Gull.</li>
+                            <li><code>T-SQL</code>: Fabric Lakehouses har et innebygd SQL Analyse-endepunkt, slik at du kan bruke SQL til å spørre og transformere data, spesielt i Sølv- og Gull-lagene.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Warehouse som Alternativ for Gull:</strong> For Gull-laget kan du også velge å bruke et Fabric Warehouse i stedet for et Lakehouse. Dette er et godt valg hvis teamet ditt har sterk <code>T-SQL</code>-kompetanse og foretrekker en mer tradisjonell datavarehus-opplevelse for det kuraterte laget. Du kan enkelt flytte data fra Sølv Lakehouse til Gull Warehouse med <code>T-SQL</code>.</li>
+                    <li><strong>Shortcuts for Mindre Kopiering:</strong> Hvis rådataene dine allerede finnes i støttede kilder (som ADLS Gen2 eller S3), kan du bruke Fabric Shortcuts i Bronse-laget for å referere til dataene uten å fysisk kopiere dem inn.</li>
+                </ul>
+                <p>Fabric gjør det sømløst å jobbe på tvers av disse verktøyene og lagene, siden alt hviler på den samme OneLake-lagringen.</p>
+
+                <h2>Fordeler med Medallion i Fabric</h2>
+                <ul>
+                    <li><strong>Bedre Datakvalitet og Pålitelighet:</strong> Den trinnvise prosessen sikrer grundig validering og rensing.</li>
+                    <li><strong>Økt Gjenbrukbarhet:</strong> Sølv-laget blir en pålitelig kilde for mange ulike analyser og rapporter.</li>
+                    <li><strong>Forbedret Ytelse:</strong> Optimaliserte data i Gull-laget gir raskere rapportering.</li>
+                    <li><strong>Enklere Styring (Governance):</strong> Klar struktur gjør det lettere å administrere tilganger og spore dataflyt (lineage).</li>
+                    <li><strong>Støtter Ulike Brukerbehov:</strong> Data Engineers kan jobbe med rådata i Bronse, Data Scientists og Analytikere kan bruke Sølv, og Forretningsbrukere får tilgang til kuraterte data i Gull.</li>
+                    <li><strong>Skalerbarhet:</strong> Arkitekturen skalerer godt med økende datamengder og kompleksitet.</li>
+                </ul>
+
+                <h2>Data Mesh og Medallion</h2>
+                <p>Medallion-arkitekturen passer også godt inn i et <strong>Data Mesh</strong>-konsept. I Fabric kan du definere forretningsdomener (f.eks. Salg, Marked, HR). Innenfor hvert domene kan du så implementere en Medallion-struktur for å organisere og levere domenets "datprodukter".</p>
+
+                <h2>Oppsummering: Bygg Riktig fra Starten</h2>
+                <p>Medallion-arkitekturen er ikke bare en teknisk implementering; det er en strategi for å sikre at data blir en pålitelig og verdifull ressurs for organisasjonen. Microsoft Fabric gir verktøyene og plattformen for å implementere denne strategien effektivt.</p>
+                <p>Å designe og implementere en god Medallion-arkitektur krever planlegging og forståelse for både forretningsbehov og tekniske muligheter. Hos TrendMe har vi erfaringen som trengs for å hjelpe deg med å bygge din data-grunnmur i Fabric.</p>
+                <p><a href="/#kontakt">Ta kontakt med oss i TrendMe</a> for å diskutere hvordan Medallion-arkitekturen kan gi struktur og kvalitet til dine data i Microsoft Fabric.</p> <!-- Beholdt CTA lenke -->
+
+            </div> <!-- Slutt .article-body -->
+
+            <a href="../" class="back-to-blog-link">← Tilbake til Bloggoversikten</a>
+
+        </div> <!-- Slutt .article-container -->
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
+            <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
+        </div>
+    </footer>
+
+    <!-- Minimal JavaScript (kun for footer årstall og evt. CSS variabler) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Oppdaterer årstall i footer
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+            // Setter CSS variabel for RGBA bruk (hvis nødvendig)
+            document.documentElement.style.setProperty('--secondary-accent-rgb', '0, 198, 255');
+        });
+    </script>
+
+</body>
+</html>
