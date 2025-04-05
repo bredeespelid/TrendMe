@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fakturapreferanser - TrendMe</title>
+    <meta name="description" content="Oppdater dine preferanser for mottak av faktura fra TrendMe.">
+
+    <!-- === FAVICON === -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/bredeespelid/TrendMe/main/icon.png">
+    <!-- === END FAVICON === -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- === CSS STILER START (Uendret) === -->
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --primary-fabric-dark: #6a0dad;
+            --primary-fabric-light: #9370db;
+            --secondary-accent: #00c6ff;
+            --glow-color: rgba(0, 198, 255, 0.5);
+            --text-light: #e0e0e0;
+            --text-medium: #b0b0b0;
+            --text-dark: #1f1f1f;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Poppins', sans-serif;
+            --transition-speed: 0.3s;
+            --transition-slow: 0.5s;
+        }
+        /* --- Grunnleggende og Hjelpeklasser --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--secondary-accent) var(--dark-bg); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark-bg); }
+        ::-webkit-scrollbar-thumb { background-color: var(--secondary-accent); border-radius: 10px; border: 2px solid var(--dark-bg); }
+        body { font-family: var(--font-primary); line-height: 1.7; color: var(--text-light); background-color: var(--dark-bg); overflow-x: hidden; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); padding-top: 80px; }
+        .container { max-width: 1200px; margin: auto; padding: 0 25px; }
+        .fade-in { opacity: 0; transition: opacity 1s ease-out, transform 0.8s ease-out; }
+        .visible { opacity: 1; transform: translate(0, 0) !important; }
+
+        /* --- Header & Navigasjon --- */
+        header { background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text-light); padding: 0.8rem 0; position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease; }
+        header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
+        header .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        header ul { list-style: none; display: flex; align-items: center; padding-left: 0; }
+        header ul li { margin-left: 20px; }
+        header ul li a { display: flex; align-items: center; color: var(--text-medium); text-decoration: none; padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px; font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative; overflow: hidden; white-space: nowrap; }
+        header ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); transition: width var(--transition-speed) ease, left var(--transition-speed) ease; transform: translateX(-50%); }
+        header ul li a:hover { color: var(--text-light); }
+        header ul li a:hover::after { width: 70%; left: 50%; }
+
+        /* --- Generell Seksjon Styling --- */
+        .section { padding: 4rem 0; overflow: hidden; }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-header h2 { font-size: 2.5rem; font-weight: 700; color: var(--text-light); margin-bottom: 1rem; position: relative; display: inline-block; }
+        .section-header h2::after { content: ''; position: absolute; width: 60px; height: 4px; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); bottom: -15px; left: 50%; transform: translateX(-50%); border-radius: 2px; }
+        .section-header p { max-width: 700px; margin: 1rem auto 0 auto; color: var(--text-medium); font-size: 1.1rem; }
+
+        /* --- Kontaktskjema Styling --- */
+        #invoice-preferences-form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 15px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .form-group { margin-bottom: 1.8rem; position: relative; }
+        .form-group label { display: block; margin-bottom: 0.7rem; font-weight: 600; color: var(--text-medium); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            background-color: rgba(50, 50, 50, 0.5);
+            color: var(--text-light);
+            transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+        .form-group select { appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23b0b0b0' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; padding-right: 2.5rem; }
+        .form-group fieldset { border: 1px solid var(--card-border); border-radius: 8px; padding: 1rem 1.5rem; margin-top: 0.5rem; }
+        .form-group legend { font-weight: 600; color: var(--text-medium); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; padding: 0 0.5rem; }
+        .radio-group label { display: block; margin-bottom: 0.5rem; font-weight: normal; color: var(--text-light); font-size: 1rem; text-transform: none; letter-spacing: normal; cursor: pointer; }
+        .radio-group input[type="radio"] { margin-right: 0.7rem; vertical-align: middle; cursor: pointer; }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary-accent);
+            box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.2);
+        }
+        .form-group input.error,
+        .form-group textarea.error {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 1px #ff6b6b;
+        }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        #invoice-preferences-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; }
+        .cta-button { display: inline-block; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); color: var(--text-dark); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease, opacity var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3); }
+        .cta-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px var(--glow-color); }
+        .cta-button:disabled { background: gray; cursor: not-allowed; opacity: 0.7; transform: none; box-shadow: none; }
+        #form-feedback-message.error { color: #ff6b6b; }
+        #form-feedback-message.success { color: var(--secondary-accent); }
+
+        /* --- Footer Styling --- */
+        footer { background-color: #0a0a0a; color: var(--text-medium); text-align: center; padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border); }
+        footer p { margin-bottom: 1rem; font-size: 0.9rem; }
+
+        /* === ANIMASJONSKODE --- */
+        #animation-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(18, 18, 18, 0.9); display: none; justify-content: center; align-items: center; flex-direction: column; z-index: 1100; overflow: hidden; }
+        #paper { background-color: #fff; width: 300px; height: 400px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); border: 1px solid var(--card-border); padding: 20px; box-sizing: border-box; opacity: 0; transform: scale(0.8); transition: opacity 0.5s ease-out, transform 0.5s ease-out; position: relative; overflow: hidden; }
+        #paper-content { font-family: var(--font-primary); font-size: 0.9rem; color: var(--text-dark); white-space: pre-wrap; word-wrap: break-word; max-height: 100%; overflow-y: auto; }
+        #thank-you-message { margin-top: 20px; font-size: 1.5rem; color: var(--secondary-accent); font-weight: bold; text-align: center; display: none; opacity: 0; transition: opacity 0.5s ease-in 0.2s; }
+        @keyframes fly-away { 0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translate(120vw, -120vh) rotate(720deg) scale(0.1); opacity: 0; } }
+        #paper.flying { animation: fly-away 2s ease-in forwards; }
+
+        /* --- Responsivitet (Uendret) --- */
+        @media (max-width: 992px) { header ul li { margin-left: 15px; } header ul li a { padding: 10px 10px;} }
+        @media (max-width: 768px) { body { padding-top: 120px; } header nav { flex-direction: column; align-items: center; } header .logo { margin-bottom: 15px; } header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; } header ul li { margin: 5px 8px; } header ul li a { font-size: 0.9rem; padding: 8px 12px; } .section { padding: 3rem 0; } .section-header h2 { font-size: 2rem; } .section-header p { font-size: 1rem; } #invoice-preferences-form { padding: 2rem; max-width: 95%; } #paper { width: 90%; max-width: 280px; height: auto; min-height: 350px; } #thank-you-message { font-size: 1.2rem; } }
+        @media (max-width: 480px) { body { padding-top: 150px; } .section-header h2 { font-size: 1.8rem; } header .logo { font-size: 1.5rem; } header ul li { margin: 3px 5px;} header ul li a { padding: 6px 8px; font-size: 0.85rem;} #invoice-preferences-form { padding: 1.5rem; } #paper { max-width: 240px; min-height: 300px; padding: 15px; } #paper-content { font-size: 0.8rem;} #thank-you-message { font-size: 1.1rem; } }
+
+    </style>
+    <!-- === CSS STILER SLUTT === -->
+
+</head>
+<body>
+
+    <header id="main-header">
+        <nav class="container">
+            <div class="logo">TrendMe</div>
+            <ul>
+                <li><a href="/">Tilbake til TrendMe</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Fakturapreferanse Seksjon -->
+        <section id="faktura-preferanser" class="section">
+            <div class="container">
+                 <div class="section-header fade-in">
+                    <h2>Oppdater dine fakturapreferanser</h2>
+                    <p>For å sikre at du mottar fakturaer fra oss på den måten som passer best for din bedrift, vennligst fyll ut skjemaet under.</p>
+                </div>
+
+                <!-- SKJEMA FOR FAKTURAPREFERANSER -->
+                <form id="invoice-preferences-form" class="fade-in" style="transition-delay: 0.3s;" novalidate>
+                     <input type="hidden" name="_subject" value="Nye fakturapreferanser fra kunde">
+
+                    <div class="form-group">
+                        <label for="pref-company-name">Bedriftsnavn:</label>
+                        <input type="text" id="pref-company-name" name="Bedriftsnavn" required placeholder="Deres bedriftsnavn">
+                    </div>
+
+                     <div class="form-group">
+                        <label for="pref-contact-person">Deres kontaktperson (for dette skjemaet):</label>
+                        <input type="text" id="pref-contact-person" name="Kontaktperson (innsender)" required placeholder="Navn på den som fyller ut">
+                    </div>
+
+                     <div class="form-group">
+                        <label for="pref-contact-email">E-post (for dette skjemaet):</label>
+                        <input type="email" id="pref-contact-email" name="Epost (innsender)" required placeholder="Din e-postadresse">
+                    </div>
+
+                    <hr style="border: none; border-top: 1px solid var(--card-border); margin: 2.5rem 0;">
+
+                    <div class="form-group">
+                        <fieldset>
+                             <legend>Ønsket leveringsmetode for faktura:</legend>
+                             <div class="radio-group">
+                                 <label>
+                                     <input type="radio" name="Leveringsmetode" value="EHF/Peppol" checked> EHF / Peppol
+                                 </label>
+                                  <label>
+                                     <input type="radio" name="Leveringsmetode" value="E-post (PDF)"> E-post (PDF-vedlegg)
+                                 </label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pref-billing-email">E-postadresse for faktura:</label>
+                        <input type="email" id="pref-billing-email" name="Fakturaepost" placeholder="faktura@deresbedrift.no">
+                        <small style="color: var(--text-medium); display: block; margin-top: 5px;">Fylles ut hvis dere velger E-post (PDF).</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pref-billing-contact">Kontaktperson for fakturaspørsmål (valgfritt):</label>
+                        <input type="text" id="pref-billing-contact" name="Fakturakontakt" placeholder="Navn på regnskapsansvarlig e.l.">
+                         <small style="color: var(--text-medium); display: block; margin-top: 5px;">Kun hvis en annen enn innsender skal kontaktes ved spørsmål.</small>
+                    </div>
+
+                    <div class="form-group">
+                         <label for="pref-orgnr">Organisasjonsnummer:</label>
+                         <input type="text" id="pref-orgnr" name="Organisasjonsnummer" placeholder="9 siffer" inputmode="numeric" pattern="[0-9]*" maxlength="9">
+                         <small style="color: var(--text-medium); display: block; margin-top: 5px;">Påkrevd og må være 9 siffer hvis dere velger EHF/Peppol.</small>
+                    </div>
+
+                     <div class="form-group">
+                        <label for="pref-po-reference">Deres referanse / PO-nummer (valgfritt):</label>
+                        <input type="text" id="pref-po-reference" name="Deres referanse/PO" placeholder="F.eks. innkjøpsordrenummer, prosjektkode">
+                         <small style="color: var(--text-medium); display: block; margin-top: 5px;">Hvis dere krever en spesifikk referanse på fakturaen.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pref-comments">Andre kommentarer eller spesifikke instruksjoner:</label>
+                        <textarea id="pref-comments" name="Kommentarer" rows="4" placeholder="F.eks. spesifikk merking..."></textarea>
+                    </div>
+
+                    <button type="submit" class="cta-button">Lagre fakturapreferanser</button>
+                    <p id="form-feedback-message" style="margin-top: 1rem; text-align: center; display: none;"></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
+            <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
+        </div>
+    </footer>
+
+    <!-- === ANIMASJONSELEMENTER (Uendret) === -->
+    <div id="animation-container">
+        <div id="paper">
+            <pre id="paper-content"></pre>
+        </div>
+        <div id="thank-you-message">Takk! Dine preferanser er lagret.</div>
+    </div>
+    <!-- === SLUTT ANIMASJONSELEMENTER === -->
+
+
+    <!-- === JAVASCRIPT START (Med validering for påkrevde felter) === -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // --- Intersection Observer (Uendret) ---
+             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+             const observerCallback = (entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } }); };
+             const observer = new IntersectionObserver(observerCallback, observerOptions);
+             const elementsToAnimate = document.querySelectorAll('.fade-in');
+             elementsToAnimate.forEach(el => observer.observe(el));
+
+             // --- Footer årstall (Uendret) ---
+             const yearSpan = document.getElementById('year');
+             if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+
+            // === KODE FOR PREFERANSESKJEMA-ANIMASJON OG FORMSPREE SUBMIT MED VALIDERING ===
+            const preferencesForm = document.getElementById('invoice-preferences-form');
+            const animationContainer = document.getElementById('animation-container');
+            const paper = document.getElementById('paper');
+            const paperContent = document.getElementById('paper-content');
+            const thankYouMessage = document.getElementById('thank-you-message');
+            const submitButton = preferencesForm.querySelector('button[type="submit"]');
+            const formFeedbackMessage = document.getElementById('form-feedback-message');
+
+            // Hent referanser til input-felter
+            const companyNameInput = document.getElementById('pref-company-name');
+            const contactPersonInput = document.getElementById('pref-contact-person');
+            const contactEmailInput = document.getElementById('pref-contact-email');
+            const orgNrInput = document.getElementById('pref-orgnr');
+            const billingEmailInput = document.getElementById('pref-billing-email');
+
+            // Funksjon for å vise feilmelding
+            function showValidationError(message, fieldToFocus = null) {
+                formFeedbackMessage.textContent = message;
+                formFeedbackMessage.className = 'error';
+                formFeedbackMessage.style.display = 'block';
+                submitButton.disabled = false;
+                submitButton.textContent = 'Lagre fakturapreferanser';
+                if (fieldToFocus) {
+                     fieldToFocus.classList.add('error');
+                     fieldToFocus.focus();
+                 }
+            }
+
+             // Fjern feilmarkering når brukeren skriver i feltet
+             [companyNameInput, contactPersonInput, contactEmailInput, orgNrInput, billingEmailInput].forEach(input => {
+                 if(input) {
+                     input.addEventListener('input', () => {
+                         input.classList.remove('error');
+                         if (input.value.trim() !== '') { // Skjul bare hvis feltet ikke er tomt (for required fields)
+                             // Kan vurdere å skjule formFeedbackMessage her også, eller vente til ny submit
+                             // formFeedbackMessage.style.display = 'none';
+                         }
+                     });
+                 }
+             });
+
+
+            async function handleSubmitPreferences(event) {
+                event.preventDefault();
+
+                // Reset feilmeldinger og styling
+                formFeedbackMessage.style.display = 'none';
+                formFeedbackMessage.className = '';
+                [companyNameInput, contactPersonInput, contactEmailInput, orgNrInput, billingEmailInput].forEach(input => input?.classList.remove('error'));
+
+                // Hent verdier
+                const companyNameValue = companyNameInput.value.trim();
+                const contactPersonValue = contactPersonInput.value.trim();
+                const contactEmailValue = contactEmailInput.value.trim();
+                const deliveryMethodRadio = preferencesForm.querySelector('input[name="Leveringsmetode"]:checked');
+                const deliveryMethod = deliveryMethodRadio ? deliveryMethodRadio.value : null;
+                const orgNrValue = orgNrInput.value.trim();
+                const billingEmailValue = billingEmailInput.value.trim();
+
+                // --- START VALIDERING ---
+
+                // 1. Sjekk alltid påkrevde felter FØRST
+                if (!companyNameValue) {
+                    showValidationError('Bedriftsnavn må fylles ut.', companyNameInput);
+                    return;
+                }
+                if (!contactPersonValue) {
+                    showValidationError('Kontaktperson (innsender) må fylles ut.', contactPersonInput);
+                    return;
+                }
+                if (!contactEmailValue) {
+                    showValidationError('E-post (innsender) må fylles ut.', contactEmailInput);
+                    return;
+                }
+                 // Enkel e-postsjekk for kontakt-epost
+                 if (contactEmailValue.indexOf('@') === -1 || contactEmailValue.indexOf('.') === -1) {
+                     showValidationError('Vennligst skriv inn en gyldig e-postadresse for kontaktperson.', contactEmailInput);
+                     return;
+                 }
+
+
+                // 2. Sjekk betingede felter basert på leveringsmetode
+                if (deliveryMethod === 'EHF/Peppol') {
+                    if (!orgNrValue) {
+                        showValidationError('Organisasjonsnummer må fylles ut når EHF/Peppol er valgt.', orgNrInput);
+                        return;
+                    }
+                    if (!/^\d+$/.test(orgNrValue)) {
+                         showValidationError('Organisasjonsnummer kan kun inneholde tall.', orgNrInput);
+                         return;
+                    }
+                    if (orgNrValue.length !== 9) {
+                        showValidationError('Organisasjonsnummer må bestå av nøyaktig 9 siffer.', orgNrInput);
+                        return;
+                    }
+                } else if (deliveryMethod === 'E-post (PDF)') {
+                    if (!billingEmailValue) {
+                        showValidationError('E-postadresse for faktura må fylles ut når E-post (PDF) er valgt.', billingEmailInput);
+                        return;
+                    }
+                     // Enkel e-postsjekk for faktura-epost
+                     if (billingEmailValue.indexOf('@') === -1 || billingEmailValue.indexOf('.') === -1) {
+                         showValidationError('Vennligst skriv inn en gyldig e-postadresse for faktura.', billingEmailInput);
+                         return;
+                     }
+                }
+                // --- SLUTT VALIDERING ---
+
+                // Validering OK, fortsett med innsending...
+                const originalButtonText = submitButton.textContent;
+                submitButton.disabled = true;
+                submitButton.textContent = 'Lagrer...';
+
+                const formData = new FormData(preferencesForm);
+                const formSpreeEndpoint = 'https://formspree.io/f/mvgkwjvn';
+
+                try {
+                    const response = await fetch(formSpreeEndpoint, {
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        // SUKSESS
+                        const paperText = `Fakturapreferanser mottatt for:\n\n${companyNameValue}\n\nMetode: ${deliveryMethod || 'Ikke spesifisert'}\nE-post: ${billingEmailValue || 'Ikke spesifisert'}\nOrgNr: ${orgNrValue || 'Ikke spesifisert'}`;
+                        paperContent.textContent = paperText;
+
+                        animationContainer.style.display = 'flex';
+                        setTimeout(() => { paper.style.opacity = '1'; paper.style.transform = 'scale(1)'; }, 100);
+                        setTimeout(() => { thankYouMessage.style.display = 'block'; thankYouMessage.offsetHeight; thankYouMessage.style.opacity = '1'; }, 800);
+                        setTimeout(() => { paper.classList.add('flying'); }, 2500);
+
+                        if(formFeedbackMessage) {
+                             formFeedbackMessage.textContent = 'Preferansene dine er lagret!';
+                             formFeedbackMessage.className = 'success';
+                             formFeedbackMessage.style.display = 'block';
+                        }
+
+                    } else {
+                        // FEIL fra Formspree
+                        const responseData = await response.json();
+                        let errorMessage = 'Kunne ikke lagre preferansene. Prøv igjen senere.';
+                        if (responseData && responseData.errors) {
+                             errorMessage = responseData.errors.map(error => error.message).join(', ');
+                        }
+                         console.error('Formspree submission error:', response.status, responseData);
+                         showValidationError(`Feil ved lagring: ${errorMessage}`);
+                    }
+
+                } catch (error) {
+                    // Nettverksfeil e.l.
+                    console.error('Error submitting preferences form:', error);
+                    showValidationError('En nettverksfeil oppstod. Sjekk tilkoblingen din.');
+                }
+            }
+
+            if (preferencesForm) {
+                preferencesForm.addEventListener('submit', handleSubmitPreferences);
+            } else { console.error("Element with ID 'invoice-preferences-form' not found."); }
+
+            if (paper) {
+                paper.addEventListener('animationend', (event) => {
+                    if (event.animationName === 'fly-away' && paper.classList.contains('flying')) {
+                        animationContainer.style.display = 'none';
+                        paper.classList.remove('flying');
+                        thankYouMessage.style.display = 'none'; thankYouMessage.style.opacity = '0';
+                        paper.style.opacity = '0'; paper.style.transform = 'scale(0.8)'; paperContent.textContent = '';
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Lagre fakturapreferanser';
+                    }
+                });
+            } else { console.error("Element with ID 'paper' not found."); }
+
+            // Sjekk for nødvendige elementer (Uendret, men inkluderer nye consts)
+             if (!animationContainer) console.error("Element with ID 'animation-container' not found.");
+             if (!paper) console.error("Element with ID 'paper' not found.");
+             if (!paperContent) console.error("Element with ID 'paper-content' not found.");
+             if (!thankYouMessage) console.error("Element with ID 'thank-you-message' not found.");
+             if (!submitButton) console.error("Submit button inside '#invoice-preferences-form' not found.");
+             if (!companyNameInput) console.error("Element with ID 'pref-company-name' not found.");
+             if (!contactPersonInput) console.error("Element with ID 'pref-contact-person' not found.");
+             if (!contactEmailInput) console.error("Element with ID 'pref-contact-email' not found.");
+             if (!orgNrInput) console.error("Element with ID 'pref-orgnr' not found.");
+             if (!billingEmailInput) console.error("Element with ID 'pref-billing-email' not found.");
+
+        });
+    </script>
+    <!-- === JAVASCRIPT SLUTT === -->
+
+</body>
+</html>
