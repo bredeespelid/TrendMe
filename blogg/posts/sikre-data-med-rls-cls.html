@@ -1,75 +1,425 @@
-<!-- Innhold for artikkel om RLS og CLS i Fabric -->
-<h2>Sikre Dine Data i Fabric: En Introduksjon til RLS og CLS</h2>
-<!-- Sett korrekt publiseringsdato -->
-<span class="post-meta">Publisert: 04. April 2025</span>
-<div class="post-content">
-    <p>Når du jobber med data i Microsoft Fabric, enten det er i et Warehouse eller via SQL Endpoint i et Lakehouse, er det avgjørende å ha kontroll på hvem som ser hva. Ikke alle brukere skal ha tilgang til all informasjon. Hvordan kan du effektivt begrense tilgangen på en sikker og robust måte?</p>
-    <p>Svaret ligger ofte i to kraftige sikkerhetsfunksjoner: <strong>Row-Level Security (RLS)</strong> og <strong>Column-Level Security (CLS)</strong>. Hos TrendMe hjelper vi bedrifter med å implementere nettopp slike mekanismer for å beskytte sensitive data. La oss se nærmere på hva RLS og CLS er og hvordan de fungerer i Fabric.</p>
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Bildeplassholder: Bytt ut src og alt -->
-    <!-- Forslag: En illustrasjon som viser rader og kolonner som blir filtrert/maskert -->
-    <img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS0zOTQzMDM2LTUxMjc3MGlEREZBQjJGNjcyNzQwNzA1?image-dimensions=750x750&revision=42" alt="Konseptuell illustrasjon av radnivå- og kolonnenivåsikkerhet">
-    <!-- Sørg for at bildet /images/rls-cls-konsept.png finnes, eller bruk en annen relevant bildesti -->
+    <!-- === Spesifikk Metadata for denne posten === -->
+    <title>Sikre Data i Fabric: RLS og CLS Forklart | TrendMe Blogg</title>
+    <meta name="description" content="En introduksjon til Row-Level Security (RLS) og Column-Level Security (CLS) i Microsoft Fabric for å kontrollere datatilgang i Warehouse og Lakehouse SQL Endpoint.">
+    <!-- === SLUTT Spesifikk Metadata === -->
 
-    <h3>Utfordringen: Kontrollert Datadeling</h3>
-    <p>Moderne dataanalyse handler om å gjøre data tilgjengelig for beslutningstakere. Men dette må balanseres mot behovet for sikkerhet og personvern (compliance). Ulike roller og avdelinger har ofte legitime behov for å se ulike deler av det samme datasettet:</p>
-    <ul>
-        <li>En selger trenger kun å se salgsdata for sine egne kunder.</li>
-        <li>En regionsjef trenger å se data for alle selgere i sin region, men ikke andre regioner.</li>
-        <li>HR-avdelingen trenger kanskje å se ansattinformasjon, men lønnskolonner skal kun være synlige for lønnsansvarlige.</li>
-        <li>Finansavdelingen trenger tilgang til økonomiske nøkkeltall, men ikke nødvendigvis detaljerte produksjonslogger.</li>
-    </ul>
-    <p>Å administrere dette manuelt med ulike rapporter eller visninger for hver brukergruppe kan fort bli uhåndterlig og feilutsatt.</p>
+    <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png"> <!-- Antar icon er i rot -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <h3>Hva er Row-Level Security (RLS)?</h3>
-    <p>Row-Level Security (RLS), eller radnivåsikkerhet, lar deg definere regler som <strong>filtrerer hvilke rader</strong> en bruker får se i en tabell, basert på hvem brukeren er eller hvilken rolle de tilhører.</p>
-    <p>Tenk deg en stor salgstabell med data fra alle selgere. Med RLS kan du sette opp en regel som sier: "Hvis brukeren som logger på er 'selger@firma.no', vis kun radene der kolonnen 'SelgerEpost' er lik 'selger@firma.no'". En salgssjef kan ha en annen regel som gir tilgang til alle rader.</p>
-    <p>Logikken ligger sentralt i databasen (Warehouse/SQL Endpoint), så filtreringen skjer automatisk uansett hvordan brukeren kobler seg til dataene (f.eks. via Power BI, SQL-klienter).</p>
+    <style>
+        /* === ALLE STILER (Fra blogg-oversikt + artikkel-spesifikke) === */
+        :root {
+            --dark-bg: #121212;
+            --primary-fabric-dark: #6a0dad;
+            --primary-fabric-light: #9370db;
+            --secondary-accent: #00c6ff;
+            /* Definer RGB-versjon for bruk med alpha/gjennomsiktighet */
+            --secondary-accent-rgb: 0, 198, 255;
+            --glow-color: rgba(0, 198, 255, 0.5);
+            --text-light: #e0e0e0;
+            --text-medium: #b0b0b0;
+            --text-dark: #1f1f1f;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --card-bg-hover: rgba(55, 55, 55, 0.9);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Poppins', sans-serif;
+            --transition-speed: 0.3s;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.7;
+            color: var(--text-light);
+            background-color: var(--dark-bg);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        .container { max-width: 1200px; margin: auto; padding: 0 25px; }
+        /* Brukes ikke på denne siden, men skader ikke å ha for konsistens */
+        .section { padding: 4rem 0; }
 
-    <h3>Hva er Column-Level Security (CLS)?</h3>
-    <p>Column-Level Security (CLS), eller kolonnenivåsikkerhet, lar deg kontrollere hvilke <strong>spesifikke kolonner</strong> i en tabell en bruker har lov til å se.</p>
-    <p>Hvis du har en tabell med kundeinformasjon som inkluderer sensitive data som personnummer eller kredittkortdetaljer, kan du bruke CLS til å skjule disse kolonnene for brukere som ikke trenger å se dem (f.eks. markedsføringsavdelingen), mens autoriserte brukere (f.eks. i finansavdelingen) fortsatt har tilgang.</p>
-    <p>Igjen, dette håndteres i databasen, noe som gir en robust og konsistent sikkerhetsmodell.</p>
+        /* === HEADER (Fra blogg-oversikt) === */
+        header {
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--text-light);
+            padding: 0.8rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--card-border);
+            transition: background-color var(--transition-speed) ease;
+        }
+        header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
+        header .logo a {
+            font-size: 1.8rem; font-weight: 700; letter-spacing: 1px;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            text-decoration: none;
+        }
+        header ul { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; }
+        header ul li { margin-left: 20px; }
+        header ul li a {
+            display: flex; align-items: center; color: var(--text-medium); text-decoration: none;
+            padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px;
+            font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative;
+            overflow: hidden; white-space: nowrap;
+        }
+        header ul li a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            transition: width var(--transition-speed) ease, left var(--transition-speed) ease;
+            transform: translateX(-50%);
+        }
+        header ul li a:hover { color: var(--text-light); }
+        header ul li a:hover::after { width: 70%; left: 50%; }
 
-    <h3>Fordeler med RLS og CLS i Fabric:</h3>
-    <ul>
-        <li><strong>Granulær Kontroll:</strong> Gir presis styring over datatilgang ned på rad- og kolonnenivå.</li>
-        <li><strong>Sentralisert Logikk:</strong> Sikkerhetsreglene defineres og håndheves i databaselaget (Warehouse/SQL Endpoint), ikke i hver enkelt rapport eller applikasjon.</li>
-        <li><strong>Robust Sikkerhet:</strong> Reduserer risikoen for utilsiktet datalekkasje, da reglene anvendes konsistent.</li>
-        <li><strong>Forenklet Design:</strong> Kan redusere behovet for å lage mange separate visninger eller rapporter for ulike brukergrupper. Én rapport kan tjene flere formål.</li>
-        <li><strong>Compliance:</strong> Hjelper med å møte krav til personvern og dataminimering (f.eks. GDPR).</li>
-    </ul>
+        /* === ARTIKKEL-SPESIFIKKE STILER === */
+        .article-section { padding: 3rem 0 4rem 0; /* Mer padding nederst */ }
+        .article-container { max-width: 800px; margin: auto; padding: 0 25px; }
 
-    <h3>Hvordan Implementeres RLS og CLS i Fabric (Forenklet)?</h3>
-    <p>Både RLS og CLS konfigureres ved hjelp av T-SQL-kommandoer direkte mot ditt Fabric Warehouse eller Lakehouse SQL Endpoint.</p>
-    <ul>
-        <li><strong>For RLS:</strong>
-            <ol>
-                <li>Man lager en liten T-SQL-funksjon (en "inline table-valued function") som fungerer som en sjekk (predikat). Funksjonen returnerer typisk 'sant' hvis brukeren (identifisert via funksjoner som <code>SUSER_SNAME()</code> eller <code>USER_NAME()</code>) skal ha tilgang til en gitt rad, og 'usant' ellers.</li>
-                <li>Man oppretter en "Security Policy" (sikkerhetspolicy) med <code>CREATE SECURITY POLICY</code> som knytter denne funksjonen til den aktuelle tabellen.</li>
-                <li>Tilgang styres ofte ved å legge brukere inn i spesifikke Workspace-roller (f.eks. Viewer, Member) eller Microsoft Entra ID (tidligere Azure AD) sikkerhetsgrupper, som funksjonen kan sjekke mot.</li>
-            </ol>
-        </li>
-        <li><strong>For CLS:</strong>
-            <ol>
-                <li>Man bruker den vanlige T-SQL <code>GRANT</code>-kommandoen.</li>
-                <li>I stedet for å gi <code>SELECT</code>-tilgang til hele tabellen, gir man <code>SELECT</code>-tilgang kun på de *spesifikke kolonnene* brukeren eller gruppen skal få se: <code>GRANT SELECT ON DinTabell (Kolonne1, Kolonne3) TO [BrukerEllerGruppeNavn]</code>.</li>
-                <li>Tilgang styres typisk ved å gi brukere/grupper tilgang via Microsoft Entra ID sikkerhetsgrupper og dele SQL Endpoint med dem (pass på å *ikke* gi unødvendige "Additional Permissions" under deling som kan overstyre CLS).</li>
-            </ol>
-        </li>
-    </ul>
-    <p>Selv om det krever litt T-SQL, er konseptene relativt enkle når man forstår prinsippene.</p>
+        .article-container h1 {
+            font-size: 2.8rem; /* Juster etter ønske */
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+            background: linear-gradient(90deg, var(--text-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
 
-    <h3>Når Bruke Hva? RLS vs. CLS</h3>
-    <ul>
-        <li>Bruk <strong>RLS</strong> når ulike brukere skal se <strong>forskjellige rader</strong> fra den samme tabellen basert på deres rolle eller tilhørighet (f.eks. selgere ser egne salg, avdelingsledere ser sin avdelings data).</li>
-        <li>Bruk <strong>CLS</strong> når du trenger å <strong>skjule sensitive kolonner</strong> for visse brukere, selv om de har tilgang til andre kolonner i de samme radene (f.eks. skjule lønn, personnummer).</li>
-    </ul>
-    <p>Det er også fullt mulig og ofte nyttig å bruke RLS og CLS <strong>sammen</strong> på samme tabell for enda mer finmasket kontroll.</p>
+        .post-meta {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            margin-bottom: 2.5rem;
+            display: block;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 1.5rem;
+        }
+        .post-meta time { /* Stil for tidspunkt */ }
+        .post-meta .author { /* Stil for forfatter */ }
 
-    <h3>TrendMe Kan Hjelpe Med Datasikkerhet i Fabric</h3>
-    <p>Å sette opp RLS og CLS korrekt er essensielt for god dataforvaltning og sikkerhet. Hos TrendMe har vi ekspertisen til å hjelpe deg med å designe og implementere robuste sikkerhetsmodeller i Microsoft Fabric Warehouse og Lakehouse SQL Endpoints.</p>
-    <p>Enten du trenger hjelp med strategi, implementering eller optimalisering av datasikkerheten din, <a href="/#kontakt">ta kontakt med oss i TrendMe</a> for en uforpliktende samtale.</p>
+        .featured-image { /* Valgfritt: Stil for hovedbilde */
+            width: 100%;
+            max-height: 400px; /* Juster */
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--card-border);
+            display: block; /* Sikrer at margin auto fungerer */
+        }
 
-    <p>Sørg for at dine verdifulle data er både tilgjengelige og sikre!</p>
-</div>
+        .article-body { /* Container for selve brødteksten */ }
+
+        .article-body h2 {
+            font-size: 2rem;
+            color: var(--text-light);
+            margin-top: 3rem;
+            margin-bottom: 1.5rem; /* Økt margin */
+            font-weight: 600;
+            border-bottom: 2px solid var(--primary-fabric-light);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .article-body h3 {
+            font-size: 1.6rem;
+            color: var(--text-light);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .article-body p {
+            margin-bottom: 1.2rem;
+            color: var(--text-medium);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        .article-body strong { /* Utheving av tekst */
+             color: var(--text-light); /* Litt lysere enn vanlig tekst */
+             font-weight: 600;
+        }
+        .article-body a { /* Stil for lenker i teksten (kun for Call to Action nå) */
+             color: var(--secondary-accent);
+             text-decoration: none;
+             border-bottom: 1px dotted var(--secondary-accent);
+             transition: color 0.3s ease, border-bottom-color 0.3s ease;
+        }
+        .article-body a:hover {
+             color: var(--primary-fabric-light);
+             border-bottom-color: var(--primary-fabric-light);
+        }
+
+        .article-body ul, .article-body ol {
+            margin-left: 25px;
+            margin-bottom: 1.5rem;
+            padding-left: 1rem; /* Litt mer luft */
+        }
+
+        .article-body li {
+            margin-bottom: 0.7rem;
+            color: var(--text-medium);
+            line-height: 1.7;
+        }
+         .article-body ul li::marker { color: var(--secondary-accent); font-size: 1.2em; } /* Style list bullets */
+         .article-body ol { list-style-type: decimal; } /* Sikre nummerering */
+         .article-body ol li::marker { color: var(--secondary-accent); font-weight: bold; }
+
+        .article-body blockquote {
+            border-left: 4px solid var(--secondary-accent);
+            margin: 2rem 0;
+            padding: 1rem 1.5rem;
+            background-color: rgba(var(--secondary-accent-rgb), 0.05); /* Bruker RGB for alpha */
+            color: var(--text-light);
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+        }
+         .article-body blockquote p { margin-bottom: 0; }
+
+        .article-body code { /* Inline code */
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+            color: var(--text-light);
+        }
+
+        .article-body pre { /* Code block */
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #c5c8c6;
+        }
+        .article-body pre code { /* Reset inline style inside pre */
+            background-color: transparent; padding: 0; border-radius: 0;
+            color: inherit; font-size: inherit;
+        }
+
+        .article-body img { /* Bilder inni artikkelen */
+            max-width: 100%; height: auto; border-radius: 8px;
+            margin: 2rem auto; border: 1px solid var(--card-border); display: block;
+        }
+        .article-body figure { margin: 2rem 0; }
+        .article-body figcaption {
+            text-align: center; font-size: 0.9rem;
+            color: var(--text-medium); margin-top: 0.5rem;
+        }
+
+        /* Tabell-styling (Beholdt hvis du trenger tabeller i andre poster) */
+        .comparison-table {
+            width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.95rem;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid var(--card-border); padding: 0.8rem 1rem;
+            text-align: left; vertical-align: top;
+        }
+        .comparison-table thead {
+            background-color: rgba(var(--secondary-accent-rgb), 0.1);
+        }
+        .comparison-table thead th { color: var(--text-light); font-weight: 600; }
+        .comparison-table tbody tr:nth-child(even) { background-color: rgba(255, 255, 255, 0.03); }
+        .comparison-table strong { color: var(--secondary-accent); font-weight: 600; }
+
+        .back-to-blog-link {
+            display: inline-block; margin-top: 3rem; color: var(--secondary-accent);
+            text-decoration: none; font-weight: 600; transition: color 0.3s ease;
+        }
+        .back-to-blog-link:hover { color: var(--primary-fabric-light); }
+
+        /* === FOOTER (Fra blogg-oversikt) === */
+        footer {
+            background-color: #0a0a0a; color: var(--text-medium); text-align: center;
+            padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border);
+        }
+        footer p { margin-bottom: 1rem; font-size: 0.9rem; }
+
+         /* === RESPONSIVITET (Fra blogg-oversikt + artikkel) === */
+         @media (max-width: 768px) {
+             header nav { flex-direction: column; align-items: center; }
+             header .logo { margin-bottom: 15px; }
+             header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+             header ul li { margin: 5px 8px; }
+             .article-container h1 { font-size: 2.2rem; }
+             .article-body h2 { font-size: 1.7rem; }
+             .article-body h3 { font-size: 1.4rem; }
+             .article-body p { font-size: 1rem; }
+             .comparison-table { font-size: 0.9rem; }
+             .comparison-table th, .comparison-table td { padding: 0.6rem 0.8rem; }
+         }
+         @media (max-width: 500px) {
+              .article-container h1 { font-size: 1.8rem; }
+              .article-body h2 { font-size: 1.5rem; }
+              .article-body h3 { font-size: 1.3rem; }
+         }
+
+    </style>
+
+    <!-- === Schema.org Markup (JSON-LD) - VIKTIG FOR SEO === -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Sikre Data i Fabric: RLS og CLS Forklart",
+      "description": "En introduksjon til Row-Level Security (RLS) og Column-Level Security (CLS) i Microsoft Fabric for å kontrollere datatilgang i Warehouse og Lakehouse SQL Endpoint.",
+      "image": "https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS0zOTQzMDM2LTUxMjc3MGlEREZBQjJGNjcyNzQwNzA1?image-dimensions=750x750&revision=42", // Bruker URL fra input. Bytt ut hvis du har et bedre bilde.
+      "author": {
+        "@type": "Organization", // Eller Person
+        "name": "TrendMe"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "TrendMe",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png" // URL til din logo
+        }
+      },
+      "datePublished": "2024-04-04", // Sett faktisk publiseringsdato
+      "dateModified": "2024-04-04" // Sett faktisk dato for siste endring
+    }
+    </script>
+    <!-- === SLUTT SCHEMA MARKUP === -->
+
+</head>
+<body>
+
+    <header id="main-header">
+        <nav class="container">
+            <div class="logo"><a href="/">TrendMe</a></div> <!-- Lenke til hovedside -->
+            <ul>
+                <!-- Relative stier fra /posts/ mappen -->
+                <li><a href="../">Tilbake til Bloggen</a></li> <!-- Går ett nivå opp til /blogg/ -->
+                <li><a href="/">Til TrendMe Hovedside</a></li> <!-- Går til roten -->
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Artikkelinnhold -->
+    <main class="section article-section">
+        <div class="article-container">
+
+            <h1>Sikre Dine Data i Fabric: En Introduksjon til RLS og CLS</h1>
+
+            <p class="post-meta">
+                Publisert: <time datetime="2024-04-04">04. April 2024</time>
+                <!-- Valgfritt: by <span class="author">Ditt Navn</span> -->
+            </p>
+
+            <div class="article-body">
+                <p>Når du jobber med data i Microsoft Fabric, enten det er i et Warehouse eller via SQL Endpoint i et Lakehouse, er det avgjørende å ha kontroll på hvem som ser hva. Ikke alle brukere skal ha tilgang til all informasjon. Hvordan kan du effektivt begrense tilgangen på en sikker og robust måte?</p>
+                <p>Svaret ligger ofte i to kraftige sikkerhetsfunksjoner: <strong>Row-Level Security (RLS)</strong> og <strong>Column-Level Security (CLS)</strong>. Hos TrendMe hjelper vi bedrifter med å implementere nettopp slike mekanismer for å beskytte sensitive data. La oss se nærmere på hva RLS og CLS er og hvordan de fungerer i Fabric.</p>
+
+                <figure>
+                    <!-- Kommentar: Vurder SVG her -->
+                    <img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS0zOTQzMDM2LTUxMjc3MGlEREZBQjJGNjcyNzQwNzA1?image-dimensions=750x750&revision=42" alt="Konseptuell illustrasjon av radnivå- og kolonnenivåsikkerhet">
+                    <figcaption>RLS filtrerer rader, CLS skjuler kolonner.</figcaption>
+                </figure>
+
+                <h2>Utfordringen: Kontrollert Datadeling</h2>
+                <p>Moderne dataanalyse handler om å gjøre data tilgjengelig for beslutningstakere. Men dette må balanseres mot behovet for sikkerhet og personvern (compliance). Ulike roller og avdelinger har ofte legitime behov for å se ulike deler av det samme datasettet:</p>
+                <ul>
+                    <li>En selger trenger kun å se salgsdata for sine egne kunder.</li>
+                    <li>En regionsjef trenger å se data for alle selgere i sin region, men ikke andre regioner.</li>
+                    <li>HR-avdelingen trenger kanskje å se ansattinformasjon, men lønnskolonner skal kun være synlige for lønnsansvarlige.</li>
+                    <li>Finansavdelingen trenger tilgang til økonomiske nøkkeltall, men ikke nødvendigvis detaljerte produksjonslogger.</li>
+                </ul>
+                <p>Å administrere dette manuelt med ulike rapporter eller visninger for hver brukergruppe kan fort bli uhåndterlig og feilutsatt.</p>
+
+                <h2>Hva er Row-Level Security (RLS)?</h2>
+                <p>Row-Level Security (RLS), eller <strong>radnivåsikkerhet</strong>, lar deg definere regler som <strong>filtrerer hvilke rader</strong> en bruker får se i en tabell, basert på hvem brukeren er eller hvilken rolle de tilhører.</p>
+                <p>Tenk deg en stor salgstabell med data fra alle selgere. Med RLS kan du sette opp en regel som sier: "Hvis brukeren som logger på er 'selger@firma.no', vis kun radene der kolonnen 'SelgerEpost' er lik 'selger@firma.no'". En salgssjef kan ha en annen regel som gir tilgang til alle rader.</p>
+                <p>Logikken ligger sentralt i databasen (Warehouse/SQL Endpoint), så filtreringen skjer automatisk uansett hvordan brukeren kobler seg til dataene (f.eks. via Power BI, SQL-klienter).</p>
+
+                <h2>Hva er Column-Level Security (CLS)?</h2>
+                <p>Column-Level Security (CLS), eller <strong>kolonnenivåsikkerhet</strong>, lar deg kontrollere hvilke <strong>spesifikke kolonner</strong> i en tabell en bruker har lov til å se.</p>
+                <p>Hvis du har en tabell med kundeinformasjon som inkluderer sensitive data som personnummer eller kredittkortdetaljer, kan du bruke CLS til å skjule disse kolonnene for brukere som ikke trenger å se dem (f.eks. markedsføringsavdelingen), mens autoriserte brukere (f.eks. i finansavdelingen) fortsatt har tilgang.</p>
+                <p>Igjen, dette håndteres i databasen, noe som gir en robust og konsistent sikkerhetsmodell.</p>
+
+                <h2>Fordeler med RLS og CLS i Fabric:</h2>
+                <ul>
+                    <li><strong>Granulær Kontroll:</strong> Gir presis styring over datatilgang ned på rad- og kolonnenivå.</li>
+                    <li><strong>Sentralisert Logikk:</strong> Sikkerhetsreglene defineres og håndheves i databaselaget (Warehouse/SQL Endpoint), ikke i hver enkelt rapport eller applikasjon.</li>
+                    <li><strong>Robust Sikkerhet:</strong> Reduserer risikoen for utilsiktet datalekkasje, da reglene anvendes konsistent.</li>
+                    <li><strong>Forenklet Design:</strong> Kan redusere behovet for å lage mange separate visninger eller rapporter for ulike brukergrupper. Én rapport kan tjene flere formål.</li>
+                    <li><strong>Compliance:</strong> Hjelper med å møte krav til personvern og dataminimering (f.eks. GDPR).</li>
+                </ul>
+
+                <h2>Hvordan Implementeres RLS og CLS i Fabric (Forenklet)?</h2>
+                <p>Både RLS og CLS konfigureres ved hjelp av T-SQL-kommandoer direkte mot ditt Fabric Warehouse eller Lakehouse SQL Endpoint.</p>
+                <ul>
+                    <li><strong>For RLS:</strong>
+                        <ol>
+                            <li>Man lager en liten T-SQL-funksjon (en "inline table-valued function") som fungerer som en sjekk (predikat). Funksjonen returnerer typisk 'sant' hvis brukeren (identifisert via funksjoner som <code>SUSER_SNAME()</code> eller <code>USER_NAME()</code>) skal ha tilgang til en gitt rad, og 'usant' ellers.</li>
+                            <li>Man oppretter en "Security Policy" (sikkerhetspolicy) med <code>CREATE SECURITY POLICY</code> som knytter denne funksjonen til den aktuelle tabellen.</li>
+                            <li>Tilgang styres ofte ved å legge brukere inn i spesifikke Workspace-roller (f.eks. Viewer, Member) eller Microsoft Entra ID (tidligere Azure AD) sikkerhetsgrupper, som funksjonen kan sjekke mot.</li>
+                        </ol>
+                    </li>
+                    <li><strong>For CLS:</strong>
+                        <ol>
+                            <li>Man bruker den vanlige T-SQL <code>GRANT</code>-kommandoen.</li>
+                            <li>I stedet for å gi <code>SELECT</code>-tilgang til hele tabellen, gir man <code>SELECT</code>-tilgang kun på de *spesifikke kolonnene* brukeren eller gruppen skal få se: <code>GRANT SELECT ON DinTabell (Kolonne1, Kolonne3) TO [BrukerEllerGruppeNavn]</code>.</li>
+                            <li>Tilgang styres typisk ved å gi brukere/grupper tilgang via Microsoft Entra ID sikkerhetsgrupper og dele SQL Endpoint med dem (pass på å *ikke* gi unødvendige "Additional Permissions" under deling som kan overstyre CLS).</li>
+                        </ol>
+                    </li>
+                </ul>
+                <p>Selv om det krever litt T-SQL, er konseptene relativt enkle når man forstår prinsippene.</p>
+
+                <h2>Når Bruke Hva? RLS vs. CLS</h2>
+                <ul>
+                    <li>Bruk <strong>RLS</strong> når ulike brukere skal se <strong>forskjellige rader</strong> fra den samme tabellen basert på deres rolle eller tilhørighet (f.eks. selgere ser egne salg, avdelingsledere ser sin avdelings data).</li>
+                    <li>Bruk <strong>CLS</strong> når du trenger å <strong>skjule sensitive kolonner</strong> for visse brukere, selv om de har tilgang til andre kolonner i de samme radene (f.eks. skjule lønn, personnummer).</li>
+                </ul>
+                <p>Det er også fullt mulig og ofte nyttig å bruke RLS og CLS <strong>sammen</strong> på samme tabell for enda mer finmasket kontroll.</p>
+
+                <h2>TrendMe Kan Hjelpe Med Datasikkerhet i Fabric</h2>
+                <p>Å sette opp RLS og CLS korrekt er essensielt for god dataforvaltning og sikkerhet. Hos TrendMe har vi ekspertisen til å hjelpe deg med å designe og implementere robuste sikkerhetsmodeller i Microsoft Fabric Warehouse og Lakehouse SQL Endpoints.</p>
+                <p>Enten du trenger hjelp med strategi, implementering eller optimalisering av datasikkerheten din, <a href="/#kontakt">ta kontakt med oss i TrendMe</a> for en uforpliktende samtale.</p> <!-- Beholdt CTA lenke -->
+
+                <p>Sørg for at dine verdifulle data er både tilgjengelige og sikre!</p>
+
+            </div> <!-- Slutt .article-body -->
+
+            <a href="../" class="back-to-blog-link">← Tilbake til Bloggoversikten</a>
+
+        </div> <!-- Slutt .article-container -->
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
+            <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
+        </div>
+    </footer>
+
+    <!-- Minimal JavaScript (kun for footer årstall og evt. CSS variabler) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Oppdaterer årstall i footer
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+            // Setter CSS variabel for RGBA bruk (hvis nødvendig)
+            document.documentElement.style.setProperty('--secondary-accent-rgb', '0, 198, 255');
+        });
+    </script>
+
+</body>
+</html>
