@@ -1,105 +1,403 @@
-<!-- Innhold for Warehouse vs Lakehouse artikkel -->
-<h2>Warehouse vs. Lakehouse i Microsoft Fabric: Hva Bør Du Velge?</h2>
-<!-- Husk å oppdatere datoen til når du publiserer -->
-<span class="post-meta">Publisert: 04. April 2025</span>
-<div class="post-content">
-    <p>Når du dykker ned i Microsoft Fabric, vil du raskt møte på to sentrale begreper for datalagring og analyse: <strong>Warehouse</strong> og <strong>Lakehouse</strong>. Begge er bygget på den åpne Delta Lake-standarden og lagrer data i OneLake, men de er designet for litt ulike formål og brukere. Å velge riktig (eller en kombinasjon) er viktig for å bygge en effektiv dataplattform.</p>
-    <p>I dette innlegget ser vi nærmere på hva et Warehouse og et Lakehouse er i Fabric, hva som skiller dem, og når du bør vurdere den ene fremfor den andre.</p>
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Forslag til bilde: Et diagram som viser Warehouse og Lakehouse side om side, gjerne med ikoner for T-SQL og Spark/filer. -->
-    <!-- VIKTIG: Bytt ut bildestien og alt-teksten! -->
-    <img src="https://learn.microsoft.com/en-us/fabric/fundamentals/media/decision-guide-lakehouse-warehouse/lakehouse-warehouse-choose.png" alt="Sammenligning av Microsoft Fabric Warehouse og Lakehouse">
-    <!-- Forslag til bildesti: lag en /images/ mappe i roten av repoet ditt -->
+    <!-- === Spesifikk Metadata for denne posten === -->
+    <title>Warehouse vs. Lakehouse i Microsoft Fabric: Hva Bør Du Velge? | TrendMe Blogg</title>
+    <meta name="description" content="Sammenligning av Warehouse og Lakehouse i Microsoft Fabric. Forstå forskjellene, bruksområdene (T-SQL vs Spark), og når du bør velge hva.">
+    <!-- === SLUTT Spesifikk Metadata === -->
 
-    <h3>Hva er et Warehouse i Fabric?</h3>
-    <p>Et Fabric Warehouse er det du kan kalle et <strong>tradisjonelt, men moderne, datavarehus</strong>. Det er designet for:</p>
-    <ul>
-        <li><strong>Strukturert data:</strong> Optimalisert for tabeller med rader og kolonner.</li>
-        <li><strong>SQL-utviklere og analytikere:</strong> Hovedspråket er T-SQL for datainnlasting, transformasjon (ETL/ELT), modellering og querying.</li>
-        <li><strong>Business Intelligence (BI):</strong> Tett integrert med Power BI for rapportering og dashboards.</li>
-        <li><strong>Transaksjoner (ACID):</strong> Støtter fullt ut transaksjoner på tvers av flere tabeller, noe som sikrer datakonsistens ved komplekse skriveoperasjoner.</li>
-        <li><strong>Ytelse og Skalerbarhet:</strong> Bygget for høy ytelse på SQL-spørringer, med automatisk skalering av data og regnekraft (compute).</li>
-    </ul>
-    <p>Tenk på Warehouse når du trenger en robust plattform for bedriftens "single source of truth" for strukturerte data, spesielt for BI-formål, og hvor T-SQL-kompetanse er utbredt.</p>
+    <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png"> <!-- Antar icon er i rot -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <h3>Hva er et Lakehouse i Fabric?</h3>
-    <p>Et Fabric Lakehouse er en mer <strong>fleksibel dataarkitekturplattform</strong> som kombinerer det beste fra Data Lakes (rådatalagring) og Data Warehouses (strukturert analyse). Det er designet for:</p>
-    <ul>
-        <li><strong>Alle typer data:</strong> Kan lagre og behandle både strukturert (tabeller) og ustrukturert data (filer som CSV, JSON, Parquet, bilder etc.) i OneLake.</li>
-        <li><strong>Data Engineers og Data Scientists:</strong> Hovedverktøyene er ofte Spark (med Python, Scala, R, Spark SQL) for datatransformasjon, engineering og maskinlæring.</li>
-        <li><strong>Fleksibilitet:</strong> Gir større frihet til å organisere data (f.eks. i en Medallion-arkitektur med Bronze, Silver, Gold-lag).</li>
-        <li><strong>Åpenhet:</strong> Data lagres i åpent Delta Lake-format, tilgjengelig for ulike verktøy.</li>
-    </ul>
+    <style>
+        /* === ALLE STILER (Fra blogg-oversikt + artikkel-spesifikke) === */
+        :root {
+            --dark-bg: #121212;
+            --primary-fabric-dark: #6a0dad;
+            --primary-fabric-light: #9370db;
+            --secondary-accent: #00c6ff;
+            /* Definer RGB-versjon for bruk med alpha/gjennomsiktighet */
+            --secondary-accent-rgb: 0, 198, 255;
+            --glow-color: rgba(0, 198, 255, 0.5);
+            --text-light: #e0e0e0;
+            --text-medium: #b0b0b0;
+            --text-dark: #1f1f1f;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --card-bg-hover: rgba(55, 55, 55, 0.9);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Poppins', sans-serif;
+            --transition-speed: 0.3s;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.7;
+            color: var(--text-light);
+            background-color: var(--dark-bg);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        .container { max-width: 1200px; margin: auto; padding: 0 25px; }
+        .section { padding: 4rem 0; } /* Brukes for main */
 
-    <h4>Det Viktige SQL-Endepunktet</h4>
-    <p>En nøkkelfunksjon ved Lakehouse er at Fabric <strong>automatisk oppretter et SQL Analytics Endpoint</strong> for hvert Lakehouse. Dette endepunktet lar deg:</p>
-    <ul>
-        <li>Querye Delta-tabellene i Lakehouse ved hjelp av T-SQL (samme språk som i Warehouse).</li>
-        <li>Koble til Power BI (DirectLake-modus for topp ytelse uten import!) og andre SQL-kompatible verktøy.</li>
-    </ul>
-    <p><strong>MEN, og dette er en viktig begrensning:</strong> SQL-endepunktet til et Lakehouse er primært for <strong>leseoperasjoner</strong>. Du kan opprette views og noen funksjoner, men du kan *ikke* bruke det til å laste data med `INSERT/UPDATE/DELETE` (DML) eller gjøre omfattende endringer i tabellstrukturen (DDL) via T-SQL slik du kan i et Warehouse. Datainnlasting og transformasjon i Lakehouse skjer typisk via Spark, Dataflows eller Pipelines.</p>
+        /* === HEADER === */
+        header {
+            background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); color: var(--text-light);
+            padding: 0.8rem 0; position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease;
+        }
+        header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
+        header .logo a {
+            font-size: 1.8rem; font-weight: 700; letter-spacing: 1px;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            text-decoration: none;
+        }
+        header ul { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; }
+        header ul li { margin-left: 20px; }
+        header ul li a {
+            display: flex; align-items: center; color: var(--text-medium); text-decoration: none;
+            padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px;
+            font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative;
+            overflow: hidden; white-space: nowrap;
+        }
+        header ul li a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            transition: width var(--transition-speed) ease, left var(--transition-speed) ease;
+            transform: translateX(-50%);
+        }
+        header ul li a:hover { color: var(--text-light); }
+        header ul li a:hover::after { width: 70%; left: 50%; }
 
-    <h3>Warehouse vs. Lakehouse: Hovedforskjeller og Begrensninger</h3>
+        /* === ARTIKKEL-SPESIFIKKE STILER === */
+        .article-section { padding: 3rem 0 4rem 0; }
+        .article-container { max-width: 800px; margin: auto; padding: 0 25px; }
+        .article-container h1 {
+            font-size: 2.8rem; font-weight: 700; color: var(--text-light);
+            margin-bottom: 1rem; line-height: 1.3;
+            background: linear-gradient(90deg, var(--text-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .post-meta {
+            font-size: 0.9rem; color: var(--text-medium); margin-bottom: 2.5rem;
+            display: block; border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem;
+        }
+        .article-body h2 {
+            font-size: 2rem; color: var(--text-light); margin-top: 3rem; margin-bottom: 1.5rem;
+            font-weight: 600; border-bottom: 2px solid var(--primary-fabric-light);
+            padding-bottom: 0.5rem; display: inline-block;
+        }
+        .article-body h3 {
+            font-size: 1.6rem; color: var(--text-light); margin-top: 2.5rem; margin-bottom: 1rem;
+            font-weight: 600;
+        }
+         .article-body h4 { /* Lagt til for SQL-Endepunktet */
+            font-size: 1.3rem; color: var(--text-light); margin-top: 2rem; margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        .article-body p {
+            margin-bottom: 1.2rem; color: var(--text-medium); font-size: 1.05rem; line-height: 1.8;
+        }
+        .article-body strong { color: var(--text-light); font-weight: 600; }
+        .article-body a { /* Kun for CTA lenke */
+             color: var(--secondary-accent); text-decoration: none;
+             border-bottom: 1px dotted var(--secondary-accent);
+             transition: color 0.3s ease, border-bottom-color 0.3s ease;
+        }
+        .article-body a:hover {
+             color: var(--primary-fabric-light); border-bottom-color: var(--primary-fabric-light);
+        }
+        .article-body ul, .article-body ol {
+            margin-left: 25px; margin-bottom: 1.5rem; padding-left: 1rem;
+        }
+        .article-body li { margin-bottom: 0.7rem; color: var(--text-medium); line-height: 1.7; }
+        .article-body ul li::marker { color: var(--secondary-accent); font-size: 1.2em; }
+        .article-body ol { list-style-type: decimal; }
+        .article-body ol li::marker { color: var(--secondary-accent); font-weight: bold; }
+        .article-body ul ul, .article-body ol ol { margin-top: 0.5rem; margin-bottom: 0.8rem; }
+        .article-body ul ul li::marker { color: var(--primary-fabric-light); font-size: 1em; }
 
-    <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0;">
-        <thead>
-            <tr style="background-color: rgba(var(--secondary-accent-rgb, 0, 198, 255), 0.1); border-bottom: 1px solid var(--card-border);">
-                <th style="padding: 0.8rem; text-align: left;">Egenskap</th>
-                <th style="padding: 0.8rem; text-align: left;">Warehouse</th>
-                <th style="padding: 0.8rem; text-align: left;">Lakehouse (via SQL Endpoint)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr style="border-bottom: 1px solid var(--card-border);">
-                <td style="padding: 0.8rem;">Primært Bruksområde</td>
-                <td style="padding: 0.8rem;">Enterprise Data Warehousing, BI, strukturert analyse</td>
-                <td style="padding: 0.8rem;">Datateknikk, Data Science, analyse av Delta-tabeller, staging, utforsking</td>
-            </tr>
-            <tr style="border-bottom: 1px solid var(--card-border);">
-                <td style="padding: 0.8rem;">Datatyper</td>
-                <td style="padding: 0.8rem;">Primært strukturert</td>
-                <td style="padding: 0.8rem;">Strukturert og ustrukturert (SQL EP leser kun Delta-tabeller)</td>
-            </tr>
-            <tr style="border-bottom: 1px solid var(--card-border);">
-                <td style="padding: 0.8rem;">Hovedspråk/-verktøy</td>
-                <td style="padding: 0.8rem;">T-SQL</td>
-                <td style="padding: 0.8rem;">Spark (Python/Scala/SQL), Dataflows, Pipelines (men T-SQL for lesing via SQL EP)</td>
-            </tr>
-            <tr style="border-bottom: 1px solid var(--card-border);">
-                <td style="padding: 0.8rem;">Skriveoperasjoner (T-SQL DML)</td>
-                <td style="padding: 0.8rem;"><strong>Ja (Full støtte)</strong></td>
-                <td style="padding: 0.8rem;"><strong>Nei (Kun Lese)</strong></td>
-            </tr>
-             <tr style="border-bottom: 1px solid var(--card-border);">
-                <td style="padding: 0.8rem;">Transaksjoner (ACID)</td>
-                <td style="padding: 0.8rem;"><strong>Ja (Full støtte)</strong></td>
-                <td style="padding: 0.8rem;">Nei (via SQL EP), men Delta Lake-formatet i seg selv gir ACID på filnivå via Spark.</td>
-            </tr>
-             <tr style="border-bottom: 1px solid var(--card-border);">
-                <td style="padding: 0.8rem;">Tabell-endringer (T-SQL DDL)</td>
-                <td style="padding: 0.8rem;">Ja (Full støtte)</td>
-                <td style="padding: 0.8rem;">Begrenset (Views, TVFs - ikke `CREATE TABLE`, `ALTER TABLE` etc.)</td>
-            </tr>
-        </tbody>
-    </table>
-    <style>:root { --secondary-accent-rgb: 0, 198, 255; }</style> <!-- Legg til RGB for RGBA i tabell -->
+        .article-body blockquote {
+            border-left: 4px solid var(--secondary-accent); margin: 2rem 0; padding: 1rem 1.5rem;
+            background-color: rgba(var(--secondary-accent-rgb), 0.05); color: var(--text-light);
+            font-style: italic; border-radius: 0 8px 8px 0;
+        }
+        .article-body blockquote p { margin-bottom: 0; }
+        .article-body code {
+            background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.5em; border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.9em; color: var(--text-light);
+        }
+        .article-body pre {
+            background-color: rgba(0, 0, 0, 0.5); border: 1px solid var(--card-border);
+            border-radius: 8px; padding: 1.5rem; overflow-x: auto; margin: 2rem 0;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.95em; line-height: 1.6; color: #c5c8c6;
+        }
+        .article-body pre code {
+            background-color: transparent; padding: 0; border-radius: 0;
+            color: inherit; font-size: inherit;
+        }
+        .article-body img {
+            max-width: 100%; height: auto; border-radius: 8px;
+            margin: 2rem auto; border: 1px solid var(--card-border); display: block;
+        }
+        .article-body figure { margin: 2rem 0; }
+        .article-body figcaption {
+            text-align: center; font-size: 0.9rem;
+            color: var(--text-medium); margin-top: 0.5rem;
+        }
 
+        /* Tabell-styling */
+        .comparison-table { /* Endret navn for spesifisitet */
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid var(--card-border);
+            padding: 0.8rem 1rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        .comparison-table thead {
+            background-color: rgba(var(--secondary-accent-rgb), 0.1);
+        }
+        .comparison-table thead th {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+        .comparison-table tbody tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        .comparison-table strong {
+            color: var(--secondary-accent);
+            font-weight: 600; /* Sikrer fet skrift */
+        }
 
-    <h3>"Better Together": Når Bruker Man Begge?</h3>
-    <p>Ofte er ikke svaret enten/eller, men heller hvordan man best kombinerer styrkene til begge. En vanlig tilnærming er Medallion-arkitekturen:</p>
-    <ul>
-        <li><strong>Lakehouse (Bronze & Silver):</strong> Brukes til å lande rådata (Bronze) og deretter rense, transformere og berike dataene (Silver) ved hjelp av Spark eller Dataflows. Her håndteres både strukturert og ustrukturert data.</li>
-        <li><strong>Warehouse (Gold):</strong> Data fra Silver-laget lastes inn i Warehouse. Her skjer den siste modelleringen for BI-formål, aggregering og optimalisering for rapportering. Warehouse blir da kilden for Power BI-rapporter og sluttbrukeranalyser som krever høy ytelse og T-SQL-funksjonalitet.</li>
-    </ul>
-    <p>Fabric gjør det også enkelt å koble sammen Warehouse og Lakehouse ved hjelp av <strong>Shortcuts</strong> og kryss-database-spørringer, slik at du kan få tilgang til data uten å måtte kopiere dem fysisk.</p>
+        .back-to-blog-link {
+            display: inline-block; margin-top: 3rem; color: var(--secondary-accent);
+            text-decoration: none; font-weight: 600; transition: color 0.3s ease;
+        }
+        .back-to-blog-link:hover { color: var(--primary-fabric-light); }
 
-    <h3>Konklusjon: Hva Bør Du Velge?</h3>
-    <p>Valget avhenger av dine behov:</p>
-    <ul>
-        <li>Trenger du en klassisk datavarehusløsning med full T-SQL-støtte, transaksjoner og primært strukturert data for BI? Da er Warehouse et godt utgangspunkt.</li>
-        <li>Trenger du fleksibilitet til å håndtere ulike datatyper (også ustrukturerte), jobber mye med Spark/Python, og trenger et staging-område eller en plattform for data science? Da er Lakehouse veien å gå. Husk begrensningene i SQL-endepunktet for skriving.</li>
-        <li>Har du komplekse behov og vil bygge en moderne dataplattform fra rådata til ferdige rapporter? Da er en **kombinasjon av Lakehouse og Warehouse** ofte den beste løsningen.</li>
-    </ul>
-    <p>Det kan være utfordrende å navigere i de ulike alternativene. Vi i TrendMe har erfaring med å designe og implementere effektive dataløsninger i Microsoft Fabric og kan hjelpe deg med å velge riktig arkitektur for din bedrift.</p>
-    <p><a href="/#kontakt">Ta kontakt</a> for en prat om hvordan vi kan bistå dere!</p>
-</div>
+        /* === FOOTER === */
+        footer {
+            background-color: #0a0a0a; color: var(--text-medium); text-align: center;
+            padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border);
+        }
+        footer p { margin-bottom: 1rem; font-size: 0.9rem; }
+
+         /* === RESPONSIVITET === */
+         @media (max-width: 768px) {
+             header nav { flex-direction: column; align-items: center; }
+             header .logo { margin-bottom: 15px; }
+             header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+             header ul li { margin: 5px 8px; }
+             .article-container h1 { font-size: 2.2rem; }
+             .article-body h2 { font-size: 1.7rem; }
+             .article-body h3 { font-size: 1.4rem; }
+             .article-body h4 { font-size: 1.2rem; }
+             .article-body p { font-size: 1rem; }
+             .comparison-table { font-size: 0.9rem; }
+             .comparison-table th, .comparison-table td { padding: 0.6rem 0.8rem; }
+         }
+         @media (max-width: 500px) {
+              .article-container h1 { font-size: 1.8rem; }
+              .article-body h2 { font-size: 1.5rem; }
+              .article-body h3 { font-size: 1.3rem; }
+              .article-body h4 { font-size: 1.1rem; }
+         }
+
+    </style>
+
+    <!-- === Schema.org Markup (JSON-LD) - VIKTIG FOR SEO === -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Warehouse vs. Lakehouse i Microsoft Fabric: Hva Bør Du Velge?",
+      "description": "Sammenligning av Warehouse og Lakehouse i Microsoft Fabric. Forstå forskjellene, bruksområdene (T-SQL vs Spark), og når du bør velge hva.",
+      "image": "https://learn.microsoft.com/en-us/fabric/fundamentals/media/decision-guide-lakehouse-warehouse/lakehouse-warehouse-choose.png", // Bruker URL fra input. Bytt ut hvis du har et bedre bilde.
+      "author": {
+        "@type": "Organization", // Eller Person
+        "name": "TrendMe"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "TrendMe",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png" // URL til din logo
+        }
+      },
+      "datePublished": "2024-04-04", // Sett faktisk publiseringsdato
+      "dateModified": "2024-04-04" // Sett faktisk dato for siste endring
+    }
+    </script>
+    <!-- === SLUTT SCHEMA MARKUP === -->
+
+</head>
+<body>
+
+    <header id="main-header">
+        <nav class="container">
+            <div class="logo"><a href="/">TrendMe</a></div> <!-- Lenke til hovedside -->
+            <ul>
+                <!-- Relative stier fra /posts/ mappen -->
+                <li><a href="../">Tilbake til Bloggen</a></li> <!-- Går ett nivå opp til /blogg/ -->
+                <li><a href="/">Til TrendMe Hovedside</a></li> <!-- Går til roten -->
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Artikkelinnhold -->
+    <main class="section article-section">
+        <div class="article-container">
+
+            <h1>Warehouse vs. Lakehouse i Microsoft Fabric: Hva Bør Du Velge?</h1>
+
+            <p class="post-meta">
+                Publisert: <time datetime="2024-04-04">04. April 2024</time>
+                <!-- Valgfritt: by <span class="author">Ditt Navn</span> -->
+            </p>
+
+             <!-- Fjernet <div class="post-content"> wrapper -->
+            <div class="article-body">
+                <p>Når du dykker ned i Microsoft Fabric, vil du raskt møte på to sentrale begreper for datalagring og analyse: <strong>Warehouse</strong> og <strong>Lakehouse</strong>. Begge er bygget på den åpne <code>Delta Lake</code>-standarden og lagrer data i OneLake, men de er designet for litt ulike formål og brukere. Å velge riktig (eller en kombinasjon) er viktig for å bygge en effektiv dataplattform.</p>
+                <p>I dette innlegget ser vi nærmere på hva et Warehouse og et Lakehouse er i Fabric, hva som skiller dem, og når du bør vurdere den ene fremfor den andre.</p>
+
+                <figure>
+                     <!-- Kommentar: Vurder SVG her -->
+                    <img src="https://learn.microsoft.com/en-us/fabric/fundamentals/media/decision-guide-lakehouse-warehouse/lakehouse-warehouse-choose.png" alt="Sammenligning av Microsoft Fabric Warehouse og Lakehouse som viser fokus på T-SQL vs Spark/filer">
+                    <figcaption>Fabric Warehouse og Lakehouse: To sider av samme OneLake-mynt, men med ulikt fokus.</figcaption>
+                </figure>
+
+                <h2>Hva er et Warehouse i Fabric?</h2>
+                <p>Et Fabric Warehouse er det du kan kalle et <strong>tradisjonelt, men moderne, datavarehus</strong>. Det er designet for:</p>
+                <ul>
+                    <li><strong>Strukturert data:</strong> Optimalisert for tabeller med rader og kolonner.</li>
+                    <li><strong>SQL-utviklere og analytikere:</strong> Hovedspråket er <code>T-SQL</code> for datainnlasting, transformasjon (ETL/ELT), modellering og querying.</li>
+                    <li><strong>Business Intelligence (BI):</strong> Tett integrert med Power BI for rapportering og dashboards.</li>
+                    <li><strong>Transaksjoner (ACID):</strong> Støtter fullt ut transaksjoner på tvers av flere tabeller, noe som sikrer datakonsistens ved komplekse skriveoperasjoner.</li>
+                    <li><strong>Ytelse og Skalerbarhet:</strong> Bygget for høy ytelse på SQL-spørringer, med automatisk skalering av data og regnekraft (compute).</li>
+                </ul>
+                <p>Tenk på Warehouse når du trenger en robust plattform for bedriftens "single source of truth" for strukturerte data, spesielt for BI-formål, og hvor <code>T-SQL</code>-kompetanse er utbredt.</p>
+
+                <h2>Hva er et Lakehouse i Fabric?</h2>
+                <p>Et Fabric Lakehouse er en mer <strong>fleksibel dataarkitekturplattform</strong> som kombinerer det beste fra Data Lakes (rådatalagring) og Data Warehouses (strukturert analyse). Det er designet for:</p>
+                <ul>
+                    <li><strong>Alle typer data:</strong> Kan lagre og behandle både strukturert (tabeller) og ustrukturert data (filer som CSV, JSON, Parquet, bilder etc.) i OneLake.</li>
+                    <li><strong>Data Engineers og Data Scientists:</strong> Hovedverktøyene er ofte <code>Spark</code> (med Python, Scala, R, Spark SQL) for datatransformasjon, engineering og maskinlæring.</li>
+                    <li><strong>Fleksibilitet:</strong> Gir større frihet til å organisere data (f.eks. i en Medallion-arkitektur med Bronze, Silver, Gold-lag).</li>
+                    <li><strong>Åpenhet:</strong> Data lagres i åpent <code>Delta Lake</code>-format, tilgjengelig for ulike verktøy.</li>
+                </ul>
+
+                <h4>Det Viktige SQL-Endepunktet</h4>
+                <p>En nøkkelfunksjon ved Lakehouse er at Fabric <strong>automatisk oppretter et SQL Analytics Endpoint</strong> for hvert Lakehouse. Dette endepunktet lar deg:</p>
+                <ul>
+                    <li>Querye <code>Delta</code>-tabellene i Lakehouse ved hjelp av <code>T-SQL</code> (samme språk som i Warehouse).</li>
+                    <li>Koble til Power BI (<code>DirectLake</code>-modus for topp ytelse uten import!) og andre SQL-kompatible verktøy.</li>
+                </ul>
+                <p><strong>MEN, og dette er en viktig begrensning:</strong> SQL-endepunktet til et Lakehouse er primært for <strong>leseoperasjoner</strong>. Du kan opprette views og noen funksjoner, men du kan <em>ikke</em> bruke det til å laste data med <code>INSERT/UPDATE/DELETE</code> (DML) eller gjøre omfattende endringer i tabellstrukturen (DDL) via <code>T-SQL</code> slik du kan i et Warehouse. Datainnlasting og transformasjon i Lakehouse skjer typisk via <code>Spark</code>, Dataflows eller Pipelines.</p>
+
+                <h2>Warehouse vs. Lakehouse: Hovedforskjeller og Begrensninger</h2>
+
+                <table class="comparison-table"> <!-- Bruker CSS-klassen -->
+                    <thead>
+                        <tr>
+                            <th>Egenskap</th>
+                            <th>Warehouse</th>
+                            <th>Lakehouse (via SQL Endpoint)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Primært Bruksområde</td>
+                            <td>Enterprise Data Warehousing, BI, strukturert analyse</td>
+                            <td>Datateknikk, Data Science, analyse av Delta-tabeller, staging, utforsking</td>
+                        </tr>
+                        <tr>
+                            <td>Datatyper</td>
+                            <td>Primært strukturert</td>
+                            <td>Strukturert og ustrukturert (SQL EP leser kun Delta-tabeller)</td>
+                        </tr>
+                        <tr>
+                            <td>Hovedspråk/-verktøy</td>
+                            <td><code>T-SQL</code></td>
+                            <td><code>Spark</code> (Python/Scala/SQL), Dataflows, Pipelines (men <code>T-SQL</code> for lesing via SQL EP)</td>
+                        </tr>
+                        <tr>
+                            <td>Skriveoperasjoner (<code>T-SQL</code> DML)</td>
+                            <td><strong>Ja (Full støtte)</strong></td>
+                            <td><strong>Nei (Kun Lese)</strong></td>
+                        </tr>
+                         <tr>
+                            <td>Transaksjoner (ACID)</td>
+                            <td><strong>Ja (Full støtte)</strong></td>
+                            <td>Nei (via SQL EP), men <code>Delta Lake</code>-formatet gir ACID på filnivå via <code>Spark</code>.</td>
+                        </tr>
+                         <tr>
+                            <td>Tabell-endringer (<code>T-SQL</code> DDL)</td>
+                            <td>Ja (Full støtte)</td>
+                            <td>Begrenset (Views, TVFs - ikke <code>CREATE TABLE</code>, <code>ALTER TABLE</code> etc.)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>"Better Together": Når Bruker Man Begge?</h2>
+                <p>Ofte er ikke svaret enten/eller, men heller hvordan man best kombinerer styrkene til begge. En vanlig tilnærming er Medallion-arkitekturen:</p>
+                <ul>
+                    <li><strong>Lakehouse (Bronze & Silver):</strong> Brukes til å lande rådata (Bronze) og deretter rense, transformere og berike dataene (Silver) ved hjelp av <code>Spark</code> eller Dataflows. Her håndteres både strukturert og ustrukturert data.</li>
+                    <li><strong>Warehouse (Gold):</strong> Data fra Silver-laget lastes inn i Warehouse. Her skjer den siste modelleringen for BI-formål, aggregering og optimalisering for rapportering. Warehouse blir da kilden for Power BI-rapporter og sluttbrukeranalyser som krever høy ytelse og <code>T-SQL</code>-funksjonalitet.</li>
+                </ul>
+                <p>Fabric gjør det også enkelt å koble sammen Warehouse og Lakehouse ved hjelp av <strong>Shortcuts</strong> og kryss-database-spørringer, slik at du kan få tilgang til data uten å måtte kopiere dem fysisk.</p>
+
+                <h2>Konklusjon: Hva Bør Du Velge?</h2>
+                <p>Valget avhenger av dine behov:</p>
+                <ul>
+                    <li>Trenger du en klassisk datavarehusløsning med full <code>T-SQL</code>-støtte, transaksjoner og primært strukturert data for BI? Da er <strong>Warehouse</strong> et godt utgangspunkt.</li>
+                    <li>Trenger du fleksibilitet til å håndtere ulike datatyper (også ustrukturerte), jobber mye med <code>Spark/Python</code>, og trenger et staging-område eller en plattform for data science? Da er <strong>Lakehouse</strong> veien å gå. Husk begrensningene i SQL-endepunktet for skriving.</li>
+                    <li>Har du komplekse behov og vil bygge en moderne dataplattform fra rådata til ferdige rapporter? Da er en <strong>kombinasjon av Lakehouse og Warehouse</strong> ofte den beste og mest robuste løsningen.</li>
+                </ul>
+                <p>Det kan være utfordrende å navigere i de ulike alternativene. Vi i TrendMe har erfaring med å designe og implementere effektive dataløsninger i Microsoft Fabric og kan hjelpe deg med å velge riktig arkitektur for din bedrift.</p>
+                <p><a href="/#kontakt">Ta kontakt</a> for en prat om hvordan vi kan bistå dere!</p> <!-- Beholdt CTA lenke -->
+
+            </div> <!-- Slutt .article-body -->
+
+            <a href="../" class="back-to-blog-link">← Tilbake til Bloggoversikten</a>
+
+        </div> <!-- Slutt .article-container -->
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
+            <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
+        </div>
+    </footer>
+
+    <!-- Minimal JavaScript (kun for footer årstall og evt. CSS variabler) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Oppdaterer årstall i footer
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+            // Setter CSS variabel for RGBA bruk (hvis nødvendig for tabell)
+            document.documentElement.style.setProperty('--secondary-accent-rgb', '0, 198, 255');
+        });
+    </script>
+
+</body>
+</html>
