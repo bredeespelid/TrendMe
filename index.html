@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO Optimalisert Tittel og Beskrivelse -->
-    <meta name="description" content="TrendMe hjelper norske virksomheter med rådgivning og implementering av Microsoft Fabric. Fra strategi og migrering til optimalisering og Power BI-integrasjon."">
+    <meta name="description" content="TrendMe hjelper norske virksomheter med rådgivning og implementering av Microsoft Fabric. Fra strategi og migrering til optimalisering og Power BI-integrasjon.">
     <title>Microsoft Fabric Rådgivning & Implementering | TrendMe</title>
 
     <!-- === FAVICON === -->
@@ -26,7 +26,7 @@
             --glow-color: rgba(0, 198, 255, 0.5);
             --text-light: #e0e0e0;
             --text-medium: #b0b0b0;
-            --text-dark: #1f1f1f;
+            --text-dark: #1f1f1f; /* Mørk tekst for lys bakgrunn (som papiret) */
             --card-bg: rgba(40, 40, 40, 0.8);
             --card-border: rgba(255, 255, 255, 0.1);
             --font-primary: 'Poppins', sans-serif;
@@ -63,20 +63,19 @@
         .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top left, rgba(147, 112, 219, 0.1), transparent 40%), radial-gradient(circle at bottom right, rgba(0, 198, 255, 0.1), transparent 50%); animation: pulse-glow 10s infinite alternate ease-in-out; z-index: 1; }
         @keyframes pulse-glow { from { opacity: 0.5; } to { opacity: 1; } }
         .hero .container { position: relative; z-index: 2; }
-        /* SEO: H1 er viktigst. Fokus på nøkkeltjeneste */
         .hero h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; background: linear-gradient(90deg, var(--text-light), var(--secondary-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; animation: text-focus-in 1.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both; }
         @keyframes text-focus-in { 0% { filter: blur(12px); opacity: 0; } 100% { filter: blur(0px); opacity: 1; } }
-        /* SEO: Fokus på forretningsfordeler */
         .hero .typing-container { font-size: 1.4rem; color: var(--text-medium); margin-bottom: 2.5rem; min-height: 1.8em; }
         .typing-cursor { display: inline-block; width: 10px; height: 1.4rem; background-color: var(--secondary-accent); margin-left: 5px; animation: blink 0.7s infinite; vertical-align: bottom; }
         @keyframes blink { 50% { opacity: 0; } }
-        /* SEO: Tydelig CTA */
-        .cta-button { display: inline-block; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); color: var(--text-dark); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3); }
+        .cta-button { display: inline-block; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); color: var(--text-dark); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease, opacity var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3); }
         .cta-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px var(--glow-color); }
+        /* Stil for når knappen er disabled (sender...) */
+        .cta-button:disabled { background: gray; cursor: not-allowed; opacity: 0.7; transform: none; box-shadow: none; }
+
         .section { padding: 6rem 0; overflow: hidden; }
         .section-header { text-align: center; margin-bottom: 4rem; }
         .section-header span { display: block; font-size: 1rem; color: var(--secondary-accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 600; }
-        /* SEO: H2 er viktig for seksjonstema */
         .section-header h2 { font-size: 2.8rem; font-weight: 700; color: var(--text-light); margin-bottom: 1rem; position: relative; display: inline-block; }
         .section-header h2::after { content: ''; position: absolute; width: 60px; height: 4px; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); bottom: -15px; left: 50%; transform: translateX(-50%); border-radius: 2px; }
         .section-header p { max-width: 700px; margin: 1.5rem auto 0 auto; color: var(--text-medium); font-size: 1.1rem; }
@@ -86,7 +85,6 @@
         .feature-item { text-align: center; background: var(--card-bg); padding: 2rem 1.5rem; border-radius: 10px; border: 1px solid var(--card-border); transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
         .feature-item:hover { transform: translateY(-8px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); }
         .feature-icon { font-size: 3rem; margin-bottom: 1rem; color: var(--secondary-accent); display: inline-block; width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-fabric-light), var(--secondary-accent)); border-radius: 50%; line-height: 60px; color: var(--dark-bg); font-weight: bold; }
-        /* SEO: H3 for underoverskrifter */
         .feature-item h3 { font-size: 1.4rem; margin-bottom: 0.8rem; color: var(--text-light); }
         .feature-item p { font-size: 0.95rem; color: var(--text-medium); }
         .services-bg { background: linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.95)), url('tech-pattern.png'); background-color: #16161d; }
@@ -117,64 +115,19 @@
         .accordion-content.aktiv { padding: 1.5rem 1.5rem 2.5rem 1.5rem; /* max-height settes av JS */ }
         .accordion-content img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 1.5rem; border: 1px solid var(--card-border); }
         .accordion-content h4 { color: var(--text-light); margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.1rem; }
-         /* Sørger for at lister inni accordion ser bra ut */
         .accordion-content ul { list-style: disc; padding-left: 25px; margin-top: 1rem; margin-bottom: 1rem; }
         .accordion-content ul li { margin-bottom: 0.5rem; padding-left: 0; color: var(--text-medium); }
         .accordion-content ul li::before { content: none; }
-        /* --- Slutt Styling for Accordion --- */
 
-
-        /* --- Om Oss Styling (Oppdatert for to personer) --- */
+        /* --- Om Oss Styling --- */
         #om { background: var(--dark-bg); }
-        #om .container {
-            display: flex;
-            flex-wrap: wrap; /* Viktig for responsivitet */
-            justify-content: center; /* Sentrerer innholdet når det er plass */
-            gap: 4rem; /* Økt mellomrom mellom teammedlemmer */
-        }
-        /* Ny klasse for hvert teammedlem */
-        .team-member {
-            flex: 1; /* Lar elementene vokse */
-            min-width: 300px; /* Minimum bredde før wrapping */
-            max-width: 450px; /* Maks bredde per medlem */
-            display: flex;
-            flex-direction: column; /* Stabler bilde og tekst vertikalt */
-            align-items: center; /* Sentrerer innholdet (bilde, tekst) */
-            text-align: center; /* Sentrerer teksten */
-        }
-        /* Bruker .om-image innenfor .team-member */
-        .team-member .om-image {
-            margin-bottom: 1.5rem; /* Avstand mellom bilde og tekst */
-            flex-shrink: 0; /* Forhindrer at bildet krymper for mye */
-        }
-        .team-member .om-image img {
-            width: 200px; /* Justert størrelse */
-            height: 200px; /* Sørger for at bildet er kvadratisk før runding */
-            object-fit: cover; /* Dekker området uten å strekke */
-            border-radius: 50%;
-            border: 5px solid var(--card-border);
-            box-shadow: 0 0 25px rgba(147, 112, 219, 0.3);
-        }
-        /* Bruker .om-text innenfor .team-member */
-        .team-member .om-text {
-            /* Trenger ikke spesifikk flex-styling her lenger */
-        }
-        .team-member .om-text h3 { /* Styling for navn/tittel */
-            font-size: 1.6rem;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-        .team-member .om-text p {
-            color: var(--text-medium);
-            margin-bottom: 1rem;
-            font-size: 1rem; /* Litt mindre font for beskrivelse */
-        }
-        .team-member .om-text strong {
-             color: var(--text-light);
-        }
-        /* --- Slutt Om Oss Styling --- */
-
+        #om .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 4rem; }
+        .team-member { flex: 1; min-width: 300px; max-width: 450px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .team-member .om-image { margin-bottom: 1.5rem; flex-shrink: 0; }
+        .team-member .om-image img { width: 200px; height: 200px; object-fit: cover; border-radius: 50%; border: 5px solid var(--card-border); box-shadow: 0 0 25px rgba(147, 112, 219, 0.3); }
+        .team-member .om-text h3 { font-size: 1.6rem; color: var(--text-light); margin-bottom: 1rem; font-weight: 600; }
+        .team-member .om-text p { color: var(--text-medium); margin-bottom: 1rem; font-size: 1rem; }
+        .team-member .om-text strong { color: var(--text-light); }
 
         /* --- Kontakt & Footer Styling --- */
         #kontakt { position: relative; background: linear-gradient(rgba(18,18,18,0.95), rgba(18,18,18,0.98)), url('contact-bg.jpg') no-repeat center center/cover; background-color: var(--dark-bg); }
@@ -184,7 +137,7 @@
         .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group textarea { width: 100%; padding: 1rem; border: 1px solid var(--card-border); border-radius: 8px; font-family: inherit; font-size: 1rem; background-color: rgba(50, 50, 50, 0.5); color: var(--text-light); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--secondary-accent); box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.2); }
         .form-group textarea { resize: vertical; min-height: 120px; }
-        #contact-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; }
+        #contact-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; } /* Bruker .cta-button klassen for utseende */
         footer { background-color: #0a0a0a; color: var(--text-medium); text-align: center; padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border); }
         footer p { margin-bottom: 1rem; font-size: 0.9rem; }
         .footer-links { margin-bottom: 1.5rem; }
@@ -192,39 +145,111 @@
         .footer-links img { width: 28px; height: 28px; vertical-align: middle; filter: none; transition: filter var(--transition-speed) ease; }
         .footer-links a:hover { transform: scale(1.15); opacity: 1; }
 
-        /* --- Responsivitet (Justerte fontstørrelser og Om Oss) --- */
+        /* === ANIMASJONSKODE START === */
+
+        /* Animasjonscontainer */
+        #animation-container {
+            position: fixed; /* Dekker hele vinduet */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* Tilpasset bakgrunn til mørkt tema */
+            background-color: rgba(18, 18, 18, 0.9); /* Mørk overlay */
+            display: none; /* Skjult som standard */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* Plasser papir og melding over hverandre */
+            z-index: 1100; /* Over alt annet, inkludert header (z-index 1000) */
+            overflow: hidden; /* Forhindrer at flyet lager scrollbars */
+        }
+
+        /* Papir-element */
+        #paper {
+            background-color: #fff; /* Hvit bakgrunn for papiret */
+            width: 300px;
+            height: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--card-border); /* Bruker theme border */
+            padding: 20px;
+            box-sizing: border-box;
+            opacity: 0; /* Starter usynlig */
+            transform: scale(0.8); /* Starter litt mindre */
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            position: relative; /* For posisjonering av innhold og flyanimasjon */
+            overflow: hidden; /* Klipper innhold som går utenfor */
+        }
+
+        #paper-content {
+            /* Tilpasset font og farge */
+            font-family: var(--font-primary);
+            font-size: 0.9rem;
+            color: var(--text-dark); /* Mørk tekst på hvitt papir */
+            white-space: pre-wrap; /* Bevarer linjeskift og mellomrom */
+            word-wrap: break-word; /* Bryter lange ord */
+            max-height: 100%;
+            overflow-y: auto; /* Scroll hvis innholdet er for langt */
+        }
+
+        /* Takkemelding */
+        #thank-you-message {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            /* Tilpasset farge */
+            color: var(--secondary-accent);
+            font-weight: bold;
+            text-align: center;
+            display: none; /* Skjult som standard */
+            opacity: 0;
+            transition: opacity 0.5s ease-in 0.2s; /* Fade inn etter en liten forsinkelse */
+        }
+
+        /* Flyanimasjon */
+        @keyframes fly-away {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 1;
+            }
+            100% {
+                /* Flyr opp og til høyre, roterer, skalerer ned og fader ut */
+                transform: translate(120vw, -120vh) rotate(720deg) scale(0.1);
+                opacity: 0;
+            }
+        }
+
+        #paper.flying {
+            /* Starter fly-away animasjonen */
+            animation: fly-away 2s ease-in forwards; /* 'forwards' holder slutt-tilstanden */
+        }
+        /* === ANIMASJONSKODE SLUTT === */
+
+        /* --- Responsivitet --- */
         @media (max-width: 992px) {
              .hero h1 { font-size: 3rem; } .hero .typing-container { font-size: 1.2rem; } .section-header h2 { font-size: 2.4rem; } .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); } header ul li { margin-left: 15px; } header ul li a { padding: 10px 10px;}
-             /* Om Oss Justering */
-             #om .container { gap: 3rem; } /* Litt mindre gap */
-             .team-member { max-width: 400px; } /* Juster maks bredde */
+             #om .container { gap: 3rem; }
+             .team-member { max-width: 400px; }
         }
         @media (max-width: 768px) {
              header nav { flex-direction: column; align-items: center; } header .logo { margin-bottom: 15px; } header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; } header ul li { margin: 5px 8px; } header ul li a { font-size: 0.9rem; padding: 8px 12px; } .hero { min-height: 70vh; padding: 6rem 0 3rem 0; } .hero h1 { font-size: 2.5rem; } .hero .typing-container { font-size: 1.1rem; } .cta-button { padding: 12px 30px; font-size: 1rem; } .section { padding: 4rem 0; } .section-header h2 { font-size: 2rem; } .section-header p { font-size: 1rem; } #contact-form { padding: 2rem; } .service-grid { grid-template-columns: 1fr; } .feature-grid { grid-template-columns: 1fr; }
-            /* Juster accordion fontstørrelser */
             .accordion-title { font-size: 1.1rem; padding: 1.2rem 0.8rem; }
             .accordion-content { padding: 0 1rem; font-size: 0.95rem;}
             .accordion-content.aktiv { padding: 1rem 1rem 2rem 1rem; }
-            /* Om Oss Justering for mobil */
-            #om .container {
-                flex-direction: column; /* Stabler vertikalt */
-                align-items: center; /* Sentrerer stabelen */
-                gap: 3rem;
-            }
-            .team-member {
-                 min-width: unset; /* Fjerner min-width */
-                 width: 90%; /* Tar opp mesteparten av bredden */
-                 max-width: 400px; /* Holder en fornuftig maks bredde */
-                 flex: none; /* Fjerner flex-grow */
-            }
-            .team-member .om-image img { width: 180px; height: 180px; } /* Litt mindre bilde */
+            #om .container { flex-direction: column; align-items: center; gap: 3rem; }
+            .team-member { min-width: unset; width: 90%; max-width: 400px; flex: none; }
+            .team-member .om-image img { width: 180px; height: 180px; }
+            /* Juster papirstørrelse for mindre skjermer */
+            #paper { width: 90%; max-width: 280px; height: auto; min-height: 350px; }
+            #thank-you-message { font-size: 1.2rem; }
         }
         @media (max-width: 480px) {
              .hero h1 { font-size: 2rem; } header .logo { font-size: 1.5rem; } .section-header h2 { font-size: 1.8rem; } header ul li { margin: 3px 5px;} header ul li a { padding: 6px 8px; font-size: 0.85rem;} .footer-links img { width: 24px; height: 24px;} .footer-links a { margin: 0 8px;}
-             /* Om Oss Justering for små skjermer */
              .team-member .om-image img { width: 150px; height: 150px; }
              .team-member .om-text h3 { font-size: 1.4rem; }
              .team-member .om-text p { font-size: 0.95rem; }
+             /* Mindre papir på små skjermer */
+             #paper { max-width: 240px; min-height: 300px; padding: 15px; }
+             #paper-content { font-size: 0.8rem;}
+             #thank-you-message { font-size: 1.1rem; }
         }
 
     </style>
@@ -238,11 +263,11 @@
             <div class="logo">TrendMe</div>
             <ul>
                 <li><a href="#hjem">Hjem</a></li>
-                <li><a href="#om-fabric">Om Fabric</a></li> <!-- Nytt menypunkt -->
+                <li><a href="#om-fabric">Om Fabric</a></li>
                 <li><a href="#fabric-tjenester">Fabric Tjenester</a></li>
                 <li><a href="#powerbi-tjenester">Power BI Tjenester</a></li>
                 <li><a href="#prosjekter">Kundecaser</a></li>
-                <li><a href="/blogg">Blogg</a></li> 
+                <li><a href="/blogg">Blogg</a></li>
                 <li><a href="#om">Om Oss</a></li>
                 <li><a href="#kontakt">Kontakt</a></li>
             </ul>
@@ -250,377 +275,324 @@
     </header>
 
     <main>
-        <!-- Hero Seksjon (SEO Optimalisert) -->
+        <!-- ... (resten av innholdet ditt fra <section id="hjem"> til før <section id="kontakt">) ... -->
+         <!-- Hero Seksjon -->
         <section id="hjem" class="hero">
             <div class="container">
-                 <!-- SEO: Hovedoverskrift (H1) med nøkkelord -->
                 <h1 class="fade-in">Microsoft Fabric Rådgivning: Fra Strategi til Verdi</h1>
                 <div class="typing-container fade-in" style="animation-delay: 0.5s;">
-                    <!-- SEO: Fokus på forretningsverdi/problemløsning -->
                     <span id="typing-text"></span><span class="typing-cursor"></span>
                 </div>
-                <!-- SEO: Tydelig, handlingsorientert CTA -->
                 <a href="#kontakt" class="cta-button fade-in" style="animation-delay: 1s;">Be om en Uforpliktende Konsultasjon</a>
             </div>
         </section>
 
-        <!-- Hvorfor Fabric Seksjon (Tekst justert for forretningsverdi) -->
+        <!-- Hvorfor Fabric Seksjon -->
         <section id="hvorfor-fabric" class="section">
-            <div class="container">
-                <div class="section-header fade-in">
-                    <span>Fremtiden for Dataanalyse</span>
-                    <h2>Hvorfor Velge Microsoft Fabric?</h2>
-                     <!-- SEO: Tydelig forklaring, inkluderer nøkkelord -->
-                    <p>Gå utover tradisjonell dataanalyse. Microsoft Fabric er en ende-til-ende, AI-drevet SaaS-plattform som samler dataintegrasjon, engineering, warehousing, datavitenskap, sanntidsanalyse og business intelligence på ett sted.</p>
-                </div>
-                <div class="feature-grid">
-                    <div class="feature-item fade-in slide-up" style="transition-delay: 0.2s;">
-                        <div class="feature-icon">✓</div>
-                        <h3>Samlet Plattform</h3>
-                         <!-- SEO: Fokus på forretningsfordel -->
-                        <p>Integrerer nøkkelkomponenter som Data Factory, Synapse og Power BI – reduserer verktøysprawl, kostnader og kompleksitet.</p>
-                    </div>
-                    <div class="feature-item fade-in slide-up" style="transition-delay: 0.4s;">
-                         <div class="feature-icon">⚡</div>
-                        <h3>AI-drevet Innsikt</h3>
-                         <!-- SEO: Fremhever AI og fordeler -->
-                        <p>Utnytt innebygd Copilot og Azure AI for raskere innsikt, automatisering av dataoppgaver og smartere forretningsbeslutninger.</p>
-                    </div>
-                     <div class="feature-item fade-in slide-up" style="transition-delay: 0.6s;">
-                         <div class="feature-icon">🔗</div>
-                        <h3>OneLake Sentrert</h3>
-                         <!-- SEO: Forklarer kjerneteknologi og fordel -->
-                        <p>En felles, logisk datasjø (OneLake) eliminerer datasiloer, forenkler datadeling og styrker data governance på tvers av organisasjonen.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- NY: Om Fabric Seksjon (Accordion Struktur for SEO & Info) -->
-        <section id="om-fabric" class="section services-bg">
-            <div class="container">
-                <div class="section-header fade-in">
-                    <span>Bakgrunn & Visjon</span>
-                    <h2>Historien Bak Microsoft Fabric</h2>
-                    <p>Forstå hvorfor Fabric ble utviklet, problemene det løser for bedrifter, og hvordan det representerer fremtiden for dataanalyse.</p>
-                </div>
-
-                <div class="accordion-list fade-in" style="transition-delay: 0.3s;">
-                    <!-- Accordion Item 1: Problemet -->
-                    <div class="accordion-item">
-                        <button class="accordion-title">
-                            <span class="tittel-tekst">Utfordringen Fabric Løser: Kompleksitet og Datasiloer</span>
-                            <span class="ikon">+</span>
-                        </button>
-                        <div class="accordion-content">
-                            <p>Før Microsoft Fabric sto mange bedrifter overfor et fragmentert dataøkosystem. De måtte sette sammen og administrere separate tjenester som:</p>
-                            <ul>
-                                <li>Azure Data Factory for ETL/ELT</li>
-                                <li>Azure Synapse Analytics for datavarehus og analyse</li>
-                                <li>Azure Databricks for avansert analyse og datavitenskap</li>
-                                <li>Azure Data Explorer for sanntidsanalyse</li>
-                                <li>Power BI for visualisering og rapportering</li>
-                                <li>Azure Data Lake Storage for lagring</li>
-                            </ul>
-                            <p>Dette førte ofte til <strong>datasiloer</strong>, duplisering av data, komplekse <strong>integrasjonsutfordringer</strong>, høye administrasjonskostnader og tregere "time-to-insight". Ulike team (data engineers, data scientists, BI-analytikere) jobbet ofte med ulike verktøy og kopier av data, noe som hindret effektivt samarbeid og governance.</p>
-                            <h4>Nøkkelutfordringer før Fabric:</h4>
-                            <ul>
-                                <li>Fragmentert verktøylandskap</li>
-                                <li>Høy integrasjonskompleksitet</li>
-                                <li>Datasiloer og duplisering</li>
-                                <li>Utfordringer med data governance og sikkerhet</li>
-                                <li>Separat administrasjon og lisensiering</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Accordion Item 2: Evolusjonen -->
-                    <div class="accordion-item">
-                        <button class="accordion-title">
-                             <span class="tittel-tekst">Evolusjonen: Hvordan Microsoft Fabric Ble Til</span>
-                             <span class="ikon">+</span>
-                        </button>
-                        <div class="accordion-content">
-                            <p>Microsoft Fabric er ikke bygget fra bunnen av, men representerer en <strong>evolusjon og sammenslåing</strong> av Microsofts velprøvde og markedsledende datateknologier. Visjonen var å skape én enkelt, enhetlig analyseplattform levert som Software-as-a-Service (SaaS).</p>
-                            <p>Plattformen tar de beste egenskapene fra <strong>Azure Synapse Analytics</strong>, <strong>Azure Data Factory</strong>, og <strong>Power BI</strong>, og integrerer dem sømløst med nye innovasjoner.</p>
-                            <h4>Viktige Byggeklosser og Inspirasjon:</h4>
-                            <ul>
-                                <li><strong>Power BI's SaaS-modell:</strong> Suksessen med Power BI som en brukervennlig, skalerbar SaaS-tjeneste la grunnlaget.</li>
-                                <li><strong>Synapse Analytics' motorer:</strong> De kraftige SQL- og Spark-motorene fra Synapse ble integrert.</li>
-                                <li><strong>Data Factory's integrasjonsevner:</strong> De robuste dataflyt- og pipeline-mulighetene ble modernisert og inkludert.</li>
-                                <li><strong>Azure Data Lake Storage Gen2:</strong> Fundamentet for den åpne og skalerbare lagringen.</li>
-                            </ul>
-                            <p>Målet var å forenkle hele dataanalyseprosessen, fra dataintegrasjon til business intelligence, på en plattform som er enkel å administrere, bruke og skalere for alle data-roller i en bedrift.</p>
-                        </div>
-                    </div>
-
-                    <!-- Accordion Item 3: Kjernekonsepter -->
-                    <div class="accordion-item">
-                        <button class="accordion-title">
-                             <span class="tittel-tekst">Kjernekonseptene: Hva Gjør Fabric Unikt?</span>
-                             <span class="ikon">+</span>
-                        </button>
-                        <div class="accordion-content">
-                            <p>Microsoft Fabric introduserer flere nøkkelkonsepter som skiller det fra tidligere løsninger:</p>
-                             <ul>
-                                <li><strong>OneLake:</strong> Ofte kalt "OneDrive for data". OneLake er en enkelt, enhetlig, logisk datasjø for hele organisasjonen, bygget på ADLS Gen2. Den eliminerer datasiloer ved å lagre data én gang og muliggjøre enkel deling og gjenbruk på tvers av ulike analysemotorer (Spark, SQL, KQL) og verktøy (Pipelines, Notebooks, Power BI) uten å flytte eller duplisere data. Bruker åpne formater som <strong>Delta Lake / Parquet</strong>.</li>
-                                <li><strong>Unified SaaS Platform:</strong> Alle komponentene (Data Factory, Synapse Engineering/Warehouse/Real-Time Analytics, Data Activator, Power BI) er integrert i én enkelt brukeropplevelse og administrasjonsportal.</li>
-                                <li><strong>Universal Compute Capacities:</strong> En forenklet modell der du kjøper én pool med regnekraft (Fabric Capacity) som deles på tvers av alle Fabric-workloads. Dette forenkler kostnadsstyring og ressursallokering.</li>
-                                <li><strong>DirectLake Mode for Power BI:</strong> En banebrytende modus som lar Power BI analysere Delta-tabeller direkte i OneLake med ytelse som tidligere krevde import, uten å kopiere data. Dette gir rask innsikt på ferske data.</li>
-                                <li><strong>Sentralisert Governance og Sikkerhet:</strong> Administreres gjennom Fabric-portalen og Microsoft Purview, noe som gir bedre kontroll og oversikt.</li>
-                                <li><strong>AI-integrasjon (Copilot):</strong> Dyp integrasjon av AI-assistenter for å øke produktiviteten for alle roller.</li>
-                             </ul>
-                             <p>Disse konseptene jobber sammen for å levere en mer effektiv, kostnadsoptimalisert og brukervennlig plattform for ende-til-ende dataanalyse og business intelligence i skyen.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- SLUTT NY SEKSJON -->
-
-        <!-- Fabric Tjenester Seksjon (SEO Optimalisert) -->
-        <section id="fabric-tjenester" class="section"> <!-- Fjernet services-bg for variasjon, kan legges tilbake -->
-            <div class="container">
-                 <div class="section-header fade-in">
-                    <span>Våre Spesialiteter</span>
-                    <h2>Våre Microsoft Fabric Tjenester</h2>
-                     <!-- SEO: Direkte og handlingsorientert -->
-                    <p>Vi tilbyr ende-til-ende rådgivning og implementering for å sikre at din bedrift får maksimal verdi fra Microsoft Fabric.</p>
-                </div>
-                <div class="service-grid">
-                    <div class="service-card fade-in slide-left" style="transition-delay: 0.2s;">
-                         <div class="service-icon-container">
-                             <!-- SEO: Beskrivende alt-tekst -->
-                             <img src="https://debruyn.dev/2024/all-microsoft-fabric-icons-for-diagramming/lakehouse.png" alt="Microsoft Fabric Lakehouse ikon" class="service-icon">
-                         </div>
-                         <!-- SEO: Tydelig tjenestetittel -->
-                        <h3>Fabric Strategi & Arkitektur</h3>
-                        <ul>
-                            <li>Utvikling av skreddersydd Fabric-strategi og veikart</li>
-                            <li>Design og implementering av optimalisert OneLake- og Lakehouse-arkitektur (Medallion)</li>
-                            <li>Datamodellering for Delta Lake / Parquet</li>
-                            <li>Effektiv bruk av Shortcuts for datadeling</li>
-                             <li>Etablering av robust sikkerhets- og governance-modell i Fabric</li>
-                        </ul>
-                    </div>
-                    <div class="service-card fade-in" style="transition-delay: 0.4s;">
-                         <div class="service-icon-container">
-                             <!-- SEO: Beskrivende alt-tekst -->
-                             <img src="https://debruyn.dev/2023/all-microsoft-fabric-icons-for-diagramming-old-version/data_factory_512_color.png" alt="Microsoft Fabric Data Factory ikon" class="service-icon">
-                         </div>
-                         <!-- SEO: Tydelig tjenestetittel -->
-                        <h3>Data Engineering & Migrering til Fabric</h3>
-                        <ul>
-                            <li>Effektiv dataintegrasjon med Data Factory Pipelines & Dataflows Gen2</li>
-                            <li>Utvikling og optimalisering av Spark Notebooks (PySpark, Scala, SQL)</li>
-                             <li>Migrering fra Azure Synapse, Databricks eller on-prem til Fabric</li>
-                            <li>Implementering av skalerbart Data Warehouse i Fabric</li>
-                             <li>Orkestrering, overvåkning og feilhåndtering</li>
-                        </ul>
-                    </div>
-                    <div class="service-card fade-in slide-right" style="transition-delay: 0.6s;">
-                         <div class="service-icon-container">
-                             <!-- SEO: Beskrivende alt-tekst -->
-                             <img src="https://debruyn.dev/2023/all-microsoft-fabric-icons-for-diagramming-old-version/synapse_real_time_analytics_512_color.png" alt="Microsoft Fabric Real-time Analytics ikon" class="service-icon">
-                         </div>
-                         <!-- SEO: Tydelig tjenestetittel -->
-                        <h3>Sanntidsanalyse & AI i Fabric</h3>
-                        <ul>
-                             <li>Implementering av Eventstreams for sanntids datastrømmer</li>
-                            <li>Analyse av strømmedata med KQL (Kusto Query Language)</li>
-                            <li>Automatisering av handlinger med Data Activator</li>
-                            <li>Integrasjon med Azure AI & Machine Learning tjenester</li>
-                            <li>Strategisk utnyttelse av Copilot i Fabric</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-         <!-- Power BI Tjenester Seksjon (SEO Optimalisert) -->
-         <section id="powerbi-tjenester" class="section services-bg"> <!-- La til services-bg igjen her -->
              <div class="container">
-                  <div class="section-header fade-in">
-                     <span>Visualisering & Innsikt</span>
-                      <!-- SEO: Tydelig H2 -->
-                     <h2>Power BI Tjenester & Optimalisering for Fabric</h2>
-                      <!-- SEO: Forklarer kobling til Fabric -->
-                     <p>Vi leverer kvalitetssikre Power BI-løsninger, sømløst integrert og optimalisert for Microsoft Fabric, inkludert DirectLake for lynrask innsikt.</p>
+                 <div class="section-header fade-in">
+                     <span>Fremtiden for Dataanalyse</span>
+                     <h2>Hvorfor Velge Microsoft Fabric?</h2>
+                     <p>Gå utover tradisjonell dataanalyse. Microsoft Fabric er en ende-til-ende, AI-drevet SaaS-plattform som samler dataintegrasjon, engineering, warehousing, datavitenskap, sanntidsanalyse og business intelligence på ett sted.</p>
                  </div>
-                  <div class="service-grid">
-                     <div class="service-card fade-in slide-left" style="transition-delay: 0.2s;">
-                         <div class="service-icon-container">
-                              <!-- SEO: Beskrivende alt-tekst -->
-                              <img src="https://1000logos.net/wp-content/uploads/2022/08/Microsoft-Power-BI-Logo.png" alt="Power BI rapport og dashboard ikon" class="service-icon pbi-logo">
-                          </div>
-                          <!-- SEO: Tydelig tjenestetittel -->
-                         <h3>Power BI Rapportering & Dashboard Design</h3>
-                         <ul>
-                             <li>Design av engasjerende og intuitive Power BI rapporter</li>
-                             <li>Utvikling av innsiktsdrevne, interaktive dashboards</li>
-                             <li>Optimalisering av ytelse med DirectLake modus mot Fabric OneLake</li>
-                              <li>Beste praksis for visualisering og brukeropplevelse</li>
-                             <li>Utvikling av mobilvennlige Power BI rapporter</li>
-                         </ul>
+                 <div class="feature-grid">
+                     <div class="feature-item fade-in slide-up" style="transition-delay: 0.2s;">
+                         <div class="feature-icon">✓</div>
+                         <h3>Samlet Plattform</h3>
+                         <p>Integrerer nøkkelkomponenter som Data Factory, Synapse og Power BI – reduserer verktøysprawl, kostnader og kompleksitet.</p>
                      </div>
-                     <div class="service-card fade-in" style="transition-delay: 0.4s;">
-                         <div class="service-icon-container">
-                              <!-- SEO: Beskrivende alt-tekst -->
-                              <img src="https://img.icons8.com/color/512/power-bi.png" alt="Power BI datamodellering og DAX ikon" class="service-icon">
-                          </div>
-                          <!-- SEO: Tydelig tjenestetittel -->
-                         <h3>Datamodellering & DAX Optimalisering</h3>
-                         <ul>
-                             <li>Bygging av robuste og skalerbare Power BI datamodeller (Stjerneskjema/Snowflake)</li>
-                             <li>Utvikling og feilsøking av avanserte DAX-beregninger</li>
-                             <li>Optimalisering av datamodeller for DirectLake og import-modus</li>
-                             <li>Implementering av Row-Level Security (RLS) for datasikkerhet</li>
-                             <li>Anvendelse av beste praksis for Power BI utvikling</li>
-                         </ul>
+                     <div class="feature-item fade-in slide-up" style="transition-delay: 0.4s;">
+                          <div class="feature-icon">⚡</div>
+                         <h3>AI-drevet Innsikt</h3>
+                         <p>Utnytt innebygd Copilot og Azure AI for raskere innsikt, automatisering av dataoppgaver og smartere forretningsbeslutninger.</p>
                      </div>
-                      <div class="service-card fade-in slide-right" style="transition-delay: 0.6s;">
-                         <div class="service-icon-container">
-                               <!-- SEO: Beskrivende alt-tekst -->
-                              <img src="https://powerbihelper.org/wp-content/uploads/2019/07/PbiHIcon.png" alt="Power BI administrasjon og governance ikon" class="service-icon">
-                          </div>
-                          <!-- SEO: Tydelig tjenestetittel -->
-                         <h3>Power BI Governance & Opplæring</h3>
-                         <ul>
-                             <li>Etablering av Power BI Governance rammeverk</li>
-                             <li>Administrasjon av Fabric/Power BI kapasiteter og lisenser</li>
-                             <li>Implementering av datasett-sertifisering og delingsstrategier</li>
-                             <li>Skreddersydd Power BI opplæring og workshops for brukere og utviklere</li>
-                             <li>Leveranse av brukerstøtte og veiledning</li>
-                         </ul>
+                      <div class="feature-item fade-in slide-up" style="transition-delay: 0.6s;">
+                          <div class="feature-icon">🔗</div>
+                         <h3>OneLake Sentrert</h3>
+                         <p>En felles, logisk datasjø (OneLake) eliminerer datasiloer, forenkler datadeling og styrker data governance på tvers av organisasjonen.</p>
                      </div>
-                  </div>
+                 </div>
              </div>
          </section>
 
-        <!-- Prosjekter Seksjon (SEO Optimalisert - Fokus på Caser) -->
+        <!-- Om Fabric Seksjon -->
+        <section id="om-fabric" class="section services-bg">
+             <div class="container">
+                 <div class="section-header fade-in">
+                     <span>Bakgrunn & Visjon</span>
+                     <h2>Historien Bak Microsoft Fabric</h2>
+                     <p>Forstå hvorfor Fabric ble utviklet, problemene det løser for bedrifter, og hvordan det representerer fremtiden for dataanalyse.</p>
+                 </div>
+                 <div class="accordion-list fade-in" style="transition-delay: 0.3s;">
+                     <!-- Accordion Item 1: Problemet -->
+                     <div class="accordion-item">
+                         <button class="accordion-title">
+                             <span class="tittel-tekst">Utfordringen Fabric Løser: Kompleksitet og Datasiloer</span>
+                             <span class="ikon">+</span>
+                         </button>
+                         <div class="accordion-content">
+                             <p>Før Microsoft Fabric sto mange bedrifter overfor et fragmentert dataøkosystem. De måtte sette sammen og administrere separate tjenester som:</p>
+                             <ul>
+                                 <li>Azure Data Factory for ETL/ELT</li>
+                                 <li>Azure Synapse Analytics for datavarehus og analyse</li>
+                                 <li>Azure Databricks for avansert analyse og datavitenskap</li>
+                                 <li>Azure Data Explorer for sanntidsanalyse</li>
+                                 <li>Power BI for visualisering og rapportering</li>
+                                 <li>Azure Data Lake Storage for lagring</li>
+                             </ul>
+                             <p>Dette førte ofte til <strong>datasiloer</strong>, duplisering av data, komplekse <strong>integrasjonsutfordringer</strong>, høye administrasjonskostnader og tregere "time-to-insight". Ulike team (data engineers, data scientists, BI-analytikere) jobbet ofte med ulike verktøy og kopier av data, noe som hindret effektivt samarbeid og governance.</p>
+                             <h4>Nøkkelutfordringer før Fabric:</h4>
+                             <ul>
+                                 <li>Fragmentert verktøylandskap</li>
+                                 <li>Høy integrasjonskompleksitet</li>
+                                 <li>Datasiloer og duplisering</li>
+                                 <li>Utfordringer med data governance og sikkerhet</li>
+                                 <li>Separat administrasjon og lisensiering</li>
+                             </ul>
+                         </div>
+                     </div>
+                     <!-- Accordion Item 2: Evolusjonen -->
+                     <div class="accordion-item">
+                         <button class="accordion-title">
+                              <span class="tittel-tekst">Evolusjonen: Hvordan Microsoft Fabric Ble Til</span>
+                              <span class="ikon">+</span>
+                         </button>
+                         <div class="accordion-content">
+                             <p>Microsoft Fabric er ikke bygget fra bunnen av, men representerer en <strong>evolusjon og sammenslåing</strong> av Microsofts velprøvde og markedsledende datateknologier. Visjonen var å skape én enkelt, enhetlig analyseplattform levert som Software-as-a-Service (SaaS).</p>
+                             <p>Plattformen tar de beste egenskapene fra <strong>Azure Synapse Analytics</strong>, <strong>Azure Data Factory</strong>, og <strong>Power BI</strong>, og integrerer dem sømløst med nye innovasjoner.</p>
+                             <h4>Viktige Byggeklosser og Inspirasjon:</h4>
+                             <ul>
+                                 <li><strong>Power BI's SaaS-modell:</strong> Suksessen med Power BI som en brukervennlig, skalerbar SaaS-tjeneste la grunnlaget.</li>
+                                 <li><strong>Synapse Analytics' motorer:</strong> De kraftige SQL- og Spark-motorene fra Synapse ble integrert.</li>
+                                 <li><strong>Data Factory's integrasjonsevner:</strong> De robuste dataflyt- og pipeline-mulighetene ble modernisert og inkludert.</li>
+                                 <li><strong>Azure Data Lake Storage Gen2:</strong> Fundamentet for den åpne og skalerbare lagringen.</li>
+                             </ul>
+                             <p>Målet var å forenkle hele dataanalyseprosessen, fra dataintegrasjon til business intelligence, på en plattform som er enkel å administrere, bruke og skalere for alle data-roller i en bedrift.</p>
+                         </div>
+                     </div>
+                     <!-- Accordion Item 3: Kjernekonsepter -->
+                     <div class="accordion-item">
+                         <button class="accordion-title">
+                              <span class="tittel-tekst">Kjernekonseptene: Hva Gjør Fabric Unikt?</span>
+                              <span class="ikon">+</span>
+                         </button>
+                         <div class="accordion-content">
+                             <p>Microsoft Fabric introduserer flere nøkkelkonsepter som skiller det fra tidligere løsninger:</p>
+                              <ul>
+                                 <li><strong>OneLake:</strong> Ofte kalt "OneDrive for data". OneLake er en enkelt, enhetlig, logisk datasjø for hele organisasjonen, bygget på ADLS Gen2. Den eliminerer datasiloer ved å lagre data én gang og muliggjøre enkel deling og gjenbruk på tvers av ulike analysemotorer (Spark, SQL, KQL) og verktøy (Pipelines, Notebooks, Power BI) uten å flytte eller duplisere data. Bruker åpne formater som <strong>Delta Lake / Parquet</strong>.</li>
+                                 <li><strong>Unified SaaS Platform:</strong> Alle komponentene (Data Factory, Synapse Engineering/Warehouse/Real-Time Analytics, Data Activator, Power BI) er integrert i én enkelt brukeropplevelse og administrasjonsportal.</li>
+                                 <li><strong>Universal Compute Capacities:</strong> En forenklet modell der du kjøper én pool med regnekraft (Fabric Capacity) som deles på tvers av alle Fabric-workloads. Dette forenkler kostnadsstyring og ressursallokering.</li>
+                                 <li><strong>DirectLake Mode for Power BI:</strong> En banebrytende modus som lar Power BI analysere Delta-tabeller direkte i OneLake med ytelse som tidligere krevde import, uten å kopiere data. Dette gir rask innsikt på ferske data.</li>
+                                 <li><strong>Sentralisert Governance og Sikkerhet:</strong> Administreres gjennom Fabric-portalen og Microsoft Purview, noe som gir bedre kontroll og oversikt.</li>
+                                 <li><strong>AI-integrasjon (Copilot):</strong> Dyp integrasjon av AI-assistenter for å øke produktiviteten for alle roller.</li>
+                              </ul>
+                              <p>Disse konseptene jobber sammen for å levere en mer effektiv, kostnadsoptimalisert og brukervennlig plattform for ende-til-ende dataanalyse og business intelligence i skyen.</p>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </section>
+
+         <!-- Fabric Tjenester Seksjon -->
+         <section id="fabric-tjenester" class="section">
+             <div class="container">
+                  <div class="section-header fade-in">
+                     <span>Våre Spesialiteter</span>
+                     <h2>Våre Microsoft Fabric Tjenester</h2>
+                     <p>Vi tilbyr ende-til-ende rådgivning og implementering for å sikre at din bedrift får maksimal verdi fra Microsoft Fabric.</p>
+                 </div>
+                 <div class="service-grid">
+                     <div class="service-card fade-in slide-left" style="transition-delay: 0.2s;">
+                          <div class="service-icon-container">
+                              <img src="https://debruyn.dev/2024/all-microsoft-fabric-icons-for-diagramming/lakehouse.png" alt="Microsoft Fabric Lakehouse ikon" class="service-icon">
+                          </div>
+                         <h3>Fabric Strategi & Arkitektur</h3>
+                         <ul>
+                             <li>Utvikling av skreddersydd Fabric-strategi og veikart</li>
+                             <li>Design og implementering av optimalisert OneLake- og Lakehouse-arkitektur (Medallion)</li>
+                             <li>Datamodellering for Delta Lake / Parquet</li>
+                             <li>Effektiv bruk av Shortcuts for datadeling</li>
+                              <li>Etablering av robust sikkerhets- og governance-modell i Fabric</li>
+                         </ul>
+                     </div>
+                     <div class="service-card fade-in" style="transition-delay: 0.4s;">
+                          <div class="service-icon-container">
+                              <img src="https://debruyn.dev/2023/all-microsoft-fabric-icons-for-diagramming-old-version/data_factory_512_color.png" alt="Microsoft Fabric Data Factory ikon" class="service-icon">
+                          </div>
+                         <h3>Data Engineering & Migrering til Fabric</h3>
+                         <ul>
+                             <li>Effektiv dataintegrasjon med Data Factory Pipelines & Dataflows Gen2</li>
+                             <li>Utvikling og optimalisering av Spark Notebooks (PySpark, Scala, SQL)</li>
+                              <li>Migrering fra Azure Synapse, Databricks eller on-prem til Fabric</li>
+                             <li>Implementering av skalerbart Data Warehouse i Fabric</li>
+                              <li>Orkestrering, overvåkning og feilhåndtering</li>
+                         </ul>
+                     </div>
+                     <div class="service-card fade-in slide-right" style="transition-delay: 0.6s;">
+                          <div class="service-icon-container">
+                              <img src="https://debruyn.dev/2023/all-microsoft-fabric-icons-for-diagramming-old-version/synapse_real_time_analytics_512_color.png" alt="Microsoft Fabric Real-time Analytics ikon" class="service-icon">
+                          </div>
+                         <h3>Sanntidsanalyse & AI i Fabric</h3>
+                         <ul>
+                              <li>Implementering av Eventstreams for sanntids datastrømmer</li>
+                             <li>Analyse av strømmedata med KQL (Kusto Query Language)</li>
+                             <li>Automatisering av handlinger med Data Activator</li>
+                             <li>Integrasjon med Azure AI & Machine Learning tjenester</li>
+                             <li>Strategisk utnyttelse av Copilot i Fabric</li>
+                         </ul>
+                     </div>
+                 </div>
+             </div>
+         </section>
+
+         <!-- Power BI Tjenester Seksjon -->
+          <section id="powerbi-tjenester" class="section services-bg">
+              <div class="container">
+                   <div class="section-header fade-in">
+                      <span>Visualisering & Innsikt</span>
+                      <h2>Power BI Tjenester & Optimalisering for Fabric</h2>
+                      <p>Vi leverer kvalitetssikre Power BI-løsninger, sømløst integrert og optimalisert for Microsoft Fabric, inkludert DirectLake for lynrask innsikt.</p>
+                  </div>
+                   <div class="service-grid">
+                      <div class="service-card fade-in slide-left" style="transition-delay: 0.2s;">
+                          <div class="service-icon-container">
+                               <img src="https://1000logos.net/wp-content/uploads/2022/08/Microsoft-Power-BI-Logo.png" alt="Power BI rapport og dashboard ikon" class="service-icon pbi-logo">
+                           </div>
+                          <h3>Power BI Rapportering & Dashboard Design</h3>
+                          <ul>
+                              <li>Design av engasjerende og intuitive Power BI rapporter</li>
+                              <li>Utvikling av innsiktsdrevne, interaktive dashboards</li>
+                              <li>Optimalisering av ytelse med DirectLake modus mot Fabric OneLake</li>
+                               <li>Beste praksis for visualisering og brukeropplevelse</li>
+                              <li>Utvikling av mobilvennlige Power BI rapporter</li>
+                          </ul>
+                      </div>
+                      <div class="service-card fade-in" style="transition-delay: 0.4s;">
+                          <div class="service-icon-container">
+                               <img src="https://img.icons8.com/color/512/power-bi.png" alt="Power BI datamodellering og DAX ikon" class="service-icon">
+                           </div>
+                          <h3>Datamodellering & DAX Optimalisering</h3>
+                          <ul>
+                              <li>Bygging av robuste og skalerbare Power BI datamodeller (Stjerneskjema/Snowflake)</li>
+                              <li>Utvikling og feilsøking av avanserte DAX-beregninger</li>
+                              <li>Optimalisering av datamodeller for DirectLake og import-modus</li>
+                              <li>Implementering av Row-Level Security (RLS) for datasikkerhet</li>
+                              <li>Anvendelse av beste praksis for Power BI utvikling</li>
+                          </ul>
+                      </div>
+                       <div class="service-card fade-in slide-right" style="transition-delay: 0.6s;">
+                          <div class="service-icon-container">
+                               <img src="https://powerbihelper.org/wp-content/uploads/2019/07/PbiHIcon.png" alt="Power BI administrasjon og governance ikon" class="service-icon">
+                           </div>
+                          <h3>Power BI Governance & Opplæring</h3>
+                          <ul>
+                              <li>Etablering av Power BI Governance rammeverk</li>
+                              <li>Administrasjon av Fabric/Power BI kapasiteter og lisenser</li>
+                              <li>Implementering av datasett-sertifisering og delingsstrategier</li>
+                              <li>Skreddersydd Power BI opplæring og workshops for brukere og utviklere</li>
+                              <li>Leveranse av brukerstøtte og veiledning</li>
+                          </ul>
+                      </div>
+                   </div>
+              </div>
+          </section>
+
+        <!-- Prosjekter Seksjon -->
         <section id="prosjekter" class="section">
-            <div class="container">
-                <div class="section-header fade-in">
-                    <span>Resultater & Erfaring</span>
-                    <h2>Utvalgte Kundecaser i Microsoft Fabric & Power BI</h2>
-                     <!-- SEO: Tydelig beskrivelse -->
-                    <p>Se eksempler på hvordan vi har hjulpet bedrifter med å løse reelle utfordringer og oppnå konkrete resultater med Microsoft Fabric og Power BI.</p>
-                </div>
+             <div class="container">
+                 <div class="section-header fade-in">
+                     <span>Resultater & Erfaring</span>
+                     <h2>Utvalgte Kundecaser i Microsoft Fabric & Power BI</h2>
+                     <p>Se eksempler på hvordan vi har hjulpet bedrifter med å løse reelle utfordringer og oppnå konkrete resultater med Microsoft Fabric og Power BI.</p>
+                 </div>
+                 <div class="accordion-list fade-in" style="transition-delay: 0.3s;">
+                     <!-- Case 1 -->
+                     <div class="accordion-item">
+                         <button class="accordion-title">
+                             <span class="tittel-tekst">Retail: Vellykket Migrering til Fabric ga Raskere Innsikt og Kostnadsreduksjon</span>
+                             <span class="ikon">+</span>
+                         </button>
+                         <div class="accordion-content">
+                             <p>Ledet full migrering av eksisterende rapporteringsløsning til Microsoft Fabric for en ledende retail-kjede. Fokuset var på å bygge en skalerbar, kostnadseffektiv og pålitelig plattform for fremtiden.</p>
+                             <h4>Nøkkelpunkter i Løsningen:</h4>
+                             <ul>
+                                 <li>Design og implementering av Medallion-arkitektur i OneLake.</li>
+                                 <li>Automatisert datainnhenting fra diverse kilder via API-integrasjoner og Data Factory Pipelines.</li>
+                                 <li>Utvikling av inkrementell logikk for å minimere databehandling og lagringskostnader.</li>
+                                 <li>Optimalisering av Spark Notebooks (PySpark) for effektiv datatransformasjon.</li>
+                                 <li>Strukturert feilhåndtering og dokumentasjon for økt pålitelighet.</li>
+                                 <li>Bruk av Azure DevOps for versjonskontroll og CI/CD.</li>
+                             </ul>
+                             <h4>Resultater:</h4>
+                             <p>Oppnådde betydelig reduksjon i kjøretid for rapporter, reduserte driftskostnader og etablerte en robust plattform klar for fremtidig vekst og AI-initiativer.</p>
+                         </div>
+                     </div>
+                     <!-- Legg til flere cases her -->
+                 </div>
+             </div>
+         </section>
 
-                <!-- Bruker nå .accordion-list og .accordion-item for konsistens -->
-                <div class="accordion-list fade-in" style="transition-delay: 0.3s;">
-                    <!-- Case 1 -->
-                    <div class="accordion-item">
-                         <!-- SEO: Resultatorientert tittel -->
-                        <button class="accordion-title">
-                            <span class="tittel-tekst">Retail: Vellykket Migrering til Fabric ga Raskere Innsikt og Kostnadsreduksjon</span>
-                            <span class="ikon">+</span>
-                        </button>
-                        <div class="accordion-content">
-                             <!-- Beholdt din opprinnelige tekst her - Bør struktureres som Utfordring/Løsning/Resultat -->
-                            <p>Ledet full migrering av eksisterende rapporteringsløsning til Microsoft Fabric for en ledende retail-kjede. Fokuset var på å bygge en skalerbar, kostnadseffektiv og pålitelig plattform for fremtiden.</p>
-                            <h4>Nøkkelpunkter i Løsningen:</h4>
-                            <ul>
-                                <li>Design og implementering av Medallion-arkitektur i OneLake.</li>
-                                <li>Automatisert datainnhenting fra diverse kilder via API-integrasjoner og Data Factory Pipelines.</li>
-                                <li>Utvikling av inkrementell logikk for å minimere databehandling og lagringskostnader.</li>
-                                <li>Optimalisering av Spark Notebooks (PySpark) for effektiv datatransformasjon.</li>
-                                <li>Strukturert feilhåndtering og dokumentasjon for økt pålitelighet.</li>
-                                <li>Bruk av Azure DevOps for versjonskontroll og CI/CD.</li>
-                            </ul>
-                             <!-- SEO: Spesifikk placeholder alt-tekst -->
-                            
-                            <h4>Resultater:</h4>
-                            <p>Oppnådde betydelig reduksjon i kjøretid for rapporter, reduserte driftskostnader og etablerte en robust plattform klar for fremtidig vekst og AI-initiativer.</p>
-                        </div>
-                    </div>
-
-
-                    <!-- Legg til flere .accordion-item her etter behov -->
-
-                </div>
-            </div>
-        </section>
-
-        <!-- Om Oss Seksjon (Oppdatert med to personer) -->
+        <!-- Om Oss Seksjon -->
         <section id="om" class="section">
-            <div class="container">
-                <!-- Flyttet Section Header hit for en generell introduksjon -->
-                <div class="section-header fade-in" style="margin-bottom: 5rem;"> <!-- Økt margin for bedre separasjon -->
-                    <span>Vårt Team</span>
-                    <h2>Møt Dine Partnere i Dataanalyse</h2>
-                    <p>Vi kombinerer teknisk dybde i Microsoft Fabric og Power BI med solid forretningsforståelse for å levere løsninger som skaper reell verdi.</p>
-                </div>
+             <div class="container">
+                 <div class="section-header fade-in" style="margin-bottom: 5rem;">
+                     <span>Vårt Team</span>
+                     <h2>Møt Dine Partnere i Dataanalyse</h2>
+                     <p>Vi kombinerer teknisk dybde i Microsoft Fabric og Power BI med solid forretningsforståelse for å levere løsninger som skaper reell verdi.</p>
+                 </div>
 
-                <!-- Teammedlem 1: Brede -->
-                <div class="team-member fade-in slide-left" style="transition-delay: 0.2s;">
-                    <div class="om-image">
-                           <!-- SEO: Beskrivende alt-tekst -->
-                           <!-- OPPPDATERT BILDEADRESSE -->
-                           <img src="https://media.licdn.com/dms/image/v2/D4E03AQGFN5oKY0Yyxg/profile-displayphoto-shrink_800_800/B4EZX92ehyHgAc-/0/1743720672611?e=1749081600&v=beta&t=XoCc9kuLGNrVYBLcuhOtj9CKgF7EXMiHi4fmqcZMLVM" alt="Brede Nicolai Espelid, Grunnlegger & Microsoft Fabric Konsulent hos TrendMe">
-                    </div>
-                    <div class="om-text">
-                         <!-- SEO: Tydelig H3 om rollen -->
-                        <h3>Brede</h3>
-                         <!-- SEO: Profesjonalisert tekst, fokus på erfaring og verdi -->
-                        <p>
-                            Grunnlegger av TrendMe. Student innen Business Analytics og Finans ved NHH med praktisk erfaring innen regnskap og analyse. Noe som kombinert gir teknisk ekspertise i <strong>Microsoft Fabric</strong> og <strong>Power BI</strong> med en solid forståelse for forretningsprosesser.
-                        </p>
-                        <p>
-                            Har ledet vellykkede <strong>migreringer til Fabric</strong>, designet skalerbare arkitekturer i OneLake, og implementert automatiserte dataløsninger med Data Factory og Spark. Erfaring med <strong>Python</strong>, <strong>PySpark</strong> og <strong>AI/ML</strong> sikrer løsninger som møter forretningsmål.
-                        </p>
+                 <!-- Teammedlem 1: Brede -->
+                 <div class="team-member fade-in slide-left" style="transition-delay: 0.2s;">
+                     <div class="om-image">
+                            <img src="https://media.licdn.com/dms/image/v2/D4E03AQGFN5oKY0Yyxg/profile-displayphoto-shrink_800_800/B4EZX92ehyHgAc-/0/1743720672611?e=1749081600&v=beta&t=XoCc9kuLGNrVYBLcuhOtj9CKgF7EXMiHi4fmqcZMLVM" alt="Brede Nicolai Espelid, Grunnlegger & Microsoft Fabric Konsulent hos TrendMe">
+                     </div>
+                     <div class="om-text">
+                         <h3>Brede</h3>
                          <p>
-                             TrendMe er et sideprosjekt ved siden av studiene, drevet av ønsket om å hjelpe bedrifter transformere data til strategisk innsikt.
-                        </p>
-                         <!-- SEO: Fremhever relevant sertifisering -->
-                        <p><strong>Sertifiseringer:</strong> Microsoft Certified: Fabric Analytics Engineer Associate (DP-600)</p>
-                    </div>
-                </div>
+                             Grunnlegger av TrendMe. Student innen Business Analytics og Finans ved NHH med praktisk erfaring innen regnskap og analyse. Noe som kombinert gir teknisk ekspertise i <strong>Microsoft Fabric</strong> og <strong>Power BI</strong> med en solid forståelse for forretningsprosesser.
+                         </p>
+                         <p>
+                             Har ledet vellykkede <strong>migreringer til Fabric</strong>, designet skalerbare arkitekturer i OneLake, og implementert automatiserte dataløsninger med Data Factory og Spark. Erfaring med <strong>Python</strong>, <strong>PySpark</strong> og <strong>AI/ML</strong> sikrer løsninger som møter forretningsmål.
+                         </p>
+                          <p>
+                              TrendMe er et sideprosjekt ved siden av studiene, drevet av ønsket om å hjelpe bedrifter transformere data til strategisk innsikt.
+                         </p>
+                         <p><strong>Sertifiseringer:</strong> Microsoft Certified: Fabric Analytics Engineer Associate (DP-600)</p>
+                     </div>
+                 </div>
 
-                <!-- Teammedlem 2: Partner -->
-                <div class="team-member fade-in slide-right" style="transition-delay: 0.4s;">
-                    <div class="om-image">
-                        <!-- SEO: Beskrivende alt-tekst -->
-                        <!-- PARTNERENS BILDEADRESSE -->
-                        <img src="https://media.licdn.com/dms/image/v2/D4D03AQEW-QLXtdJGrA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1718370433252?e=1749081600&v=beta&t=jrkhW3MPx2ot6jbw4lJFDNuXjxK0bPGFB_GUifGvBUY" alt="[Partnerens Navn], Partner & Power BI Spesialist hos TrendMe">
-                    </div>
-                    <div class="om-text">
-                        <!-- SEO: Tydelig H3 om rollen -->
-                        <!-- VIKTIG: Erstatt [Partnerens Navn] med faktisk navn -->
-                        <h3>Ulrik</h3>
-                        <p>
-                            Ulrik er partner og vår spesialist innen <strong>Power BI</strong>. Han har hovedansvaret for å omsette data og innsikt til konkret forretningsverdi gjennom <strong>utvikling av effektive og innsiktsgivende dashboards</strong>.
-                        </p>
-                        <p>
-                            Han er dyktig til å kartlegge bedriftens reelle behov og visualisere data på en måte som gir klarhet og støtter gode beslutninger. Hans bakgrunn fra <strong>økonomiroller</strong> og <strong>salgsledelse</strong> gir ham en verdifull kommersiell forståelse som sikrer at dashboardene ikke bare er teknisk gode, men også forretningsmessig relevante.
-                        </p>
-                        <p>
-                            Hans fokus er å bygge bro mellom data og beslutningstakere, og sikre at Power BI-løsningene gir maksimal effekt.
-                        </p>
-                        <!-- Kan legge til sertifiseringer e.l. her hvis relevant -->
-                    </div>
-                </div>
+                 <!-- Teammedlem 2: Partner -->
+                 <div class="team-member fade-in slide-right" style="transition-delay: 0.4s;">
+                     <div class="om-image">
+                         <img src="https://media.licdn.com/dms/image/v2/D4D03AQEW-QLXtdJGrA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1718370433252?e=1749081600&v=beta&t=jrkhW3MPx2ot6jbw4lJFDNuXjxK0bPGFB_GUifGvBUY" alt="Ulrik, Partner & Power BI Spesialist hos TrendMe">
+                     </div>
+                     <div class="om-text">
+                         <h3>Ulrik</h3>
+                         <p>
+                             Ulrik er partner og vår spesialist innen <strong>Power BI</strong>. Han har hovedansvaret for å omsette data og innsikt til konkret forretningsverdi gjennom <strong>utvikling av effektive og innsiktsgivende dashboards</strong>.
+                         </p>
+                         <p>
+                             Han er dyktig til å kartlegge bedriftens reelle behov og visualisere data på en måte som gir klarhet og støtter gode beslutninger. Hans bakgrunn fra <strong>økonomiroller</strong> og <strong>salgsledelse</strong> gir ham en verdifull kommersiell forståelse som sikrer at dashboardene ikke bare er teknisk gode, men også forretningsmessig relevante.
+                         </p>
+                         <p>
+                             Hans fokus er å bygge bro mellom data og beslutningstakere, og sikre at Power BI-løsningene gir maksimal effekt.
+                         </p>
+                     </div>
+                 </div>
+             </div>
+         </section>
 
-            </div>
-        </section>
-
-        <!-- Kontakt Seksjon (SEO Optimalisert) -->
+        <!-- Kontakt Seksjon -->
         <section id="kontakt" class="section">
             <div class="container">
                  <div class="section-header fade-in">
                      <span>Ta Neste Steg</span>
-                     <!-- SEO: Handlingsorientert H2 -->
                     <h2>Klar for å Utnytte Potensialet i Microsoft Fabric?</h2>
-                    <!-- SEO: Tydelig oppfordring -->
                     <p>Fyll ut skjemaet under for en uforpliktende samtale om hvordan TrendMe kan hjelpe din bedrift med Microsoft Fabric rådgivning, implementering eller optimalisering.</p>
                 </div>
 
-                <form id="contact-form"
-                      action="https://formspree.io/f/xqapydgw"
-                      method="POST"
-                      class="fade-in"
-                      style="transition-delay: 0.3s;">
-
+                <!-- VIKTIG: Fjernet action og method attributtene -->
+                <form id="contact-form" class="fade-in" style="transition-delay: 0.3s;">
                     <div class="form-group">
                         <label for="name">Navn:</label>
                         <input type="text" id="name" name="name" required>
@@ -631,7 +603,6 @@
                     </div>
                     <div class="form-group">
                         <label for="company">Bedrift:</label>
-                         <!-- Valgfritt, men nyttig info -->
                         <input type="text" id="company" name="company">
                     </div>
                      <div class="form-group">
@@ -642,8 +613,10 @@
                         <label for="message">Hva kan vi hjelpe deg med?</label>
                         <textarea id="message" name="message" rows="6" required placeholder="F.eks. behov for Fabric strategi, migrering fra Synapse, Power BI optimalisering..."></textarea>
                     </div>
-                    <!-- SEO: Tydelig CTA på knappen -->
+                    <!-- Knappen bruker nå .cta-button stilen -->
                     <button type="submit" class="cta-button">Send Forespørsel om Konsultasjon</button>
+                    <!-- Valgfri melding for feil -->
+                    <p id="form-error-message" style="color: #ff6b6b; margin-top: 1rem; text-align: center; display: none;"></p>
                 </form>
             </div>
         </section>
@@ -652,7 +625,6 @@
     <footer>
         <div class="container">
              <div class="footer-links">
-                 <!-- SEO: Aria-label og beskrivende alt-tekst -->
                  <a href="https://www.linkedin.com/in/brede-espelid/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profil for Brede Espelid">
                      <img src="https://brandlogos.net/wp-content/uploads/2016/06/linkedin-logo-512x512.png" alt="LinkedIn logo">
                  </a>
@@ -662,14 +634,23 @@
                  <a href="mailto:brede.espelid@gmail.com" aria-label="Send e-post til Brede Espelid">
                       <img src="https://cdn-icons-png.flaticon.com/512/8898/8898833.png" alt="E-post ikon">
                  </a>
-                  <!-- TODO: Legg til link til partnerens LinkedIn hvis ønskelig -->
              </div>
             <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
             <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
         </div>
     </footer>
 
-    <!-- === JAVASCRIPT START (Uendret - men inkluderer nå accordion JS) === -->
+    <!-- === ANIMASJONSELEMENTER (Lagt til her) === -->
+    <div id="animation-container">
+        <div id="paper">
+            <pre id="paper-content"></pre>
+        </div>
+        <div id="thank-you-message">Tusen takk! Vi tar kontakt snarest.</div>
+    </div>
+    <!-- === SLUTT ANIMASJONSELEMENTER === -->
+
+
+    <!-- === JAVASCRIPT START === -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
@@ -693,20 +674,19 @@
             });
 
             // --- Smooth scrolling justert for header (uendret) ---
-            const navLinks = document.querySelectorAll('header nav a[href^="#"]'); // Mer spesifikk selektor
+            const navLinks = document.querySelectorAll('header nav a[href^="#"]');
             const header = document.getElementById('main-header');
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     let targetId = this.getAttribute('href');
-                    // Håndterer edge case hvis href kun er '#'
                     if (targetId === '#') return;
                     try {
                          let targetElement = document.querySelector(targetId);
                          if (targetElement) {
                             const headerOffset = header ? header.offsetHeight : 0;
                             const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                            const offsetPosition = elementPosition - headerOffset - 20; // 20px buffer
+                            const offsetPosition = elementPosition - headerOffset - 20;
                             window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                         } else {
                             console.warn(`Smooth scroll target element not found for selector: ${targetId}`);
@@ -717,10 +697,9 @@
                 });
             });
 
-             // --- Skrivemaskineffekt (Oppdatert tekst) ---
+             // --- Skrivemaskineffekt (uendret) ---
              const typingTextElement = document.getElementById('typing-text');
              if (typingTextElement) {
-                 // SEO: Bruker forretningsorientert tekst
                  const textToType = "Reduser datakompleksitet. Akselerer innsikt. Optimaliser kostnader. Sikre governance.";
                  let charIndex = 0;
                  function typeChar() {
@@ -728,14 +707,13 @@
                          if (charIndex === 0) typingTextElement.textContent = '';
                          typingTextElement.textContent += textToType.charAt(charIndex);
                          charIndex++;
-                         setTimeout(typeChar, 80); // Justert hastighet litt
+                         setTimeout(typeChar, 80);
                      }
                  }
-                 // Starter litt senere for å la H1 animere inn
                  setTimeout(typeChar, 1800);
              }
 
-            // --- Generell Accordion Logikk ---
+            // --- Generell Accordion Logikk (uendret) ---
             const accordionTitles = document.querySelectorAll('.accordion-title');
             accordionTitles.forEach(title => {
                 title.addEventListener('click', function() {
@@ -766,7 +744,7 @@
                         } else {
                             content.classList.add('aktiv');
                             content.style.maxHeight = content.scrollHeight + "px";
-                            if(icon) icon.textContent = '−'; // Bruk minus for åpen
+                            if(icon) icon.textContent = '−';
                         }
                     } else {
                          console.warn("Accordion content not found immediately after title:", this);
@@ -778,6 +756,165 @@
             // --- Footer årstall (uendret) ---
             const yearSpan = document.getElementById('year');
             if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+
+            // === NY KODE FOR KONTAKTSKJEMA-ANIMASJON OG FORMSPREE SUBMIT ===
+
+            const contactForm = document.getElementById('contact-form');
+            const animationContainer = document.getElementById('animation-container');
+            const paper = document.getElementById('paper');
+            const paperContent = document.getElementById('paper-content');
+            const thankYouMessage = document.getElementById('thank-you-message');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageInput = document.getElementById('message');
+            const companyInput = document.getElementById('company'); // Henter company input
+            const phoneInput = document.getElementById('phone'); // Henter phone input
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const formErrorMessage = document.getElementById('form-error-message'); // For feilmelding
+
+            // Funksjon som håndterer innsending
+            async function handleSubmit(event) {
+                event.preventDefault(); // Forhindre at siden lastes på nytt/standard innsending
+
+                // Visuelt indikerer innsending
+                const originalButtonText = submitButton.textContent;
+                submitButton.disabled = true;
+                submitButton.textContent = 'Sender...';
+                if(formErrorMessage) formErrorMessage.style.display = 'none'; // Skjul evt. tidligere feilmelding
+
+                // 1. Forbered data for Formspree
+                const formData = new FormData(contactForm);
+                const formSpreeEndpoint = 'https://formspree.io/f/xqapydgw'; // Din Formspree endpoint
+
+                try {
+                    // 2. Send data til Formspree
+                    const response = await fetch(formSpreeEndpoint, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json' // Viktig for å få JSON respons
+                        }
+                    });
+
+                    // 3. Håndter Formspree respons
+                    if (response.ok) {
+                        // SUKSESS - Start animasjonen
+
+                        // 3a. Formater data for papiret
+                        const formDataText = `Fra: ${nameInput.value}\n` +
+                                             `E-post: ${emailInput.value}\n` +
+                                             (companyInput.value ? `Bedrift: ${companyInput.value}\n` : '') + // Legg til hvis fylt ut
+                                             (phoneInput.value ? `Telefon: ${phoneInput.value}\n` : '') + // Legg til hvis fylt ut
+                                             `\nMelding:\n--------------------------\n${messageInput.value}`;
+                        paperContent.textContent = formDataText;
+
+                        // 3b. Vis animasjonscontaineren
+                        animationContainer.style.display = 'flex';
+
+                        // 3c. Få papiret til å dukke opp (med liten forsinkelse)
+                        setTimeout(() => {
+                            paper.style.opacity = '1';
+                            paper.style.transform = 'scale(1)';
+                        }, 100); // Kort forsinkelse for fade-in effekt
+
+                        // 3d. Vis takkemeldingen etter at papiret er synlig
+                        setTimeout(() => {
+                            thankYouMessage.style.display = 'block';
+                            thankYouMessage.offsetHeight; // Force reflow
+                            thankYouMessage.style.opacity = '1';
+                        }, 800); // Venter litt lenger
+
+                        // 3e. Start flyanimasjonen etter at takkemeldingen er vist
+                        setTimeout(() => {
+                            paper.classList.add('flying');
+                        }, 2500); // Venter før flyet letter
+
+                    } else {
+                         // FEIL ved innsending til Formspree
+                        const responseData = await response.json();
+                        let errorMessage = 'Kunne ikke sende meldingen. Prøv igjen senere.';
+                        if (responseData && responseData.errors && responseData.errors.length > 0) {
+                             // Prøver å gi en mer spesifikk feilmelding fra Formspree hvis mulig
+                             errorMessage = responseData.errors.map(error => error.message).join(', ');
+                        } else if (response.status === 422) {
+                             errorMessage = 'Vennligst sjekk at alle feltene er korrekt utfylt.';
+                        }
+                        console.error('Formspree submission error:', response.status, responseData);
+                        if(formErrorMessage) {
+                            formErrorMessage.textContent = errorMessage;
+                            formErrorMessage.style.display = 'block';
+                        } else {
+                            alert(errorMessage); // Fallback hvis p-tag ikke finnes
+                        }
+                        // Reset knappen ved feil
+                        submitButton.disabled = false;
+                        submitButton.textContent = originalButtonText;
+                    }
+
+                } catch (error) {
+                    // Nettverksfeil eller annen JS-feil
+                    console.error('Error submitting form:', error);
+                    if(formErrorMessage) {
+                        formErrorMessage.textContent = 'En nettverksfeil oppstod. Sjekk tilkoblingen din og prøv igjen.';
+                        formErrorMessage.style.display = 'block';
+                    } else {
+                         alert('En nettverksfeil oppstod. Sjekk tilkoblingen din og prøv igjen.');
+                    }
+                    // Reset knappen ved feil
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalButtonText;
+                }
+            }
+
+            // Lytt etter 'submit'-hendelsen på skjemaet
+            if (contactForm) {
+                contactForm.addEventListener('submit', handleSubmit);
+            } else {
+                 console.error("Element with ID 'contact-form' not found.");
+            }
+
+            // Lytt etter når flyanimasjonen er ferdig for å rydde opp
+            if (paper) {
+                paper.addEventListener('animationend', () => {
+                    if (paper.classList.contains('flying')) {
+                        // Skjul containeren
+                        animationContainer.style.display = 'none';
+
+                        // Fjern animasjonsklassen
+                        paper.classList.remove('flying');
+
+                        // Skjul takkemelding og reset dens opacity
+                        thankYouMessage.style.display = 'none';
+                        thankYouMessage.style.opacity = '0';
+
+                        // Reset papirets stil
+                        paper.style.opacity = '0';
+                        paper.style.transform = 'scale(0.8)';
+                        paperContent.textContent = ''; // Tøm innholdet
+
+                        // Reset skjemaet
+                        if (contactForm) contactForm.reset();
+
+                         // Reset knappen etter vellykket animasjon
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Send Forespørsel om Konsultasjon'; // Tilbake til original tekst
+                    }
+                });
+            } else {
+                 console.error("Element with ID 'paper' not found.");
+            }
+
+             // Sørg for at alle nødvendige elementer finnes før vi legger til event listeners
+             if (!animationContainer) console.error("Element with ID 'animation-container' not found.");
+             if (!paperContent) console.error("Element with ID 'paper-content' not found.");
+             if (!thankYouMessage) console.error("Element with ID 'thank-you-message' not found.");
+             if (!nameInput) console.error("Element with ID 'name' not found.");
+             if (!emailInput) console.error("Element with ID 'email' not found.");
+             if (!messageInput) console.error("Element with ID 'message' not found.");
+             if (!submitButton) console.error("Submit button inside '#contact-form' not found.");
+
+            // === SLUTT NY KODE ===
 
         });
     </script>
