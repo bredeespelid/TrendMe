@@ -11,12 +11,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* === GRUNNLEGGENDE OG LAYOUT === */
+        /* === GRUNNLEGGENDE OG LAYOUT (Fra hovedblogg) === */
         :root {
             --dark-bg: #121212;
-            --primary-fabric-dark: #6a0dad;
-            --primary-fabric-light: #9370db;
-            --secondary-accent: #00c6ff;
+            --primary-fabric-dark: #6a0dad; /* Mørk lilla */
+            --primary-fabric-light: #9370db; /* Lys lilla */
+            --secondary-accent: #00c6ff;   /* Lys blå */
+            --secondary-accent-rgb: 0, 198, 255; /* Definert for RGBA bruk */
             --glow-color: rgba(0, 198, 255, 0.5);
             --text-light: #e0e0e0;
             --text-medium: #b0b0b0;
@@ -24,8 +25,16 @@
             --card-bg: rgba(40, 40, 40, 0.8);
             --card-bg-hover: rgba(55, 55, 55, 0.9);
             --card-border: rgba(255, 255, 255, 0.1);
+            --bronze: #cd7f32;
+            --bronze-rgb: 205, 127, 50; /* Definert for RGBA bruk */
+            --silver: #c0c0c0;
+            --silver-rgb: 192, 192, 192; /* Definert for RGBA bruk */
+            --gold: #ffd700;
+            --gold-rgb: 255, 215, 0;   /* Definert for RGBA bruk */
+            --warning-color: #ffcc00;
             --font-primary: 'Poppins', sans-serif;
-            --transition-speed: 0.3s;
+            --transition-speed: 0.3s; /* Endret til 0.3s fra hovedblogg */
+            --anim-duration-base: 3.5s; /* Beholder denne for animasjonslogikk */
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
@@ -40,7 +49,7 @@
         .container { max-width: 1200px; margin: auto; padding: 0 25px; }
         .section { padding: 4rem 0; }
 
-        /* === HEADER === */
+        /* === HEADER (Fra hovedblogg) === */
         header {
             background: rgba(18, 18, 18, 0.8);
             backdrop-filter: blur(10px);
@@ -106,7 +115,8 @@
         header ul li a:hover { color: var(--text-light); }
         header ul li a:hover::after { width: 70%; left: 50%; }
 
-        /* === HERO SEKSJON === */
+
+        /* === HERO SEKSJON (Fra hovedblogg) === */
         .hero {
             min-height: 40vh;
             display: flex;
@@ -116,9 +126,9 @@
             padding: 4rem 0 2rem 0;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(160deg, rgba(106, 13, 173, 0.2) 0%, rgba(18, 18, 18, 0.7) 60%), url('fabric-background.jpg') no-repeat center center/cover; /* Vurder en annen bakgrunn for bloggen */
+            /* Vurder å bruke samme bakgrunn som hovedbloggen eller en nøytral */
+            background: linear-gradient(160deg, rgba(106, 13, 173, 0.2) 0%, rgba(18, 18, 18, 0.7) 60%);
             background-color: #1a1a2e;
-            background-attachment: fixed; /* Kan være litt tungt, vurder å fjerne */
         }
         .hero::before { /* Lett glød-effekt */
             content: '';
@@ -152,13 +162,14 @@
             margin-right: auto;
         }
 
-        /* === BLOGG GRID & KORT === */
+
+        /* === BLOGG GRID & KORT (Kombinert) === */
         .blog-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4 kolonner på store skjermer */
+            grid-template-columns: repeat(4, 1fr); /* Matcher hovedblogg */
             gap: 2rem;
         }
-        a.blog-card { /* Endret fra div til a */
+        a.blog-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 12px;
@@ -166,52 +177,189 @@
             transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background-color var(--transition-speed) ease;
             display: flex;
             flex-direction: column;
-            text-decoration: none; /* Fjern link-understrek */
-            color: inherit; /* Arv tekstfarge */
-            opacity: 0; /* For fade-in animasjon */
-            transform: translateY(20px); /* For fade-in animasjon */
+            text-decoration: none;
+            color: inherit;
+            opacity: 0; /* For JS fade-in */
+            transform: translateY(20px); /* For JS fade-in */
         }
         a.blog-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-8px); /* Matcher hovedblogg */
             box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
             background-color: var(--card-bg-hover);
         }
+
+        /* CARD IMAGE - Spesifikk for denne filen for å holde animasjoner */
         .card-image {
             width: 100%;
-            height: 180px; /* Juster høyde etter behov */
+            height: 180px; /* Matcher hovedblogg */
             overflow: hidden;
+            /* FJERN bakgrunn/padding som var her før for å matche hovedblogg */
+            /* background: radial-gradient... */
+            /* background-color: #1a1e2a; */
+            /* padding: 15px; */
+            display: flex; /* Behøves for sentrering av innhold */
+            align-items: center;
+            justify-content: center;
+            position: relative; /* Behøves for absolutt posisjonerte elementer inni? */
         }
-        .card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Sørger for at bildet dekker uten å strekkes */
-            display: block;
-            transition: transform 0.4s ease;
+
+        /* FJERN generell .card-image svg regel, stiler settes per illustrasjon nå */
+        /*
+        .card-image svg {
+            width: 85%; height: 85%;
+            max-width: 120px; max-height: 120px;
+            overflow: visible;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4));
         }
-        a.blog-card:hover .card-image img {
-            transform: scale(1.05); /* Lett zoom på hover */
+        a.blog-card:hover .card-image svg {
+             transform: scale(1.05);
+             filter: drop-shadow(3px 6px 10px var(--glow-color));
+             transition: transform 0.4s ease-out, filter 0.4s ease-out;
         }
+        */
+
         .card-content {
-            padding: 1.5rem;
-            flex-grow: 1; /* Sørger for at innholdet fyller plassen */
+            padding: 1.5rem; /* Matcher hovedblogg */
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
         .card-title {
-            font-size: 1.3rem;
+            font-size: 1.3rem; /* Matcher hovedblogg */
             font-weight: 600;
             color: var(--text-light);
             margin-bottom: 0.5rem;
-            line-height: 1.3;
+            line-height: 1.3; /* Matcher hovedblogg */
         }
         .card-meta {
-            font-size: 0.85rem;
+            font-size: 0.85rem; /* Matcher hovedblogg */
             color: var(--text-medium);
-            margin-top: auto; /* Skyver datoen til bunnen */
+            margin-top: auto;
             padding-top: 0.75rem;
         }
 
-        /* === FOOTER === */
+        /* ================================================================ */
+        /* === START: FORBEDREDE INLINE SVG/CSS ANIMASJONER (BEHOLDT) === */
+        /* ================================================================ */
+
+         /* --- 1. Star/Snowflake (BEHOLDT) --- */
+         @keyframes starflake-single-rotate { from { transform: rotate(0deg) scale(0.9); } to   { transform: rotate(180deg) scale(1); } }
+         @keyframes starflake-single-fade-star { 0%, 40% { opacity: 1; } 60%, 100% { opacity: 0; } }
+         @keyframes starflake-single-fade-flake { 0%, 40% { opacity: 0; } 60%, 100% { opacity: 1; } }
+         @keyframes starflake-svg-fade-in { from { opacity: 0; } to { opacity: 1; } }
+         .illustration-star-snowflake { /* Container for å sikre størrelse */ width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+         .illustration-star-snowflake svg { opacity: 0; animation: starflake-svg-fade-in 0.5s ease-out forwards, starflake-single-rotate calc(var(--anim-duration-base) * 0.8) ease-in-out 0.5s 1 forwards; width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
+         .illustration-star-snowflake svg .star-use, .illustration-star-snowflake svg .flake-use-pro { fill: none; stroke: url(#starFlakeGradient); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transform-origin: center; }
+         .illustration-star-snowflake svg .star-use { animation: starflake-single-fade-star calc(var(--anim-duration-base) * 0.8) ease-in-out 0.5s 1 forwards; }
+         .illustration-star-snowflake svg .flake-use-pro { opacity: 0; animation: starflake-single-fade-flake calc(var(--anim-duration-base) * 0.8) ease-in-out 0.5s 1 forwards; }
+         .illustration-star-snowflake svg .flake-core { stroke-width: 1.8; }
+         .illustration-star-snowflake svg .flake-arm { stroke-width: 1.5; }
+         .illustration-star-snowflake svg .flake-branch { stroke-width: 1.2; }
+         a.blog-card:hover .illustration-star-snowflake svg { filter: drop-shadow(3px 6px 10px var(--glow-color)); transition: filter 0.4s ease-out; } /* Kun glow hover */
+
+
+        /* --- 2. Medallion Flow Logic (BEHOLDT) --- */
+        @keyframes draw-flow-line { to { stroke-dashoffset: 0; } }
+        @keyframes layer-appear-fade { from { opacity: 0; transform: scale(0.9); } to   { opacity: 1; transform: scale(1); } }
+        @keyframes gold-pulse { 0%, 100% { filter: drop-shadow(0 0 2px var(--gold)); opacity: 0.8; } 50% { filter: drop-shadow(0 0 6px var(--gold)); opacity: 1; } }
+        .illustration-medallion { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .illustration-medallion svg { width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
+        .illustration-medallion svg .layer-shape { stroke-width: 1.5; rx: 5; opacity: 0; transform-origin: center; animation: layer-appear-fade 0.8s ease-out forwards; }
+        .illustration-medallion svg .bronze-layer { fill: rgba(var(--bronze-rgb), 0.3); stroke: var(--bronze); animation-delay: 0.3s; }
+        .illustration-medallion svg .silver-layer { fill: rgba(var(--silver-rgb), 0.3); stroke: var(--silver); animation-delay: 1.1s; }
+        .illustration-medallion svg .gold-layer { fill: rgba(var(--gold-rgb), 0.3); stroke: var(--gold); animation: layer-appear-fade 0.8s ease-out 1.9s forwards, gold-pulse calc(var(--anim-duration-base) * 0.7) ease-in-out infinite alternate 2.7s; }
+        .illustration-medallion svg .flow-arrow { fill: none; stroke: var(--text-medium); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 50; stroke-dashoffset: 50; animation: draw-flow-line 0.8s ease-out forwards; marker-end: url(#arrowhead-medallion); }
+        .illustration-medallion svg #arrow-bronze-silver { animation-delay: 0.6s; }
+        .illustration-medallion svg .arrow-silver-gold { animation-delay: 1.4s; }
+        .illustration-medallion svg .layer-text { font-size: 10px; fill: var(--text-light); text-anchor: middle; dominant-baseline: middle; font-weight: 600; opacity: 0; animation: layer-appear-fade 0.8s ease-out forwards; }
+        .illustration-medallion svg .bronze-text { animation-delay: 0.3s; }
+        .illustration-medallion svg .silver-text { animation-delay: 1.1s; }
+        .illustration-medallion svg .gold-text { animation-delay: 1.9s; }
+        a.blog-card:hover .illustration-medallion svg .layer-shape { filter: brightness(1.2) drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); transition: filter 0.3s ease; } /* La til drop-shadow */
+        a.blog-card:hover .illustration-medallion svg .flow-arrow { stroke: var(--secondary-accent); transition: stroke 0.3s ease; }
+
+
+        /* --- 3. Data Ingestion (BEHOLDT) --- */
+        @keyframes particle-fall-into-funnel-v14 { 0% { transform: translateY(-15px); opacity: 0; } 30% { opacity: 1; transform: translateY(0px); } 100% { transform: translateY(50px) scale(0.5); opacity: 0; } }
+        @keyframes fade-in-static-v14 { from { opacity: 0; } to { opacity: 1; } }
+        .illustration-ingestion { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .illustration-ingestion svg { width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
+        .illustration-ingestion svg .funnel-static-v14 { opacity: 0; animation: fade-in-static-v14 0.8s ease-out 0.3s forwards; }
+        .illustration-ingestion svg .funnel-top-v14 { fill: rgba(var(--secondary-accent-rgb), 0.15); stroke: var(--secondary-accent); stroke-width: 1; }
+        .illustration-ingestion svg .funnel-pipe-v14 { fill: none; stroke: var(--secondary-accent); stroke-width: 1; }
+        .illustration-ingestion svg .fall-particle-v14 { fill: var(--primary-fabric-light); opacity: 0; transform-origin: center; animation: particle-fall-into-funnel-v14 1.5s ease-in forwards; }
+        .illustration-ingestion svg #p1 { animation-delay: 0.8s; }
+        .illustration-ingestion svg #p2 { animation-delay: 1.0s; fill: var(--secondary-accent); }
+        .illustration-ingestion svg #p3 { animation-delay: 1.2s; }
+        .illustration-ingestion svg #p4 { animation-delay: 1.4s; fill: var(--gold); }
+        .illustration-ingestion svg #p5 { animation-delay: 1.6s; }
+        .illustration-ingestion svg #p6 { animation-delay: 1.8s; fill: var(--silver); }
+        a.blog-card:hover .illustration-ingestion svg .funnel-static-v14 { filter: brightness(1.2) drop-shadow(3px 6px 10px var(--glow-color)); transition: filter 0.3s ease; } /* La til glow */
+
+
+        /* --- 4. Capacity/Pricing Meter (BEHOLDT) --- */
+        @keyframes meter-fill-single { from { stroke-dashoffset: 251.2; } to { stroke-dashoffset: 63; } }
+        @keyframes fade-in-text { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .illustration-capacity { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .illustration-capacity svg { width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
+        .illustration-capacity svg .meter-bg { fill: none; stroke: var(--card-border); stroke-width: 6; opacity: 0; animation: fade-in-text 1s ease-out 0.2s forwards; }
+        .illustration-capacity svg .meter-value { fill: none; stroke: url(#capacityGradient); stroke-width: 7; stroke-linecap: round; stroke-dasharray: 251.2; stroke-dashoffset: 251.2; transform: rotate(-90deg); transform-origin: 50% 50%; animation: meter-fill-single 1.8s cubic-bezier(0.64, 0, 0.78, 1) 0.5s 1 forwards; --color: var(--secondary-accent); }
+        .illustration-capacity svg .meter-text { font-size: 18px; font-weight: 600; fill: var(--text-light); text-anchor: middle; opacity: 0; animation: fade-in-text 1s ease-out 1.8s forwards; }
+        a.blog-card:hover .illustration-capacity svg { filter: drop-shadow(3px 6px 10px var(--glow-color)); transition: filter 0.4s ease-out; } /* La til glow */
+
+
+        /* --- 5. RLS/CLS Table Grid (BEHOLDT) --- */
+        @keyframes grid-cell-appear { from { opacity: 0; transform: scale(0.7); } to   { opacity: 1; transform: scale(1); } }
+        @keyframes highlight-cell { from { opacity: 0; } to   { opacity: 0.4; } }
+        @keyframes highlight-cell-strong { from { opacity: 0; } to { opacity: 0.7; } }
+        @keyframes lock-appear-scale { from { opacity: 0; transform: scale(0.5) rotate(-45deg); } to   { opacity: 1; transform: scale(1) rotate(0deg); } }
+        .illustration-security { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .illustration-security svg { width: 95%; height: 95%; /* Litt større pga bredere viewbox */ max-width: 140px; max-height: 120px; overflow: visible; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
+        .illustration-security svg .grid-cell { fill: none; stroke: var(--text-medium); stroke-width: 0.8; opacity: 0; transform-origin: center; animation: grid-cell-appear 0.6s ease-out forwards; }
+        .illustration-security svg g:nth-child(1) rect { animation-delay: 0.3s; } .illustration-security svg g:nth-child(2) rect { animation-delay: 0.4s; } .illustration-security svg g:nth-child(3) rect { animation-delay: 0.5s; } .illustration-security svg g:nth-child(4) rect { animation-delay: 0.4s; } .illustration-security svg g:nth-child(5) rect { animation-delay: 0.5s; } .illustration-security svg g:nth-child(6) rect { animation-delay: 0.6s; } .illustration-security svg g:nth-child(7) rect { animation-delay: 0.5s; } .illustration-security svg g:nth-child(8) rect { animation-delay: 0.6s; } .illustration-security svg g:nth-child(9) rect { animation-delay: 0.7s; }
+        .illustration-security svg .highlight-rect-row { fill: var(--primary-fabric-light); opacity: 0; animation: highlight-cell 0.8s ease-out 1.0s forwards; }
+        .illustration-security svg .highlight-cell-col { fill: var(--primary-fabric-light); opacity: 0; animation: highlight-cell-strong 0.8s ease-out 1.0s forwards; }
+        .illustration-security svg .dimmed-cell-col { fill: var(--text-dark); opacity: 0; animation: highlight-cell 0.8s ease-out 1.0s forwards; animation-fill-mode: forwards; }
+        .illustration-security svg .lock-icon-group { opacity: 0; transform-origin: center; animation: lock-appear-scale 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55) 1.3s forwards; }
+        .illustration-security svg .lock-icon-group path { fill: var(--secondary-accent); }
+        a.blog-card:hover .illustration-security svg { filter: drop-shadow(3px 6px 10px var(--glow-color)); transition: filter 0.4s ease-out; } /* La til glow */
+
+
+        /* --- 6. Calculation Groups Stack (BEHOLDT) --- */
+        @keyframes stack-appear { 0% { transform: translate(0, 20px) rotate(0deg) scale(0.8); opacity: 0; } 60% { transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--r, 0deg)) scale(1.05); opacity: 0.8; } 100% { transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--r, 0deg)) scale(1); opacity: 1; } }
+        .illustration-calc-groups { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .illustration-calc-groups svg { width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
+        .illustration-calc-groups svg .card-stack { fill: none; stroke-width: 2; rx: 5; transform-origin: center; opacity: 0; animation: stack-appear 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; transition: transform 0.3s ease-out; } /* Added transition here */
+        .illustration-calc-groups svg .card-stack-1 { stroke: var(--secondary-accent); --tx: 0px; --ty: 0px; --r: 0deg; animation-delay: 0.5s; }
+        .illustration-calc-groups svg .card-stack-2 { stroke: var(--primary-fabric-light); --tx: -4px; --ty: -4px; --r: -3deg; animation-delay: 0.7s; }
+        .illustration-calc-groups svg .card-stack-3 { stroke: var(--gold); --tx: -8px; --ty: -8px; --r: -6deg; animation-delay: 0.9s; }
+        a.blog-card:hover .illustration-calc-groups svg .card-stack { transform: translate(var(--tx), calc(var(--ty) - 3px)) rotate(var(--r)); filter: drop-shadow(3px 6px 10px var(--glow-color)); } /* lagt til glow */
+
+
+        /* --- 7. Warehouse vs Lakehouse (BEHOLDT) --- */
+        @keyframes wh-lh-appear { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes wave-hover-animate { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+        .illustration-wh-lh { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .illustration-wh-lh svg { display: block; width: 100%; height: 100%; max-width: none; max-height: none; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); transition: filter 0.4s ease-out; /* Added transition */ }
+        .illustration-wh-lh svg #main-lakehouse-icon { opacity: 0; animation: wh-lh-appear 0.8s ease-out 0.4s forwards; transform-origin: center center; transform: translate(65px, 38px) scale(1.4); }
+        .illustration-wh-lh svg .cube-face { fill: rgba(var(--primary-fabric-light-rgb), 0.15); stroke: var(--primary-fabric-light); stroke-width: 1.5; stroke-linejoin: round; }
+        .illustration-wh-lh svg .cube-edge { stroke: var(--primary-fabric-light); stroke-width: 1.5; }
+        .illustration-wh-lh svg .lh-wave { fill: none; stroke: var(--secondary-accent); stroke-width: 2; stroke-linecap: round; transition: transform 0.3s ease-out; }
+        a.blog-card:hover .illustration-wh-lh svg .lh-wave { animation: wave-hover-animate 1.2s ease-in-out infinite; }
+        a.blog-card:hover .illustration-wh-lh svg { filter: drop-shadow(3px 6px 10px var(--glow-color)); } /* La til glow på hele svg */
+
+
+        /* --- 8. Fabric Intro Logo Build (BEHOLDT - Image URL) --- */
+        @keyframes img-logo-appear-scale { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+        .illustration-fabric-intro { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+        .illustration-fabric-intro img.fabric-logo-img { display: block; max-width: 100%; max-height: 100%; height: 80%; width: auto; object-fit: contain; opacity: 0; transform-origin: center center; animation: img-logo-appear-scale 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards; transition: filter 0.4s ease-out; /* Behøvde bare filter transition */ }
+        a.blog-card:hover .illustration-fabric-intro img.fabric-logo-img { filter: drop-shadow(0 0 10px var(--secondary-accent, #00c6ff)); }
+
+        /* ================================================================ */
+        /* === SLUTT: FORBEDREDE INLINE SVG/CSS ANIMASJONER === */
+        /* ================================================================ */
+
+        /* === FOOTER (Fra hovedblogg) === */
         footer {
             background-color: #0a0a0a;
             color: var(--text-medium);
@@ -224,9 +372,8 @@
             margin-bottom: 1rem;
             font-size: 0.9rem;
         }
-        /* Legg til .footer-links stiler hvis du bruker dem */
 
-        /* === RESPONSIVITET === */
+        /* === RESPONSIVITET (Fra hovedblogg) === */
         @media (max-width: 1100px) {
             .blog-grid { grid-template-columns: repeat(3, 1fr); } /* 3 kolonner */
         }
@@ -244,21 +391,57 @@
             .hero h1 { font-size: 1.8rem; }
         }
     </style>
-    <!-- Forslag: Flytt CSS til en ekstern fil, f.eks. css/blog-styles.css -->
-    <!-- <link rel="stylesheet" href="css/blog-styles.css"> -->
+     <!-- RGB Vars Script beholdes uendret -->
+     <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+             const style = getComputedStyle(document.documentElement);
+             const hexToRgb = hex => {
+                 // Robust hexToRgb funksjon
+                 hex = hex.trim();
+                 if (!hex.startsWith('#')) return '128, 128, 128';
+                 let shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+                 hex = hex.replace(shorthandRegex, function(m, r, g, b) { return r + r + g + g + b + b; });
+                 let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                 if (!result) return '128, 128, 128';
+                 const r = parseInt(result[1], 16);
+                 const g = parseInt(result[2], 16);
+                 const b = parseInt(result[3], 16);
+                 return `${r}, ${g}, ${b}`;
+             };
+
+             // Funksjon for å sette RGB-variabler trygt
+             const setRgbVar = (varName, fallback) => {
+                 try {
+                     const val = style.getPropertyValue(varName).trim();
+                     document.documentElement.style.setProperty(`${varName}-rgb`, hexToRgb(val));
+                 } catch (e) {
+                     console.warn(`Could not process CSS variable ${varName}. Using fallback.`);
+                     document.documentElement.style.setProperty(`${varName}-rgb`, fallback);
+                 }
+             };
+
+             setRgbVar('--primary-fabric-dark', '106, 13, 173');
+             setRgbVar('--primary-fabric-light', '147, 112, 219');
+             setRgbVar('--secondary-accent', '0, 198, 255');
+             setRgbVar('--bronze', '205, 127, 50');
+             setRgbVar('--silver', '192, 192, 192');
+             setRgbVar('--gold', '255, 215, 0');
+        });
+    </script>
 </head>
 <body>
 
+    <!-- Header (Struktur beholdes) -->
     <header id="main-header">
         <nav class="container">
-            <div class="logo"><a href="/">TrendMe</a></div> <!-- Lenke til hovedside -->
+            <div class="logo"><a href="/">TrendMe</a></div>
             <ul>
                 <li><a href="/">Tilbake til TrendMe</a></li>
-                <!-- Vurder å legge til link til /#kontakt eller andre viktige sider -->
             </ul>
         </nav>
     </header>
 
+    <!-- Hero Seksjon (Struktur beholdes) -->
      <section id="blogg-hero" class="hero">
         <div class="container">
             <h1>TrendMe Blogg</h1>
@@ -266,98 +449,165 @@
         </div>
     </section>
 
+    <!-- Hovedinnhold (Struktur beholdes, men innholdet i kortene er fra animasjonsfilen) -->
     <main class="section">
         <div class="container">
             <div class="blog-grid">
 
-                <!-- === KORT 8 (Stjerne/Snøfnugg) - Nå som lenke === -->
+                <!-- === KORT 8 (Stjerne/Snøfnugg) - Mer Detaljert Snøfnugg === -->
                 <a href="posts/stjerne-vs-snofnugg-schema.html" class="blog-card">
                     <div class="card-image">
-                        <img src="https://microsoftlearning.github.io/mslearn-fabric/Instructions/Labs/Images/star-schema-diagram.png" alt="Stjerne vs Snøfnugg skjema i Fabric og Power BI">
+                        <div class="css-illustration illustration-star-snowflake">
+                            <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                                <defs>
+                                    <linearGradient id="starFlakeGradient" gradientTransform="rotate(45)">
+                                        <stop offset="0%" stop-color="var(--primary-fabric-light)" />
+                                        <stop offset="100%" stop-color="var(--secondary-accent)" />
+                                    </linearGradient>
+                                    <path id="star-shape-pro" d="M50,10 L61.8,36.4 L90.9,36.4 L68.2,54.5 L79.1,80.9 L50,65 L20.9,80.9 L31.8,54.5 L9.1,36.4 L38.2,36.4 Z"/>
+                                    <g id="flake-shape-pro-v2">
+                                        <polygon class="flake-core" points="50,38 60.4,44 60.4,56 50,62 39.6,56 39.6,44"/>
+                                        <g id="flake-arm-template">
+                                            <line class="flake-arm" x1="50" y1="38" x2="50" y2="5" />
+                                            <path class="flake-branch" d="M45,30 L50,22 L55,30"/>
+                                            <path class="flake-branch" d="M42,18 L50,5 L58,18"/>
+                                            <path class="flake-branch" d="M46,12 L50,5 L54,12"/>
+                                        </g>
+                                        <use href="#flake-arm-template" /> <use href="#flake-arm-template" transform="rotate(60 50 50)"/> <use href="#flake-arm-template" transform="rotate(120 50 50)"/> <use href="#flake-arm-template" transform="rotate(180 50 50)"/> <use href="#flake-arm-template" transform="rotate(240 50 50)"/> <use href="#flake-arm-template" transform="rotate(300 50 50)"/>
+                                    </g>
+                                </defs>
+                                <use href="#star-shape-pro" class="star-use" />
+                                <use href="#flake-shape-pro-v2" class="flake-use-pro" />
+                            </svg>
+                        </div>
                     </div>
                     <div class="card-content">
-                        <h3 class="card-title">Stjerne eller Snøfnugg? Velge Riktig Datamodell (Schema) i Fabric og Power BI</h3>
+                        <h3 class="card-title">Stjerne eller Snøfnugg? Velge Riktig Datamodell</h3>
                         <span class="card-meta"><time datetime="2024-04-04">04. April 2024</time></span>
                     </div>
                 </a>
                 <!-- === SLUTT KORT 8 === -->
 
-                <!-- === KORT 7 (Medallion) - Nå som lenke === -->
+                <!-- === KORT 7 (Medallion) - Flow Logic Illustrasjon === -->
                 <a href="posts/medallion-arkitektur-fabric.html" class="blog-card">
                     <div class="card-image">
-                        <img src="https://miro.medium.com/v2/resize:fit:1200/1*hlo4bss4yyO6rleDTEgzeg.png" alt="Medallion-arkitektur i Microsoft Fabric">
+                         <div class="css-illustration illustration-medallion">
+                              <svg viewBox="0 0 120 100" preserveAspectRatio="xMidYMid meet">
+                                  <defs>
+                                      <marker id="arrowhead-medallion" markerWidth="8" markerHeight="6" refX="4" refY="3" orient="auto" markerUnits="strokeWidth"> <path d="M0,0 L8,3 L0,6 Z" fill="var(--text-medium)" /> </marker>
+                                      <!-- Innebygd stil beholdes, men RGB variabler settes av JS nå -->
+                                      <style> .bronze-layer { fill: rgba(var(--bronze-rgb), 0.3); stroke: var(--bronze); } .silver-layer { fill: rgba(var(--silver-rgb), 0.3); stroke: var(--silver); } .gold-layer { fill: rgba(var(--gold-rgb), 0.3); stroke: var(--gold); } </style>
+                                  </defs>
+                                  <g> <rect class="layer-shape bronze-layer" x="35" y="75" width="50" height="20"/> <text class="layer-text bronze-text" x="60" y="86">BRONZE</text> </g>
+                                  <g> <rect class="layer-shape silver-layer" x="35" y="40" width="50" height="20"/> <text class="layer-text silver-text" x="60" y="51">SILVER</text> </g>
+                                  <g> <rect class="layer-shape gold-layer" id="gold1" x="5" y="5" width="30" height="20"/> <text class="layer-text gold-text" x="20" y="16">GOLD</text> </g>
+                                  <g> <rect class="layer-shape gold-layer" id="gold2" x="45" y="5" width="30" height="20"/> <text class="layer-text gold-text" x="60" y="16">GOLD</text> </g>
+                                  <g> <rect class="layer-shape gold-layer" id="gold3" x="85" y="5" width="30" height="20"/> <text class="layer-text gold-text" x="100" y="16">GOLD</text> </g>
+                                  <path id="arrow-bronze-silver" class="flow-arrow" d="M60,75 V60" /> <path class="flow-arrow arrow-silver-gold" d="M50,40 Q 30 30 20 25" /> <path class="flow-arrow arrow-silver-gold" d="M60,40 V 25" /> <path class="flow-arrow arrow-silver-gold" d="M70,40 Q 90 30 100 25" />
+                              </svg>
+                         </div>
                     </div>
                     <div class="card-content">
-                        <h3 class="card-title">Bygg en Solid Datagrunnmur: Medallion-arkitektur i Microsoft Fabric</h3>
+                        <h3 class="card-title">Bygg en Solid Datagrunnmur: Medallion-arkitektur</h3>
                          <span class="card-meta"><time datetime="2024-04-04">04. April 2024</time></span>
                     </div>
                 </a>
                 <!-- === SLUTT KORT 7 === -->
 
-                 <!-- === KORT 6 (Datainnhenting) - Nå som lenke === -->
-                 <a href="posts/fabric-datainnhenting-metoder.html" class="blog-card">
-                     <div class="card-image">
-                         <img src="https://telefonicatech.uk/wp-content/uploads/adatis/Data-Factory-2-1.png" alt="Metoder for datainnhenting i Microsoft Fabric">
+                <!-- === KORT 6 (Datainnhenting) - Simple Funnel Drop v14 (Single Run) === -->
+                <a href="posts/fabric-datainnhenting-metoder.html" class="blog-card">
+                    <div class="card-image">
+                        <div class="css-illustration illustration-ingestion">
+                             <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                                  <g class="funnel-static-v14" transform="translate(0 15)"> <rect class="funnel-top-v14" x="20" y="15" width="60" height="8" rx="2"/> <polygon class="funnel-pipe-v14" points="25,23 75,23 60,65 40,65" /> </g>
+                                   <circle id="p1" class="fall-particle-v14" cx="30" cy="10" r="4"/> <circle id="p2" class="fall-particle-v14" cx="50" cy="5"  r="4"/> <circle id="p3" class="fall-particle-v14" cx="70" cy="10" r="4"/> <circle id="p4" class="fall-particle-v14" cx="40" cy="0"  r="3.5"/> <circle id="p5" class="fall-particle-v14" cx="60" cy="0"  r="3.5"/> <circle id="p6" class="fall-particle-v14" cx="50" cy="15" r="4"/>
+                              </svg>
+                         </div>
                      </div>
                      <div class="card-content">
-                         <h3 class="card-title">Få Dataene Inn: Metoder for Datainnhenting i Microsoft Fabric</h3>
+                         <h3 class="card-title">Få Dataene Inn: Metoder for Datainnhenting</h3>
                          <span class="card-meta"><time datetime="2024-04-04">04. April 2024</time></span>
                      </div>
                  </a>
                  <!-- === SLUTT KORT 6 === -->
 
-                 <!-- === KORT 5 (Capacity/Prising) - Nå som lenke === -->
+                  <!-- === KORT 5 (Capacity/Prising) - Roligere Meter === -->
                  <a href="posts/fabric-capacity-og-prising.html" class="blog-card">
                      <div class="card-image">
-                         <img src="https://miro.medium.com/v2/resize:fit:1400/0*n2wIOxrlzPEAgi8O.jpg" alt="Forstå Microsoft Fabric Capacity og Prising">
+                          <div class="css-illustration illustration-capacity">
+                               <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                                  <defs> <linearGradient id="capacityGradient" gradientTransform="rotate(90)"> <stop offset="0%" stop-color="var(--primary-fabric-dark)" /> <stop offset="50%" stop-color="var(--primary-fabric-light)" /> <stop offset="100%" stop-color="var(--secondary-accent)" /> </linearGradient> </defs>
+                                  <circle class="meter-bg" cx="50" cy="50" r="40" /> <circle class="meter-value" cx="50" cy="50" r="40" /> <text class="meter-text" x="50" y="58">CU</text>
+                              </svg>
+                          </div>
                      </div>
                      <div class="card-content">
-                         <h3 class="card-title">Forstå Microsoft Fabric Capacity og Prising: Hva Trenger Du å Vite?</h3>
+                         <h3 class="card-title">Forstå Fabric Capacity og Prising</h3>
                          <span class="card-meta"><time datetime="2024-04-04">04. April 2024</time></span>
                      </div>
                  </a>
                  <!-- === SLUTT KORT 5 === -->
 
-                <!-- === KORT 4 (RLS/CLS) - Nå som lenke === -->
+                <!-- === KORT 4 (RLS/CLS) - Table Grid Illustrasjon (FIXED CLS) === -->
                 <a href="posts/sikre-data-med-rls-cls.html" class="blog-card">
                     <div class="card-image">
-                        <img src="https://techcommunity.microsoft.com/t5/s/gxcuf89792/images/bS0zOTQzMDM2LTUxMjc3MGlEREZBQjJGNjcyNzQwNzA1?image-dimensions=750x750&revision=42" alt="Sikre data i Fabric med RLS og CLS">
+                         <div class="css-illustration illustration-security">
+                              <svg viewBox="0 0 220 100" preserveAspectRatio="xMidYMid meet">
+                                  <g id="rls-grid" transform="translate(20, 20)"> <rect class="highlight-rect-row" x="0" y="25" width="60" height="20"/> <g transform="translate(0,0)"> <rect class="grid-cell" width="20" height="20"/> </g> <g transform="translate(20,0)"> <rect class="grid-cell" width="20" height="20"/> </g> <g transform="translate(40,0)"> <rect class="grid-cell" width="20" height="20"/> </g> <g transform="translate(0,25)"> <rect class="grid-cell" width="20" height="20"/> </g> <g transform="translate(20,25)"> <rect class="grid-cell" width="20" height="20"/> </g> <g transform="translate(40,25)"> <rect class="grid-cell" width="20" height="20"/> </g> <g transform="translate(0,50)"> <rect class="grid-cell" width="20" height="20"/> </g> <g transform="translate(20,50)"> <rect class="grid-cell" width="20" height="20"/> </g> <g transform="translate(40,50)"> <rect class="grid-cell" width="20" height="20"/> </g> </g>
+                                  <g class="lock-icon-group" transform="translate(5, 40) scale(1.8)"> <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/> </g>
+                                  <g id="cls-grid" transform="translate(140, 20)"> <g transform="translate(0,0)"> <rect class="grid-cell dimmed-cell-col" width="20" height="20"/> </g> <g transform="translate(25,0)"> <rect class="grid-cell highlight-cell-col" width="20" height="20"/> </g> <g transform="translate(50,0)"> <rect class="grid-cell dimmed-cell-col" width="20" height="20"/> </g> <g transform="translate(0,25)"> <rect class="grid-cell dimmed-cell-col" width="20" height="20"/> </g> <g transform="translate(25,25)"> <rect class="grid-cell highlight-cell-col" width="20" height="20"/> </g> <g transform="translate(50,25)"> <rect class="grid-cell dimmed-cell-col" width="20" height="20"/> </g> <g transform="translate(0,50)"> <rect class="grid-cell dimmed-cell-col" width="20" height="20"/> </g> <g transform="translate(25,50)"> <rect class="grid-cell highlight-cell-col" width="20" height="20"/> </g> <g transform="translate(50,50)"> <rect class="grid-cell dimmed-cell-col" width="20" height="20"/> </g> </g>
+                                  <g class="lock-icon-group" transform="translate(115, 40) scale(1.8)"> <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/> </g>
+                              </svg>
+                         </div>
                     </div>
                     <div class="card-content">
-                        <h3 class="card-title">Sikre Dine Data i Fabric: En Introduksjon til RLS og CLS</h3>
+                        <h3 class="card-title">Sikre Dine Data i Fabric: RLS og CLS</h3>
                         <span class="card-meta"><time datetime="2024-04-04">04. April 2024</time></span>
                     </div>
                 </a>
                 <!-- === SLUTT KORT 4 === -->
 
-                 <!-- === KORT 3 (Calculation Groups) - Nå som lenke === -->
-                 <a href="posts/fordeler-med-calculation-groups.html" class="blog-card">
-                     <div class="card-image">
-                         <img src="https://community.fabric.microsoft.com/t5/image/serverpage/image-id/1013134i8F35DF6549602F5E/image-size/large?v=v2&px=999" alt="Fordeler med Calculation Groups i Power BI">
-                     </div>
-                     <div class="card-content">
-                         <h3 class="card-title">Færre Mål, Mer Innsikt: Fordelene med Calculation Groups</h3>
-                         <span class="card-meta"><time datetime="2024-04-04">04. April 2024</time></span>
-                     </div>
-                 </a>
-                 <!-- === SLUTT KORT 3 === -->
-
-                <!-- === KORT 2 (Warehouse vs Lakehouse) - Nå som lenke === -->
-                <a href="posts/fabric-warehouse-vs-lakehouse.html" class="blog-card">
+                <!-- === KORT 3 (Calculation Groups) - Stack Animation (Single Run) === -->
+                <a href="posts/fordeler-med-calculation-groups.html" class="blog-card">
                     <div class="card-image">
-                        <img src="https://www.datasarva.com/images/fabric/lakehouse-components.png" alt="Sammenligning av Fabric Warehouse og Lakehouse">
+                         <div class="css-illustration illustration-calc-groups">
+                              <svg viewBox="-5 -5 90 90" preserveAspectRatio="xMidYMid meet">
+                                  <rect class="card-stack card-stack-1" x="20" y="30" width="60" height="40" /> <rect class="card-stack card-stack-2" x="20" y="30" width="60" height="40" /> <rect class="card-stack card-stack-3" x="20" y="30" width="60" height="40" />
+                              </svg>
+                         </div>
                     </div>
                     <div class="card-content">
-                        <h3 class="card-title">Warehouse vs. Lakehouse i Fabric: Hva Bør Du Velge?</h3>
-                         <span class="card-meta"><time datetime="2024-04-04">04. April 2024</time></span>
+                        <h3 class="card-title">Færre Mål, Mer Innsikt: Calculation Groups</h3>
+                        <span class="card-meta"><time datetime="2024-04-04">04. April 2024</time></span>
+                    </div>
+                </a>
+                <!-- === SLUTT KORT 3 === -->
+
+                <!-- === KORT 2 (Warehouse vs Lakehouse) - KUN Lakehouse Sentrert === -->
+                <a href="posts/fabric-warehouse-vs-lakehouse.html" class="blog-card">
+                    <div class="card-image">
+                        <div class="css-illustration illustration-wh-lh">
+                            <svg viewBox="0 0 120 70" preserveAspectRatio="xMidYMid meet">
+                                <defs> <g id="centered-cube"> <polygon class="cube-face" points="-15,-10 0,-20 15,-10 0,0 Z" /> <polygon class="cube-face" points="-15,-10 -15,10 0,20 0,0 Z" /> <polygon class="cube-face" points="0,0 0,20 15,10 15,-10 Z" /> </g> </defs>
+                                <g id="main-lakehouse-icon"> <use href="#centered-cube"/> <g transform="translate(0, 25)"> <path class="lh-wave" d="M-18 0 Q -9 -8 0 0 T 18 0"/> <path class="lh-wave" d="M-18 5 Q -9 -3 0 5 T 18 5" opacity="0.7"/> </g> </g>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Warehouse vs. Lakehouse i Fabric</h3>
+                        <span class="card-meta"><time datetime="2024-04-04">04. April 2024</time></span>
                     </div>
                 </a>
                 <!-- === SLUTT KORT 2 === -->
 
-                <!-- === KORT 1 (Intro Fabric) - Nå som lenke === -->
-                <a href="posts/hva-er-microsoft-fabric-introduksjon.html" class="blog-card">
+                 <!-- === KORT 1 (Intro Fabric) - Using Image URL (PNG from GitHub) === -->
+                 <a href="posts/hva-er-microsoft-fabric-introduksjon.html" class="blog-card">
                     <div class="card-image">
-                        <img src="https://www.twoday.no/hs-fs/hubfs/GL%20-%20twoday%20Global/GL_Website/Pictures/Microsoft-fabric-1-1-A.png?width=1280&height=1280&name=Microsoft-fabric-1-1-A.png" alt="Hva er Microsoft Fabric? En introduksjon">
+                        <div class="css-illustration illustration-fabric-intro">
+                            <img class="fabric-logo-img"
+                                 src="https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/fabric_logo.png?raw=true" <!-- ENDRET SRC HER -->
+                                 alt="Microsoft Fabric Logo">
+                        </div>
                     </div>
                     <div class="card-content">
                         <h3 class="card-title">Hva er Microsoft Fabric? En Enkel Introduksjon</h3>
@@ -366,12 +616,11 @@
                 </a>
                 <!-- === SLUTT KORT 1 === -->
 
-                <!-- Legg til flere <a class="blog-card">...</a> her for nye innlegg -->
-
             </div> <!-- Slutt .blog-grid -->
         </div> <!-- Slutt .container -->
     </main>
 
+    <!-- Footer (Struktur beholdes) -->
     <footer>
         <div class="container">
             <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
@@ -379,7 +628,7 @@
         </div>
     </footer>
 
-    <!-- === JavaScript for Fade-in og Footer Year === -->
+    <!-- === JavaScript (Fra hovedblogg) === -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
@@ -416,10 +665,38 @@
                  observer.observe(el);
              });
 
+             // --- RGB Variabel Setter (Fra forrige animasjonsfil, robust versjon) ---
+             const style = getComputedStyle(document.documentElement);
+             const hexToRgb = hex => {
+                 hex = hex.trim();
+                 if (!hex.startsWith('#')) return '128, 128, 128';
+                 let shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+                 hex = hex.replace(shorthandRegex, function(m, r, g, b) { return r + r + g + g + b + b; });
+                 let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                 if (!result) return '128, 128, 128';
+                 const r = parseInt(result[1], 16);
+                 const g = parseInt(result[2], 16);
+                 const b = parseInt(result[3], 16);
+                 return `${r}, ${g}, ${b}`;
+             };
+             const setRgbVar = (varName, fallback) => {
+                 try {
+                     const val = style.getPropertyValue(varName).trim();
+                     document.documentElement.style.setProperty(`${varName}-rgb`, hexToRgb(val));
+                 } catch (e) {
+                     console.warn(`Could not process CSS variable ${varName}. Using fallback.`);
+                     document.documentElement.style.setProperty(`${varName}-rgb`, fallback);
+                 }
+             };
+             setRgbVar('--primary-fabric-dark', '106, 13, 173');
+             setRgbVar('--primary-fabric-light', '147, 112, 219');
+             setRgbVar('--secondary-accent', '0, 198, 255');
+             setRgbVar('--bronze', '205, 127, 50');
+             setRgbVar('--silver', '192, 192, 192');
+             setRgbVar('--gold', '255, 215, 0');
+
         });
     </script>
-    <!-- Forslag: Flytt JS til en ekstern fil, f.eks. js/blog-script.js -->
-    <!-- <script src="js/blog-script.js"></script> -->
 
 </body>
 </html>
