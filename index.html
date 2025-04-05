@@ -32,6 +32,10 @@
             --font-primary: 'Poppins', sans-serif;
             --transition-speed: 0.3s;
             --transition-slow: 0.5s; /* For accordion */
+            --error-color: #ff6b6b; /* For feilmeldinger */
+            /* Lagt til for suggestions */
+            --suggestions-bg: rgba(50, 50, 50, 0.95);
+            --suggestions-hover-bg: rgba(60, 60, 60, 0.98);
         }
         /* --- Grunnleggende og Hjelpeklasser --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -132,12 +136,14 @@
         /* --- Kontakt & Footer Styling --- */
         #kontakt { position: relative; background: linear-gradient(rgba(18,18,18,0.95), rgba(18,18,18,0.98)), url('contact-bg.jpg') no-repeat center center/cover; background-color: var(--dark-bg); }
         #contact-form { max-width: 700px; margin: 0 auto; background: var(--card-bg); padding: 3rem; border-radius: 15px; border: 1px solid var(--card-border); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
-        .form-group { margin-bottom: 1.8rem; position: relative; }
+        .form-group { margin-bottom: 1.8rem; position: relative; /* Viktig for suggestions */ }
         .form-group label { display: block; margin-bottom: 0.7rem; font-weight: 600; color: var(--text-medium); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
         .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group textarea { width: 100%; padding: 1rem; border: 1px solid var(--card-border); border-radius: 8px; font-family: inherit; font-size: 1rem; background-color: rgba(50, 50, 50, 0.5); color: var(--text-light); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--secondary-accent); box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.2); }
         .form-group textarea { resize: vertical; min-height: 120px; }
         #contact-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; } /* Bruker .cta-button klassen for utseende */
+        #form-error-message { color: var(--error-color); } /* Bruker error-color variabel */
+
         footer { background-color: #0a0a0a; color: var(--text-medium); text-align: center; padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border); }
         footer p { margin-bottom: 1rem; font-size: 0.9rem; }
         .footer-links { margin-bottom: 1.5rem; }
@@ -145,9 +151,50 @@
         .footer-links img { width: 28px; height: 28px; vertical-align: middle; filter: none; transition: filter var(--transition-speed) ease; }
         .footer-links a:hover { transform: scale(1.15); opacity: 1; }
 
-        /* === ANIMASJONSKODE START === */
+        /* === START Styling for Brreg NAME suggestions (Kontakt skjema) === */
+        .suggestions-container {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%; /* Rett under inputfeltet */
+            background-color: var(--suggestions-bg);
+            border: 1px solid var(--card-border);
+            border-top: none; /* Unngå dobbel kant mot input */
+            border-radius: 0 0 8px 8px; /* Matcher input-radius */
+            z-index: 10; /* Skal ligge over andre elementer */
+            max-height: 200px; /* Begrens høyden */
+            overflow-y: auto; /* Scroll hvis mange treff */
+            display: none; /* Skjult som standard */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        .suggestions-container ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .suggestions-container li {
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+            color: var(--text-light);
+            border-bottom: 1px solid var(--card-border);
+            transition: background-color 0.2s ease;
+        }
+         .suggestions-container li:last-child {
+             border-bottom: none;
+         }
+        .suggestions-container li:hover {
+            background-color: var(--suggestions-hover-bg);
+            color: var(--secondary-accent);
+        }
+         .suggestions-container .no-results {
+            padding: 0.8rem 1rem;
+            color: var(--text-medium);
+            font-style: italic;
+         }
+        /* === SLUTT Styling for Brreg NAME suggestions === */
 
-        /* Animasjonscontainer */
+        /* === ANIMASJONSKODE START (Uendret) === */
         #animation-container {
             position: fixed; /* Dekker hele vinduet */
             top: 0;
@@ -163,8 +210,6 @@
             z-index: 1100; /* Over alt annet, inkludert header (z-index 1000) */
             overflow: hidden; /* Forhindrer at flyet lager scrollbars */
         }
-
-        /* Papir-element */
         #paper {
             background-color: #fff; /* Hvit bakgrunn for papiret */
             width: 300px;
@@ -179,7 +224,6 @@
             position: relative; /* For posisjonering av innhold og flyanimasjon */
             overflow: hidden; /* Klipper innhold som går utenfor */
         }
-
         #paper-content {
             /* Tilpasset font og farge */
             font-family: var(--font-primary);
@@ -190,8 +234,6 @@
             max-height: 100%;
             overflow-y: auto; /* Scroll hvis innholdet er for langt */
         }
-
-        /* Takkemelding */
         #thank-you-message {
             margin-top: 20px;
             font-size: 1.5rem;
@@ -203,8 +245,6 @@
             opacity: 0;
             transition: opacity 0.5s ease-in 0.2s; /* Fade inn etter en liten forsinkelse */
         }
-
-        /* Flyanimasjon */
         @keyframes fly-away {
             0% {
                 transform: translate(0, 0) rotate(0deg) scale(1);
@@ -216,14 +256,13 @@
                 opacity: 0;
             }
         }
-
         #paper.flying {
             /* Starter fly-away animasjonen */
             animation: fly-away 2s ease-in forwards; /* 'forwards' holder slutt-tilstanden */
         }
-        /* === ANIMASJONSKODE SLUTT === */
+        /* === ANIMASJONSKODE SLUTT (Uendret) === */
 
-        /* --- Responsivitet --- */
+        /* --- Responsivitet (Uendret) --- */
         @media (max-width: 992px) {
              .hero h1 { font-size: 3rem; } .hero .typing-container { font-size: 1.2rem; } .section-header h2 { font-size: 2.4rem; } .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); } header ul li { margin-left: 15px; } header ul li a { padding: 10px 10px;}
              #om .container { gap: 3rem; }
@@ -263,7 +302,7 @@
             <div class="logo">TrendMe</div>
             <ul>
                 <li><a href="#hjem">Hjem</a></li>
-                <li><a href="#om-fabric">Om Fabric</a></li>
+				<li><a href="#hvorfor-fabric">Hvorfor Fabric</a></li>
                 <li><a href="#fabric-tjenester">Fabric Tjenester</a></li>
                 <li><a href="#powerbi-tjenester">Power BI Tjenester</a></li>
                 <li><a href="#prosjekter">Kundecaser</a></li>
@@ -276,8 +315,7 @@
     </header>
 
     <main>
-        <!-- ... (resten av innholdet ditt fra <section id="hjem"> til før <section id="kontakt">) ... -->
-         <!-- Hero Seksjon -->
+        <!-- Hero Seksjon -->
         <section id="hjem" class="hero">
             <div class="container">
                 <h1 class="fade-in">Microsoft Fabric Rådgivning: Fra Strategi til Verdi</h1>
@@ -591,7 +629,7 @@
                     <p>Fyll ut skjemaet under for en uforpliktende samtale om hvordan TrendMe kan hjelpe din bedrift med Microsoft Fabric rådgivning, implementering eller optimalisering.</p>
                 </div>
 
-                <!-- VIKTIG: Fjernet action og method attributtene -->
+                <!-- Kontaktskjema med bedriftssøk -->
                 <form id="contact-form" class="fade-in" style="transition-delay: 0.3s;">
                     <div class="form-group">
                         <label for="name">Navn:</label>
@@ -601,10 +639,19 @@
                         <label for="email">E-post:</label>
                         <input type="email" id="email" name="email" required>
                     </div>
+
+                    <!-- === BEDRIFTSFELT MED SØK === -->
                     <div class="form-group">
                         <label for="company">Bedrift:</label>
-                        <input type="text" id="company" name="company">
+                        <input type="text" id="company" name="company" placeholder="Skriv for å søke..." autocomplete="off">
+                        <!-- Container for forslag -->
+                        <div id="company-suggestions-list" class="suggestions-container">
+                            <ul></ul>
+                        </div>
+                        <small style="color: var(--text-medium); display: block; margin-top: 5px;">Begynn å skrive for å søke etter bedrifter.</small>
                     </div>
+                    <!-- === SLUTT BEDRIFTSFELT === -->
+
                      <div class="form-group">
                         <label for="phone">Telefon (valgfritt):</label>
                         <input type="tel" id="phone" name="phone">
@@ -616,7 +663,7 @@
                     <!-- Knappen bruker nå .cta-button stilen -->
                     <button type="submit" class="cta-button">Send Forespørsel om Konsultasjon</button>
                     <!-- Valgfri melding for feil -->
-                    <p id="form-error-message" style="color: #ff6b6b; margin-top: 1rem; text-align: center; display: none;"></p>
+                    <p id="form-error-message" style="color: var(--error-color); margin-top: 1rem; text-align: center; display: none;"></p>
                 </form>
             </div>
         </section>
@@ -626,10 +673,14 @@
         <div class="container">
             <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
             <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
+            <div class="footer-links">
+                 <!-- Legg til lenker til sosiale medier eller lignende her hvis ønskelig -->
+                 <!-- Eksempel: <a href="https://linkedin.com/company/trendme" target="_blank" rel="noopener noreferrer"><img src="linkedin-icon.png" alt="LinkedIn"></a> -->
+             </div>
         </div>
     </footer>
 
-    <!-- === ANIMASJONSELEMENTER (Lagt til her) === -->
+    <!-- === ANIMASJONSELEMENTER (Uendret) === -->
     <div id="animation-container">
         <div id="paper">
             <pre id="paper-content"></pre>
@@ -675,16 +726,26 @@
                          if (targetElement) {
                             const headerOffset = header ? header.offsetHeight : 0;
                             const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                            const offsetPosition = elementPosition - headerOffset - 20;
+                            const offsetPosition = elementPosition - headerOffset - 20; // Litt ekstra padding
                             window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                         } else {
-                            console.warn(`Smooth scroll target element not found for selector: ${targetId}`);
+                            // Prøv å navigere direkte hvis element ikke finnes (f.eks. /blogg, /faktura)
+                            if (!targetId.startsWith('#')) {
+                                window.location.href = targetId;
+                            } else {
+                                console.warn(`Smooth scroll target element not found for selector: ${targetId}`);
+                            }
                         }
                     } catch (error) {
-                        console.error(`Error finding element for smooth scroll: ${targetId}`, error);
+                         if (!targetId.startsWith('#')) {
+                            window.location.href = targetId; // Naviger direkte ved feil også
+                         } else {
+                             console.error(`Error finding element for smooth scroll: ${targetId}`, error);
+                         }
                     }
                 });
             });
+
 
              // --- Skrivemaskineffekt (uendret) ---
              const typingTextElement = document.getElementById('typing-text');
@@ -699,6 +760,7 @@
                          setTimeout(typeChar, 80);
                      }
                  }
+                 // Starter litt senere for å la hovedinnholdet laste
                  setTimeout(typeChar, 1800);
              }
 
@@ -707,33 +769,40 @@
             accordionTitles.forEach(title => {
                 title.addEventListener('click', function() {
                     const parentList = this.closest('.accordion-list');
+                    // Lukk andre åpne elementer i samme liste
                     if (parentList) {
                          parentList.querySelectorAll('.accordion-item').forEach(otherItem => {
                             const otherTitle = otherItem.querySelector('.accordion-title');
                             const otherContent = otherItem.querySelector('.accordion-content');
                             if (otherTitle !== this && otherTitle.classList.contains('aktiv')) {
                                 otherTitle.classList.remove('aktiv');
-                                if(otherContent) otherContent.style.maxHeight = null;
-                                if(otherContent) otherContent.classList.remove('aktiv');
+                                if(otherContent) {
+                                    otherContent.style.maxHeight = null;
+                                    otherContent.classList.remove('aktiv');
+                                }
                                 const otherIcon = otherTitle.querySelector('.ikon');
                                 if(otherIcon) otherIcon.textContent = '+';
                             }
                         });
                     }
 
+                    // Åpne/lukke det klikkede elementet
                     this.classList.toggle('aktiv');
                     const content = this.nextElementSibling;
                     const icon = this.querySelector('.ikon');
 
                     if (content && content.classList.contains('accordion-content')) {
                         if (content.style.maxHeight) {
+                            // Lukk
                             content.style.maxHeight = null;
                             content.classList.remove('aktiv');
                             if(icon) icon.textContent = '+';
                         } else {
+                            // Åpne
                             content.classList.add('aktiv');
+                            // Sett max-height til scrollHeight for animasjon
                             content.style.maxHeight = content.scrollHeight + "px";
-                            if(icon) icon.textContent = '−';
+                            if(icon) icon.textContent = '−'; // Bruker minus-tegn når åpen
                         }
                     } else {
                          console.warn("Accordion content not found immediately after title:", this);
@@ -747,7 +816,125 @@
             if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
 
 
-            // === NY KODE FOR KONTAKTSKJEMA-ANIMASJON OG FORMSPREE SUBMIT ===
+             // === START NY KODE FOR KONTAKTSKJEMA BEDRIFTSSØK ===
+
+            // --- Hjelpefunksjon: Debounce ---
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+
+            // --- Elementreferanser for kontaktskjema bedriftssøk ---
+            const contactCompanyInput = document.getElementById('company');
+            const companySuggestionsContainer = document.getElementById('company-suggestions-list');
+            const companySuggestionsUl = companySuggestionsContainer?.querySelector('ul'); // Bruker optional chaining
+
+            // --- Konstanter for søk ---
+            const MIN_SEARCH_LENGTH = 3;
+            const DEBOUNCE_DELAY = 350;
+
+             // Sjekk om nødvendige elementer for søk finnes
+             if (!contactCompanyInput || !companySuggestionsContainer || !companySuggestionsUl) {
+                 console.error("CRITICAL: Missing elements required for company search functionality in the contact form.");
+             } else {
+
+                // --- Funksjon for å søke i Brreg etter NAVN (tilpasset for kontaktskjema) ---
+                async function searchContactCompanyByName(searchTerm) {
+                    const trimmedSearch = searchTerm.trim();
+                    if (trimmedSearch.length < MIN_SEARCH_LENGTH) {
+                        companySuggestionsUl.innerHTML = '';
+                        companySuggestionsContainer.style.display = 'none';
+                        return;
+                    }
+
+                    companySuggestionsUl.innerHTML = '<li class="no-results">Søker...</li>';
+                    companySuggestionsContainer.style.display = 'block';
+
+                    // Samme API-endepunkt som på fakturasiden
+                    const apiUrl = `https://data.brreg.no/enhetsregisteret/api/enheter?navn=${encodeURIComponent(trimmedSearch)}&size=10`;
+
+                    try {
+                        const response = await fetch(apiUrl);
+                        companySuggestionsUl.innerHTML = ''; // Tøm søkeresultater før nye legges til
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            const units = data._embedded?.enheter;
+
+                            if (units && units.length > 0) {
+                                units.forEach(unit => {
+                                    if (!unit.navn) return; // Trenger bare navn her
+
+                                    const li = document.createElement('li');
+                                    li.textContent = unit.navn; // Vis kun navnet i forslaget
+
+                                    // Event listener for når brukeren klikker på et forslag
+                                    li.addEventListener('click', () => {
+                                        contactCompanyInput.value = unit.navn; // Sett verdien i inputfeltet
+                                        companySuggestionsContainer.style.display = 'none'; // Skjul forslagsboksen
+                                        companySuggestionsUl.innerHTML = ''; // Tøm listen
+                                        // Fjern eventuell feilmarkering hvis feltet ble korrigert
+                                        contactCompanyInput.classList.remove('error');
+                                    });
+                                    companySuggestionsUl.appendChild(li);
+                                });
+                            } else {
+                                companySuggestionsUl.innerHTML = '<li class="no-results">Ingen treff funnet.</li>';
+                            }
+                        } else {
+                            console.error('Brreg name search API error:', response.status, response.statusText);
+                            companySuggestionsUl.innerHTML = '<li class="no-results">Feil ved søk.</li>';
+                        }
+                    } catch (error) {
+                        console.error('Error fetching Brreg by name:', error);
+                        companySuggestionsUl.innerHTML = '<li class="no-results">Nettverksfeil.</li>';
+                    }
+                    // Sørg for at containeren er synlig hvis det er resultater eller melding
+                    if (companySuggestionsUl.childNodes.length > 0) {
+                       companySuggestionsContainer.style.display = 'block';
+                    } else {
+                       // Hvis ingen resultater eller feil, og listen er tom, skjul containeren
+                       companySuggestionsContainer.style.display = 'none';
+                    }
+                }
+
+                // --- Koble søkefunksjon til input-event (med debounce) ---
+                const debouncedContactNameSearch = debounce(searchContactCompanyByName, DEBOUNCE_DELAY);
+                contactCompanyInput.addEventListener('input', (event) => {
+                    debouncedContactNameSearch(event.target.value);
+                });
+
+                // Skjul forslag når brukeren klikker utenfor
+                contactCompanyInput.addEventListener('blur', () => {
+                    // Liten forsinkelse for å tillate klikk på forslagene
+                    setTimeout(() => {
+                        // Dobbeltsjekk at containeren finnes før vi prøver å skjule den
+                        if (companySuggestionsContainer) {
+                             companySuggestionsContainer.style.display = 'none';
+                        }
+                    }, 150); // 150ms should be enough for click event to register
+                });
+
+                // --- Forhindre at blur skjuler forslagene FØR man rekker å klikke på dem ---
+                companySuggestionsContainer.addEventListener('mousedown', (event) => {
+                    // Forhindrer at 'blur'-eventet på input-feltet trigger umiddelbart når man klikker i suggestion-boksen
+                    event.preventDefault();
+                });
+
+             } // Slutt på else-blokk for element-sjekk
+
+
+            // === SLUTT NY KODE FOR KONTAKTSKJEMA BEDRIFTSSØK ===
+
+
+            // === KODE FOR KONTAKTSKJEMA-ANIMASJON OG FORMSPREE SUBMIT (litt justert for klarhet) ===
 
             const contactForm = document.getElementById('contact-form');
             const animationContainer = document.getElementById('animation-container');
@@ -757,116 +944,120 @@
             const nameInput = document.getElementById('name');
             const emailInput = document.getElementById('email');
             const messageInput = document.getElementById('message');
-            const companyInput = document.getElementById('company'); // Henter company input
-            const phoneInput = document.getElementById('phone'); // Henter phone input
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-            const formErrorMessage = document.getElementById('form-error-message'); // For feilmelding
+            // contactCompanyInput er definert ovenfor
+            const phoneInput = document.getElementById('phone');
+            const submitButton = contactForm?.querySelector('button[type="submit"]'); // Bruker optional chaining
+            const formErrorMessage = document.getElementById('form-error-message');
 
-            // Funksjon som håndterer innsending
-            async function handleSubmit(event) {
-                event.preventDefault(); // Forhindre at siden lastes på nytt/standard innsending
+            // Sørg for at alle nødvendige elementer for innsending/animasjon finnes
+             if (!contactForm || !animationContainer || !paper || !paperContent || !thankYouMessage || !nameInput || !emailInput || !messageInput || !contactCompanyInput || !phoneInput || !submitButton || !formErrorMessage) {
+                  console.error("CRITICAL: Missing elements required for contact form submission or animation.");
+                  // Gi en enkel feilmelding til brukeren
+                  if (formErrorMessage) {
+                      formErrorMessage.textContent = "En feil oppstod med skjemaet. Prøv å laste siden på nytt.";
+                      formErrorMessage.style.display = "block";
+                  }
+                  // Deaktiver submit-knapp hvis den finnes
+                  if (submitButton) submitButton.disabled = true;
+             } else {
 
-                // Visuelt indikerer innsending
-                const originalButtonText = submitButton.textContent;
-                submitButton.disabled = true;
-                submitButton.textContent = 'Sender...';
-                if(formErrorMessage) formErrorMessage.style.display = 'none'; // Skjul evt. tidligere feilmelding
+                // Funksjon som håndterer innsending
+                async function handleSubmit(event) {
+                    event.preventDefault(); // Forhindre at siden lastes på nytt/standard innsending
 
-                // 1. Forbered data for Formspree
-                const formData = new FormData(contactForm);
-                const formSpreeEndpoint = 'https://formspree.io/f/xyzenqnp'; // Din Formspree endpoint
+                    // Visuelt indikerer innsending
+                    const originalButtonText = submitButton.textContent;
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Sender...';
+                    formErrorMessage.style.display = 'none'; // Skjul evt. tidligere feilmelding
 
-                try {
-                    // 2. Send data til Formspree
-                    const response = await fetch(formSpreeEndpoint, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json' // Viktig for å få JSON respons
-                        }
-                    });
+                    // 1. Forbered data for Formspree
+                    const formData = new FormData(contactForm);
+                    const formSpreeEndpoint = 'https://formspree.io/f/xyzenqnp'; // Din Formspree endpoint for kontakt
 
-                    // 3. Håndter Formspree respons
-                    if (response.ok) {
-                        // SUKSESS - Start animasjonen
+                    try {
+                        // 2. Send data til Formspree
+                        const response = await fetch(formSpreeEndpoint, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Accept': 'application/json' // Viktig for å få JSON respons
+                            }
+                        });
 
-                        // 3a. Formater data for papiret
-                        const formDataText = `Fra: ${nameInput.value}\n` +
-                                             `E-post: ${emailInput.value}\n` +
-                                             (companyInput.value ? `Bedrift: ${companyInput.value}\n` : '') + // Legg til hvis fylt ut
-                                             (phoneInput.value ? `Telefon: ${phoneInput.value}\n` : '') + // Legg til hvis fylt ut
-                                             `\nMelding:\n--------------------------\n${messageInput.value}`;
-                        paperContent.textContent = formDataText;
+                        // 3. Håndter Formspree respons
+                        if (response.ok) {
+                            // SUKSESS - Start animasjonen
 
-                        // 3b. Vis animasjonscontaineren
-                        animationContainer.style.display = 'flex';
+                            // 3a. Formater data for papiret
+                            const formDataText = `Fra: ${nameInput.value}\n` +
+                                                 `E-post: ${emailInput.value}\n` +
+                                                 (contactCompanyInput.value ? `Bedrift: ${contactCompanyInput.value}\n` : '') + // Bruker contactCompanyInput
+                                                 (phoneInput.value ? `Telefon: ${phoneInput.value}\n` : '') +
+                                                 `\nMelding:\n--------------------------\n${messageInput.value}`;
+                            paperContent.textContent = formDataText;
 
-                        // 3c. Få papiret til å dukke opp (med liten forsinkelse)
-                        setTimeout(() => {
-                            paper.style.opacity = '1';
-                            paper.style.transform = 'scale(1)';
-                        }, 100); // Kort forsinkelse for fade-in effekt
+                            // 3b. Vis animasjonscontaineren
+                            animationContainer.style.display = 'flex';
 
-                        // 3d. Vis takkemeldingen etter at papiret er synlig
-                        setTimeout(() => {
-                            thankYouMessage.style.display = 'block';
-                            thankYouMessage.offsetHeight; // Force reflow
-                            thankYouMessage.style.opacity = '1';
-                        }, 800); // Venter litt lenger
+                            // 3c. Få papiret til å dukke opp (med liten forsinkelse)
+                            setTimeout(() => {
+                                paper.style.opacity = '1';
+                                paper.style.transform = 'scale(1)';
+                            }, 100); // Kort forsinkelse for fade-in effekt
 
-                        // 3e. Start flyanimasjonen etter at takkemeldingen er vist
-                        setTimeout(() => {
-                            paper.classList.add('flying');
-                        }, 2500); // Venter før flyet letter
+                            // 3d. Vis takkemeldingen etter at papiret er synlig
+                            setTimeout(() => {
+                                thankYouMessage.style.display = 'block';
+                                thankYouMessage.offsetHeight; // Force reflow
+                                thankYouMessage.style.opacity = '1';
+                            }, 800); // Venter litt lenger
 
-                    } else {
-                         // FEIL ved innsending til Formspree
-                        const responseData = await response.json();
-                        let errorMessage = 'Kunne ikke sende meldingen. Prøv igjen senere.';
-                        if (responseData && responseData.errors && responseData.errors.length > 0) {
-                             // Prøver å gi en mer spesifikk feilmelding fra Formspree hvis mulig
-                             errorMessage = responseData.errors.map(error => error.message).join(', ');
-                        } else if (response.status === 422) {
-                             errorMessage = 'Vennligst sjekk at alle feltene er korrekt utfylt.';
-                        }
-                        console.error('Formspree submission error:', response.status, responseData);
-                        if(formErrorMessage) {
-                            formErrorMessage.textContent = errorMessage;
-                            formErrorMessage.style.display = 'block';
+                            // 3e. Start flyanimasjonen etter at takkemeldingen er vist
+                            setTimeout(() => {
+                                paper.classList.add('flying');
+                            }, 2500); // Venter før flyet letter
+
+                             // Ikke reset knappen her, det gjøres i animationend
+
                         } else {
-                            alert(errorMessage); // Fallback hvis p-tag ikke finnes
+                             // FEIL ved innsending til Formspree
+                            const responseData = await response.json();
+                            let errorMessageText = 'Kunne ikke sende meldingen. Prøv igjen senere.';
+                            if (responseData && responseData.errors && responseData.errors.length > 0) {
+                                 // Prøver å gi en mer spesifikk feilmelding fra Formspree hvis mulig
+                                 errorMessageText = responseData.errors.map(error => error.message).join(', ');
+                            } else if (response.status === 422) {
+                                 errorMessageText = 'Vennligst sjekk at alle feltene er korrekt utfylt.';
+                            }
+                            console.error('Formspree submission error:', response.status, responseData);
+                            formErrorMessage.textContent = errorMessageText;
+                            formErrorMessage.style.display = 'block';
+
+                            // Reset knappen ved feil
+                            submitButton.disabled = false;
+                            submitButton.textContent = originalButtonText;
                         }
+
+                    } catch (error) {
+                        // Nettverksfeil eller annen JS-feil
+                        console.error('Error submitting form:', error);
+                        formErrorMessage.textContent = 'En nettverksfeil oppstod. Sjekk tilkoblingen din og prøv igjen.';
+                        formErrorMessage.style.display = 'block';
+
                         // Reset knappen ved feil
                         submitButton.disabled = false;
                         submitButton.textContent = originalButtonText;
                     }
+                } // Slutt handleSubmit
 
-                } catch (error) {
-                    // Nettverksfeil eller annen JS-feil
-                    console.error('Error submitting form:', error);
-                    if(formErrorMessage) {
-                        formErrorMessage.textContent = 'En nettverksfeil oppstod. Sjekk tilkoblingen din og prøv igjen.';
-                        formErrorMessage.style.display = 'block';
-                    } else {
-                         alert('En nettverksfeil oppstod. Sjekk tilkoblingen din og prøv igjen.');
-                    }
-                    // Reset knappen ved feil
-                    submitButton.disabled = false;
-                    submitButton.textContent = originalButtonText;
-                }
-            }
-
-            // Lytt etter 'submit'-hendelsen på skjemaet
-            if (contactForm) {
+                // Lytt etter 'submit'-hendelsen på skjemaet
                 contactForm.addEventListener('submit', handleSubmit);
-            } else {
-                 console.error("Element with ID 'contact-form' not found.");
-            }
 
-            // Lytt etter når flyanimasjonen er ferdig for å rydde opp
-            if (paper) {
-                paper.addEventListener('animationend', () => {
-                    if (paper.classList.contains('flying')) {
+                // Lytt etter når flyanimasjonen er ferdig for å rydde opp
+                paper.addEventListener('animationend', (event) => {
+                    // Sjekk at det er 'fly-away' animasjonen som er ferdig
+                    if (event.animationName === 'fly-away' && paper.classList.contains('flying')) {
                         // Skjul containeren
                         animationContainer.style.display = 'none';
 
@@ -883,29 +1074,19 @@
                         paperContent.textContent = ''; // Tøm innholdet
 
                         // Reset skjemaet
-                        if (contactForm) contactForm.reset();
+                        contactForm.reset();
 
-                         // Reset knappen etter vellykket animasjon
+                         // Reset knappen ETTER vellykket animasjon
                         submitButton.disabled = false;
                         submitButton.textContent = 'Send Forespørsel om Konsultasjon'; // Tilbake til original tekst
                     }
                 });
-            } else {
-                 console.error("Element with ID 'paper' not found.");
-            }
 
-             // Sørg for at alle nødvendige elementer finnes før vi legger til event listeners
-             if (!animationContainer) console.error("Element with ID 'animation-container' not found.");
-             if (!paperContent) console.error("Element with ID 'paper-content' not found.");
-             if (!thankYouMessage) console.error("Element with ID 'thank-you-message' not found.");
-             if (!nameInput) console.error("Element with ID 'name' not found.");
-             if (!emailInput) console.error("Element with ID 'email' not found.");
-             if (!messageInput) console.error("Element with ID 'message' not found.");
-             if (!submitButton) console.error("Submit button inside '#contact-form' not found.");
+             } // Slutt på else-blokk for innsendings/animasjons-element-sjekk
 
-            // === SLUTT NY KODE ===
+            // === SLUTT KODE FOR KONTAKTSKJEMA-ANIMASJON OG FORMSPREE SUBMIT ===
 
-        });
+        }); // Slutt på DOMContentLoaded
     </script>
     <!-- === JAVASCRIPT SLUTT === -->
 
