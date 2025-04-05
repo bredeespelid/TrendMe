@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <defs>
+    <linearGradient id="smoothArrowGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <!-- Startfarge (basert på en av de øverste lilla) -->
+      <stop offset="0%" stop-color="#7C4DE8"/>
+
+      <!-- Mellomstopp for jevnere overgang (kan justeres/fjernes/legges til flere) -->
+      <!-- Prøv en farge midt mellom lilla og cyan -->
+      <stop offset="50%" stop-color="#3e87f7"/>
+
+      <!-- Sluttfarge (basert på en av de nederste blå/cyan eller ønsket farge) -->
+      <stop offset="100%" stop-color="#00c6ff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Bruker den første path-definisjonen som grunnlag for formen.
+       MERK: For perfekt resultat bør alle stier kombineres i en vektor-editor først. -->
+  <path 
+    d="M300 106c44 64 88 132 130 194 -19-4-42-27-64-37 22 68 45 137 68 204 -45-34-90-71-130-105 -47 35-90 72-135 108 21-71 43-138 66-204 -22 8-42 27-64 40 42-68 83-130 126-194z" 
+    fill="url(#smoothArrowGradient)" 
+  />
+  
+  <!-- De andre path-elementene er fjernet, da de erstattes av gradienten -->
+
+</svg>
