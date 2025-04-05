@@ -271,18 +271,32 @@
              #om .container { gap: 3rem; }
              .team-member { max-width: 400px; }
         }
-        @media (max-width: 768px) {
-             header nav { flex-direction: column; align-items: center; } header .logo { margin-bottom: 15px; } header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; } header ul li { margin: 5px 8px; } header ul li a { font-size: 0.9rem; padding: 8px 12px; } .hero { min-height: 70vh; padding: 6rem 0 3rem 0; } .hero h1 { font-size: 2.5rem; } .hero .typing-container { font-size: 1.1rem; } .cta-button { padding: 12px 30px; font-size: 1rem; } .section { padding: 4rem 0; } .section-header h2 { font-size: 2rem; } .section-header p { font-size: 1rem; } #contact-form { padding: 2rem; } .service-grid { grid-template-columns: 1fr; } .feature-grid { grid-template-columns: 1fr; }
-            .accordion-title { font-size: 1.1rem; padding: 1.2rem 0.8rem; }
-            .accordion-content { padding: 0 1rem; font-size: 0.95rem;}
-            .accordion-content.aktiv { padding: 1rem 1rem 2rem 1rem; }
-            #om .container { flex-direction: column; align-items: center; gap: 3rem; }
-            .team-member { min-width: unset; width: 90%; max-width: 400px; flex: none; }
-            .team-member .om-image img { width: 180px; height: 180px; }
-            /* Juster papirstørrelse for mindre skjermer */
-            #paper { width: 90%; max-width: 280px; height: auto; min-height: 350px; }
-            #thank-you-message { font-size: 1.2rem; }
-        }
+	@media (max-width: 768px) {
+	    header nav { flex-direction: column; align-items: center; }
+	    header .logo { margin-bottom: 15px; }
+	    header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+	    header ul li { margin: 4px 6px; }
+	    header ul li a { font-size: 0.85rem; padding: 6px 10px; white-space: nowrap; }
+	    .hero { min-height: 70vh; padding: 6rem 0 3rem 0; }
+	    .hero h1 { font-size: 2.5rem; }
+	    .hero .typing-container { font-size: 1.1rem; }
+	    .cta-button { padding: 12px 30px; font-size: 1rem; }
+	    .section { padding: 4rem 0; }
+	    .section-header h2 { font-size: 2rem; }
+	    .section-header p { font-size: 1rem; }
+	    #contact-form { padding: 2rem; }
+	    .service-grid { grid-template-columns: 1fr; }
+	    .feature-grid { grid-template-columns: 1fr; }
+	    .accordion-title { font-size: 1.1rem; padding: 1.2rem 0.8rem; }
+	    .accordion-content { padding: 0 1rem; font-size: 0.95rem; }
+	    .accordion-content.aktiv { padding: 1rem 1rem 2rem 1rem; }
+	    #om .container { flex-direction: column; align-items: center; gap: 3rem; }
+	    .team-member { min-width: unset; width: 90%; max-width: 400px; flex: none; }
+	    .team-member .om-image img { width: 180px; height: 180px; }
+	    #paper { width: 90%; max-width: 280px; height: auto; min-height: 350px; }
+	    #thank-you-message { font-size: 1.2rem; }
+	}
+
         @media (max-width: 480px) {
              .hero h1 { font-size: 2rem; } header .logo { font-size: 1.5rem; } .section-header h2 { font-size: 1.8rem; } header ul li { margin: 3px 5px;} header ul li a { padding: 6px 8px; font-size: 0.85rem;} .footer-links img { width: 24px; height: 24px;} .footer-links a { margin: 0 8px;}
              .team-member .om-image img { width: 150px; height: 150px; }
