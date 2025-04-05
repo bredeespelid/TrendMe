@@ -1,14 +1,57 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-		<!--	created with www.mysitemapgenerator.com	-->
-		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-	<loc>https://www.trendme.no/</loc>
-	<lastmod>2025-04-04T22:24:09+01:00</lastmod>
-	<priority>1.0</priority>
-</url>
-<url>
-	<loc>https://www.trendme.no/blogg/</loc>
-	<lastmod>2025-04-04T22:24:10+01:00</lastmod>
-	<priority>0.8</priority>
-</url>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://www.trendme.no/</loc>
+        <lastmod>2024-04-05T10:00:00+02:00</lastmod> <!-- KORRIGERT DATO -->
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://www.trendme.no/blogg/</loc>
+        <lastmod>2024-04-05T10:05:00+02:00</lastmod> <!-- KORRIGERT DATO (oppdatert når nye poster legges til) -->
+        <priority>0.8</priority>
+    </url>
+
+    <!-- === NYE BLOGGPOSTER === -->
+    <url>
+        <loc>https://www.trendme.no/blogg/posts/stjerne-vs-snofnugg-schema.html</loc>
+        <lastmod>2024-04-04T12:00:00+02:00</lastmod> <!-- Faktisk publiserings-/endringsdato -->
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.trendme.no/blogg/posts/medallion-arkitektur-fabric.html</loc>
+        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.trendme.no/blogg/posts/sikre-data-med-rls-cls.html</loc>
+        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <priority>0.7</priority>
+    </url>
+     <url>
+        <loc>https://www.trendme.no/blogg/posts/fabric-datainnhenting-metoder.html</loc>
+        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.trendme.no/blogg/posts/fabric-capacity-og-prising.html</loc>
+        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <priority>0.7</priority>
+    </url>
+     <url>
+        <loc>https://www.trendme.no/blogg/posts/fordeler-med-calculation-groups.html</loc>
+        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.trendme.no/blogg/posts/fabric-warehouse-vs-lakehouse.html</loc>
+        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://www.trendme.no/blogg/posts/hva-er-microsoft-fabric-introduksjon.html</loc>
+        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <priority>0.7</priority>
+    </url>
+    <!-- Legg til flere <url>-blokker for alle andre bloggposter -->
+
 </urlset>
