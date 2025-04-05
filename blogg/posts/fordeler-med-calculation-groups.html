@@ -1,98 +1,361 @@
-<!-- Innhold for introduksjonsartikkel om Calculation Groups -->
-<h2>Færre Mål, Mer Innsikt: Fordelene med Calculation Groups i Power BI & Fabric</h2>
-<!-- Husk å oppdatere datoen til når du publiserer -->
-<span class="post-meta">Publisert: 04. April 2025</span>
-<div class="post-content">
-    <p>Blir DAX-modellen din i Power BI eller Microsoft Fabric stadig mer kompleks? Kanskje du ender opp med å lage nesten identiske mål for ulike tidsperioder (som fjoråret, hittil i år) eller for ulike valutaer? Da er Calculation Groups en funksjon du absolutt bør kjenne til!</p>
-    <p>Hos TrendMe ser vi ofte at Calculation Groups kan revolusjonere hvordan bedrifter bygger og vedlikeholder sine datamodeller. I dette innlegget forklarer vi hva de er, hvorfor de er så kraftfulle, og hvordan du kommer i gang.</p>
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Husk å bytte ut bildestien og alt-teksten! -->
-    <!-- Forslag: Et skjermbilde av Calculation Group-grensesnittet i Power BI Desktop, eller en konseptuell illustrasjon -->
-    <img src="https://learn.microsoft.com/en-us/power-bi/transform-model/media/calculation-groups/calculation-groups-04.png" alt="Calculation Groups i Power BI Model View"> <!-- Oppdatert alt-tekst for bildet -->
+    <!-- === Spesifikk Metadata for denne posten === -->
+    <title>Færre Mål, Mer Innsikt: Calculation Groups i Power BI & Fabric | TrendMe Blogg</title>
+    <meta name="description" content="Lær hvordan Calculation Groups i Power BI og Microsoft Fabric drastisk kan redusere antall mål, forenkle vedlikehold og forbedre DAX-modeller.">
+    <!-- === SLUTT Spesifikk Metadata === -->
 
-    <h3>Problemet Calculation Groups Løser: "Mål-eksplosjonen"</h3>
-    <p>Etter hvert som en datamodell vokser, oppstår ofte behovet for å se de samme grunnleggende målene (f.eks. Salg, Kostnad, Antall) på forskjellige måter:</p>
-    <ul>
-        <li>Sammenlignet med forrige år (Year-over-Year, YOY)</li>
-        <li>Akkumulert hittil i år (Year-to-Date, YTD)</li>
-        <li>Konvertert til en annen valuta</li>
-        <li>Justert for inflasjon</li>
-        <li>...og så videre.</li>
-    </ul>
-    <p>Den tradisjonelle måten å løse dette på er å lage separate mål for hver eneste kombinasjon: `Salg YOY`, `Salg YTD`, `Kostnad YOY`, `Kostnad YTD`, `Antall YOY`, `Antall YTD`, osv. Dette fører raskt til:</p>
-    <ul>
-        <li>Enorme mengder mål: Modellen blir uoversiktlig og vanskelig å navigere i.</li>
-        <li>Repetitiv DAX-kode: Samme logikk (f.eks. YOY-beregningen) kopieres og limes inn i mange mål.</li>
-        <li>Vedlikeholdsmareritt: Hvis logikken for YOY må endres, må du oppdatere alle YOY-målene.</li>
-        <li>Inkonsistens: Risiko for små feil eller ulikheter når man kopierer kode.</li>
-    </ul>
-    <p>Calculation Groups tilbyr en mye smartere løsning.</p>
+    <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png"> <!-- Antar icon er i rot -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <h3>Hva er Egentlig en Calculation Group?</h3>
-    <p>Tenk på en Calculation Group som en samling av gjenbrukbare beregningsformler (eller formateringer) som kan brukes på alle eksisterende mål i modellen din.</p>
-    <p>I stedet for å lage `Salg YOY` og `Kostnad YOY` separat, lager du:</p>
-    <ol>
-        <li>Dine grunnleggende mål: `[Salg]` og `[Kostnad]` (som du sannsynligvis allerede har).</li>
-        <li>Én Calculation Group (f.eks. kalt "Tidsberegninger").</li>
-        <li>Inne i denne gruppen lager du "Calculation Items", som `YOY` og `YTD`. Hver av disse inneholder DAX-logikken for hvordan den respektive tidsberegningen skal gjøres.</li>
-    </ol>
-    <p>Magien ligger i en spesiell DAX-funksjon: <code>SELECTEDMEASURE()</code>. Når du definerer Calculation Item for `YOY`, bruker du <code>SELECTEDMEASURE()</code> som en plassholder for det målet brukeren har valgt i rapporten (f.eks. `[Salg]` eller `[Kostnad]`). Calculation Item-et tar dette målet, utfører YOY-logikken på det, og returnerer resultatet.</p>
+    <style>
+        /* === ALLE STILER (Fra blogg-oversikt + artikkel-spesifikke) === */
+        :root {
+            --dark-bg: #121212;
+            --primary-fabric-dark: #6a0dad;
+            --primary-fabric-light: #9370db;
+            --secondary-accent: #00c6ff;
+            /* Definer RGB-versjon for bruk med alpha/gjennomsiktighet */
+            --secondary-accent-rgb: 0, 198, 255;
+            --glow-color: rgba(0, 198, 255, 0.5);
+            --text-light: #e0e0e0;
+            --text-medium: #b0b0b0;
+            --text-dark: #1f1f1f;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --card-bg-hover: rgba(55, 55, 55, 0.9);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Poppins', sans-serif;
+            --transition-speed: 0.3s;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.7;
+            color: var(--text-light);
+            background-color: var(--dark-bg);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        .container { max-width: 1200px; margin: auto; padding: 0 25px; }
+        .section { padding: 4rem 0; } /* Brukes for main */
 
-    <h3>De Store Fordelene (Hvorfor du bør bruke dem):</h3>
-    <ul>
-        <li>Drastisk reduksjon i antall mål: Dette er hovedgevinsten! I stedet for N  M mål (N grunnmål  M beregningstyper), trenger du bare N + M (N grunnmål + M calculation items). Modellen blir mye renere og enklere.</li>
-        <li>Enklere vedlikehold: Trenger du å justere YOY-logikken? Du endrer den kun på ett sted (i YOY Calculation Item), og endringen gjelder automatisk for alle mål den brukes på.</li>
-        <li>Konsistent logikk: Sikrer at f.eks. YTD beregnes på nøyaktig samme måte for Salg, Kostnad, og Antall.</li>
-        <li>Dynamisk Formatering: Du kan definere formatstrenger (f.eks. prosent, valuta) som en del av et Calculation Item. `YOY%` kan automatisk vises som en prosent, uavhengig av formatet til det underliggende målet.</li>
-        <li>Fleksibilitet for brukere: Brukere kan enkelt velge hvilken beregning (f.eks. YOY, YTD, vanlig verdi) de vil se for et mål ved hjelp av en slicer eller filter i rapporten.</li>
-    </ul>
+        /* === HEADER === */
+        header {
+            background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); color: var(--text-light);
+            padding: 0.8rem 0; position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease;
+        }
+        header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
+        header .logo a {
+            font-size: 1.8rem; font-weight: 700; letter-spacing: 1px;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            text-decoration: none;
+        }
+        header ul { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; }
+        header ul li { margin-left: 20px; }
+        header ul li a {
+            display: flex; align-items: center; color: var(--text-medium); text-decoration: none;
+            padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px;
+            font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative;
+            overflow: hidden; white-space: nowrap;
+        }
+        header ul li a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            transition: width var(--transition-speed) ease, left var(--transition-speed) ease;
+            transform: translateX(-50%);
+        }
+        header ul li a:hover { color: var(--text-light); }
+        header ul li a:hover::after { width: 70%; left: 50%; }
 
-    <h3>Hvordan Sette Opp en Calculation Group (Enkel Oversikt):</h3>
-    <p>Du oppretter Calculation Groups i Model View i Power BI Desktop eller når du redigerer datamodellen i Fabric-tjenesten:</p>
-    <ol>
-        <li>Gå til Model View.</li>
-        <li>Klikk på Calculation group-knappen i båndet (Ribbon) under "Calculations"-gruppen.</li>
-        <li>(Du blir kanskje bedt om å aktivere "Discourage implicit measures". Dette er anbefalt og nødvendig for Calculation Groups. Si ja til dette.)</li>
-        <li>En ny "tabell" dukker opp i Data-panelet. Gi den et godt navn (f.eks. "Time Intelligence", "Valutakonvertering").</li>
-        <li>Standard får den én kolonne (ofte kalt "Name"). Gi denne kolonnen et beskrivende navn som skal vises i rapporter (f.eks. "Tidsberegning", "Vis som").</li>
-        <li>Standard får den ett Calculation Item (ofte kalt "Calculation"). Gi dette et meningsfylt navn (f.eks. "Current" eller "Faktisk Verdi"). DAX-uttrykket for denne er vanligvis bare <code>SELECTEDMEASURE()</code>, som betyr "vis målet som det er".</li>
-        <li>Lag nye Calculation Items: Høyreklikk på "Calculation Items"-mappen under gruppen din og velg "New calculation item". Gi dem navn (f.eks. "YOY", "YTD").</li>
-        <li>Skriv DAX-koden: For hvert nye item, skriv DAX-logikken. Bruk <code>SELECTEDMEASURE()</code> der du normalt ville referert til det spesifikke målet. Eksempel (veldig forenklet YOY):
-            <pre><code class="language-dax">CALCULATE(
+        /* === ARTIKKEL-SPESIFIKKE STILER === */
+        .article-section { padding: 3rem 0 4rem 0; }
+        .article-container { max-width: 800px; margin: auto; padding: 0 25px; }
+        .article-container h1 {
+            font-size: 2.8rem; font-weight: 700; color: var(--text-light);
+            margin-bottom: 1rem; line-height: 1.3;
+            background: linear-gradient(90deg, var(--text-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .post-meta {
+            font-size: 0.9rem; color: var(--text-medium); margin-bottom: 2.5rem;
+            display: block; border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem;
+        }
+        .article-body h2 {
+            font-size: 2rem; color: var(--text-light); margin-top: 3rem; margin-bottom: 1.5rem;
+            font-weight: 600; border-bottom: 2px solid var(--primary-fabric-light);
+            padding-bottom: 0.5rem; display: inline-block;
+        }
+        .article-body h3 {
+            font-size: 1.6rem; color: var(--text-light); margin-top: 2.5rem; margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .article-body p {
+            margin-bottom: 1.2rem; color: var(--text-medium); font-size: 1.05rem; line-height: 1.8;
+        }
+        .article-body strong { color: var(--text-light); font-weight: 600; }
+        .article-body a { /* Kun for CTA lenke */
+             color: var(--secondary-accent); text-decoration: none;
+             border-bottom: 1px dotted var(--secondary-accent);
+             transition: color 0.3s ease, border-bottom-color 0.3s ease;
+        }
+        .article-body a:hover {
+             color: var(--primary-fabric-light); border-bottom-color: var(--primary-fabric-light);
+        }
+        .article-body ul, .article-body ol {
+            margin-left: 25px; margin-bottom: 1.5rem; padding-left: 1rem;
+        }
+        .article-body li { margin-bottom: 0.7rem; color: var(--text-medium); line-height: 1.7; }
+        .article-body ul li::marker { color: var(--secondary-accent); font-size: 1.2em; }
+        .article-body ol { list-style-type: decimal; }
+        .article-body ol li::marker { color: var(--secondary-accent); font-weight: bold; }
+        .article-body ul ul, .article-body ol ol { margin-top: 0.5rem; margin-bottom: 0.8rem; }
+        .article-body ul ul li::marker { color: var(--primary-fabric-light); font-size: 1em; }
+
+        .article-body blockquote {
+            border-left: 4px solid var(--secondary-accent); margin: 2rem 0; padding: 1rem 1.5rem;
+            background-color: rgba(var(--secondary-accent-rgb), 0.05); color: var(--text-light);
+            font-style: italic; border-radius: 0 8px 8px 0;
+        }
+        .article-body blockquote p { margin-bottom: 0; }
+        .article-body code {
+            background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.5em; border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.9em; color: var(--text-light);
+        }
+        .article-body pre {
+            background-color: rgba(0, 0, 0, 0.5); border: 1px solid var(--card-border);
+            border-radius: 8px; padding: 1.5rem; overflow-x: auto; margin: 2rem 0;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.95em; line-height: 1.6; color: #c5c8c6;
+        }
+        .article-body pre code {
+            background-color: transparent; padding: 0; border-radius: 0;
+            color: inherit; font-size: inherit;
+        }
+        .article-body img {
+            max-width: 100%; height: auto; border-radius: 8px;
+            margin: 2rem auto; border: 1px solid var(--card-border); display: block;
+        }
+        .article-body figure { margin: 2rem 0; }
+        .article-body figcaption {
+            text-align: center; font-size: 0.9rem;
+            color: var(--text-medium); margin-top: 0.5rem;
+        }
+        .back-to-blog-link {
+            display: inline-block; margin-top: 3rem; color: var(--secondary-accent);
+            text-decoration: none; font-weight: 600; transition: color 0.3s ease;
+        }
+        .back-to-blog-link:hover { color: var(--primary-fabric-light); }
+
+        /* === FOOTER === */
+        footer {
+            background-color: #0a0a0a; color: var(--text-medium); text-align: center;
+            padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border);
+        }
+        footer p { margin-bottom: 1rem; font-size: 0.9rem; }
+
+         /* === RESPONSIVITET === */
+         @media (max-width: 768px) {
+             header nav { flex-direction: column; align-items: center; }
+             header .logo { margin-bottom: 15px; }
+             header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+             header ul li { margin: 5px 8px; }
+             .article-container h1 { font-size: 2.2rem; }
+             .article-body h2 { font-size: 1.7rem; }
+             .article-body h3 { font-size: 1.4rem; }
+             .article-body p { font-size: 1rem; }
+         }
+         @media (max-width: 500px) {
+              .article-container h1 { font-size: 1.8rem; }
+              .article-body h2 { font-size: 1.5rem; }
+              .article-body h3 { font-size: 1.3rem; }
+         }
+
+    </style>
+
+    <!-- === Schema.org Markup (JSON-LD) - VIKTIG FOR SEO === -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Færre Mål, Mer Innsikt: Fordelene med Calculation Groups i Power BI & Fabric",
+      "description": "Lær hvordan Calculation Groups i Power BI og Microsoft Fabric drastisk kan redusere antall mål, forenkle vedlikehold og forbedre DAX-modeller.",
+      "image": "https://learn.microsoft.com/en-us/power-bi/transform-model/media/calculation-groups/calculation-groups-04.png", // Bruker URL fra input. Bytt ut hvis du har et bedre bilde.
+      "author": {
+        "@type": "Organization", // Eller Person
+        "name": "TrendMe"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "TrendMe",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png" // URL til din logo
+        }
+      },
+      "datePublished": "2024-04-04", // Sett faktisk publiseringsdato
+      "dateModified": "2024-04-04" // Sett faktisk dato for siste endring
+    }
+    </script>
+    <!-- === SLUTT SCHEMA MARKUP === -->
+
+</head>
+<body>
+
+    <header id="main-header">
+        <nav class="container">
+            <div class="logo"><a href="/">TrendMe</a></div> <!-- Lenke til hovedside -->
+            <ul>
+                <!-- Relative stier fra /posts/ mappen -->
+                <li><a href="../">Tilbake til Bloggen</a></li> <!-- Går ett nivå opp til /blogg/ -->
+                <li><a href="/">Til TrendMe Hovedside</a></li> <!-- Går til roten -->
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Artikkelinnhold -->
+    <main class="section article-section">
+        <div class="article-container">
+
+            <h1>Færre Mål, Mer Innsikt: Fordelene med Calculation Groups i Power BI & Fabric</h1>
+
+            <p class="post-meta">
+                Publisert: <time datetime="2024-04-04">04. April 2024</time>
+                <!-- Valgfritt: by <span class="author">Ditt Navn</span> -->
+            </p>
+
+            <!-- Fjernet <div class="post-content"> wrapper -->
+            <div class="article-body">
+                <p>Blir DAX-modellen din i Power BI eller Microsoft Fabric stadig mer kompleks? Kanskje du ender opp med å lage nesten identiske mål for ulike tidsperioder (som fjoråret, hittil i år) eller for ulike valutaer? Da er <strong>Calculation Groups</strong> en funksjon du absolutt bør kjenne til!</p>
+                <p>Hos TrendMe ser vi ofte at Calculation Groups kan revolusjonere hvordan bedrifter bygger og vedlikeholder sine datamodeller. I dette innlegget forklarer vi hva de er, hvorfor de er så kraftfulle, og hvordan du kommer i gang.</p>
+
+                <figure>
+                    <!-- Kommentar: Sørg for at bildet er relevant og at du har rettigheter til det -->
+                    <img src="https://learn.microsoft.com/en-us/power-bi/transform-model/media/calculation-groups/calculation-groups-04.png" alt="Calculation Groups i Power BI Model View som viser Time Intelligence">
+                    <figcaption>Calculation Groups lar deg organisere og gjenbruke beregningslogikk.</figcaption>
+                </figure>
+
+                <h2>Problemet Calculation Groups Løser: "Mål-eksplosjonen"</h2>
+                <p>Etter hvert som en datamodell vokser, oppstår ofte behovet for å se de samme grunnleggende målene (f.eks. Salg, Kostnad, Antall) på forskjellige måter:</p>
+                <ul>
+                    <li>Sammenlignet med forrige år (Year-over-Year, <strong>YOY</strong>)</li>
+                    <li>Akkumulert hittil i år (Year-to-Date, <strong>YTD</strong>)</li>
+                    <li>Konvertert til en annen valuta</li>
+                    <li>Justert for inflasjon</li>
+                    <li>...og så videre.</li>
+                </ul>
+                <p>Den tradisjonelle måten å løse dette på er å lage separate mål for hver eneste kombinasjon: <code>Salg YOY</code>, <code>Salg YTD</code>, <code>Kostnad YOY</code>, <code>Kostnad YTD</code>, <code>Antall YOY</code>, <code>Antall YTD</code>, osv. Dette fører raskt til:</p>
+                <ul>
+                    <li><strong>Enorme mengder mål:</strong> Modellen blir uoversiktlig og vanskelig å navigere i.</li>
+                    <li><strong>Repetitiv DAX-kode:</strong> Samme logikk (f.eks. YOY-beregningen) kopieres og limes inn i mange mål.</li>
+                    <li><strong>Vedlikeholdsmareritt:</strong> Hvis logikken for YOY må endres, må du oppdatere alle YOY-målene.</li>
+                    <li><strong>Inkonsistens:</strong> Risiko for små feil eller ulikheter når man kopierer kode.</li>
+                </ul>
+                <p>Calculation Groups tilbyr en mye smartere løsning.</p>
+
+                <h2>Hva er Egentlig en Calculation Group?</h2>
+                <p>Tenk på en Calculation Group som en samling av <strong>gjenbrukbare beregningsformler</strong> (eller formateringer) som kan brukes på alle <strong>eksisterende mål</strong> i modellen din.</p>
+                <p>I stedet for å lage <code>Salg YOY</code> og <code>Kostnad YOY</code> separat, lager du:</p>
+                <ol>
+                    <li>Dine grunnleggende mål: <code>[Salg]</code> og <code>[Kostnad]</code> (som du sannsynligvis allerede har).</li>
+                    <li>Én Calculation Group (f.eks. kalt "Tidsberegninger").</li>
+                    <li>Inne i denne gruppen lager du "Calculation Items", som <code>YOY</code> og <code>YTD</code>. Hver av disse inneholder DAX-logikken for hvordan den respektive tidsberegningen skal gjøres.</li>
+                </ol>
+                <p>Magien ligger i en spesiell DAX-funksjon: <code>SELECTEDMEASURE()</code>. Når du definerer Calculation Item for <code>YOY</code>, bruker du <code>SELECTEDMEASURE()</code> som en plassholder for det målet brukeren har valgt i rapporten (f.eks. <code>[Salg]</code> eller <code>[Kostnad]</code>). Calculation Item-et tar dette målet, utfører YOY-logikken på det, og returnerer resultatet.</p>
+
+                <h2>De Store Fordelene (Hvorfor du bør bruke dem):</h2>
+                <ul>
+                    <li><strong>Drastisk reduksjon i antall mål:</strong> Dette er hovedgevinsten! I stedet for N * M mål (N grunnmål * M beregningstyper), trenger du bare N + M (N grunnmål + M calculation items). Modellen blir mye renere og enklere.</li>
+                    <li><strong>Enklere vedlikehold:</strong> Trenger du å justere YOY-logikken? Du endrer den kun på <strong>ett sted</strong> (i YOY Calculation Item), og endringen gjelder automatisk for alle mål den brukes på.</li>
+                    <li><strong>Konsistent logikk:</strong> Sikrer at f.eks. YTD beregnes på nøyaktig samme måte for Salg, Kostnad, og Antall.</li>
+                    <li><strong>Dynamisk Formatering:</strong> Du kan definere formatstrenger (f.eks. prosent, valuta) som en del av et Calculation Item. <code>YOY%</code> kan automatisk vises som en prosent, uavhengig av formatet til det underliggende målet.</li>
+                    <li><strong>Fleksibilitet for brukere:</strong> Brukere kan enkelt velge hvilken beregning (f.eks. YOY, YTD, vanlig verdi) de vil se for et mål ved hjelp av en slicer eller filter i rapporten.</li>
+                </ul>
+
+                <h2>Hvordan Sette Opp en Calculation Group (Enkel Oversikt):</h2>
+                <p>Du oppretter Calculation Groups i Model View i Power BI Desktop eller når du redigerer datamodellen i Fabric-tjenesten:</p>
+                <ol>
+                    <li>Gå til <strong>Model View</strong>.</li>
+                    <li>Klikk på <strong>Calculation group</strong>-knappen i båndet (Ribbon) under "Calculations"-gruppen.</li>
+                    <li>(Du blir kanskje bedt om å aktivere "Discourage implicit measures". Dette er anbefalt og nødvendig for Calculation Groups. Si ja til dette.)</li>
+                    <li>En ny "tabell" dukker opp i Data-panelet. Gi den et godt navn (f.eks. "Time Intelligence", "Valutakonvertering").</li>
+                    <li>Standard får den én kolonne (ofte kalt "Name"). Gi denne kolonnen et beskrivende navn som skal vises i rapporter (f.eks. "Tidsberegning", "Vis som").</li>
+                    <li>Standard får den ett Calculation Item (ofte kalt "Calculation"). Gi dette et meningsfylt navn (f.eks. "Current" eller "Faktisk Verdi"). DAX-uttrykket for denne er vanligvis bare <code>SELECTEDMEASURE()</code>, som betyr "vis målet som det er".</li>
+                    <li>Lag nye Calculation Items: Høyreklikk på "Calculation Items"-mappen under gruppen din og velg "New calculation item". Gi dem navn (f.eks. "YOY", "YTD").</li>
+                    <li>Skriv DAX-koden: For hvert nye item, skriv DAX-logikken. Bruk <code>SELECTEDMEASURE()</code> der du normalt ville referert til det spesifikke målet. Eksempel (veldig forenklet YOY):
+                        <pre><code class="language-dax">CALCULATE(
     SELECTEDMEASURE(),
     SAMEPERIODLASTYEAR('Date'[Date]) -- Husk å bruke DITT datotabellnavn!
 )</code></pre>
-        </li>
-        <li>(Valgfritt) Dynamisk Formatstreng: Velg et Calculation Item og slå på "Dynamic format string" i Properties-panelet for å overstyre standard formatering (f.eks. sett til `#,##0.00%` for YOY%).</li>
-        <li>(Valgfritt) Prioritet (Precedence): Hvis du har flere Calculation Groups, kan du bestemme rekkefølgen de anvendes i via "Calculation group precedence" i Properties for selve gruppen.</li>
-    </ol>
+                    </li>
+                    <li>(Valgfritt) <strong>Dynamisk Formatstreng:</strong> Velg et Calculation Item og slå på "Dynamic format string" i Properties-panelet for å overstyre standard formatering (f.eks. sett til <code>"#,##0.00%"</code> for YOY%).</li>
+                    <li>(Valgfritt) <strong>Prioritet (Precedence):</strong> Hvis du har flere Calculation Groups, kan du bestemme rekkefølgen de anvendes i via "Calculation group precedence" i Properties for selve gruppen.</li>
+                </ol>
 
-    <h3>Hvordan Bruke Calculation Groups i Rapporter:</h3>
-    <p>Når gruppen er laget, bruker du den slik:</p>
-    <ul>
-        <li>I Matriser/Tabeller: Dra den navngitte kolonnen fra Calculation Group (f.eks. "Tidsberegning") til "Columns"-feltet i en matrise. Dra deretter dine vanlige mål (f.eks. `[Salg]`, `[Kostnad]`) til "Values"-feltet. Vips, så ser du målene brutt ned etter Calculation Items!</li>
-        <li>I Slicere: Dra Calculation Group-kolonnen inn i en Slicer. Brukerne kan da velge om de vil se "Current", "YOY", "YTD", etc. for alle målene i tilknyttede visualiseringer.</li>
-        <li>I Andre Mål: Du kan også "tvinge" et mål til å bruke et spesifikt Calculation Item ved hjelp av `CALCULATE`. Eksempel:
-            <pre><code class="language-dax">Salg YOY% = 
+                <h2>Hvordan Bruke Calculation Groups i Rapporter:</h2>
+                <p>Når gruppen er laget, bruker du den slik:</p>
+                <ul>
+                    <li><strong>I Matriser/Tabeller:</strong> Dra den navngitte kolonnen fra Calculation Group (f.eks. "Tidsberegning") til "Columns"-feltet i en matrise. Dra deretter dine vanlige mål (f.eks. <code>[Salg]</code>, <code>[Kostnad]</code>) til "Values"-feltet. Vips, så ser du målene brutt ned etter Calculation Items!</li>
+                    <li><strong>I Slicere:</strong> Dra Calculation Group-kolonnen inn i en Slicer. Brukerne kan da velge om de vil se "Current", "YOY", "YTD", etc. for alle målene i tilknyttede visualiseringer.</li>
+                    <li><strong>I Andre Mål (mindre vanlig for å redusere antall):</strong> Du kan også "tvinge" et mål til å bruke et spesifikt Calculation Item ved hjelp av <code>CALCULATE</code>. Eksempel:
+                        <pre><code class="language-dax">Salg YOY% =
 CALCULATE(
     [Salg],
     'Time Intelligence'[Tidsberegning] = "YOY%" -- Bruk DITT gruppe- og kolonnenavn
 )</code></pre>
-            Dette er nyttig hvis du alltid vil vise en spesifikk beregning i et KPI-kort e.l., men det reduserer ikke antall mål like mye som de andre metodene.</li>
-    </ul>
+                        Dette er nyttig hvis du alltid vil vise en spesifikk beregning i et KPI-kort e.l., men det reduserer ikke antall mål like mye som de andre metodene.</li>
+                </ul>
 
-    <h3>Når Bør Du Vurdere Calculation Groups?</h3>
-    <p>De er spesielt nyttige for:</p>
-    <ul>
-        <li>Standardisert tidintelligence (YOY, MTD, YTD, QTD, osv.).</li>
-        <li>Valutakonvertering.</li>
-        <li>Scenarioanalyse (f.eks. vise "Budsjett", "Prognose", "Faktisk").</li>
-        <li>Ulike formateringsbehov for samme mål (f.eks. vise som tall, prosent av total, eller rangering).</li>
-    </ul>
+                <h2>Når Bør Du Vurdere Calculation Groups?</h2>
+                <p>De er spesielt nyttige for:</p>
+                <ul>
+                    <li>Standardisert tidintelligence (YOY, MTD, YTD, QTD, osv.).</li>
+                    <li>Valutakonvertering.</li>
+                    <li>Scenarioanalyse (f.eks. vise "Budsjett", "Prognose", "Faktisk").</li>
+                    <li>Ulike formateringsbehov for samme mål (f.eks. vise som tall, prosent av total, eller rangering).</li>
+                </ul>
 
-    <h3>La TrendMe Hjelpe Deg Med Calculation Groups</h3>
-    <p>Calculation Groups er et kraftig verktøy, men det krever litt innsikt å sette dem opp optimalt. Hos TrendMe har vi solid erfaring med å implementere Calculation Groups for å forenkle og forbedre Power BI- og Fabric-løsninger.</p>
-    <p>Trenger du hjelp til å rydde opp i mål-kaoset eller ønsker å utnytte potensialet i Fabric og Power BI fullt ut? <a href="/#kontakt">Ta kontakt med oss i TrendMe</a> for en prat om hvordan vi kan bistå!</p>
+                <h2>La TrendMe Hjelpe Deg Med Calculation Groups</h2>
+                <p>Calculation Groups er et kraftig verktøy, men det krever litt innsikt å sette dem opp optimalt. Hos TrendMe har vi solid erfaring med å implementere Calculation Groups for å forenkle og forbedre Power BI- og Fabric-løsninger.</p>
+                <p>Trenger du hjelp til å rydde opp i mål-kaoset eller ønsker å utnytte potensialet i Fabric og Power BI fullt ut? <a href="/#kontakt">Ta kontakt med oss i TrendMe</a> for en prat om hvordan vi kan bistå!</p> <!-- Beholdt CTA lenke -->
 
-    <p>Følg med videre for flere tips og triks om dataanalyse med Microsofts verktøy!</p>
-</div>
+                <p>Følg med videre for flere tips og triks om dataanalyse med Microsofts verktøy!</p>
+
+            </div> <!-- Slutt .article-body -->
+
+            <a href="../" class="back-to-blog-link">← Tilbake til Bloggoversikten</a>
+
+        </div> <!-- Slutt .article-container -->
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
+            <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
+        </div>
+    </footer>
+
+    <!-- Minimal JavaScript (kun for footer årstall og evt. CSS variabler) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Oppdaterer årstall i footer
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+            // Setter CSS variabel for RGBA bruk (hvis nødvendig)
+            document.documentElement.style.setProperty('--secondary-accent-rgb', '0, 198, 255');
+        });
+    </script>
+
+</body>
+</html>
