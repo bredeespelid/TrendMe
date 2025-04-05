@@ -305,7 +305,8 @@
             <div class="logo">TrendMe</div>
             <ul>
                 <li><a href="#hjem">Hjem</a></li>
-				<li><a href="#hvorfor-fabric">Hvorfor Fabric</a></li>
+		<li><a href="#hvorfor-fabric">Hvorfor Fabric</a></li>
+		<li><a href="#om-fabric">Om Fabric</a></li>
                 <li><a href="#fabric-tjenester">Fabric Tjenester</a></li>
                 <li><a href="#powerbi-tjenester">Power BI Tjenester</a></li>
                 <li><a href="#prosjekter">Kundecaser</a></li>
@@ -698,7 +699,7 @@
         document.addEventListener('DOMContentLoaded', function() {
 
             // --- Intersection Observer for animasjoner (uendret) ---
-            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.25 };
             const observerCallback = (entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
