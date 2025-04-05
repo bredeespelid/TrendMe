@@ -713,7 +713,7 @@
         document.addEventListener('DOMContentLoaded', function() {
 
             // --- Intersection Observer for animasjoner (uendret) ---
-            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
             const observerCallback = (entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
