@@ -1,66 +1,338 @@
-<!-- Innhold for introduksjonsartikkel om Microsoft Fabric -->
-<h2>Hva er Microsoft Fabric? En Enkel Introduksjon fra TrendMe</h2>
-<!-- Husk å oppdatere datoen til når du publiserer -->
-<span class="post-meta">Publisert: 04. April 2025</span>
-<div class="post-content">
-    <p>Du har kanskje hørt snakk om <strong>Microsoft Fabric</strong> i det siste? Det er Microsofts store satsing innen data og analyse, lansert for å forenkle en stadig mer kompleks dataverden. Men hva er det egentlig, og hvorfor bør din bedrift bry seg?</p>
-    <p>Hos TrendMe er vi dypt engasjert i hvordan verktøy som Fabric og Power BI kan hjelpe bedrifter med å få mer verdi ut av dataene sine. I dette første innlegget gir vi deg en grunnleggende introduksjon til Microsoft Fabric.</p>
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Husk å bytte ut bildestien og alt-teksten! -->
-    <img src="https://www.invisocorp.com/wp-content/uploads/2023/05/MSFabric_Screenshot.jpg" alt="Microsoft Fabric logo og oversikt over komponenter">
-    <!-- Forslag til bildesti: lag en /images/ mappe i roten av repoet ditt -->
+    <!-- === Spesifikk Metadata for denne posten === -->
+    <title>Hva er Microsoft Fabric? En Enkel Introduksjon | TrendMe Blogg</title>
+    <meta name="description" content="En grunnleggende introduksjon til Microsoft Fabric: Hva det er, hvilke problemer det løser, hovedkomponentene (OneLake, Experiences) og fordelene.">
+    <!-- === SLUTT Spesifikk Metadata === -->
 
-    <h3>Problemet Fabric Løser: Slutten på Verktøy-Kaoset?</h3>
-    <p>Før Fabric måtte bedrifter ofte sette sammen og administrere en rekke separate verktøy for å håndtere dataene sine: ett for datainnhenting (ETL/ELT), ett for datavarehus, ett for avansert analyse, ett for rapportering (som Power BI), og så videre. Dette førte ofte til:</p>
-    <ul>
-        <li><strong>Datasiloer:</strong> Data ble låst i ulike systemer.</li>
-        <li><strong>Kompleksitet:</strong> Vanskelig å få verktøyene til å snakke sammen.</li>
-        <li><strong>Duplisering:</strong> Samme data ble kopiert mange steder.</li>
-        <li><strong>Høye kostnader:</strong> Både i lisenser og administrasjon.</li>
-    </ul>
-    <p>Microsoft Fabric prøver å løse dette ved å samle alt på én plattform.</p>
+    <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png"> <!-- Antar icon er i rot -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <h3>Hva er Microsoft Fabric – Hoveddelene</h3>
-    <p>Tenk på Fabric som en <strong>helhetlig analysepakke levert som en skytjeneste (SaaS)</strong> – litt som Office 365, men for data. Den bygger på velkjente Microsoft-teknologier, men integrerer dem på en ny måte. Kjernen består av:</p>
+    <style>
+        /* === ALLE STILER (Fra blogg-oversikt + artikkel-spesifikke) === */
+        :root {
+            --dark-bg: #121212;
+            --primary-fabric-dark: #6a0dad;
+            --primary-fabric-light: #9370db;
+            --secondary-accent: #00c6ff;
+            /* Definer RGB-versjon for bruk med alpha/gjennomsiktighet */
+            --secondary-accent-rgb: 0, 198, 255;
+            --glow-color: rgba(0, 198, 255, 0.5);
+            --text-light: #e0e0e0;
+            --text-medium: #b0b0b0;
+            --text-dark: #1f1f1f;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --card-bg-hover: rgba(55, 55, 55, 0.9);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Poppins', sans-serif;
+            --transition-speed: 0.3s;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.7;
+            color: var(--text-light);
+            background-color: var(--dark-bg);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        .container { max-width: 1200px; margin: auto; padding: 0 25px; }
+        .section { padding: 4rem 0; } /* Brukes for main */
 
-    <ol>
-        <li><strong>OneLake:</strong> Dette er hjertet i Fabric, en sentral, logisk "datasjø" for hele organisasjonen. Tenk på det som "OneDrive for data". All data kan lagres her (i det åpne Delta Lake-formatet), noe som reduserer behovet for å flytte og kopiere data mellom ulike verktøy. Du kan også lage "Shortcuts" til data som ligger andre steder (f.eks. i Azure Data Lake Storage eller Amazon S3).</li>
-        <li><strong>Integrerte "Experiences" (Verktøy/Arbeidsområder):</strong> Fabric samler flere spesialiserte verktøy (kalt "Experiences") under samme tak, med et felles grensesnitt:
+        /* === HEADER === */
+        header {
+            background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); color: var(--text-light);
+            padding: 0.8rem 0; position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease;
+        }
+        header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
+        header .logo a {
+            font-size: 1.8rem; font-weight: 700; letter-spacing: 1px;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            text-decoration: none;
+        }
+        header ul { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; }
+        header ul li { margin-left: 20px; }
+        header ul li a {
+            display: flex; align-items: center; color: var(--text-medium); text-decoration: none;
+            padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px;
+            font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative;
+            overflow: hidden; white-space: nowrap;
+        }
+        header ul li a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            transition: width var(--transition-speed) ease, left var(--transition-speed) ease;
+            transform: translateX(-50%);
+        }
+        header ul li a:hover { color: var(--text-light); }
+        header ul li a:hover::after { width: 70%; left: 50%; }
+
+        /* === ARTIKKEL-SPESIFIKKE STILER === */
+        .article-section { padding: 3rem 0 4rem 0; }
+        .article-container { max-width: 800px; margin: auto; padding: 0 25px; }
+        .article-container h1 {
+            font-size: 2.8rem; font-weight: 700; color: var(--text-light);
+            margin-bottom: 1rem; line-height: 1.3;
+            background: linear-gradient(90deg, var(--text-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .post-meta {
+            font-size: 0.9rem; color: var(--text-medium); margin-bottom: 2.5rem;
+            display: block; border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem;
+        }
+        .article-body h2 {
+            font-size: 2rem; color: var(--text-light); margin-top: 3rem; margin-bottom: 1.5rem;
+            font-weight: 600; border-bottom: 2px solid var(--primary-fabric-light);
+            padding-bottom: 0.5rem; display: inline-block;
+        }
+        .article-body h3 {
+            font-size: 1.6rem; color: var(--text-light); margin-top: 2.5rem; margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .article-body p {
+            margin-bottom: 1.2rem; color: var(--text-medium); font-size: 1.05rem; line-height: 1.8;
+        }
+        .article-body strong { color: var(--text-light); font-weight: 600; }
+        .article-body a { /* Kun for CTA lenke */
+             color: var(--secondary-accent); text-decoration: none;
+             border-bottom: 1px dotted var(--secondary-accent);
+             transition: color 0.3s ease, border-bottom-color 0.3s ease;
+        }
+        .article-body a:hover {
+             color: var(--primary-fabric-light); border-bottom-color: var(--primary-fabric-light);
+        }
+        .article-body ul, .article-body ol {
+            margin-left: 25px; margin-bottom: 1.5rem; padding-left: 1rem;
+        }
+        .article-body li { margin-bottom: 0.7rem; color: var(--text-medium); line-height: 1.7; }
+        .article-body ul li::marker { color: var(--secondary-accent); font-size: 1.2em; }
+        .article-body ol { list-style-type: decimal; }
+        .article-body ol li::marker { color: var(--secondary-accent); font-weight: bold; }
+        /* Stil for nestede lister */
+        .article-body ul ul, .article-body ol ol { margin-top: 0.5rem; margin-bottom: 0.8rem; }
+        .article-body ul ul li::marker { color: var(--primary-fabric-light); font-size: 1em; } /* Annen farge/stil for sub-liste */
+
+        .article-body blockquote {
+            border-left: 4px solid var(--secondary-accent); margin: 2rem 0; padding: 1rem 1.5rem;
+            background-color: rgba(var(--secondary-accent-rgb), 0.05); color: var(--text-light);
+            font-style: italic; border-radius: 0 8px 8px 0;
+        }
+        .article-body blockquote p { margin-bottom: 0; }
+        .article-body code {
+            background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.5em; border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.9em; color: var(--text-light);
+        }
+        .article-body pre {
+            background-color: rgba(0, 0, 0, 0.5); border: 1px solid var(--card-border);
+            border-radius: 8px; padding: 1.5rem; overflow-x: auto; margin: 2rem 0;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.95em; line-height: 1.6; color: #c5c8c6;
+        }
+        .article-body pre code {
+            background-color: transparent; padding: 0; border-radius: 0;
+            color: inherit; font-size: inherit;
+        }
+        .article-body img {
+            max-width: 100%; height: auto; border-radius: 8px;
+            margin: 2rem auto; border: 1px solid var(--card-border); display: block;
+        }
+        .article-body figure { margin: 2rem 0; }
+        .article-body figcaption {
+            text-align: center; font-size: 0.9rem;
+            color: var(--text-medium); margin-top: 0.5rem;
+        }
+        .back-to-blog-link {
+            display: inline-block; margin-top: 3rem; color: var(--secondary-accent);
+            text-decoration: none; font-weight: 600; transition: color 0.3s ease;
+        }
+        .back-to-blog-link:hover { color: var(--primary-fabric-light); }
+
+        /* === FOOTER === */
+        footer {
+            background-color: #0a0a0a; color: var(--text-medium); text-align: center;
+            padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border);
+        }
+        footer p { margin-bottom: 1rem; font-size: 0.9rem; }
+
+         /* === RESPONSIVITET === */
+         @media (max-width: 768px) {
+             header nav { flex-direction: column; align-items: center; }
+             header .logo { margin-bottom: 15px; }
+             header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+             header ul li { margin: 5px 8px; }
+             .article-container h1 { font-size: 2.2rem; }
+             .article-body h2 { font-size: 1.7rem; }
+             .article-body h3 { font-size: 1.4rem; }
+             .article-body p { font-size: 1rem; }
+         }
+         @media (max-width: 500px) {
+              .article-container h1 { font-size: 1.8rem; }
+              .article-body h2 { font-size: 1.5rem; }
+              .article-body h3 { font-size: 1.3rem; }
+         }
+
+    </style>
+
+    <!-- === Schema.org Markup (JSON-LD) - VIKTIG FOR SEO === -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Hva er Microsoft Fabric? En Enkel Introduksjon fra TrendMe",
+      "description": "En grunnleggende introduksjon til Microsoft Fabric: Hva det er, hvilke problemer det løser, hovedkomponentene (OneLake, Experiences) og fordelene.",
+      "image": "https://www.invisocorp.com/wp-content/uploads/2023/05/MSFabric_Screenshot.jpg", // Bruker URL fra input. Bytt ut hvis du har et bedre bilde.
+      "author": {
+        "@type": "Organization", // Eller Person
+        "name": "TrendMe"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "TrendMe",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png" // URL til din logo
+        }
+      },
+      "datePublished": "2024-04-04", // Sett faktisk publiseringsdato
+      "dateModified": "2024-04-04" // Sett faktisk dato for siste endring
+    }
+    </script>
+    <!-- === SLUTT SCHEMA MARKUP === -->
+
+</head>
+<body>
+
+    <header id="main-header">
+        <nav class="container">
+            <div class="logo"><a href="/">TrendMe</a></div> <!-- Lenke til hovedside -->
             <ul>
-                <li><strong>Data Factory:</strong> For å hente inn og transformere data (ETL/ELT).</li>
-                <li><strong>Synapse Data Engineering:</strong> For å bygge og vedlikeholde dataløsninger med Spark.</li>
-                <li><strong>Synapse Data Science:</strong> For å utvikle og kjøre maskinlæringsmodeller.</li>
-                <li><strong>Synapse Data Warehouse:</strong> Et moderne datavarehus bygget på OneLake.</li>
-                <li><strong>Synapse Real-Time Analytics:</strong> For analyse av data som strømmer inn i sanntid.</li>
-                <li><strong>Power BI:</strong> For datavisualisering, rapportering og dashboards (tett integrert!).</li>
-                <li><strong>Data Activator:</strong> For å overvåke data og automatisk utløse handlinger (f.eks. sende et varsel).</li>
+                <!-- Relative stier fra /posts/ mappen -->
+                <li><a href="../">Tilbake til Bloggen</a></li> <!-- Går ett nivå opp til /blogg/ -->
+                <li><a href="/">Til TrendMe Hovedside</a></li> <!-- Går til roten -->
             </ul>
-        </li>
-        <li><strong>AI med Copilot (Under utvikling):</strong> Fabric integrerer Microsofts Copilot (kunstig intelligens) for å hjelpe brukere med alt fra å bygge rapporter og datastrømmer til å skrive kode og analysere data ved hjelp av naturlig språk.</li>
-    </ol>
+        </nav>
+    </header>
 
-    <h3>Hvorfor er Fabric Interessant? Noen Fordeler:</h3>
-    <ul>
-        <li><strong>Enklere:</strong> Én plattform å forholde seg til, ett felles grensesnitt.</li>
-        <li><strong>Samarbeid:</strong> Enklere for ulike roller (dataingeniører, analytikere, forretningsbrukere) å jobbe sammen på de samme dataene.</li>
-        <li><strong>Effektivitet:</strong> Mindre tid brukt på integrasjon og administrasjon, mer tid på analyse og innsikt.</li>
-        <li><strong>Skalerbart:</strong> Bygget for skyen og kan tilpasses bedriftens behov.</li>
-        <li><strong>Åpent:</strong> Bruker åpne formater (Delta Lake), som gir fleksibilitet.</li>
-    </ul>
+    <!-- Artikkelinnhold -->
+    <main class="section article-section">
+        <div class="article-container">
 
-    <h3>Hvem er Fabric for?</h3>
-    <p>Fabric er designet for et bredt spekter av roller som jobber med data, inkludert dataingeniører, data scientists, dataanalytikere, BI-utviklere og til og med forretningsbrukere som trenger innsikt fra data.</p>
+            <h1>Hva er Microsoft Fabric? En Enkel Introduksjon fra TrendMe</h1>
 
-    <h3>Hvordan Kan TrendMe Hjelpe Deg Med Fabric?</h3>
-    <p>Å ta i bruk en ny plattform som Microsoft Fabric kan virke overveldende. Hos TrendMe er vi spesialister på nettopp dette. Vi kan hjelpe din bedrift med:</p>
-    <ul>
-        <li><strong>Strategi og Veikart:</strong> Finne ut hvordan Fabric best passer inn i deres eksisterende dataøkosystem.</li>
-        <li><strong>Implementering og Arkitektur:</strong> Sette opp OneLake og de ulike Fabric-komponentene på en optimal måte.</li>
-        <li><strong>Migrering:</strong> Hjelpe dere med å flytte eksisterende løsninger (f.eks. fra Azure Synapse eller andre plattformer) til Fabric.</li>
-        <li><strong>Power BI Integrasjon:</strong> Sørge for at dere får mest mulig ut av Power BI i samspill med Fabric.</li>
-        <li><strong>Optimalisering og Opplæring:</strong> Sikre at dere bruker plattformen effektivt og bygger kompetanse internt.</li>
-    </ul>
-    <p>Er du nysgjerrig på mulighetene med Microsoft Fabric? <a href="/#kontakt">Ta kontakt med oss i TrendMe</a> for en uforpliktende prat!</p>
+            <p class="post-meta">
+                Publisert: <time datetime="2024-04-04">04. April 2024</time>
+                <!-- Valgfritt: by <span class="author">Ditt Navn</span> -->
+            </p>
 
-    <p>Følg med på bloggen for flere dypdykk i spesifikke Fabric-funksjoner og praktiske tips!</p>
-</div>
+            <!-- Fjernet <div class="post-content"> wrapper -->
+            <div class="article-body">
+                <p>Du har kanskje hørt snakk om <strong>Microsoft Fabric</strong> i det siste? Det er Microsofts store satsing innen data og analyse, lansert for å forenkle en stadig mer kompleks dataverden. Men hva er det egentlig, og hvorfor bør din bedrift bry seg?</p>
+                <p>Hos TrendMe er vi dypt engasjert i hvordan verktøy som Fabric og Power BI kan hjelpe bedrifter med å få mer verdi ut av dataene sine. I dette første innlegget gir vi deg en grunnleggende introduksjon til Microsoft Fabric.</p>
+
+                <figure>
+                    <!-- Kommentar: Sørg for at bildet er relevant og at du har rettigheter til det -->
+                    <img src="https://www.invisocorp.com/wp-content/uploads/2023/05/MSFabric_Screenshot.jpg" alt="Microsoft Fabric logo og oversikt over komponenter som Data Factory, Synapse, Power BI">
+                    <figcaption>Microsoft Fabric samler ulike data- og analyseverktøy på én plattform.</figcaption>
+                </figure>
+
+                <h2>Problemet Fabric Løser: Slutten på Verktøy-Kaoset?</h2>
+                <p>Før Fabric måtte bedrifter ofte sette sammen og administrere en rekke separate verktøy for å håndtere dataene sine: ett for datainnhenting (ETL/ELT), ett for datavarehus, ett for avansert analyse, ett for rapportering (som Power BI), og så videre. Dette førte ofte til:</p>
+                <ul>
+                    <li><strong>Datasiloer:</strong> Data ble låst i ulike systemer.</li>
+                    <li><strong>Kompleksitet:</strong> Vanskelig å få verktøyene til å snakke sammen.</li>
+                    <li><strong>Duplisering:</strong> Samme data ble kopiert mange steder.</li>
+                    <li><strong>Høye kostnader:</strong> Både i lisenser og administrasjon.</li>
+                </ul>
+                <p>Microsoft Fabric prøver å løse dette ved å samle alt på én plattform.</p>
+
+                <h2>Hva er Microsoft Fabric – Hoveddelene</h2>
+                <p>Tenk på Fabric som en <strong>helhetlig analysepakke levert som en skytjeneste (SaaS)</strong> – litt som Office 365, men for data. Den bygger på velkjente Microsoft-teknologier, men integrerer dem på en ny måte. Kjernen består av:</p>
+
+                <ol>
+                    <li>
+                        <h3>OneLake</h3>
+                        <p>Dette er hjertet i Fabric, en sentral, logisk "datasjø" for hele organisasjonen. Tenk på det som <strong>"OneDrive for data"</strong>. All data kan lagres her (i det åpne <code>Delta Lake</code>-formatet), noe som reduserer behovet for å flytte og kopiere data mellom ulike verktøy. Du kan også lage "Shortcuts" til data som ligger andre steder (f.eks. i Azure Data Lake Storage eller Amazon S3).</p>
+                    </li>
+                    <li>
+                        <h3>Integrerte "Experiences" (Verktøy/Arbeidsområder)</h3>
+                        <p>Fabric samler flere spesialiserte verktøy (kalt "Experiences") under samme tak, med et felles grensesnitt:</p>
+                        <ul>
+                            <li><strong>Data Factory:</strong> For å hente inn og transformere data (ETL/ELT).</li>
+                            <li><strong>Synapse Data Engineering:</strong> For å bygge og vedlikeholde dataløsninger med Spark.</li>
+                            <li><strong>Synapse Data Science:</strong> For å utvikle og kjøre maskinlæringsmodeller.</li>
+                            <li><strong>Synapse Data Warehouse:</strong> Et moderne datavarehus bygget på OneLake.</li>
+                            <li><strong>Synapse Real-Time Analytics:</strong> For analyse av data som strømmer inn i sanntid.</li>
+                            <li><strong>Power BI:</strong> For datavisualisering, rapportering og dashboards (tett integrert!).</li>
+                            <li><strong>Data Activator:</strong> For å overvåke data og automatisk utløse handlinger (f.eks. sende et varsel).</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <h3>AI med Copilot (Under utvikling)</h3>
+                        <p>Fabric integrerer Microsofts Copilot (kunstig intelligens) for å hjelpe brukere med alt fra å bygge rapporter og datastrømmer til å skrive kode og analysere data ved hjelp av naturlig språk. (Merk: Funksjonalitet og tilgjengelighet for Copilot utvikles kontinuerlig).</p>
+                    </li>
+                </ol>
+
+                <h2>Hvorfor er Fabric Interessant? Noen Fordeler:</h2>
+                <ul>
+                    <li><strong>Enklere:</strong> Én plattform å forholde seg til, ett felles grensesnitt.</li>
+                    <li><strong>Samarbeid:</strong> Enklere for ulike roller (dataingeniører, analytikere, forretningsbrukere) å jobbe sammen på de samme dataene i OneLake.</li>
+                    <li><strong>Effektivitet:</strong> Mindre tid brukt på integrasjon og administrasjon, mer tid på analyse og innsikt.</li>
+                    <li><strong>Skalerbart:</strong> Bygget for skyen og kan tilpasses bedriftens behov via Fabric Capacities.</li>
+                    <li><strong>Åpent:</strong> Bruker åpne formater (<code>Delta Lake</code>/<code>Parquet</code>), som gir fleksibilitet og unngår "vendor lock-in".</li>
+                </ul>
+
+                <h2>Hvem er Fabric for?</h2>
+                <p>Fabric er designet for et bredt spekter av roller som jobber med data, inkludert dataingeniører, data scientists, dataanalytikere, BI-utviklere og til og med forretningsbrukere som trenger innsikt fra data.</p>
+
+                <h2>Hvordan Kan TrendMe Hjelpe Deg Med Fabric?</h2>
+                <p>Å ta i bruk en ny plattform som Microsoft Fabric kan virke overveldende. Hos TrendMe er vi spesialister på nettopp dette. Vi kan hjelpe din bedrift med:</p>
+                <ul>
+                    <li><strong>Strategi og Veikart:</strong> Finne ut hvordan Fabric best passer inn i deres eksisterende dataøkosystem.</li>
+                    <li><strong>Implementering og Arkitektur:</strong> Sette opp OneLake og de ulike Fabric-komponentene på en optimal måte (f.eks. med en Medallion-arkitektur).</li>
+                    <li><strong>Migrering:</strong> Hjelpe dere med å flytte eksisterende løsninger (f.eks. fra Azure Synapse eller andre plattformer) til Fabric.</li>
+                    <li><strong>Power BI Integrasjon:</strong> Sørge for at dere får mest mulig ut av Power BI i samspill med Fabric (inkludert DirectLake).</li>
+                    <li><strong>Optimalisering og Opplæring:</strong> Sikre at dere bruker plattformen effektivt og bygger kompetanse internt.</li>
+                </ul>
+                <p>Er du nysgjerrig på mulighetene med Microsoft Fabric? <a href="/#kontakt">Ta kontakt med oss i TrendMe</a> for en uforpliktende prat!</p> <!-- Beholdt CTA lenke -->
+
+                <p>Følg med på bloggen for flere dypdykk i spesifikke Fabric-funksjoner og praktiske tips!</p>
+
+            </div> <!-- Slutt .article-body -->
+
+            <a href="../" class="back-to-blog-link">← Tilbake til Bloggoversikten</a>
+
+        </div> <!-- Slutt .article-container -->
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
+            <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
+        </div>
+    </footer>
+
+    <!-- Minimal JavaScript (kun for footer årstall og evt. CSS variabler) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Oppdaterer årstall i footer
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+            // Setter CSS variabel for RGBA bruk (hvis nødvendig)
+            document.documentElement.style.setProperty('--secondary-accent-rgb', '0, 198, 255');
+        });
+    </script>
+
+</body>
+</html>
