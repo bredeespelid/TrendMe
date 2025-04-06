@@ -54,51 +54,16 @@
         .slide-right { transform: translateX(40px); }
         .visible { opacity: 1; transform: translate(0, 0) !important; }
 
-        /* --- Header & Navigasjon (Base styles for > 992px, grunnlag for > 1800px) --- */
+        /* --- Header & Navigasjon --- */
         header { background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text-light); padding: 0.8rem 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease; }
-        header nav {
-            display: flex;
-            justify-content: space-between; /* Logo venstre, UL høyre */
-            align-items: center;            /* Vertikal sentrering */
-            min-height: 50px;
-            /* flex-direction: row; er standard */
-        }
-        header .logo {
-            font-size: 1.8rem; font-weight: 700; letter-spacing: 1px;
-            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            margin-bottom: 0; /* <<< NY/JUSTERT: Ingen bunnmarg i rad-layout */
-        }
-        header ul {
-            list-style: none;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;         /* <<< NY/JUSTERT: Tillat wrap som standard for rad-layout */
-            justify-content: flex-end; /* Juster knapper til høyre */
-            margin-top: 0;           /* <<< NY/JUSTERT: Ingen toppmarg i rad-layout */
-            padding: 0;
-        }
-        header ul li {
-            margin-left: 20px;       /* Standard horisontal avstand */
-            margin-top: 2px;         /* <<< NY/JUSTERT: Litt vertikal luft hvis de wrapper */
-            margin-bottom: 2px;      /* <<< NY/JUSTERT: Litt vertikal luft hvis de wrapper */
-        }
-        header ul li a {
-            display: flex; align-items: center; color: var(--text-medium); text-decoration: none;
-            padding: 10px 15px;      /* Standard padding for bred skjerm */
-            transition: color var(--transition-speed) ease; border-radius: 5px;
-            font-weight: 400; font-size: 0.95rem; /* Standard font for bred skjerm */
-            letter-spacing: 0.5px; position: relative; overflow: hidden;
-            white-space: nowrap;     /* <<< NY/JUSTERT: Hold link-tekst samlet som standard */
-        }
-        header ul li a::after {
-            content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%;
-            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
-            transition: width var(--transition-speed) ease, left var(--transition-speed) ease; transform: translateX(-50%);
-        }
+        header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
+        header .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 0; }
+        header ul { list-style: none; display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; margin-top: 0; padding: 0; }
+        header ul li { margin-left: 20px; margin-top: 2px; margin-bottom: 2px; }
+        header ul li a { display: flex; align-items: center; color: var(--text-medium); text-decoration: none; padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px; font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative; overflow: hidden; white-space: nowrap; }
+        header ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); transition: width var(--transition-speed) ease, left var(--transition-speed) ease; transform: translateX(-50%); }
         header ul li a:hover { color: var(--text-light); }
         header ul li a:hover::after { width: 70%; left: 50%; }
-
 
         /* --- Hero & Generell Seksjon Styling --- */
         .hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 0 4rem 0; position: relative; overflow: hidden; background: linear-gradient(160deg, rgba(106, 13, 173, 0.3) 0%, rgba(18, 18, 18, 0.8) 70%), url('fabric-background.jpg') no-repeat center center/cover; background-color: #1a1a2e; }
@@ -112,7 +77,6 @@
         @keyframes blink { 50% { opacity: 0; } }
         .cta-button { display: inline-block; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); color: var(--text-dark); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease, opacity var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3); }
         .cta-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px var(--glow-color); }
-        /* Stil for når knappen er disabled (sender...) */
         .cta-button:disabled { background: gray; cursor: not-allowed; opacity: 0.7; transform: none; box-shadow: none; }
 
         .section { padding: 6rem 0; overflow: hidden; }
@@ -145,7 +109,7 @@
         .service-card ul li::before { content: '>'; position: absolute; left: 0; color: var(--secondary-accent); font-weight: bold; font-size: 1.2rem; line-height: 1; top: 2px; transition: transform var(--transition-speed) ease; }
         .service-card:hover ul li::before { transform: translateX(3px); }
 
-        /* --- Styling for Accordion (Brukes for Prosjekter & Om Fabric) --- */
+        /* --- Styling for Accordion --- */
         .accordion-list { max-width: 900px; margin: 2rem auto 0 auto; }
         .accordion-item { border-bottom: 1px solid var(--card-border); margin-bottom: 1rem; }
         .accordion-title { background: none; border: none; color: var(--text-light); cursor: pointer; padding: 1.5rem 1rem; width: 100%; text-align: left; font-size: 1.3rem; font-weight: 600; font-family: inherit; display: flex; justify-content: space-between; align-items: center; transition: background-color var(--transition-speed) ease; }
@@ -161,10 +125,27 @@
         .accordion-content ul li { margin-bottom: 0.5rem; padding-left: 0; color: var(--text-medium); }
         .accordion-content ul li::before { content: none; }
 
-        /* --- Om Oss Styling --- */
+        /* --- Om Oss Styling (Opprinnelig) --- */
         #om { background: var(--dark-bg); }
-        #om .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 4rem; }
-        .team-member { flex: 1; min-width: 300px; max-width: 450px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        /* Grunnleggende container oppsett for Om Oss */
+        #om .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Skal sentrere team-medlemmene horisontalt */
+            gap: 4rem; /* Avstand mellom elementer */
+        }
+        /* Grunnleggende stil for hvert teammedlem */
+        .team-member {
+             flex: 1 1 300px; /* Tillat vekst/krympt, basis 300px */
+             min-width: 300px; /* Minimum bredde */
+             max-width: 450px; /* Maksimum bredde, hindrer at de blir for brede */
+             display: flex;
+             flex-direction: column;
+             align-items: center; /* Skal sentrere innholdet (bilde/tekst) vertikalt */
+             text-align: center; /* Skal sentrere teksten */
+             /* Fjern unødvendig margin siden gap brukes */
+             margin: 0;
+        }
         .team-member .om-image { margin-bottom: 1.5rem; flex-shrink: 0; }
         .team-member .om-image img { width: 200px; height: 200px; object-fit: cover; border-radius: 50%; border: 5px solid var(--card-border); box-shadow: 0 0 25px rgba(147, 112, 219, 0.3); }
         .team-member .om-text h3 { font-size: 1.6rem; color: var(--text-light); margin-bottom: 1rem; font-weight: 600; }
@@ -174,13 +155,13 @@
         /* --- Kontakt & Footer Styling --- */
         #kontakt { position: relative; background: linear-gradient(rgba(18,18,18,0.95), rgba(18,18,18,0.98)), url('contact-bg.jpg') no-repeat center center/cover; background-color: var(--dark-bg); }
         #contact-form { max-width: 700px; margin: 0 auto; background: var(--card-bg); padding: 3rem; border-radius: 15px; border: 1px solid var(--card-border); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
-        .form-group { margin-bottom: 1.8rem; position: relative; /* Viktig for suggestions */ }
+        .form-group { margin-bottom: 1.8rem; position: relative; }
         .form-group label { display: block; margin-bottom: 0.7rem; font-weight: 600; color: var(--text-medium); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
         .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group textarea { width: 100%; padding: 1rem; border: 1px solid var(--card-border); border-radius: 8px; font-family: inherit; font-size: 1rem; background-color: rgba(50, 50, 50, 0.5); color: var(--text-light); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--secondary-accent); box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.2); }
         .form-group textarea { resize: vertical; min-height: 120px; }
-        #contact-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; } /* Bruker .cta-button klassen for utseende */
-        #form-error-message { color: var(--error-color); } /* Bruker error-color variabel */
+        #contact-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; }
+        #form-error-message { color: var(--error-color); }
 
         footer { background-color: #0a0a0a; color: var(--text-medium); text-align: center; padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border); }
         footer p { margin-bottom: 1rem; font-size: 0.9rem; }
@@ -189,92 +170,43 @@
         .footer-links img { width: 28px; height: 28px; vertical-align: middle; filter: none; transition: filter var(--transition-speed) ease; }
         .footer-links a:hover { transform: scale(1.15); opacity: 1; }
 
-        /* === START Styling for Brreg NAME suggestions (Kontakt skjema) === */
-        .suggestions-container {
-            position: absolute; left: 0; right: 0; top: 100%; /* Rett under inputfeltet */
-            background-color: var(--suggestions-bg); border: 1px solid var(--card-border); border-top: none;
-            border-radius: 0 0 8px 8px; z-index: 10; max-height: 200px; overflow-y: auto;
-            display: none; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-        }
+        /* === Brreg NAME suggestions (Kontakt skjema) === */
+        .suggestions-container { position: absolute; left: 0; right: 0; top: 100%; background-color: var(--suggestions-bg); border: 1px solid var(--card-border); border-top: none; border-radius: 0 0 8px 8px; z-index: 10; max-height: 200px; overflow-y: auto; display: none; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
         .suggestions-container ul { list-style: none; margin: 0; padding: 0; }
         .suggestions-container li { padding: 0.8rem 1rem; cursor: pointer; color: var(--text-light); border-bottom: 1px solid var(--card-border); transition: background-color 0.2s ease; }
         .suggestions-container li:last-child { border-bottom: none; }
         .suggestions-container li:hover { background-color: var(--suggestions-hover-bg); color: var(--secondary-accent); }
         .suggestions-container .no-results { padding: 0.8rem 1rem; color: var(--text-medium); font-style: italic; }
-        /* === SLUTT Styling for Brreg NAME suggestions === */
 
-        /* === ANIMASJONSKODE START === */
+        /* === ANIMASJONSKODE === */
         #animation-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(18, 18, 18, 0.9); display: none; justify-content: center; align-items: center; flex-direction: column; z-index: 1100; overflow: hidden; }
         #paper { background-color: #fff; width: 300px; height: 400px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); border: 1px solid var(--card-border); padding: 20px; box-sizing: border-box; opacity: 0; transform: scale(0.8); transition: opacity 0.5s ease-out, transform 0.5s ease-out; position: relative; overflow: hidden; }
         #paper-content { font-family: var(--font-primary); font-size: 0.9rem; color: var(--text-dark); white-space: pre-wrap; word-wrap: break-word; max-height: 100%; overflow-y: auto; }
         #thank-you-message { margin-top: 20px; font-size: 1.5rem; color: var(--secondary-accent); font-weight: bold; text-align: center; display: none; opacity: 0; transition: opacity 0.5s ease-in 0.2s; }
         @keyframes fly-away { 0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translate(120vw, -120vh) rotate(720deg) scale(0.1); opacity: 0; } }
         #paper.flying { animation: fly-away 2s ease-in forwards; }
-        /* === ANIMASJONSKODE SLUTT === */
 
-        /* --- RESPONSIVITET START --- */
-
-        /* === TABLET & MINDRE (Stacked Header Layout) === */
+        /* --- RESPONSIVITET --- */
         @media (max-width: 992px) {
-             /* --- Header & Navigasjon for < 992px --- */
-             header nav {
-                 flex-direction: column; /* <<< NY/JUSTERT: Stack logo og nav */
-                 align-items: center;    /* Sentrer innholdet */
-                 min-height: auto;       /* La høyden justeres */
-             }
-             header .logo {
-                 margin-bottom: 15px; /* Avstand logo -> nav */
-             }
-             header ul {
-                 /* Inherits display: flex, flex-wrap: wrap */
-                 justify-content: center; /* <<< NY/JUSTERT: Sentrer knappene horisontalt */
-                 margin-top: 10px;        /* Avstand fra logoen */
-                 /* Inherits padding: 0 */
-             }
-             header ul li {
-                 margin: 4px 6px; /* <<< NY/JUSTERT: Tettere marginer for knapper */
-                 margin-left: 6px; /* Overstyr base margin-left */
-             }
-             header ul li a {
-                 padding: 8px 12px;     /* <<< NY/JUSTERT: Litt mindre padding */
-                 font-size: 0.9rem;     /* <<< NY/JUSTERT: Litt mindre skrift */
-                 white-space: normal;   /* <<< NY/JUSTERT: Tillat tekstbryting i linker her om nødvendig */
-             }
-             header ul li a::after { /* Juster hover-strek om nødvendig */
-                 bottom: 4px; /* Juster posisjon */
-             }
-             header ul li a:hover::after {
-                 width: 65%; /* Juster bredde */
-             }
-
-             /* --- Andre justeringer for < 992px --- */
+             header nav { flex-direction: column; align-items: center; min-height: auto; }
+             header .logo { margin-bottom: 15px; }
+             header ul { justify-content: center; margin-top: 10px; }
+             header ul li { margin: 4px 6px; margin-left: 6px; }
+             header ul li a { padding: 8px 12px; font-size: 0.9rem; white-space: normal; }
+             header ul li a::after { bottom: 4px; }
+             header ul li a:hover::after { width: 65%; }
              .hero h1 { font-size: 3rem; }
              .hero .typing-container { font-size: 1.2rem; }
              .section-header h2 { font-size: 2.4rem; }
-             .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); } /* Holder seg greit */
+             .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
              #om .container { gap: 3rem; }
              .team-member { max-width: 400px; }
         }
-
-        /* === MOBIL (Finjusteringer) === */
 	    @media (max-width: 768px) {
-	        /* Header arver layout fra 992px, justerer kun detaljer */
-	        header ul li {
-	             margin: 3px 5px; /* Enda litt tettere? */
-                 margin-left: 5px;
-	        }
-	        header ul li a {
-	            padding: 6px 10px;    /* Enda mindre padding */
-	            font-size: 0.85rem;   /* Enda mindre skrift */
-	        }
-	        header ul li a::after {
-	            bottom: 3px;
-	        }
-	        header ul li a:hover::after {
-	            width: 60%;
-	        }
-
-	        /* --- Andre justeringer for < 768px --- */
+	        header ul li { margin: 3px 5px; margin-left: 5px; }
+	        header ul li a { padding: 6px 10px; font-size: 0.85rem; }
+	        header ul li a::after { bottom: 3px; }
+	        header ul li a:hover::after { width: 60%; }
 	        .hero { min-height: 70vh; padding: 6rem 0 3rem 0; }
 	        .hero h1 { font-size: 2.5rem; }
 	        .hero .typing-container { font-size: 1.1rem; }
@@ -288,20 +220,14 @@
 	        .accordion-title { font-size: 1.1rem; padding: 1.2rem 0.8rem; }
 	        .accordion-content { padding: 0 1rem; font-size: 0.95rem; }
 	        .accordion-content.aktiv { padding: 1rem 1rem 2rem 1rem; }
-	        #om .container { flex-direction: column; align-items: center; gap: 3rem; }
-	        .team-member { min-width: unset; width: 90%; max-width: 400px; flex: none; }
+	        .team-member { min-width: unset; width: 90%; max-width: 400px; flex: 0 0 auto !important; /* Tvinger den til ikke å strekke seg mer enn bredden */ }
 	        .team-member .om-image img { width: 180px; height: 180px; }
 	        #paper { width: 90%; max-width: 280px; height: auto; min-height: 350px; }
 	        #thank-you-message { font-size: 1.2rem; }
 	    }
-
-        /* === LITEN MOBIL (Ytterligere finjusteringer) === */
         @media (max-width: 480px) {
-            /* Header arver layout */
             header .logo { font-size: 1.5rem; }
-            header ul li a { padding: 6px 8px; font-size: 0.8rem; } /* Enda mindre? */
-
-            /* --- Andre justeringer for < 480px --- */
+            header ul li a { padding: 6px 8px; font-size: 0.8rem; }
             .hero h1 { font-size: 2rem; }
             .section-header h2 { font-size: 1.8rem; }
             .footer-links img { width: 24px; height: 24px;}
@@ -313,21 +239,103 @@
             #paper-content { font-size: 0.8rem;}
             #thank-you-message { font-size: 1.1rem; }
         }
-
-        /* === SVÆRT BRED SKJERM (Tving én linje i header) === */
-        @media (min-width: 1800px) { /* <<< NY/JUSTERT: Juster 1800px etter behov */
-            header ul {
-                flex-wrap: nowrap; /* Tving alt på én linje */
-            }
-            /* Sikre at vertikal margin fjernes og base horisontal margin gjelder */
-            header ul li {
-                margin-top: 0;
-                margin-bottom: 0;
-                margin-left: 20px; /* Standard horisontal avstand */
-            }
+        @media (min-width: 1800px) {
+            header ul { flex-wrap: nowrap; }
+            header ul li { margin-top: 0; margin-bottom: 0; margin-left: 20px; }
         }
 
-        /* --- RESPONSIVITET SLUTT --- */
+		/* --- === FORENKLET OVERSTYRING FOR TEAM-MEDLEMMER LAYOUT (JUSTERT) === --- */
+		/* Sikrer at containeren ER en flex container og sentrerer barna */
+		#om .container {
+			display: flex !important;
+			flex-wrap: wrap !important;
+			justify-content: center !important; /* SENTRERING PÅ CONTAINER */
+			gap: 4rem !important;
+		}
+		/* Anvender flex-egenskaper og nullstillinger på ALLE team-medlemmer */
+		#om .container > .team-member {
+             /* Viktigste flex-egenskaper */
+             flex-grow: 1 !important;    /* Tillat vekst */
+             flex-shrink: 1 !important;  /* Tillat krymping */
+             flex-basis: 300px !important;/* Startbredde (juster 300px) */
+
+             /* Breddebegrensninger */
+             min-width: 300px !important; /* Juster */
+             max-width: 450px !important; /* Juster */
+
+             /* Nullstill potensielle problemstiftere */
+             width: auto !important; /* La flex styre */
+             margin: 0 !important;   /* La gap styre */
+             padding: 0 !important; /* Nullstill padding på selve kortet (internt innhold har egen padding) */
+             float: none !important;
+             clear: none !important;
+             position: relative !important;
+             order: 0 !important; /* Nullstill eventuell rekkefølgeendring */
+
+			 /* Sikre at den internt er flex column og sentrerer innholdet */
+			 display: flex !important;
+			 flex-direction: column !important;
+			 align-items: center !important; /* SENTRERING INNI TEAM-MEMBER (vertikalt) */
+			 text-align: center !important;   /* SENTRERING AV TEKST INNI TEAM-MEMBER */
+		}
+		/* --- SLUTT PÅ OVERSTYRING FOR TEAM-MEDLEMMER --- */
+
+        /* === LOKAL OVERSTYRING FOR Å TVINGE SENTERSTILLING AV #om HEADER === */
+        /* Tving selve header-blokken (#om .section-header) til å sentrere tekst og inline-block elementer */
+        #om .section-header {
+            text-align: center !important; /* Tvinger tekstjustering */
+            /* Sikrer at selve blokken er sentrert hvis den mot formodning ikke tar full bredde */
+            margin-left: auto !important;
+            margin-right: auto !important;
+            width: 100%; /* Sørger for at den tar bredden den trenger for sentrering */
+            max-width: 100%; /* Forhindrer uventet krymping */
+        }
+        /* Sikre at H2 (som er inline-block) faktisk blir behandlet som sentrert */
+        #om .section-header h2 {
+            display: inline-block !important; /* Bekrefter inline-block for text-align sentrering */
+            margin-left: auto !important;  /* Prøver å sentrere H2 hvis den ikke er det */
+            margin-right: auto !important; /* Prøver å sentrere H2 hvis den ikke er det */
+        }
+        /* Sikre at ::after pseudo-elementet (understreken) er sentrert under H2 */
+        #om .section-header h2::after {
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+        }
+        /* Tving P-elementet til å sentrere seg selv og sin tekst */
+        #om .section-header p {
+            max-width: 700px; /* Behold gjerne denne */
+            margin: 1.5rem auto 0 auto !important; /* Tvinger auto L/R margin for blokk-sentrering */
+            text-align: center !important; /* Tvinger tekst-sentrering inni P */
+        }
+        /* === SLUTT PÅ LOKAL OVERSTYRING FOR HEADER === */
+
+        /* === NY LOKAL OVERSTYRING FOR Å TVINGE SENTERSTILLING AV #om TEAM-MEDLEMMER === */
+        /* Tving selve team-member blokken til å sentrere innholdet (igjen, for sikkerhets skyld) */
+        #om .team-member {
+            align-items: center !important; /* Sentrerer bilde/tekst-blokk vertikalt */
+            text-align: center !important; /* Sentrerer all tekst */
+            /* Tvinger horisontal sentrering av selve blokken i flex-konteksten,
+               selv om justify-content:center på containeren burde håndtere dette */
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        /* Tving sentrering på spesifikke elementer inni team-member */
+        #om .team-member .om-image {
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+        #om .team-member .om-text h3 {
+             text-align: center !important;
+        }
+        #om .team-member .om-text p {
+             text-align: center !important;
+             /* Sikrer at p tar nok plass til at sentrering er synlig */
+             margin-left: auto !important;
+             margin-right: auto !important;
+             /* Du kan eventuelt justere max-width hvis teksten er veldig kort */
+             /* max-width: 90%; */
+        }
+        /* === SLUTT PÅ LOKAL OVERSTYRING FOR TEAM-MEDLEMMER === */
 
     </style>
     <!-- === CSS STILER SLUTT === -->
@@ -340,8 +348,8 @@
             <div class="logo">TrendMe</div>
             <ul>
                 <li><a href="#hjem">Hjem</a></li>
-		        <li><a href="#hvorfor-fabric">Hvorfor Fabric</a></li>
-		        <li><a href="#om-fabric">Om Fabric</a></li>
+                <li><a href="#hvorfor-fabric">Hvorfor Fabric</a></li>
+                <li><a href="#om-fabric">Om Fabric</a></li>
                 <li><a href="#fabric-tjenester">Fabric Tjenester</a></li>
                 <li><a href="#powerbi-tjenester">Power BI Tjenester</a></li>
                 <li><a href="#prosjekter">Kundecaser</a></li>
@@ -354,6 +362,7 @@
     </header>
 
     <main>
+        <!-- *** RESTEN AV MAIN-INNHOLDET (HERO, TJENESTER ETC.) SKAL VÆRE HER *** -->
         <!-- Hero Seksjon -->
         <section id="hjem" class="hero">
             <div class="container">
@@ -402,8 +411,7 @@
                      <p>Forstå hvorfor Fabric ble utviklet, problemene det løser for bedrifter, og hvordan det representerer fremtiden for dataanalyse.</p>
                  </div>
                  <div class="accordion-list fade-in" style="transition-delay: 0.3s;">
-                     <!-- Accordion Item 1: Problemet -->
-                     <div class="accordion-item">
+                    <div class="accordion-item">
                          <button class="accordion-title">
                              <span class="tittel-tekst">Utfordringen Fabric Løser: Kompleksitet og Datasiloer</span>
                              <span class="ikon">+</span>
@@ -429,7 +437,6 @@
                              </ul>
                          </div>
                      </div>
-                     <!-- Accordion Item 2: Evolusjonen -->
                      <div class="accordion-item">
                          <button class="accordion-title">
                               <span class="tittel-tekst">Evolusjonen: Hvordan Microsoft Fabric Ble Til</span>
@@ -448,7 +455,6 @@
                              <p>Målet var å forenkle hele dataanalyseprosessen, fra dataintegrasjon til business intelligence, på en plattform som er enkel å administrere, bruke og skalere for alle data-roller i en bedrift.</p>
                          </div>
                      </div>
-                     <!-- Accordion Item 3: Kjernekonsepter -->
                      <div class="accordion-item">
                          <button class="accordion-title">
                               <span class="tittel-tekst">Kjernekonseptene: Hva Gjør Fabric Unikt?</span>
@@ -480,7 +486,7 @@
                      <p>Vi tilbyr ende-til-ende rådgivning og implementering for å sikre at din bedrift får maksimal verdi fra Microsoft Fabric.</p>
                  </div>
                  <div class="service-grid">
-                     <div class="service-card fade-in slide-left" style="transition-delay: 0.2s;">
+                    <div class="service-card fade-in slide-left" style="transition-delay: 0.2s;">
                           <div class="service-icon-container">
                               <img src="https://github.com/bredeespelid/TrendMe/blob/main/pictures/main_page/lakehouse.png?raw=true" alt="Microsoft Fabric Lakehouse ikon" class="service-icon">
                           </div>
@@ -609,55 +615,64 @@
              </div>
          </section>
 
-        <!-- Om Oss Seksjon -->
-        <section id="om" class="section">
-             <div class="container">
-                 <div class="section-header fade-in" style="margin-bottom: 5rem;">
-                     <span>Vårt Team</span>
-                     <h2>Møt Dine Partnere i Dataanalyse</h2>
-                     <p>Vi kombinerer teknisk dybde i Microsoft Fabric og Power BI med solid forretningsforståelse for å levere løsninger som skaper reell verdi.</p>
-                 </div>
+		<!-- Om Oss Seksjon -->
+		<section id="om" class="section">
+			 <div class="container"> <!-- STARTEN PÅ FELLES CONTAINER -->
+				 <div class="section-header fade-in">
+					 <span>Vårt Team</span>
+					 <h2>Møt Dine Partnere i Dataanalyse</h2>
+					 <p>Vi kombinerer teknisk dybde i Microsoft Fabric og Power BI med solid forretningsforståelse for å levere løsninger som skaper reell verdi.</p>
+				 </div>
+				 <!-- SLUTT PÅ SEKSJONSHEADER -->
+					 <!-- ALLE TEAMMEDLEMMER ER NÅ DIREKTE BARN AV .container -->
+					 <!-- Teammedlem x:  -->
+					 <div class="team-member fade-in slide-right" style="transition-delay: 0.1s;">
+					 </div>
 
-                 <!-- Teammedlem 1: Brede -->
-                 <div class="team-member fade-in slide-left" style="transition-delay: 0.2s;">
-                     <div class="om-image">
-                            <img src="https://media.licdn.com/dms/image/v2/D4E03AQGFN5oKY0Yyxg/profile-displayphoto-shrink_800_800/B4EZX92ehyHgAc-/0/1743720672611?e=1749081600&v=beta&t=XoCc9kuLGNrVYBLcuhOtj9CKgF7EXMiHi4fmqcZMLVM" alt="Brede Nicolai Espelid, Grunnlegger & Microsoft Fabric Konsulent hos TrendMe">
-                     </div>
-                     <div class="om-text">
-                         <h3>Brede</h3>
-                         <p>
-                             Grunnlegger av TrendMe. Student innen Business Analytics og Finans ved NHH med praktisk erfaring innen regnskap og analyse. Noe som kombinert gir teknisk ekspertise i <strong>Microsoft Fabric</strong> og <strong>Power BI</strong> med en solid forståelse for forretningsprosesser.
-                         </p>
-                         <p>
-                             Har ledet vellykkede <strong>migreringer til Fabric</strong>, designet skalerbare arkitekturer i OneLake, og implementert automatiserte dataløsninger med Data Factory og Spark. Erfaring med <strong>Python</strong>, <strong>PySpark</strong> og <strong>AI/ML</strong> sikrer løsninger som møter forretningsmål.
-                         </p>
-                          <p>
-                              TrendMe er et sideprosjekt ved siden av studiene, drevet av ønsket om å hjelpe bedrifter transformere data til strategisk innsikt.
-                         </p>
-                         <p><strong>Sertifiseringer:</strong> Microsoft Certified: Fabric Analytics Engineer Associate (DP-600)</p>
-                     </div>
-                 </div>
+					 <!-- Teammedlem 1: Brede -->
+					 <div class="team-member fade-in slide-left" style="transition-delay: 0.2s;">
+						 <div class="om-image">
+								<img src="https://media.licdn.com/dms/image/v2/D4E03AQGFN5oKY0Yyxg/profile-displayphoto-shrink_800_800/B4EZX92ehyHgAc-/0/1743720672611?e=1749081600&v=beta&t=XoCc9kuLGNrVYBLcuhOtj9CKgF7EXMiHi4fmqcZMLVM" alt="Brede Nicolai Espelid, Grunnlegger, CTO & CFO hos TrendMe">
+						 </div>
+						 <div class="om-text">
+							 <h3>Brede</h3>
+							  <p>
+								  Grunnlegger hos TrendMe. Kombinerer studier innen Business Analytics og Finans ved NHH med praktisk erfaring innen regnskap og analyse. Dette gir teknisk ekspertise i Microsoft Fabric og Power BI, kombinert med solid forretningsforståelse.
+							 </p>
+							  <p>
+								   Har ledet vellykkede migreringer til Fabric, designet skalerbare arkitekturer i OneLake, og implementert automatiserte dataløsninger med Data Factory og Spark.
+							  </p>
+							  <p>
+								   Drevet av ønsket om å hjelpe bedrifter transformere data til strategisk innsikt.
+							  </p>
+							  <p><strong>Sertifiseringer:</strong> Microsoft Certified: Fabric Analytics Engineer Associate (DP-600)</p>
+						 </div>
+					 </div>
 
-                 <!-- Teammedlem 2: Partner -->
-                 <div class="team-member fade-in slide-right" style="transition-delay: 0.4s;">
-                     <div class="om-image">
-                         <img src="https://media.licdn.com/dms/image/v2/D4D03AQEW-QLXtdJGrA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1718370433252?e=1749081600&v=beta&t=jrkhW3MPx2ot6jbw4lJFDNuXjxK0bPGFB_GUifGvBUY" alt="Ulrik, Partner & Power BI Spesialist hos TrendMe">
-                     </div>
-                     <div class="om-text">
-                         <h3>Ulrik</h3>
-                         <p>
-                             Ulrik er partner og vår spesialist innen <strong>Power BI</strong>. Han har hovedansvaret for å omsette data og innsikt til konkret forretningsverdi gjennom <strong>utvikling av effektive og innsiktsgivende dashboards</strong>.
-                         </p>
-                         <p>
-                             Han er dyktig til å kartlegge bedriftens reelle behov og visualisere data på en måte som gir klarhet og støtter gode beslutninger. Hans bakgrunn fra <strong>økonomiroller</strong> og <strong>salgsledelse</strong> gir ham en verdifull kommersiell forståelse som sikrer at dashboardene ikke bare er teknisk gode, men også forretningsmessig relevante.
-                         </p>
-                         <p>
-                             Hans fokus er å bygge bro mellom data og beslutningstakere, og sikre at Power BI-løsningene gir maksimal effekt.
-                         </p>
-                     </div>
-                 </div>
-             </div>
-         </section>
+					 <!-- Teammedlem 2: Ulrik -->
+					 <div class="team-member fade-in slide-right" style="transition-delay: 0.4s;">
+						 <div class="om-image">
+							 <img src="https://media.licdn.com/dms/image/v2/D4D03AQEW-QLXtdJGrA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1718370433252?e=1749081600&v=beta&t=jrkhW3MPx2ot6jbw4lJFDNuXjxK0bPGFB_GUifGvBUY" alt="Ulrik, Partner & CEO hos TrendMe">
+						 </div>
+						 <div class="om-text">
+							 <h3>Ulrik</h3>
+							 <p>
+								 Ulrik er Partner, og vår spesialist innenPower BI. Han har hovedansvaret for å omsette data til konkret forretningsverdi gjennom utvikling av effektive og innsiktsgivende dashboards.
+							 </p>
+							 <p>
+								 Han er dyktig til å kartlegge reelle behov og visualisere data slik at det støtter gode beslutninger. Bakgrunn fra økonomirollerog salgsledelse gir verdifull kommersiell forståelse, og sikrer at løsningene er forretningsmessig relevante.
+							 </p>
+							 <p>
+								 Fokuset er å bygge bro mellom data og beslutningstakere for maksimal effekt.
+							 </p>
+						 </div>
+					 </div>
+
+
+
+			 </div> <!-- SLUTTEN PÅ FELLES CONTAINER -->
+		 </section> <!-- Slutten på #om -->
+
 
         <!-- Kontakt Seksjon -->
         <section id="kontakt" class="section">
@@ -668,7 +683,7 @@
                     <p>Fyll ut skjemaet under for en uforpliktende samtale om hvordan TrendMe kan hjelpe din bedrift med Microsoft Fabric rådgivning, implementering eller optimalisering.</p>
                 </div>
 
-                <!-- Kontaktskjema med bedriftssøk -->
+                <!-- Kontaktskjema -->
                 <form id="contact-form" class="fade-in" style="transition-delay: 0.3s;">
                     <div class="form-group">
                         <label for="name">Navn:</label>
@@ -678,19 +693,12 @@
                         <label for="email">E-post:</label>
                         <input type="email" id="email" name="email" required>
                     </div>
-
-                    <!-- === BEDRIFTSFELT MED SØK === -->
                     <div class="form-group">
                         <label for="company">Bedrift:</label>
                         <input type="text" id="company" name="company" placeholder="Skriv for å søke..." autocomplete="off">
-                        <!-- Container for forslag -->
-                        <div id="company-suggestions-list" class="suggestions-container">
-                            <ul></ul>
-                        </div>
+                        <div id="company-suggestions-list" class="suggestions-container"><ul></ul></div>
                         <small style="color: var(--text-medium); display: block; margin-top: 5px;">Begynn å skrive for å søke etter bedrifter.</small>
                     </div>
-                    <!-- === SLUTT BEDRIFTSFELT === -->
-
                      <div class="form-group">
                         <label for="phone">Telefon (valgfritt):</label>
                         <input type="tel" id="phone" name="phone">
@@ -699,9 +707,7 @@
                         <label for="message">Hva kan vi hjelpe deg med?</label>
                         <textarea id="message" name="message" rows="6" required placeholder="F.eks. behov for Fabric strategi, migrering fra Synapse, Power BI optimalisering..."></textarea>
                     </div>
-                    <!-- Knappen bruker nå .cta-button stilen -->
                     <button type="submit" class="cta-button">Send Forespørsel om Konsultasjon</button>
-                    <!-- Valgfri melding for feil -->
                     <p id="form-error-message" style="color: var(--error-color); margin-top: 1rem; text-align: center; display: none;"></p>
                 </form>
             </div>
@@ -713,8 +719,6 @@
             <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
             <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
             <div class="footer-links">
-                 <!-- Legg til lenker til sosiale medier eller lignende her hvis ønskelig -->
-                 <!-- Eksempel: <a href="https://linkedin.com/company/trendme" target="_blank" rel="noopener noreferrer"><img src="linkedin-icon.png" alt="LinkedIn"></a> -->
              </div>
         </div>
     </footer>
@@ -731,6 +735,7 @@
 
     <!-- === JAVASCRIPT START === -->
     <script>
+        // All JavaScript-kode her (ingen endringer gjort i JS)
         document.addEventListener('DOMContentLoaded', function() {
 
             // --- Intersection Observer for animasjoner ---
@@ -768,7 +773,6 @@
                             const offsetPosition = elementPosition - headerOffset - 20; // Litt ekstra padding
                             window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                         } else {
-                            // Prøv å navigere direkte hvis element ikke finnes (f.eks. /blogg, /faktura)
                             if (!targetId.startsWith('#')) {
                                 window.location.href = targetId;
                             } else {
@@ -777,14 +781,13 @@
                         }
                     } catch (error) {
                          if (!targetId.startsWith('#')) {
-                            window.location.href = targetId; // Naviger direkte ved feil også
+                            window.location.href = targetId;
                          } else {
                              console.error(`Error finding element for smooth scroll: ${targetId}`, error);
                          }
                     }
                 });
             });
-
 
              // --- Skrivemaskineffekt ---
              const typingTextElement = document.getElementById('typing-text');
@@ -799,7 +802,6 @@
                          setTimeout(typeChar, 80);
                      }
                  }
-                 // Starter litt senere for å la hovedinnholdet laste
                  setTimeout(typeChar, 1800);
              }
 
@@ -808,7 +810,6 @@
             accordionTitles.forEach(title => {
                 title.addEventListener('click', function() {
                     const parentList = this.closest('.accordion-list');
-                    // Lukk andre åpne elementer i samme liste
                     if (parentList) {
                          parentList.querySelectorAll('.accordion-item').forEach(otherItem => {
                             const otherTitle = otherItem.querySelector('.accordion-title');
@@ -824,24 +825,18 @@
                             }
                         });
                     }
-
-                    // Åpne/lukke det klikkede elementet
                     this.classList.toggle('aktiv');
                     const content = this.nextElementSibling;
                     const icon = this.querySelector('.ikon');
-
                     if (content && content.classList.contains('accordion-content')) {
                         if (content.style.maxHeight) {
-                            // Lukk
                             content.style.maxHeight = null;
                             content.classList.remove('aktiv');
                             if(icon) icon.textContent = '+';
                         } else {
-                            // Åpne
                             content.classList.add('aktiv');
-                            // Sett max-height til scrollHeight for animasjon
                             content.style.maxHeight = content.scrollHeight + "px";
-                            if(icon) icon.textContent = '−'; // Bruker minus-tegn når åpen
+                            if(icon) icon.textContent = '−';
                         }
                     } else {
                          console.warn("Accordion content not found immediately after title:", this);
@@ -849,132 +844,59 @@
                 });
             });
 
-
             // --- Footer årstall ---
             const yearSpan = document.getElementById('year');
             if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
 
-
              // === START KODE FOR KONTAKTSKJEMA BEDRIFTSSØK ===
-
-            // --- Hjelpefunksjon: Debounce ---
             function debounce(func, wait) {
                 let timeout;
                 return function executedFunction(...args) {
-                    const later = () => {
-                        clearTimeout(timeout);
-                        func(...args);
-                    };
-                    clearTimeout(timeout);
-                    timeout = setTimeout(later, wait);
+                    const later = () => { clearTimeout(timeout); func(...args); };
+                    clearTimeout(timeout); timeout = setTimeout(later, wait);
                 };
             }
-
-            // --- Elementreferanser for kontaktskjema bedriftssøk ---
             const contactCompanyInput = document.getElementById('company');
             const companySuggestionsContainer = document.getElementById('company-suggestions-list');
-            const companySuggestionsUl = companySuggestionsContainer?.querySelector('ul'); // Bruker optional chaining
-
-            // --- Konstanter for søk ---
+            const companySuggestionsUl = companySuggestionsContainer?.querySelector('ul');
             const MIN_SEARCH_LENGTH = 3;
             const DEBOUNCE_DELAY = 350;
-
-             // Sjekk om nødvendige elementer for søk finnes
              if (!contactCompanyInput || !companySuggestionsContainer || !companySuggestionsUl) {
                  console.error("CRITICAL: Missing elements required for company search functionality in the contact form.");
              } else {
-
-                // --- Funksjon for å søke i Brreg etter NAVN (tilpasset for kontaktskjema) ---
                 async function searchContactCompanyByName(searchTerm) {
                     const trimmedSearch = searchTerm.trim();
                     if (trimmedSearch.length < MIN_SEARCH_LENGTH) {
-                        companySuggestionsUl.innerHTML = '';
-                        companySuggestionsContainer.style.display = 'none';
-                        return;
+                        companySuggestionsUl.innerHTML = ''; companySuggestionsContainer.style.display = 'none'; return;
                     }
-
-                    companySuggestionsUl.innerHTML = '<li class="no-results">Søker...</li>';
-                    companySuggestionsContainer.style.display = 'block';
-
-                    // Samme API-endepunkt som på fakturasiden
+                    companySuggestionsUl.innerHTML = '<li class="no-results">Søker...</li>'; companySuggestionsContainer.style.display = 'block';
                     const apiUrl = `https://data.brreg.no/enhetsregisteret/api/enheter?navn=${encodeURIComponent(trimmedSearch)}&size=10`;
-
                     try {
                         const response = await fetch(apiUrl);
-                        companySuggestionsUl.innerHTML = ''; // Tøm søkeresultater før nye legges til
-
+                        companySuggestionsUl.innerHTML = '';
                         if (response.ok) {
-                            const data = await response.json();
-                            const units = data._embedded?.enheter;
-
+                            const data = await response.json(); const units = data._embedded?.enheter;
                             if (units && units.length > 0) {
                                 units.forEach(unit => {
-                                    if (!unit.navn) return; // Trenger bare navn her
-
-                                    const li = document.createElement('li');
-                                    li.textContent = unit.navn; // Vis kun navnet i forslaget
-
-                                    // Event listener for når brukeren klikker på et forslag
+                                    if (!unit.navn) return; const li = document.createElement('li'); li.textContent = unit.navn;
                                     li.addEventListener('click', () => {
-                                        contactCompanyInput.value = unit.navn; // Sett verdien i inputfeltet
-                                        companySuggestionsContainer.style.display = 'none'; // Skjul forslagsboksen
-                                        companySuggestionsUl.innerHTML = ''; // Tøm listen
-                                        // Fjern eventuell feilmarkering hvis feltet ble korrigert
-                                        contactCompanyInput.classList.remove('error');
+                                        contactCompanyInput.value = unit.navn; companySuggestionsContainer.style.display = 'none'; companySuggestionsUl.innerHTML = ''; contactCompanyInput.classList.remove('error');
                                     });
                                     companySuggestionsUl.appendChild(li);
                                 });
-                            } else {
-                                companySuggestionsUl.innerHTML = '<li class="no-results">Ingen treff funnet.</li>';
-                            }
-                        } else {
-                            console.error('Brreg name search API error:', response.status, response.statusText);
-                            companySuggestionsUl.innerHTML = '<li class="no-results">Feil ved søk.</li>';
-                        }
-                    } catch (error) {
-                        console.error('Error fetching Brreg by name:', error);
-                        companySuggestionsUl.innerHTML = '<li class="no-results">Nettverksfeil.</li>';
-                    }
-                    // Sørg for at containeren er synlig hvis det er resultater eller melding
-                    if (companySuggestionsUl.childNodes.length > 0) {
-                       companySuggestionsContainer.style.display = 'block';
-                    } else {
-                       // Hvis ingen resultater eller feil, og listen er tom, skjul containeren
-                       companySuggestionsContainer.style.display = 'none';
-                    }
+                            } else { companySuggestionsUl.innerHTML = '<li class="no-results">Ingen treff funnet.</li>'; }
+                        } else { console.error('Brreg name search API error:', response.status, response.statusText); companySuggestionsUl.innerHTML = '<li class="no-results">Feil ved søk.</li>'; }
+                    } catch (error) { console.error('Error fetching Brreg by name:', error); companySuggestionsUl.innerHTML = '<li class="no-results">Nettverksfeil.</li>'; }
+                    if (companySuggestionsUl.childNodes.length > 0) { companySuggestionsContainer.style.display = 'block'; } else { companySuggestionsContainer.style.display = 'none'; }
                 }
-
-                // --- Koble søkefunksjon til input-event (med debounce) ---
                 const debouncedContactNameSearch = debounce(searchContactCompanyByName, DEBOUNCE_DELAY);
-                contactCompanyInput.addEventListener('input', (event) => {
-                    debouncedContactNameSearch(event.target.value);
-                });
-
-                // Skjul forslag når brukeren klikker utenfor
-                contactCompanyInput.addEventListener('blur', () => {
-                    // Liten forsinkelse for å tillate klikk på forslagene
-                    setTimeout(() => {
-                        // Dobbeltsjekk at containeren finnes før vi prøver å skjule den
-                        if (companySuggestionsContainer) {
-                             companySuggestionsContainer.style.display = 'none';
-                        }
-                    }, 150); // 150ms should be enough for click event to register
-                });
-
-                // --- Forhindre at blur skjuler forslagene FØR man rekker å klikke på dem ---
-                companySuggestionsContainer.addEventListener('mousedown', (event) => {
-                    // Forhindrer at 'blur'-eventet på input-feltet trigger umiddelbart når man klikker i suggestion-boksen
-                    event.preventDefault();
-                });
-
-             } // Slutt på else-blokk for element-sjekk
-
-
+                contactCompanyInput.addEventListener('input', (event) => { debouncedContactNameSearch(event.target.value); });
+                contactCompanyInput.addEventListener('blur', () => { setTimeout(() => { if (companySuggestionsContainer) { companySuggestionsContainer.style.display = 'none'; } }, 150); });
+                companySuggestionsContainer.addEventListener('mousedown', (event) => { event.preventDefault(); });
+             }
             // === SLUTT KODE FOR KONTAKTSKJEMA BEDRIFTSSØK ===
 
-
             // === KODE FOR KONTAKTSKJEMA-ANIMASJON OG FORMSPREE SUBMIT ===
-
             const contactForm = document.getElementById('contact-form');
             const animationContainer = document.getElementById('animation-container');
             const paper = document.getElementById('paper');
@@ -983,148 +905,48 @@
             const nameInput = document.getElementById('name');
             const emailInput = document.getElementById('email');
             const messageInput = document.getElementById('message');
-            // contactCompanyInput er definert ovenfor
             const phoneInput = document.getElementById('phone');
-            const submitButton = contactForm?.querySelector('button[type="submit"]'); // Bruker optional chaining
+            const submitButton = contactForm?.querySelector('button[type="submit"]');
             const formErrorMessage = document.getElementById('form-error-message');
-
-            // Sørg for at alle nødvendige elementer for innsending/animasjon finnes
              if (!contactForm || !animationContainer || !paper || !paperContent || !thankYouMessage || !nameInput || !emailInput || !messageInput || !contactCompanyInput || !phoneInput || !submitButton || !formErrorMessage) {
                   console.error("CRITICAL: Missing elements required for contact form submission or animation.");
-                  // Gi en enkel feilmelding til brukeren
-                  if (formErrorMessage) {
-                      formErrorMessage.textContent = "En feil oppstod med skjemaet. Prøv å laste siden på nytt.";
-                      formErrorMessage.style.display = "block";
-                  }
-                  // Deaktiver submit-knapp hvis den finnes
+                  if (formErrorMessage) { formErrorMessage.textContent = "En feil oppstod med skjemaet. Prøv å laste siden på nytt."; formErrorMessage.style.display = "block"; }
                   if (submitButton) submitButton.disabled = true;
              } else {
-
-                // Funksjon som håndterer innsending
                 async function handleSubmit(event) {
-                    event.preventDefault(); // Forhindre at siden lastes på nytt/standard innsending
-
-                    // Visuelt indikerer innsending
-                    const originalButtonText = submitButton.textContent;
-                    submitButton.disabled = true;
-                    submitButton.textContent = 'Sender...';
-                    formErrorMessage.style.display = 'none'; // Skjul evt. tidligere feilmelding
-
-                    // 1. Forbered data for Formspree
-                    const formData = new FormData(contactForm);
-                    const formSpreeEndpoint = 'https://formspree.io/f/xyzenqnp'; // Din Formspree endpoint for kontakt
-
+                    event.preventDefault();
+                    const originalButtonText = submitButton.textContent; submitButton.disabled = true; submitButton.textContent = 'Sender...'; formErrorMessage.style.display = 'none';
+                    const formData = new FormData(contactForm); const formSpreeEndpoint = 'https://formspree.io/f/xyzenqnp';
                     try {
-                        // 2. Send data til Formspree
-                        const response = await fetch(formSpreeEndpoint, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                'Accept': 'application/json' // Viktig for å få JSON respons
-                            }
-                        });
-
-                        // 3. Håndter Formspree respons
+                        const response = await fetch(formSpreeEndpoint, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
                         if (response.ok) {
-                            // SUKSESS - Start animasjonen
-
-                            // 3a. Formater data for papiret
-                            const formDataText = `Fra: ${nameInput.value}\n` +
-                                                 `E-post: ${emailInput.value}\n` +
-                                                 (contactCompanyInput.value ? `Bedrift: ${contactCompanyInput.value}\n` : '') + // Bruker contactCompanyInput
-                                                 (phoneInput.value ? `Telefon: ${phoneInput.value}\n` : '') +
-                                                 `\nMelding:\n--------------------------\n${messageInput.value}`;
-                            paperContent.textContent = formDataText;
-
-                            // 3b. Vis animasjonscontaineren
-                            animationContainer.style.display = 'flex';
-
-                            // 3c. Få papiret til å dukke opp (med liten forsinkelse)
-                            setTimeout(() => {
-                                paper.style.opacity = '1';
-                                paper.style.transform = 'scale(1)';
-                            }, 100); // Kort forsinkelse for fade-in effekt
-
-                            // 3d. Vis takkemeldingen etter at papiret er synlig
-                            setTimeout(() => {
-                                thankYouMessage.style.display = 'block';
-                                thankYouMessage.offsetHeight; // Force reflow
-                                thankYouMessage.style.opacity = '1';
-                            }, 800); // Venter litt lenger
-
-                            // 3e. Start flyanimasjonen etter at takkemeldingen er vist
-                            setTimeout(() => {
-                                paper.classList.add('flying');
-                            }, 2500); // Venter før flyet letter
-
-                             // Ikke reset knappen her, det gjøres i animationend
-
+                            const formDataText = `Fra: ${nameInput.value}\nE-post: ${emailInput.value}\n` + (contactCompanyInput.value ? `Bedrift: ${contactCompanyInput.value}\n` : '') + (phoneInput.value ? `Telefon: ${phoneInput.value}\n` : '') + `\nMelding:\n--------------------------\n${messageInput.value}`;
+                            paperContent.textContent = formDataText; animationContainer.style.display = 'flex';
+                            setTimeout(() => { paper.style.opacity = '1'; paper.style.transform = 'scale(1)'; }, 100);
+                            setTimeout(() => { thankYouMessage.style.display = 'block'; thankYouMessage.offsetHeight; thankYouMessage.style.opacity = '1'; }, 800);
+                            setTimeout(() => { paper.classList.add('flying'); }, 2500);
                         } else {
-                             // FEIL ved innsending til Formspree
-                            const responseData = await response.json();
-                            let errorMessageText = 'Kunne ikke sende meldingen. Prøv igjen senere.';
-                            if (responseData && responseData.errors && responseData.errors.length > 0) {
-                                 // Prøver å gi en mer spesifikk feilmelding fra Formspree hvis mulig
-                                 errorMessageText = responseData.errors.map(error => error.message).join(', ');
-                            } else if (response.status === 422) {
-                                 errorMessageText = 'Vennligst sjekk at alle feltene er korrekt utfylt.';
-                            }
-                            console.error('Formspree submission error:', response.status, responseData);
-                            formErrorMessage.textContent = errorMessageText;
-                            formErrorMessage.style.display = 'block';
-
-                            // Reset knappen ved feil
-                            submitButton.disabled = false;
-                            submitButton.textContent = originalButtonText;
+                            const responseData = await response.json(); let errorMessageText = 'Kunne ikke sende meldingen. Prøv igjen senere.';
+                            if (responseData && responseData.errors && responseData.errors.length > 0) { errorMessageText = responseData.errors.map(error => error.message).join(', '); } else if (response.status === 422) { errorMessageText = 'Vennligst sjekk at alle feltene er korrekt utfylt.'; }
+                            console.error('Formspree submission error:', response.status, responseData); formErrorMessage.textContent = errorMessageText; formErrorMessage.style.display = 'block';
+                            submitButton.disabled = false; submitButton.textContent = originalButtonText;
                         }
-
                     } catch (error) {
-                        // Nettverksfeil eller annen JS-feil
-                        console.error('Error submitting form:', error);
-                        formErrorMessage.textContent = 'En nettverksfeil oppstod. Sjekk tilkoblingen din og prøv igjen.';
-                        formErrorMessage.style.display = 'block';
-
-                        // Reset knappen ved feil
-                        submitButton.disabled = false;
-                        submitButton.textContent = originalButtonText;
+                        console.error('Error submitting form:', error); formErrorMessage.textContent = 'En nettverksfeil oppstod. Sjekk tilkoblingen din og prøv igjen.'; formErrorMessage.style.display = 'block';
+                        submitButton.disabled = false; submitButton.textContent = originalButtonText;
                     }
-                } // Slutt handleSubmit
-
-                // Lytt etter 'submit'-hendelsen på skjemaet
+                }
                 contactForm.addEventListener('submit', handleSubmit);
-
-                // Lytt etter når flyanimasjonen er ferdig for å rydde opp
                 paper.addEventListener('animationend', (event) => {
-                    // Sjekk at det er 'fly-away' animasjonen som er ferdig
                     if (event.animationName === 'fly-away' && paper.classList.contains('flying')) {
-                        // Skjul containeren
-                        animationContainer.style.display = 'none';
-
-                        // Fjern animasjonsklassen
-                        paper.classList.remove('flying');
-
-                        // Skjul takkemelding og reset dens opacity
-                        thankYouMessage.style.display = 'none';
-                        thankYouMessage.style.opacity = '0';
-
-                        // Reset papirets stil
-                        paper.style.opacity = '0';
-                        paper.style.transform = 'scale(0.8)';
-                        paperContent.textContent = ''; // Tøm innholdet
-
-                        // Reset skjemaet
-                        contactForm.reset();
-
-                         // Reset knappen ETTER vellykket animasjon
-                        submitButton.disabled = false;
-                        submitButton.textContent = 'Send Forespørsel om Konsultasjon'; // Tilbake til original tekst
+                        animationContainer.style.display = 'none'; paper.classList.remove('flying');
+                        thankYouMessage.style.display = 'none'; thankYouMessage.style.opacity = '0';
+                        paper.style.opacity = '0'; paper.style.transform = 'scale(0.8)'; paperContent.textContent = '';
+                        contactForm.reset(); submitButton.disabled = false; submitButton.textContent = 'Send Forespørsel om Konsultasjon';
                     }
                 });
-
-             } // Slutt på else-blokk for innsendings/animasjons-element-sjekk
-
+             }
             // === SLUTT KODE FOR KONTAKTSKJEMA-ANIMASJON OG FORMSPREE SUBMIT ===
-
         }); // Slutt på DOMContentLoaded
     </script>
     <!-- === JAVASCRIPT SLUTT === -->
