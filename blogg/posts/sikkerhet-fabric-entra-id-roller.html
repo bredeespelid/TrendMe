@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- === Spesifikk Metadata for denne posten === -->
+    <title>Sikkerhet i Fabric: Styr på Tilganger med Entra ID og Roller | TrendMe Blogg</title>
+    <meta name="description" content="Forstå hvordan Microsoft Entra ID og ulike roller (Workspace vs Tenant Admin) styrer sikkerhet og tilgang i Microsoft Fabric. Lær beste praksis for tilgangskontroll.">
+    <!-- === SLUTT Spesifikk Metadata === -->
+
+    <!-- Prioriter SVG -->
+    <link rel="icon" href="https://raw.githubusercontent.com/bredeespelid/TrendMe/d6598292124a1262a3bddf7f6830d938d4ec41d9/pictures/icon_etc/SVG.svg" type="image/svg+xml">
+    <!-- Fallback PNG -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/bredeespelid/TrendMe/blob/main/pictures/icon_etc/icon.png?raw=true">
+    <!-- === END FAVICON === -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* === ALLE STILER (Fra blogg-oversikt + artikkel-spesifikke) === */
+        :root {
+            --dark-bg: #121212;
+            --primary-fabric-dark: #6a0dad;
+            --primary-fabric-light: #9370db;
+            --secondary-accent: #00c6ff;
+            /* Definer RGB-versjon for bruk med alpha/gjennomsiktighet */
+            --secondary-accent-rgb: 0, 198, 255;
+            --glow-color: rgba(0, 198, 255, 0.5);
+            --text-light: #e0e0e0;
+            --text-medium: #b0b0b0;
+            --text-dark: #1f1f1f;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --card-bg-hover: rgba(55, 55, 55, 0.9);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Poppins', sans-serif;
+            --transition-speed: 0.3s;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.7;
+            color: var(--text-light);
+            background-color: var(--dark-bg);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        .container { max-width: 1200px; margin: auto; padding: 0 25px; }
+        .section { padding: 4rem 0; } /* Brukes for main */
+
+        /* === HEADER === */
+        header {
+            background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); color: var(--text-light);
+            padding: 0.8rem 0; position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease;
+        }
+        header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
+        header .logo a {
+            font-size: 1.8rem; font-weight: 700; letter-spacing: 1px;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            text-decoration: none;
+        }
+        header ul { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; }
+        header ul li { margin-left: 20px; }
+        header ul li a {
+            display: flex; align-items: center; color: var(--text-medium); text-decoration: none;
+            padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px;
+            font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative;
+            overflow: hidden; white-space: nowrap;
+        }
+        header ul li a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            transition: width var(--transition-speed) ease, left var(--transition-speed) ease;
+            transform: translateX(-50%);
+        }
+        header ul li a:hover { color: var(--text-light); }
+        header ul li a:hover::after { width: 70%; left: 50%; }
+
+        /* === ARTIKKEL-SPESIFIKKE STILER === */
+        .article-section { padding: 3rem 0 4rem 0; }
+        .article-container { max-width: 800px; margin: auto; padding: 0 25px; }
+        .article-container h1 {
+            font-size: 2.8rem; font-weight: 700; color: var(--text-light);
+            margin-bottom: 1rem; line-height: 1.3;
+            background: linear-gradient(90deg, var(--text-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .post-meta {
+            font-size: 0.9rem; color: var(--text-medium); margin-bottom: 2.5rem;
+            display: block; border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem;
+        }
+        .article-body h2 {
+            font-size: 2rem; color: var(--text-light); margin-top: 3rem; margin-bottom: 1.5rem;
+            font-weight: 600; border-bottom: 2px solid var(--primary-fabric-light);
+            padding-bottom: 0.5rem; display: inline-block;
+        }
+        .article-body h3 {
+            font-size: 1.6rem; color: var(--text-light); margin-top: 2.5rem; margin-bottom: 1rem;
+            font-weight: 600;
+        }
+         .article-body h4 { /* Lagt til for SQL-Endepunktet */
+            font-size: 1.3rem; color: var(--text-light); margin-top: 2rem; margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        .article-body p {
+            margin-bottom: 1.2rem; color: var(--text-medium); font-size: 1.05rem; line-height: 1.8;
+        }
+        .article-body strong { color: var(--text-light); font-weight: 600; }
+        .article-body a { /* Kun for CTA lenke */
+             color: var(--secondary-accent); text-decoration: none;
+             border-bottom: 1px dotted var(--secondary-accent);
+             transition: color 0.3s ease, border-bottom-color 0.3s ease;
+        }
+        .article-body a:hover {
+             color: var(--primary-fabric-light); border-bottom-color: var(--primary-fabric-light);
+        }
+        .article-body ul, .article-body ol {
+            margin-left: 25px; margin-bottom: 1.5rem; padding-left: 1rem;
+        }
+        .article-body li { margin-bottom: 0.7rem; color: var(--text-medium); line-height: 1.7; }
+        .article-body ul li::marker { color: var(--secondary-accent); font-size: 1.2em; }
+        .article-body ol { list-style-type: decimal; }
+        .article-body ol li::marker { color: var(--secondary-accent); font-weight: bold; }
+        .article-body ul ul, .article-body ol ol { margin-top: 0.5rem; margin-bottom: 0.8rem; }
+        .article-body ul ul li::marker { color: var(--primary-fabric-light); font-size: 1em; }
+
+        .article-body blockquote {
+            border-left: 4px solid var(--secondary-accent); margin: 2rem 0; padding: 1rem 1.5rem;
+            background-color: rgba(var(--secondary-accent-rgb), 0.05); color: var(--text-light);
+            font-style: italic; border-radius: 0 8px 8px 0;
+        }
+        .article-body blockquote p { margin-bottom: 0; }
+        .article-body code {
+            background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.5em; border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.9em; color: var(--text-light);
+        }
+        .article-body pre {
+            background-color: rgba(0, 0, 0, 0.5); border: 1px solid var(--card-border);
+            border-radius: 8px; padding: 1.5rem; overflow-x: auto; margin: 2rem 0;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.95em; line-height: 1.6; color: #c5c8c6;
+        }
+        .article-body pre code {
+            background-color: transparent; padding: 0; border-radius: 0;
+            color: inherit; font-size: inherit;
+        }
+        .article-body img {
+            max-width: 100%; height: auto; border-radius: 8px;
+            margin: 2rem auto; border: 1px solid var(--card-border); display: block;
+        }
+        .article-body figure { margin: 2rem 0; }
+        .article-body figcaption {
+            text-align: center; font-size: 0.9rem;
+            color: var(--text-medium); margin-top: 0.5rem;
+        }
+
+        /* Tabell-styling */
+        .comparison-table { /* Endret navn for spesifisitet */
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid var(--card-border);
+            padding: 0.8rem 1rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        .comparison-table thead {
+            background-color: rgba(var(--secondary-accent-rgb), 0.1);
+        }
+        .comparison-table thead th {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+        .comparison-table tbody tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        .comparison-table strong {
+            color: var(--secondary-accent);
+            font-weight: 600; /* Sikrer fet skrift */
+        }
+
+        .back-to-blog-link {
+            display: inline-block; margin-top: 3rem; color: var(--secondary-accent);
+            text-decoration: none; font-weight: 600; transition: color 0.3s ease;
+        }
+        .back-to-blog-link:hover { color: var(--primary-fabric-light); }
+
+        /* === FOOTER === */
+        footer {
+            background-color: #0a0a0a; color: var(--text-medium); text-align: center;
+            padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border);
+        }
+        footer p { margin-bottom: 1rem; font-size: 0.9rem; }
+
+         /* === RESPONSIVITET === */
+         @media (max-width: 768px) {
+             header nav { flex-direction: column; align-items: center; }
+             header .logo { margin-bottom: 15px; }
+             header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+             header ul li { margin: 5px 8px; }
+             .article-container h1 { font-size: 2.2rem; }
+             .article-body h2 { font-size: 1.7rem; }
+             .article-body h3 { font-size: 1.4rem; }
+             .article-body h4 { font-size: 1.2rem; }
+             .article-body p { font-size: 1rem; }
+             .comparison-table { font-size: 0.9rem; }
+             .comparison-table th, .comparison-table td { padding: 0.6rem 0.8rem; }
+         }
+         @media (max-width: 500px) {
+              .article-container h1 { font-size: 1.8rem; }
+              .article-body h2 { font-size: 1.5rem; }
+              .article-body h3 { font-size: 1.3rem; }
+              .article-body h4 { font-size: 1.1rem; }
+         }
+
+    </style>
+
+    <!-- === Schema.org Markup (JSON-LD) - VIKTIG FOR SEO === -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Sikkerhet i Fabric: Styr på Tilganger med Entra ID og Roller",
+      "description": "Forstå hvordan Microsoft Entra ID og ulike roller (Workspace vs Tenant Admin) styrer sikkerhet og tilgang i Microsoft Fabric. Lær beste praksis for tilgangskontroll.",
+      "image": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/blogg/pictures/placeholder-security.png", // BYTT UT med passende bilde-URL (f.eks. et ikon av en lås eller nøkkel)
+      "author": {
+        "@type": "Organization", // Eller Person
+        "name": "TrendMe"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "TrendMe",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png" // URL til din logo
+        }
+      },
+      "datePublished": "2025-04-04", // Sett faktisk publiseringsdato
+      "dateModified": "2025-04-04" // Sett faktisk dato for siste endring
+    }
+    </script>
+    <!-- === SLUTT SCHEMA MARKUP === -->
+
+</head>
+<body>
+
+    <header id="main-header">
+        <nav class="container">
+            <div class="logo"><a href="/">TrendMe</a></div> <!-- Lenke til hovedside -->
+            <ul>
+                <!-- Relative stier fra /posts/ mappen -->
+                <li><a href="../">Tilbake til Bloggen</a></li> <!-- Går ett nivå opp til /blogg/ -->
+                <li><a href="/">Til TrendMe Hovedside</a></li> <!-- Går til roten -->
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Artikkelinnhold -->
+    <main class="section article-section">
+        <div class="article-container">
+
+            <h1>Sikkerhet i Fabric: Styr på Tilganger med Entra ID og Roller</h1>
+
+            <p class="post-meta">
+                Publisert: <time datetime="2025-04-04">04. April 2025</time>
+                <!-- Valgfritt: by <span class="author">Ditt Navn</span> -->
+            </p>
+
+            <div class="article-body">
+                <p>Når du jobber med data, spesielt i en skybasert plattform som Microsoft Fabric, er sikkerhet ikke bare viktig – det er fundamentalt. Hvordan sikrer du at riktige personer har tilgang til riktige data og funksjoner, samtidig som du holder uvedkommende ute? Svaret ligger i en kombinasjon av Microsoft Entra ID (tidligere Azure Active Directory) og de ulike rollene og tillatelsene som finnes i Fabric.</p>
+                <p>Dette kan virke komplekst ved første øyekast, spesielt hvis du er ny til Entra ID eller Fabric. I dette innlegget bryter vi ned de viktigste konseptene: Hva er Entra IDs rolle? Hva er forskjellen på roller i et workspace og roller på tenant-nivå? Og hva er beste praksis for å administrere tilganger effektivt?</p>
+
+                <figure>
+                     <img src="https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/entra_ID.png?raw=true" alt="Illustrasjon av sikkerhet og tilgangskontroll"> <!-- BYTT UT med passende bilde-URL -->
+                    <figcaption>Entra ID og Fabric-roller jobber sammen for å sikre din dataplattform.</figcaption>
+                </figure>
+
+                <h2>Rollen til Microsoft Entra ID</h2>
+                <p>Tenk på <strong>Microsoft Entra ID</strong> som organisasjonens digitale dørvakt og ID-kontroll. Alle Microsoft-skytjenester, inkludert Fabric, bruker Entra ID for å:</p>
+                <ul>
+                    <li><strong>Autentisere brukere:</strong> Bekrefte at brukeren er den de utgir seg for å være (typisk via brukernavn og passord, ofte supplert med multifaktorautentisering - MFA).</li>
+                    <li><strong>Autorisere tilgang:</strong> Bestemme *hva* en autentisert bruker har lov til å gjøre basert på tildelte roller og tillatelser.</li>
+                    <li><strong>Administrere identiteter:</strong> Holde styr på brukere, grupper og tjenesteprinsipper (brukes for applikasjoner/automatisering).</li>
+                </ul>
+                <p>Uten en Entra ID-konto, kommer du rett og slett ikke inn i Fabric.</p>
+
+                <h2>Tilgang i Fabric: To Hovednivåer</h2>
+                <p>Når du er autentisert via Entra ID, styrer Fabric tilgangen din på primært to nivåer:</p>
+
+                <h3>1. Roller i Arbeidsområder (Workspace Roles)</h3>
+                <p>Dette er det vanligste nivået for å styre tilgang til spesifikt innhold (rapporter, datasett, lakehouses osv.). Hvert Fabric workspace har sitt eget sett med roller som bestemmer hva brukere kan gjøre *innenfor det workspacet*:</p>
+                <ul>
+                    <li><strong><code>Admin</code>:</strong> Full kontroll over workspacet. Kan legge til/fjerne brukere (inkludert andre admins), slette workspacet, endre innstillinger og gjøre alt medlemmene kan. Bør begrenses til noen få ansvarlige.</li>
+                    <li><strong><code>Member</code>:</strong> Kan legge til brukere med lavere roller (Contributor, Viewer), publisere, redigere og slette innhold, samt opprette/bruke Deployment Pipelines og dele elementer. En vanlig rolle for utviklere og innholdseiere.</li>
+                    <li><strong><code>Contributor</code>:</strong> Kan publisere, redigere og slette innhold, men kan *ikke* legge til brukere eller endre workspace-innstillinger. En typisk rolle for de som lager innhold, men ikke skal administrere selve workspacet.</li>
+                    <li><strong><code>Viewer</code>:</strong> Kan kun se og interagere med innholdet (f.eks. se rapporter, kjøre SQL-spørringer mot et Warehouse/Lakehouse SQL Endpoint hvis de har nødvendige data-tillatelser). Kan ikke redigere eller publisere. Dette er rollen for sluttbrukere/konsumenter av innhold.</li>
+                </ul>
+                <p><strong>Viktig:</strong> En bruker må ha en Fabric-lisens (Free, Pro eller PPU) for å få tilgang til et workspace, selv med Viewer-rollen (med mindre workspacet ligger på en F64/P1 eller høyere kapasitet).</p>
+
+                <h3>2. Administratorroller på Tenant-nivå</h3>
+                <p>Disse rollene gir kontroll over *hele* Fabric-tjenesten for organisasjonen, ikke bare ett spesifikt workspace. De administreres vanligvis i Microsoft 365 admin center eller via PowerShell og er mye kraftigere:</p>
+                <ul>
+                    <li><strong><code>Fabric Administrator</code>:</strong> Har full kontroll over alle Fabric-innstillinger i Admin-portalen (tenant settings), kan administrere kapasiteter, se bruksmetrikker for hele tenanten, og administrere alle workspaces.</li>
+                    <li><strong><code>Power Platform Administrator</code>:</strong> Har også full Fabric-administrasjonstilgang, i tillegg til administrasjon av Power Apps, Power Automate osv.</li>
+                    <li><strong><code>Global Administrator</code> (fra Entra ID):</strong> Har den høyeste tilgangen på tvers av alle Microsoft 365-tjenester, inkludert Fabric-administrasjon. Denne rollen bør brukes svært restriktivt.</li>
+                </ul>
+                <p>Disse tenant-administratorene bestemmer for eksempel hvem som *kan* opprette workspaces, hvilke funksjoner som er aktivert/deaktivert for hele organisasjonen, og setter overordnede sikkerhetspolicyer.</p>
+
+                <h2>Beste Praksis: Bruk Grupper!</h2>
+                <p>En av de viktigste anbefalingene for effektiv og sikker tilgangsstyring er å **bruke Entra ID Sikkerhetsgrupper** i stedet for å tildele roller til individuelle brukere.</p>
+                <blockquote>
+                    <p><strong>Hvorfor grupper?</strong> Tenk deg at du har 10 workspaces og 50 brukere. Hvis en bruker bytter avdeling eller slutter, må du manuelt fjerne dem fra kanskje 5-10 forskjellige steder. Hvis du derimot har gitt tilgang til grupper (f.eks. "Salg Contributor", "Marked Viewer"), trenger du bare å fjerne brukeren fra den relevante gruppen i Entra ID én gang. All tilgang via den gruppen blir automatisk fjernet.</p>
+                </blockquote>
+                <p>Fordeler med å bruke grupper:</p>
+                <ul>
+                    <li><strong>Enklere administrasjon:</strong> Mye mindre jobb å legge til/fjerne brukere.</li>
+                    <li><strong>Konsistens:</strong> Sikrer at alle i samme rolle/team har lik tilgang.</li>
+                    <li><strong>Delegering:</strong> Entra ID lar deg delegere eierskap til grupper, slik at f.eks. en avdelingsleder selv kan administrere medlemmene i sin avdelingsgruppe.</li>
+                    <li><strong>Skalerbarhet:</strong> Fungerer like bra for 10 brukere som for 10 000.</li>
+                </ul>
+                <p>Lag tydelige, navngitte grupper for ulike roller og team (f.eks. <code>FABRIC_WS_Finans_Contributor</code>, <code>FABRIC_WS_Salg_Viewer</code>).</p>
+
+                <h2>Prinsippet om Minste Privilegium (Least Privilege)</h2>
+                <p>Dette er et grunnleggende sikkerhetsprinsipp: Gi brukere og grupper <strong>kun</strong> de tillatelsene de trenger for å utføre jobben sin, og ingenting mer. Ikke gi <code>Admin</code>-rollen til noen "for sikkerhets skyld". Start med <code>Viewer</code> og øk tilgangen kun ved behov.</p>
+
+                <h2>Deling av Enkeltelementer</h2>
+                <p>I tillegg til workspace-roller kan du også dele *individuelle* Fabric-elementer (som en rapport eller et Lakehouse) direkte med spesifikke brukere eller grupper. Dette gir mer granulær kontroll, men kan også bli vanskeligere å administrere i stor skala sammenlignet med workspace-roller. Bruk deling når noen trenger tilgang til bare ett eller noen få elementer, men ikke alt i workspacet.</p>
+
+                <h2>Andre Sikkerhetslag</h2>
+                <p>Husk at Entra ID og roller bare er én del av Fabric-sikkerheten. Andre viktige aspekter inkluderer:</p>
+                <ul>
+                    <li><strong>Nettverkssikkerhet:</strong> Private Endpoints, VNet Gateways for å sikre datatrafikk.</li>
+                    <li><strong>Databeskyttelse:</strong> Kryptering (automatisk i OneLake), Sensitivitetsetiketter (Microsoft Purview).</li>
+                    <li><strong>Data-spesifikk sikkerhet:</strong> Sikkerhet på radnivå (RLS), kolonnenivå (CLS) og objekt-nivå (OLS) for å begrense tilgang *innenfor* et datasett eller warehouse.</li>
+                </ul>
+
+                <h2>Konklusjon: Struktur Gir Trygghet</h2>
+                <p>Å forstå og bruke Entra ID og Fabric-roller riktig er nøkkelen til en sikker og velfungerende dataplattform. Ved å skille mellom workspace- og tenant-roller, konsekvent bruke sikkerhetsgrupper, og følge prinsippet om minste privilegium, legger du grunnlaget for trygg datadeling og samarbeid.</p>
+                <p>Synes du dette virker komplisert, eller trenger du hjelp til å sette opp en robust sikkerhetsmodell for din Fabric-implementasjon? Vi i TrendMe har erfaringen og kan bistå.</p>
+                <p><a href="/#kontakt">Kontakt oss for en prat om dine sikkerhetsbehov!</a></p>
+
+            </div> <!-- Slutt .article-body -->
+
+            <a href="../" class="back-to-blog-link">← Tilbake til Bloggoversikten</a>
+
+        </div> <!-- Slutt .article-container -->
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
+            <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
+        </div>
+    </footer>
+
+    <!-- Minimal JavaScript (kun for footer årstall og evt. CSS variabler) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Oppdaterer årstall i footer
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+            // Setter CSS variabel for RGBA bruk (hvis nødvendig)
+            document.documentElement.style.setProperty('--secondary-accent-rgb', '0, 198, 255');
+        });
+    </script>
+
+</body>
+</html>
