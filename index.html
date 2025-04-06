@@ -54,16 +54,51 @@
         .slide-right { transform: translateX(40px); }
         .visible { opacity: 1; transform: translate(0, 0) !important; }
 
-        /* --- Header & Navigasjon --- */
+        /* --- Header & Navigasjon (Base styles for > 992px, grunnlag for > 1800px) --- */
         header { background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text-light); padding: 0.8rem 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease; }
-        header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
-        header .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        header ul { list-style: none; display: flex; align-items: center; }
-        header ul li { margin-left: 20px; }
-        header ul li a { display: flex; align-items: center; color: var(--text-medium); text-decoration: none; padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px; font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative; overflow: hidden; white-space: nowrap; }
-        header ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); transition: width var(--transition-speed) ease, left var(--transition-speed) ease; transform: translateX(-50%); }
+        header nav {
+            display: flex;
+            justify-content: space-between; /* Logo venstre, UL høyre */
+            align-items: center;            /* Vertikal sentrering */
+            min-height: 50px;
+            /* flex-direction: row; er standard */
+        }
+        header .logo {
+            font-size: 1.8rem; font-weight: 700; letter-spacing: 1px;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            margin-bottom: 0; /* <<< NY/JUSTERT: Ingen bunnmarg i rad-layout */
+        }
+        header ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;         /* <<< NY/JUSTERT: Tillat wrap som standard for rad-layout */
+            justify-content: flex-end; /* Juster knapper til høyre */
+            margin-top: 0;           /* <<< NY/JUSTERT: Ingen toppmarg i rad-layout */
+            padding: 0;
+        }
+        header ul li {
+            margin-left: 20px;       /* Standard horisontal avstand */
+            margin-top: 2px;         /* <<< NY/JUSTERT: Litt vertikal luft hvis de wrapper */
+            margin-bottom: 2px;      /* <<< NY/JUSTERT: Litt vertikal luft hvis de wrapper */
+        }
+        header ul li a {
+            display: flex; align-items: center; color: var(--text-medium); text-decoration: none;
+            padding: 10px 15px;      /* Standard padding for bred skjerm */
+            transition: color var(--transition-speed) ease; border-radius: 5px;
+            font-weight: 400; font-size: 0.95rem; /* Standard font for bred skjerm */
+            letter-spacing: 0.5px; position: relative; overflow: hidden;
+            white-space: nowrap;     /* <<< NY/JUSTERT: Hold link-tekst samlet som standard */
+        }
+        header ul li a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            transition: width var(--transition-speed) ease, left var(--transition-speed) ease; transform: translateX(-50%);
+        }
         header ul li a:hover { color: var(--text-light); }
         header ul li a:hover::after { width: 70%; left: 50%; }
+
 
         /* --- Hero & Generell Seksjon Styling --- */
         .hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 0 4rem 0; position: relative; overflow: hidden; background: linear-gradient(160deg, rgba(106, 13, 173, 0.3) 0%, rgba(18, 18, 18, 0.8) 70%), url('fabric-background.jpg') no-repeat center center/cover; background-color: #1a1a2e; }
@@ -156,271 +191,143 @@
 
         /* === START Styling for Brreg NAME suggestions (Kontakt skjema) === */
         .suggestions-container {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 100%; /* Rett under inputfeltet */
-            background-color: var(--suggestions-bg);
-            border: 1px solid var(--card-border);
-            border-top: none; /* Unngå dobbel kant mot input */
-            border-radius: 0 0 8px 8px; /* Matcher input-radius */
-            z-index: 10; /* Skal ligge over andre elementer */
-            max-height: 200px; /* Begrens høyden */
-            overflow-y: auto; /* Scroll hvis mange treff */
-            display: none; /* Skjult som standard */
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            position: absolute; left: 0; right: 0; top: 100%; /* Rett under inputfeltet */
+            background-color: var(--suggestions-bg); border: 1px solid var(--card-border); border-top: none;
+            border-radius: 0 0 8px 8px; z-index: 10; max-height: 200px; overflow-y: auto;
+            display: none; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
         }
-        .suggestions-container ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        .suggestions-container li {
-            padding: 0.8rem 1rem;
-            cursor: pointer;
-            color: var(--text-light);
-            border-bottom: 1px solid var(--card-border);
-            transition: background-color 0.2s ease;
-        }
-         .suggestions-container li:last-child {
-             border-bottom: none;
-         }
-        .suggestions-container li:hover {
-            background-color: var(--suggestions-hover-bg);
-            color: var(--secondary-accent);
-        }
-         .suggestions-container .no-results {
-            padding: 0.8rem 1rem;
-            color: var(--text-medium);
-            font-style: italic;
-         }
+        .suggestions-container ul { list-style: none; margin: 0; padding: 0; }
+        .suggestions-container li { padding: 0.8rem 1rem; cursor: pointer; color: var(--text-light); border-bottom: 1px solid var(--card-border); transition: background-color 0.2s ease; }
+        .suggestions-container li:last-child { border-bottom: none; }
+        .suggestions-container li:hover { background-color: var(--suggestions-hover-bg); color: var(--secondary-accent); }
+        .suggestions-container .no-results { padding: 0.8rem 1rem; color: var(--text-medium); font-style: italic; }
         /* === SLUTT Styling for Brreg NAME suggestions === */
 
-        /* === ANIMASJONSKODE START (Uendret) === */
-        #animation-container {
-            position: fixed; /* Dekker hele vinduet */
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            /* Tilpasset bakgrunn til mørkt tema */
-            background-color: rgba(18, 18, 18, 0.9); /* Mørk overlay */
-            display: none; /* Skjult som standard */
-            justify-content: center;
-            align-items: center;
-            flex-direction: column; /* Plasser papir og melding over hverandre */
-            z-index: 1100; /* Over alt annet, inkludert header (z-index 1000) */
-            overflow: hidden; /* Forhindrer at flyet lager scrollbars */
-        }
-        #paper {
-            background-color: #fff; /* Hvit bakgrunn for papiret */
-            width: 300px;
-            height: 400px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--card-border); /* Bruker theme border */
-            padding: 20px;
-            box-sizing: border-box;
-            opacity: 0; /* Starter usynlig */
-            transform: scale(0.8); /* Starter litt mindre */
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-            position: relative; /* For posisjonering av innhold og flyanimasjon */
-            overflow: hidden; /* Klipper innhold som går utenfor */
-        }
-        #paper-content {
-            /* Tilpasset font og farge */
-            font-family: var(--font-primary);
-            font-size: 0.9rem;
-            color: var(--text-dark); /* Mørk tekst på hvitt papir */
-            white-space: pre-wrap; /* Bevarer linjeskift og mellomrom */
-            word-wrap: break-word; /* Bryter lange ord */
-            max-height: 100%;
-            overflow-y: auto; /* Scroll hvis innholdet er for langt */
-        }
-        #thank-you-message {
-            margin-top: 20px;
-            font-size: 1.5rem;
-            /* Tilpasset farge */
-            color: var(--secondary-accent);
-            font-weight: bold;
-            text-align: center;
-            display: none; /* Skjult som standard */
-            opacity: 0;
-            transition: opacity 0.5s ease-in 0.2s; /* Fade inn etter en liten forsinkelse */
-        }
-        @keyframes fly-away {
-            0% {
-                transform: translate(0, 0) rotate(0deg) scale(1);
-                opacity: 1;
-            }
-            100% {
-                /* Flyr opp og til høyre, roterer, skalerer ned og fader ut */
-                transform: translate(120vw, -120vh) rotate(720deg) scale(0.1);
-                opacity: 0;
-            }
-        }
-        #paper.flying {
-            /* Starter fly-away animasjonen */
-            animation: fly-away 2s ease-in forwards; /* 'forwards' holder slutt-tilstanden */
-        }
-        /* === ANIMASJONSKODE SLUTT (Uendret) === */
+        /* === ANIMASJONSKODE START === */
+        #animation-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(18, 18, 18, 0.9); display: none; justify-content: center; align-items: center; flex-direction: column; z-index: 1100; overflow: hidden; }
+        #paper { background-color: #fff; width: 300px; height: 400px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); border: 1px solid var(--card-border); padding: 20px; box-sizing: border-box; opacity: 0; transform: scale(0.8); transition: opacity 0.5s ease-out, transform 0.5s ease-out; position: relative; overflow: hidden; }
+        #paper-content { font-family: var(--font-primary); font-size: 0.9rem; color: var(--text-dark); white-space: pre-wrap; word-wrap: break-word; max-height: 100%; overflow-y: auto; }
+        #thank-you-message { margin-top: 20px; font-size: 1.5rem; color: var(--secondary-accent); font-weight: bold; text-align: center; display: none; opacity: 0; transition: opacity 0.5s ease-in 0.2s; }
+        @keyframes fly-away { 0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translate(120vw, -120vh) rotate(720deg) scale(0.1); opacity: 0; } }
+        #paper.flying { animation: fly-away 2s ease-in forwards; }
+        /* === ANIMASJONSKODE SLUTT === */
 
-        /* --- Responsivitet (Uendret) --- */
+        /* --- RESPONSIVITET START --- */
+
+        /* === TABLET & MINDRE (Stacked Header Layout) === */
         @media (max-width: 992px) {
-             .hero h1 { font-size: 3rem; } .hero .typing-container { font-size: 1.2rem; } .section-header h2 { font-size: 2.4rem; } .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); } header ul li { margin-left: 15px; } header ul li a { padding: 10px 10px;}
+             /* --- Header & Navigasjon for < 992px --- */
+             header nav {
+                 flex-direction: column; /* <<< NY/JUSTERT: Stack logo og nav */
+                 align-items: center;    /* Sentrer innholdet */
+                 min-height: auto;       /* La høyden justeres */
+             }
+             header .logo {
+                 margin-bottom: 15px; /* Avstand logo -> nav */
+             }
+             header ul {
+                 /* Inherits display: flex, flex-wrap: wrap */
+                 justify-content: center; /* <<< NY/JUSTERT: Sentrer knappene horisontalt */
+                 margin-top: 10px;        /* Avstand fra logoen */
+                 /* Inherits padding: 0 */
+             }
+             header ul li {
+                 margin: 4px 6px; /* <<< NY/JUSTERT: Tettere marginer for knapper */
+                 margin-left: 6px; /* Overstyr base margin-left */
+             }
+             header ul li a {
+                 padding: 8px 12px;     /* <<< NY/JUSTERT: Litt mindre padding */
+                 font-size: 0.9rem;     /* <<< NY/JUSTERT: Litt mindre skrift */
+                 white-space: normal;   /* <<< NY/JUSTERT: Tillat tekstbryting i linker her om nødvendig */
+             }
+             header ul li a::after { /* Juster hover-strek om nødvendig */
+                 bottom: 4px; /* Juster posisjon */
+             }
+             header ul li a:hover::after {
+                 width: 65%; /* Juster bredde */
+             }
+
+             /* --- Andre justeringer for < 992px --- */
+             .hero h1 { font-size: 3rem; }
+             .hero .typing-container { font-size: 1.2rem; }
+             .section-header h2 { font-size: 2.4rem; }
+             .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); } /* Holder seg greit */
              #om .container { gap: 3rem; }
              .team-member { max-width: 400px; }
         }
-	 @media (max-width: 768px) {
-	     /* --- Header & Navigasjon for mindre skjermer --- */
-	     header nav {
-	         flex-direction: column; /* Stacker logo og nav-liste vertikalt */
-	         align-items: center;    /* Sentrerer innholdet i nav */
-	         min-height: auto;       /* Lar høyden justeres automatisk basert på innhold */
-	     }
-	     header .logo {
-	         margin-bottom: 15px; /* Litt avstand mellom logo og meny */
-	     }
-	     header ul {
-	         list-style: none;         /* Fjerner kulepunkter (allerede satt, men greit å ha her) */
-	         display: flex;            /* Bruker flexbox for knappelisten */
-	         align-items: center;      /* Vertikal sentrering av knapper (hvis de wrapper) */
-	         margin-top: 10px;         /* Avstand fra logoen */
-	         flex-wrap: wrap;          /* **VIKTIG: Lar knappene gå til neste linje** */
-	         justify-content: center;  /* Sentrerer knappene horisontalt */
-	         padding: 0;               /* Fjerner eventuell default padding */
-	     }
-	     header ul li {
-	         margin: 4px 6px;          /* Litt luft rundt hver knapp */
-	     }
-	     header ul li a {
-	         display: flex;
-	         align-items: center;
-	         color: var(--text-medium);
-	         text-decoration: none;
-	         padding: 6px 10px;        /* Mindre padding på små skjermer */
-	         transition: color var(--transition-speed) ease;
-	         border-radius: 5px;
-	         font-weight: 400;
-	         font-size: 0.85rem;       /* Mindre skriftstørrelse */
-	         letter-spacing: 0.5px;
-	         position: relative;
-	         overflow: hidden;
-	         /* **VIKTIG ENDRING:** */
-	         white-space: normal;      /* Lar teksten i knappen bryte om nødvendig, hjelper wrapping */
-	     }
-	      /* Styling for hover-effekt (strek under) på små skjermer */
-	     header ul li a::after {
-	         content: '';
-	         position: absolute;
-	         width: 0;
-	         height: 2px;
-	         bottom: 3px; /* Justert litt pga mindre padding */
-	         left: 50%;
-	         background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
-	         transition: width var(--transition-speed) ease, left var(--transition-speed) ease;
-	         transform: translateX(-50%);
-	     }
-	     header ul li a:hover {
-	         color: var(--text-light); /* Gjør teksten lysere ved hover */
-	     }
-	     header ul li a:hover::after {
-	         width: 60%; /* Litt kortere strek på små skjermer kanskje? Kan justeres */
-	         left: 50%;
-	     }
-	
-	     /* --- Justeringer for Hero Seksjon --- */
-	     .hero {
-	         min-height: 70vh;         /* Litt lavere hero-seksjon */
-	         padding: 6rem 0 3rem 0;   /* Justert padding */
-	     }
-	     .hero h1 {
-	         font-size: 2.5rem;        /* Mindre hovedtittel */
-	     }
-	     .hero .typing-container {
-	         font-size: 1.1rem;        /* Mindre skrivemaskintekst */
-	     }
-	     .cta-button {
-	         padding: 12px 30px;       /* Litt mindre knapp */
-	         font-size: 1rem;
-	     }
-	
-	     /* --- Justeringer for Seksjoner --- */
-	     .section {
-	         padding: 4rem 0;          /* Mindre padding for seksjoner */
-	     }
-	     .section-header h2 {
-	         font-size: 2rem;          /* Mindre seksjonstitler */
-	     }
-	     .section-header p {
-	         font-size: 1rem;          /* Litt mindre brødtekst i header */
-	     }
-	
-	     /* --- Justeringer for Kontaktskjema --- */
-	     #contact-form {
-	         padding: 2rem;            /* Mindre padding i skjemaet */
-	     }
-	
-	     /* --- Justeringer for Grid-Layouts --- */
-	     .service-grid {
-	         grid-template-columns: 1fr; /* Én kolonne for tjenester */
-	     }
-	     .feature-grid {
-	         grid-template-columns: 1fr; /* Én kolonne for features */
-	     }
-	
-	     /* --- Justeringer for Accordion --- */
-	     .accordion-title {
-	         font-size: 1.1rem;        /* Mindre tittel i accordion */
-	         padding: 1.2rem 0.8rem;   /* Justert padding */
-	     }
-	     .accordion-content {
-	         padding: 0 1rem;          /* Justert padding for innhold (når lukket) */
-	         font-size: 0.95rem;       /* Litt mindre tekst */
-	     }
-	     .accordion-content.aktiv {
-	         padding: 1rem 1rem 2rem 1rem; /* Padding når åpen */
-	     }
-	
-	     /* --- Justeringer for Om Oss Seksjon --- */
-	     #om .container {
-	         flex-direction: column;    /* Stacker teammedlemmer vertikalt */
-	         align-items: center;       /* Sentrerer teammedlemmene */
-	         gap: 3rem;
-	     }
-	     .team-member {
-	         min-width: unset;          /* Fjerner min-width */
-	         width: 90%;                /* Setter bredde i prosent */
-	         max-width: 400px;          /* Begrenser maks bredde */
-	         flex: none;                /* Fjerner flex-grow/shrink */
-	     }
-	     .team-member .om-image img {
-	         width: 180px;              /* Mindre bilder */
-	         height: 180px;
-	     }
-	
-	     /* --- Justeringer for Animasjonspapir --- */
-	     #paper {
-	         width: 90%;                /* Papir tar mindre plass */
-	         max-width: 280px;
-	         height: auto;              /* Høyde basert på innhold */
-	         min-height: 350px;
-	     }
-	     #thank-you-message {
-	         font-size: 1.2rem;        /* Mindre takkemelding */
-	     }
-	 }
 
+        /* === MOBIL (Finjusteringer) === */
+	    @media (max-width: 768px) {
+	        /* Header arver layout fra 992px, justerer kun detaljer */
+	        header ul li {
+	             margin: 3px 5px; /* Enda litt tettere? */
+                 margin-left: 5px;
+	        }
+	        header ul li a {
+	            padding: 6px 10px;    /* Enda mindre padding */
+	            font-size: 0.85rem;   /* Enda mindre skrift */
+	        }
+	        header ul li a::after {
+	            bottom: 3px;
+	        }
+	        header ul li a:hover::after {
+	            width: 60%;
+	        }
+
+	        /* --- Andre justeringer for < 768px --- */
+	        .hero { min-height: 70vh; padding: 6rem 0 3rem 0; }
+	        .hero h1 { font-size: 2.5rem; }
+	        .hero .typing-container { font-size: 1.1rem; }
+	        .cta-button { padding: 12px 30px; font-size: 1rem; }
+	        .section { padding: 4rem 0; }
+	        .section-header h2 { font-size: 2rem; }
+	        .section-header p { font-size: 1rem; }
+	        #contact-form { padding: 2rem; }
+	        .service-grid { grid-template-columns: 1fr; }
+	        .feature-grid { grid-template-columns: 1fr; }
+	        .accordion-title { font-size: 1.1rem; padding: 1.2rem 0.8rem; }
+	        .accordion-content { padding: 0 1rem; font-size: 0.95rem; }
+	        .accordion-content.aktiv { padding: 1rem 1rem 2rem 1rem; }
+	        #om .container { flex-direction: column; align-items: center; gap: 3rem; }
+	        .team-member { min-width: unset; width: 90%; max-width: 400px; flex: none; }
+	        .team-member .om-image img { width: 180px; height: 180px; }
+	        #paper { width: 90%; max-width: 280px; height: auto; min-height: 350px; }
+	        #thank-you-message { font-size: 1.2rem; }
+	    }
+
+        /* === LITEN MOBIL (Ytterligere finjusteringer) === */
         @media (max-width: 480px) {
-             .hero h1 { font-size: 2rem; } header .logo { font-size: 1.5rem; } .section-header h2 { font-size: 1.8rem; } header ul li { margin: 3px 5px;} header ul li a { padding: 6px 8px; font-size: 0.85rem;} .footer-links img { width: 24px; height: 24px;} .footer-links a { margin: 0 8px;}
-             .team-member .om-image img { width: 150px; height: 150px; }
-             .team-member .om-text h3 { font-size: 1.4rem; }
-             .team-member .om-text p { font-size: 0.95rem; }
-             /* Mindre papir på små skjermer */
-             #paper { max-width: 240px; min-height: 300px; padding: 15px; }
-             #paper-content { font-size: 0.8rem;}
-             #thank-you-message { font-size: 1.1rem; }
+            /* Header arver layout */
+            header .logo { font-size: 1.5rem; }
+            header ul li a { padding: 6px 8px; font-size: 0.8rem; } /* Enda mindre? */
+
+            /* --- Andre justeringer for < 480px --- */
+            .hero h1 { font-size: 2rem; }
+            .section-header h2 { font-size: 1.8rem; }
+            .footer-links img { width: 24px; height: 24px;}
+            .footer-links a { margin: 0 8px;}
+            .team-member .om-image img { width: 150px; height: 150px; }
+            .team-member .om-text h3 { font-size: 1.4rem; }
+            .team-member .om-text p { font-size: 0.95rem; }
+            #paper { max-width: 240px; min-height: 300px; padding: 15px; }
+            #paper-content { font-size: 0.8rem;}
+            #thank-you-message { font-size: 1.1rem; }
         }
+
+        /* === SVÆRT BRED SKJERM (Tving én linje i header) === */
+        @media (min-width: 1800px) { /* <<< NY/JUSTERT: Juster 1800px etter behov */
+            header ul {
+                flex-wrap: nowrap; /* Tving alt på én linje */
+            }
+            /* Sikre at vertikal margin fjernes og base horisontal margin gjelder */
+            header ul li {
+                margin-top: 0;
+                margin-bottom: 0;
+                margin-left: 20px; /* Standard horisontal avstand */
+            }
+        }
+
+        /* --- RESPONSIVITET SLUTT --- */
 
     </style>
     <!-- === CSS STILER SLUTT === -->
@@ -433,8 +340,8 @@
             <div class="logo">TrendMe</div>
             <ul>
                 <li><a href="#hjem">Hjem</a></li>
-		<li><a href="#hvorfor-fabric">Hvorfor Fabric</a></li>
-		<li><a href="#om-fabric">Om Fabric</a></li>
+		        <li><a href="#hvorfor-fabric">Hvorfor Fabric</a></li>
+		        <li><a href="#om-fabric">Om Fabric</a></li>
                 <li><a href="#fabric-tjenester">Fabric Tjenester</a></li>
                 <li><a href="#powerbi-tjenester">Power BI Tjenester</a></li>
                 <li><a href="#prosjekter">Kundecaser</a></li>
@@ -812,7 +719,7 @@
         </div>
     </footer>
 
-    <!-- === ANIMASJONSELEMENTER (Uendret) === -->
+    <!-- === ANIMASJONSELEMENTER === -->
     <div id="animation-container">
         <div id="paper">
             <pre id="paper-content"></pre>
@@ -826,7 +733,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            // --- Intersection Observer for animasjoner (uendret) ---
+            // --- Intersection Observer for animasjoner ---
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
             const observerCallback = (entries, observer) => {
                 entries.forEach(entry => {
@@ -845,7 +752,7 @@
                 observer.observe(el);
             });
 
-            // --- Smooth scrolling justert for header (uendret) ---
+            // --- Smooth scrolling justert for header ---
             const navLinks = document.querySelectorAll('header nav a[href^="#"]');
             const header = document.getElementById('main-header');
             navLinks.forEach(link => {
@@ -879,7 +786,7 @@
             });
 
 
-             // --- Skrivemaskineffekt (uendret) ---
+             // --- Skrivemaskineffekt ---
              const typingTextElement = document.getElementById('typing-text');
              if (typingTextElement) {
                  const textToType = "Reduser datakompleksitet. Akselerer innsikt. Optimaliser kostnader. Sikre governance.";
@@ -896,7 +803,7 @@
                  setTimeout(typeChar, 1800);
              }
 
-            // --- Generell Accordion Logikk (uendret) ---
+            // --- Generell Accordion Logikk ---
             const accordionTitles = document.querySelectorAll('.accordion-title');
             accordionTitles.forEach(title => {
                 title.addEventListener('click', function() {
@@ -943,12 +850,12 @@
             });
 
 
-            // --- Footer årstall (uendret) ---
+            // --- Footer årstall ---
             const yearSpan = document.getElementById('year');
             if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
 
 
-             // === START NY KODE FOR KONTAKTSKJEMA BEDRIFTSSØK ===
+             // === START KODE FOR KONTAKTSKJEMA BEDRIFTSSØK ===
 
             // --- Hjelpefunksjon: Debounce ---
             function debounce(func, wait) {
@@ -1063,10 +970,10 @@
              } // Slutt på else-blokk for element-sjekk
 
 
-            // === SLUTT NY KODE FOR KONTAKTSKJEMA BEDRIFTSSØK ===
+            // === SLUTT KODE FOR KONTAKTSKJEMA BEDRIFTSSØK ===
 
 
-            // === KODE FOR KONTAKTSKJEMA-ANIMASJON OG FORMSPREE SUBMIT (litt justert for klarhet) ===
+            // === KODE FOR KONTAKTSKJEMA-ANIMASJON OG FORMSPREE SUBMIT ===
 
             const contactForm = document.getElementById('contact-form');
             const animationContainer = document.getElementById('animation-container');
