@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fakturapreferanser - TrendMe</title>
-    <meta name="description" content="Oppdater dine fakturapreferanser for TrendMe. Søk opp bedrift via navn eller orgnr. For spørsmål om eksisterende faktura, kontakt faktura@trendme.no.">
+    <meta name="description" content="Oppdater dine fakturapreferanser for TrendMe. Søk opp bedrift via navn eller orgnr og sjekk EHF-status. For spørsmål om eksisterende faktura, kontakt faktura@trendme.no.">
 
-    <!-- === FAVICON  === -->
-    <!-- Prioriter SVG -->
+    <!-- === FAVICON === -->
     <link rel="icon" href="https://raw.githubusercontent.com/bredeespelid/TrendMe/d6598292124a1262a3bddf7f6830d938d4ec41d9/pictures/icon_etc/SVG.svg" type="image/svg+xml">
-    <!-- Fallback PNG -->
     <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/bredeespelid/TrendMe/blob/main/pictures/icon_etc/icon.png?raw=true">
     <!-- === END FAVICON === -->
 
@@ -17,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <!-- === CSS STILER START (Med tillegg for suggestions) === -->
+    <!-- === CSS STILER START === -->
     <style>
         :root {
             --dark-bg: #121212;
@@ -33,13 +31,13 @@
             --font-primary: 'Poppins', sans-serif;
             --transition-speed: 0.3s;
             --transition-slow: 0.5s;
-            --success-color: #2ecc71; /* Grønn for suksess */
-            --warning-color: #f39c12; /* Gul/oransje for varsel */
-            --error-color: #ff6b6b;   /* Rød for feil */
-            --suggestions-bg: rgba(50, 50, 50, 0.95); /* Mørk bakgrunn for forslag */
-            --suggestions-hover-bg: rgba(60, 60, 60, 0.98); /* Hover bakgrunn */
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --error-color: #ff6b6b;
+            --suggestions-bg: rgba(50, 50, 50, 0.95);
+            --suggestions-hover-bg: rgba(60, 60, 60, 0.98);
         }
-        /* --- Grunnleggende og Hjelpeklasser (Uendret) --- */
+        /* Grunnleggende, Header, Seksjon, Skjema, Knapper, Suggestions, Status, Footer, Animasjon, Responsivitet (Uendret fra forrige komplette kode) */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--secondary-accent) var(--dark-bg); }
         ::-webkit-scrollbar { width: 8px; }
@@ -49,8 +47,6 @@
         .container { max-width: 1200px; margin: auto; padding: 0 25px; }
         .fade-in { opacity: 0; transition: opacity 1s ease-out, transform 0.8s ease-out; }
         .visible { opacity: 1; transform: translate(0, 0) !important; }
-
-        /* --- Header & Navigasjon (Uendret) --- */
         header { background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text-light); padding: 0.8rem 0; position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease; }
         header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
         header .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -60,146 +56,62 @@
         header ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); transition: width var(--transition-speed) ease, left var(--transition-speed) ease; transform: translateX(-50%); }
         header ul li a:hover { color: var(--text-light); }
         header ul li a:hover::after { width: 70%; left: 50%; }
-
-        /* --- Generell Seksjon Styling (Uendret) --- */
         .section { padding: 4rem 0; overflow: hidden; }
         .section-header { text-align: center; margin-bottom: 3rem; }
         .section-header h2 { font-size: 2.5rem; font-weight: 700; color: var(--text-light); margin-bottom: 1rem; position: relative; display: inline-block; }
         .section-header h2::after { content: ''; position: absolute; width: 60px; height: 4px; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); bottom: -15px; left: 50%; transform: translateX(-50%); border-radius: 2px; }
         .section-header p { max-width: 700px; margin: 1rem auto 0 auto; color: var(--text-medium); font-size: 1.1rem; }
-
-        /* --- Kontaktskjema Styling --- */
-        #invoice-preferences-form {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            padding: 3rem;
-            border-radius: 15px;
-            border: 1px solid var(--card-border);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-        .form-group {
-            margin-bottom: 1.8rem;
-            position: relative; /* Viktig for suggestions-posisjonering */
-        }
+        #invoice-preferences-form { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 3rem; border-radius: 15px; border: 1px solid var(--card-border); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+        .form-group { margin-bottom: 1.8rem; position: relative; }
         .form-group label { display: block; margin-bottom: 0.7rem; font-weight: 600; color: var(--text-medium); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group input[type="tel"],
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 1rem;
-            background-color: rgba(50, 50, 50, 0.5);
-            color: var(--text-light);
-            transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-        }
+        .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group select, .form-group textarea { width: 100%; padding: 1rem; border: 1px solid var(--card-border); border-radius: 8px; font-family: inherit; font-size: 1rem; background-color: rgba(50, 50, 50, 0.5); color: var(--text-light); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
         .form-group select { appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23b0b0b0' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; padding-right: 2.5rem; }
         .form-group fieldset { border: 1px solid var(--card-border); border-radius: 8px; padding: 1rem 1.5rem; margin-top: 0.5rem; }
         .form-group legend { font-weight: 600; color: var(--text-medium); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; padding: 0 0.5rem; }
         .radio-group label { display: block; margin-bottom: 0.5rem; font-weight: normal; color: var(--text-light); font-size: 1rem; text-transform: none; letter-spacing: normal; cursor: pointer; }
         .radio-group input[type="radio"] { margin-right: 0.7rem; vertical-align: middle; cursor: pointer; }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--secondary-accent);
-            box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.2);
-        }
-        .form-group input.error,
-        .form-group textarea.error {
-            border-color: var(--error-color);
-            box-shadow: 0 0 0 1px var(--error-color);
-        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--secondary-accent); box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.2); }
+        .form-group input.error, .form-group textarea.error { border-color: var(--error-color); box-shadow: 0 0 0 1px var(--error-color); }
         .form-group textarea { resize: vertical; min-height: 100px; }
         #invoice-preferences-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; }
         .cta-button { display: inline-block; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); color: var(--text-dark); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease, opacity var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3); }
         .cta-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px var(--glow-color); }
         .cta-button:disabled { background: gray; cursor: not-allowed; opacity: 0.7; transform: none; box-shadow: none; }
+        #form-feedback-message { margin-top: 1rem; text-align: center; display: none; }
         #form-feedback-message.error { color: var(--error-color); }
         #form-feedback-message.success { color: var(--success-color); }
-
-        /* Styling for Brreg ORGNR lookup status */
-        .brreg-status {
-             display: inline-block; margin-left: 10px; font-size: 0.85em; font-weight: 500; transition: color 0.3s ease; color: var(--text-medium);
-        }
+        .brreg-status { display: inline-block; margin-left: 10px; font-size: 0.85em; font-weight: 500; transition: color 0.3s ease; color: var(--text-medium); }
         .brreg-status.searching { color: var(--text-medium); }
         .brreg-status.success { color: var(--success-color); }
         .brreg-status.warning { color: var(--warning-color); }
         .brreg-status.error { color: var(--error-color); }
-
-        /* === START Styling for Brreg NAME suggestions === */
-        .suggestions-container {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 100%; /* Rett under inputfeltet */
-            background-color: var(--suggestions-bg);
-            border: 1px solid var(--card-border);
-            border-top: none; /* Unngå dobbel kant mot input */
-            border-radius: 0 0 8px 8px; /* Matcher input-radius */
-            z-index: 10; /* Skal ligge over andre elementer */
-            max-height: 200px; /* Begrens høyden */
-            overflow-y: auto; /* Scroll hvis mange treff */
-            display: none; /* Skjult som standard */
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-        .suggestions-container ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        .suggestions-container li {
-            padding: 0.8rem 1rem;
-            cursor: pointer;
-            color: var(--text-light);
-            border-bottom: 1px solid var(--card-border);
-            transition: background-color 0.2s ease;
-        }
-         .suggestions-container li:last-child {
-             border-bottom: none;
-         }
-        .suggestions-container li:hover {
-            background-color: var(--suggestions-hover-bg);
-            color: var(--secondary-accent);
-        }
-         .suggestions-container li .suggestion-orgnr {
-             display: block; /* Ny linje */
-             font-size: 0.8em;
-             color: var(--text-medium);
-             margin-top: 2px;
-         }
-         .suggestions-container .no-results {
-            padding: 0.8rem 1rem;
-            color: var(--text-medium);
-            font-style: italic;
-         }
-        /* === SLUTT Styling for Brreg NAME suggestions === */
-
-
-        /* --- Footer Styling (Uendret) --- */
+        .suggestions-container { position: absolute; left: 0; right: 0; top: 100%; background-color: var(--suggestions-bg); border: 1px solid var(--card-border); border-top: none; border-radius: 0 0 8px 8px; z-index: 10; max-height: 200px; overflow-y: auto; display: none; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+        .suggestions-container ul { list-style: none; margin: 0; padding: 0; }
+        .suggestions-container li { padding: 0.8rem 1rem; cursor: pointer; color: var(--text-light); border-bottom: 1px solid var(--card-border); transition: background-color 0.2s ease; }
+        .suggestions-container li:last-child { border-bottom: none; }
+        .suggestions-container li:hover { background-color: var(--suggestions-hover-bg); color: var(--secondary-accent); }
+        .suggestions-container li .suggestion-orgnr { display: block; font-size: 0.8em; color: var(--text-medium); margin-top: 2px; }
+        .suggestions-container .no-results { padding: 0.8rem 1rem; color: var(--text-medium); font-style: italic; }
+        .peppol-status { display: inline-block; margin-left: 10px; font-size: 0.85em; font-weight: 500; padding: 2px 6px; border-radius: 4px; transition: all 0.4s ease-out; opacity: 0; transform: translateY(3px); vertical-align: middle; }
+        .peppol-status.visible { opacity: 1; transform: translateY(0); }
+        .peppol-status.checking { color: var(--text-medium); background-color: rgba(100, 100, 100, 0.2); }
+        .peppol-status.registered { color: var(--success-color); background-color: rgba(46, 204, 113, 0.15); }
+        .peppol-status.not-registered { color: var(--warning-color); background-color: rgba(243, 156, 18, 0.15); }
+        .peppol-status.error { color: var(--error-color); background-color: rgba(255, 107, 107, 0.15); }
+        .peppol-status.registered::before { content: '✓ '; font-weight: bold; }
+        .peppol-status.not-registered::before { content: '✗ '; font-weight: bold; }
+        .peppol-status.error::before { content: '! '; font-weight: bold; }
         footer { background-color: #0a0a0a; color: var(--text-medium); text-align: center; padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border); }
         footer p { margin-bottom: 1rem; font-size: 0.9rem; }
-
-        /* === ANIMASJONSKODE (Uendret) --- */
         #animation-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(18, 18, 18, 0.9); display: none; justify-content: center; align-items: center; flex-direction: column; z-index: 1100; overflow: hidden; }
         #paper { background-color: #fff; width: 300px; height: 400px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); border: 1px solid var(--card-border); padding: 20px; box-sizing: border-box; opacity: 0; transform: scale(0.8); transition: opacity 0.5s ease-out, transform 0.5s ease-out; position: relative; overflow: hidden; }
         #paper-content { font-family: var(--font-primary); font-size: 0.9rem; color: var(--text-dark); white-space: pre-wrap; word-wrap: break-word; max-height: 100%; overflow-y: auto; }
         #thank-you-message { margin-top: 20px; font-size: 1.5rem; color: var(--secondary-accent); font-weight: bold; text-align: center; display: none; opacity: 0; transition: opacity 0.5s ease-in 0.2s; }
         @keyframes fly-away { 0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translate(120vw, -120vh) rotate(720deg) scale(0.1); opacity: 0; } }
         #paper.flying { animation: fly-away 2s ease-in forwards; }
-
-        /* --- Responsivitet (Uendret) --- */
         @media (max-width: 992px) { header ul li { margin-left: 15px; } header ul li a { padding: 10px 10px;} }
         @media (max-width: 768px) { body { padding-top: 120px; } header nav { flex-direction: column; align-items: center; } header .logo { margin-bottom: 15px; } header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; } header ul li { margin: 5px 8px; } header ul li a { font-size: 0.9rem; padding: 8px 12px; } .section { padding: 3rem 0; } .section-header h2 { font-size: 2rem; } .section-header p { font-size: 1rem; } #invoice-preferences-form { padding: 2rem; max-width: 95%; } #paper { width: 90%; max-width: 280px; height: auto; min-height: 350px; } #thank-you-message { font-size: 1.2rem; } }
         @media (max-width: 480px) { body { padding-top: 150px; } .section-header h2 { font-size: 1.8rem; } header .logo { font-size: 1.5rem; } header ul li { margin: 3px 5px;} header ul li a { padding: 6px 8px; font-size: 0.85rem;} #invoice-preferences-form { padding: 1.5rem; } #paper { max-width: 240px; min-height: 300px; padding: 15px; } #paper-content { font-size: 0.8rem;} #thank-you-message { font-size: 1.1rem; } }
-
     </style>
     <!-- === CSS STILER SLUTT === -->
 
@@ -221,91 +133,71 @@
             <div class="container">
                  <div class="section-header fade-in">
                     <h2>Oppdater dine fakturapreferanser</h2>
-                    <p>Søk etter bedriften din ved å skrive inn navn eller organisasjonsnummer nedenfor.</p>
-                    <!-- Alternativ 1 info: -->
+                    <p>Søk etter bedriften din ved å skrive inn navn eller organisasjonsnummer nedenfor. Systemet sjekker automatisk om bedriften kan motta EHF.</p>
                     <p style="margin-top: 1rem; color: var(--text-medium); font-size: 1rem;">
                         Har du spørsmål angående eksisterende inngående eller utgående fakturaer? Send henvendelser til <a href="mailto:faktura@trendme.no" style="color: var(--secondary-accent);">faktura@trendme.no</a>.
                     </p>
                 </div>
 
                 <!-- SKJEMA FOR FAKTURAPREFERANSER -->
-                 <!-- Viktig: Fjernet novalidate midlertidig for å se om nettleser fanger feil -->
                 <form id="invoice-preferences-form" class="fade-in" style="transition-delay: 0.3s;" >
                      <input type="hidden" name="_subject" value="Nye fakturapreferanser fra kunde">
-
-                     <!-- Bedriftsnavn (Nå med søkefunksjon) -->
                      <div class="form-group">
                         <label for="pref-company-name">Bedriftsnavn:</label>
                         <input type="text" id="pref-company-name" name="Bedriftsnavn" required placeholder="Skriv for å søke..." autocomplete="off">
-                        <!-- Container for suggestions -->
-                        <div id="suggestions-list" class="suggestions-container">
-                            <ul></ul>
-                        </div>
-                         <small style="color: var(--text-medium); display: block; margin-top: 5px;">Begynn å skrive for å søke etter bedrifter.</small>
-                    </div>
-
-
-                    <!-- Organisasjonsnummer (Nå med kun oppslag ved blur) -->
-                    <div class="form-group">
+                        <div id="suggestions-list" class="suggestions-container"><ul></ul></div>
+                        <small style="color: var(--text-medium); display: block; margin-top: 5px;">Begynn å skrive for å søke etter bedrifter.</small>
+                     </div>
+                     <div class="form-group">
                          <label for="pref-orgnr">Organisasjonsnummer:</label>
                          <input type="text" id="pref-orgnr" name="Organisasjonsnummer" placeholder="9 siffer (fylles ut ved navnevalg)" inputmode="numeric" pattern="[0-9]{9}" maxlength="9">
-                         <!-- Status element for Brreg orgnr oppslag -->
                          <span id="brreg-lookup-status" class="brreg-status"></span>
                          <small style="color: var(--text-medium); display: block; margin-top: 5px;">Fylles ut automatisk ved valg fra navnesøk, eller tast inn og klikk utenfor for å sjekke.</small>
-                    </div>
-
-
+                     </div>
                      <div class="form-group">
                         <label for="pref-contact-person">Deres kontaktperson (for dette skjemaet):</label>
                         <input type="text" id="pref-contact-person" name="Kontaktperson (innsender)" required placeholder="Navn på den som fyller ut">
-                    </div>
-
+                     </div>
                      <div class="form-group">
                         <label for="pref-contact-email">E-post (for dette skjemaet):</label>
                         <input type="email" id="pref-contact-email" name="Epost (innsender)" required placeholder="Din e-postadresse">
-                    </div>
-
-                    <hr style="border: none; border-top: 1px solid var(--card-border); margin: 2.5rem 0;">
-
-                    <div class="form-group">
-                        <fieldset>
+                     </div>
+                     <hr style="border: none; border-top: 1px solid var(--card-border); margin: 2.5rem 0;">
+                     <div class="form-group">
+                         <fieldset>
                              <legend>Ønsket leveringsmetode for faktura:</legend>
                              <div class="radio-group">
                                  <label>
                                      <input type="radio" name="Leveringsmetode" value="EHF/Peppol" checked> EHF / Peppol
+                                     <span id="peppol-status-indicator" class="peppol-status"></span>
                                  </label>
-                                  <label>
+                                 <label>
                                      <input type="radio" name="Leveringsmetode" value="E-post (PDF)"> E-post (PDF-vedlegg)
                                  </label>
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <div class="form-group">
+                             </div>
+                         </fieldset>
+                     </div>
+                     <div class="form-group">
                         <label for="pref-billing-email">E-postadresse for faktura:</label>
                         <input type="email" id="pref-billing-email" name="Fakturaepost" placeholder="faktura@deresbedrift.no">
                         <small style="color: var(--text-medium); display: block; margin-top: 5px;">Fylles ut hvis dere velger E-post (PDF).</small>
-                    </div>
-
-                    <div class="form-group">
+                     </div>
+                     <div class="form-group">
                         <label for="pref-billing-contact">Kontaktperson for fakturaspørsmål (valgfritt):</label>
                         <input type="text" id="pref-billing-contact" name="Fakturakontakt" placeholder="Navn på regnskapsansvarlig e.l.">
-                         <small style="color: var(--text-medium); display: block; margin-top: 5px;">Kun hvis en annen enn innsender skal kontaktes ved spørsmål.</small>
-                    </div>
-
+                        <small style="color: var(--text-medium); display: block; margin-top: 5px;">Kun hvis en annen enn innsender skal kontaktes ved spørsmål.</small>
+                     </div>
                      <div class="form-group">
                         <label for="pref-po-reference">Deres referanse / PO-nummer (valgfritt):</label>
                         <input type="text" id="pref-po-reference" name="Deres referanse/PO" placeholder="F.eks. innkjøpsordrenummer, prosjektkode">
-                         <small style="color: var(--text-medium); display: block; margin-top: 5px;">Hvis dere krever en spesifikk referanse på fakturaen.</small>
-                    </div>
-
-                    <div class="form-group">
+                        <small style="color: var(--text-medium); display: block; margin-top: 5px;">Hvis dere krever en spesifikk referanse på fakturaen.</small>
+                     </div>
+                     <div class="form-group">
                         <label for="pref-comments">Andre kommentarer eller spesifikke instruksjoner:</label>
                         <textarea id="pref-comments" name="Kommentarer" rows="4" placeholder="F.eks. spesifikk merking..."></textarea>
-                    </div>
-
-                    <button type="submit" class="cta-button">Lagre fakturapreferanser</button>
-                    <p id="form-feedback-message" style="margin-top: 1rem; text-align: center; display: none;"></p>
+                     </div>
+                     <button type="submit" class="cta-button">Lagre fakturapreferanser</button>
+                     <p id="form-feedback-message" style="margin-top: 1rem; text-align: center; display: none;"></p>
                 </form>
             </div>
         </section>
@@ -318,11 +210,9 @@
         </div>
     </footer>
 
-    <!-- === ANIMASJONSELEMENTER (Uendret) === -->
+    <!-- === ANIMASJONSELEMENTER === -->
     <div id="animation-container">
-        <div id="paper">
-            <pre id="paper-content"></pre>
-        </div>
+        <div id="paper"><pre id="paper-content"></pre></div>
         <div id="thank-you-message">Takk! Dine preferanser er lagret.</div>
     </div>
     <!-- === SLUTT ANIMASJONSELEMENTER === -->
@@ -330,24 +220,15 @@
 
     <!-- === JAVASCRIPT START === -->
     <script>
-        // Wrap everything in a try...catch block for basic error catching
+        // Wrap i try...catch for generell feilhåndtering
         try {
             document.addEventListener('DOMContentLoaded', function() {
+                console.log("DEBUG: DOMContentLoaded event fired."); // Start-logg
 
-                // --- Hjelpefunksjon: Debounce ---
-                function debounce(func, wait) {
-                    let timeout;
-                    return function executedFunction(...args) {
-                        const later = () => {
-                            clearTimeout(timeout);
-                            func(...args);
-                        };
-                        clearTimeout(timeout);
-                        timeout = setTimeout(later, wait);
-                    };
-                }
+                // Hjelpefunksjon: Debounce
+                function debounce(func, wait) { let timeout; return function executedFunction(...args) { const later = () => { clearTimeout(timeout); func(...args); }; clearTimeout(timeout); timeout = setTimeout(later, wait); }; }
 
-                // --- Globale referanser (med null-sjekk før bruk) ---
+                // Globale referanser
                 const preferencesForm = document.getElementById('invoice-preferences-form');
                 const animationContainer = document.getElementById('animation-container');
                 const paper = document.getElementById('paper');
@@ -359,393 +240,270 @@
                 const orgNrInput = document.getElementById('pref-orgnr');
                 const brregStatusSpan = document.getElementById('brreg-lookup-status');
                 const suggestionsContainer = document.getElementById('suggestions-list');
-                const suggestionsUl = suggestionsContainer?.querySelector('ul'); // Use optional chaining
+                const suggestionsUl = suggestionsContainer?.querySelector('ul');
                 const contactPersonInput = document.getElementById('pref-contact-person');
                 const contactEmailInput = document.getElementById('pref-contact-email');
                 const billingEmailInput = document.getElementById('pref-billing-email');
+                const peppolStatusIndicator = document.getElementById('peppol-status-indicator');
 
                 const MIN_SEARCH_LENGTH = 3;
                 const DEBOUNCE_DELAY = 350;
 
-                 // --- Sjekk essensielle elementer FØR event listeners ---
-                 if (!preferencesForm || !companyNameInput || !orgNrInput || !contactPersonInput || !contactEmailInput || !billingEmailInput || !suggestionsContainer || !suggestionsUl || !brregStatusSpan) {
-                     console.error("CRITICAL ERROR: One or more essential form elements could not be found. Aborting script initialization.");
-                     // Optionally display a user-friendly message on the page itself
-                     const body = document.querySelector('body');
-                     if (body) {
-                          const errorDiv = document.createElement('div');
-                          errorDiv.textContent = 'En kritisk feil oppstod under lasting av siden. Nødvendige skjemakomponenter mangler. Vennligst prøv å laste siden på nytt eller kontakt support.';
-                          errorDiv.style.color = 'red';
-                          errorDiv.style.backgroundColor = 'black';
-                          errorDiv.style.padding = '20px';
-                          errorDiv.style.textAlign = 'center';
-                          errorDiv.style.position = 'fixed';
-                          errorDiv.style.top = '50%';
-                          errorDiv.style.left = '50%';
-                          errorDiv.style.transform = 'translate(-50%, -50%)';
-                          errorDiv.style.zIndex = '9999';
-                          body.innerHTML = ''; // Clear body to show only the error
-                          body.appendChild(errorDiv);
+                 // Sjekk essensielle elementer - Nå logger vi bare feil, tømmer ikke body
+                 const essentialElements = { preferencesForm, companyNameInput, orgNrInput, contactPersonInput, contactEmailInput, billingEmailInput, suggestionsContainer, suggestionsUl, brregStatusSpan, peppolStatusIndicator, submitButton, formFeedbackMessage, animationContainer, paper, paperContent, thankYouMessage };
+                 let missingElements = false;
+                 for (const key in essentialElements) {
+                     if (!essentialElements[key]) {
+                         console.error(`CRITICAL ERROR: Essential element "${key}" not found!`);
+                         missingElements = true;
+                     }
+                 }
+                 if (missingElements) {
+                     console.error("Aborting script initialization due to missing essential elements.");
+                     // Alternativt: Vis en melding i formFeedbackMessage e.l.
+                     if(formFeedbackMessage) {
+                        formFeedbackMessage.textContent = "En kritisk feil oppstod ved lasting av skjema. Prøv å laste siden på nytt.";
+                        formFeedbackMessage.className = 'error';
+                        formFeedbackMessage.style.display = 'block';
                      }
                      return; // Stop script execution
                  }
+                 console.log("DEBUG: All essential elements found.");
 
+                // --- Peppol Directory Check Logic ---
+                function updatePeppolStatusUI(status, message = '') {
+                    console.log(`DEBUG: updatePeppolStatusUI: status='${status}', message='${message}'`);
+                    peppolStatusIndicator.className = 'peppol-status'; // Nullstill klasser
+                    peppolStatusIndicator.textContent = '';
+                    if (status === 'clear') {
+                        peppolStatusIndicator.style.opacity = '0';
+                        peppolStatusIndicator.classList.remove('visible');
+                    } else {
+                        peppolStatusIndicator.textContent = message;
+                        peppolStatusIndicator.classList.add(status);
+                        // Bruk en liten timeout for å la klassen legges til før visible
+                        setTimeout(() => {
+                            peppolStatusIndicator.classList.add('visible');
+                            peppolStatusIndicator.style.opacity = '1';
+                            console.log("DEBUG: Added 'visible' class to Peppol indicator.");
+                        }, 50);
+                    }
+                }
 
-                // --- START Brreg Oppslagslogikk ---
+         // Asynkron funksjon for å sjekke Peppol Directory VIA PUBLIC PROXY (allorigins.win)
+        // !! ADVARSEL: Bruk av offentlig proxy er upålitelig og ikke anbefalt for produksjon !!
+        async function checkPeppolStatus(orgnr) {
+            console.log(`DEBUG: checkPeppolStatus (via Proxy) called with orgnr: '${orgnr}'`);
+            const validOrgnrPattern = /^\d{9}$/;
+            if (!orgnr || !validOrgnrPattern.test(String(orgnr))) { console.log("DEBUG: checkPeppolStatus: Invalid orgnr, clearing UI."); updatePeppolStatusUI('clear'); return; }
 
-                // 1. Oppslag basert på NAVN
-                async function searchBrregByName(searchTerm) {
-                    // suggestionsUl is checked for existence above
-                    const trimmedSearch = searchTerm.trim();
-                    if (trimmedSearch.length < MIN_SEARCH_LENGTH) {
-                        suggestionsUl.innerHTML = '';
-                        suggestionsContainer.style.display = 'none';
-                        return;
+            updatePeppolStatusUI('checking', 'Sjekker EHF...');
+
+            const peppol_participant_id = `iso6523-actorid-upis::0192:${orgnr}`;
+            const targetApiUrl = `https://directory.peppol.eu/search/1.0/json?participant=${encodeURIComponent(peppol_participant_id)}`;
+
+            // URL til CORS Proxy (allorigins.win)
+            // Vi må URL-kode den originale API-URLen som en parameter til proxyen
+            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(targetApiUrl)}`;
+
+            const headers = { 'User-Agent': 'TrendMe Fakturapreferanse (JS Fetch via Proxy)' };
+            const timeout_ms = 15000; // Øk timeout litt pga ekstra hopp
+            console.log(`DEBUG: Calling Proxy URL: ${proxyUrl}`);
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => { console.log("DEBUG: Proxy request aborted due to timeout."); controller.abort(); }, timeout_ms);
+
+                console.log("DEBUG: Fetching Peppol status via proxy...");
+                const response = await fetch(proxyUrl, { headers, signal: controller.signal }); // Ingen spesielle CORS-headers trengs mot proxyen
+                clearTimeout(timeoutId);
+                console.log(`DEBUG: Proxy response status: ${response.status}`);
+
+                if (response.ok) {
+                    const proxyData = await response.json();
+                    // allorigins wrapper den originale responsen i et 'contents' felt
+                    const originalResponseContent = proxyData?.contents;
+
+                    if (originalResponseContent) {
+                        console.log("DEBUG: Original response content from proxy:", originalResponseContent);
+                        try {
+                            // Prøv å parse den originale JSON-responsen
+                            const data = JSON.parse(originalResponseContent);
+                            console.log("DEBUG: Parsed original Peppol API response data:", data);
+                            const total_results = data?.['total-result-count'];
+
+                            if (typeof total_results === 'number' && total_results > 0) {
+                                updatePeppolStatusUI('registered', 'Kan motta EHF');
+                            } else if (typeof total_results === 'number' && total_results === 0) {
+                                updatePeppolStatusUI('not-registered', 'Ikke EHF-registrert');
+                            } else {
+                                console.warn("DEBUG: Peppol API response format unexpected (via proxy):", data);
+                                updatePeppolStatusUI('error', 'Ukjent Peppol-svar');
+                            }
+                        } catch (parseError) {
+                             console.error('DEBUG: Failed to parse original JSON response from proxy:', parseError, originalResponseContent);
+                             updatePeppolStatusUI('error', 'Proxy-formatfeil');
+                        }
+                    } else {
+                         console.error('DEBUG: Proxy response did not contain expected "contents" field:', proxyData);
+                         updatePeppolStatusUI('error', 'Proxy-svarfeil');
                     }
 
-                    suggestionsUl.innerHTML = '<li class="no-results">Søker...</li>';
-                    suggestionsContainer.style.display = 'block';
+                } else {
+                    // Feil fra selve proxy-tjenesten
+                    console.error(`DEBUG: Proxy HTTP error: ${response.status} ${response.statusText}`);
+                    updatePeppolStatusUI('error', `Proxy-feil (${response.status})`);
+                }
+            } catch (error) {
+                 if (error.name === 'AbortError') { console.error('DEBUG: Proxy request timed out'); updatePeppolStatusUI('error', 'Proxy-timeout'); }
+                 else { console.error('DEBUG: Error fetching Peppol status via proxy:', error); updatePeppolStatusUI('error', 'Proxy-nettfeil'); }
+            }
+        }
+                // --- END Peppol Directory Check Logic ---
 
+
+                // --- START Brreg Lookup Logic ---
+                async function searchBrregByName(searchTerm) {
+                    console.log(`DEBUG: searchBrregByName called with searchTerm: '${searchTerm}'`);
+                    const trimmedSearch = searchTerm.trim(); if (trimmedSearch.length < MIN_SEARCH_LENGTH) { suggestionsUl.innerHTML = ''; suggestionsContainer.style.display = 'none'; return; }
+                    suggestionsUl.innerHTML = '<li class="no-results">Søker...</li>'; suggestionsContainer.style.display = 'block';
                     const apiUrl = `https://data.brreg.no/enhetsregisteret/api/enheter?navn=${encodeURIComponent(trimmedSearch)}&size=10`;
-
                     try {
-                        const response = await fetch(apiUrl);
-                        suggestionsUl.innerHTML = '';
-
+                        const response = await fetch(apiUrl); suggestionsUl.innerHTML = '';
                         if (response.ok) {
-                            const data = await response.json();
-                            const units = data._embedded?.enheter;
-
+                            const data = await response.json(); const units = data._embedded?.enheter;
                             if (units && units.length > 0) {
                                 units.forEach(unit => {
-                                    if (!unit.navn || !unit.organisasjonsnummer) return; // Skip incomplete units
-
-                                    const li = document.createElement('li');
-                                    li.textContent = unit.navn;
-
-                                    const orgnrSpan = document.createElement('span');
-                                    orgnrSpan.className = 'suggestion-orgnr';
-                                    orgnrSpan.textContent = `Org.nr: ${unit.organisasjonsnummer}`;
-                                    li.appendChild(orgnrSpan);
-
+                                    if (!unit.navn || !unit.organisasjonsnummer) return;
+                                    const li = document.createElement('li'); li.textContent = unit.navn; const orgnrSpan = document.createElement('span'); orgnrSpan.className = 'suggestion-orgnr'; orgnrSpan.textContent = `Org.nr: ${unit.organisasjonsnummer}`; li.appendChild(orgnrSpan);
                                     li.addEventListener('click', () => {
-                                        companyNameInput.value = unit.navn;
-                                        orgNrInput.value = unit.organisasjonsnummer;
-                                        suggestionsContainer.style.display = 'none';
-                                        suggestionsUl.innerHTML = '';
-                                        if (brregStatusSpan) {
-                                            brregStatusSpan.textContent = '';
-                                            brregStatusSpan.className = 'brreg-status';
-                                        }
-                                        companyNameInput.classList.remove('error');
-                                        orgNrInput.classList.remove('error');
+                                        console.log(`DEBUG: Suggestion clicked: Name='${unit.navn}', OrgNr='${unit.organisasjonsnummer}'`);
+                                        companyNameInput.value = unit.navn; orgNrInput.value = unit.organisasjonsnummer; suggestionsContainer.style.display = 'none'; suggestionsUl.innerHTML = '';
+                                        if (brregStatusSpan) { brregStatusSpan.textContent = '✓ Valgt fra liste'; brregStatusSpan.className = 'brreg-status success'; }
+                                        companyNameInput.classList.remove('error'); orgNrInput.classList.remove('error');
+                                        checkPeppolStatus(unit.organisasjonsnummer); // Trigger Peppol check
                                     });
                                     suggestionsUl.appendChild(li);
                                 });
-                            } else {
-                                suggestionsUl.innerHTML = '<li class="no-results">Ingen treff funnet.</li>';
-                            }
-                        } else {
-                            console.error('Brreg name search API error:', response.status, response.statusText);
-                            suggestionsUl.innerHTML = '<li class="no-results">Feil ved søk.</li>';
-                        }
-                    } catch (error) {
-                        console.error('Error fetching Brreg by name:', error);
-                        suggestionsUl.innerHTML = '<li class="no-results">Nettverksfeil.</li>';
-                    }
+                            } else { suggestionsUl.innerHTML = '<li class="no-results">Ingen treff funnet.</li>'; }
+                        } else { console.error('DEBUG: Brreg name search API error:', response.status, response.statusText); suggestionsUl.innerHTML = '<li class="no-results">Feil ved søk.</li>'; }
+                    } catch (error) { console.error('DEBUG: Error fetching Brreg by name:', error); suggestionsUl.innerHTML = '<li class="no-results">Nettverksfeil.</li>'; }
                     suggestionsContainer.style.display = 'block';
                 }
 
-                // 2. Oppslag basert på ORGNR
                 async function fetchCompanyInfoFromBrregOrgnr(orgnr) {
-                    // brregStatusSpan and companyNameInput checked for existence above
-                    const trimmedOrgnr = orgnr.replace(/\s+/g, '');
-                    if (!/^\d{9}$/.test(trimmedOrgnr)) {
-                        brregStatusSpan.textContent = '';
-                        brregStatusSpan.className = 'brreg-status';
-                        return;
-                    }
-
-                    brregStatusSpan.textContent = 'Sjekker orgnr...';
-                    brregStatusSpan.className = 'brreg-status searching';
-
-                    const apiUrl = `https://data.brreg.no/enhetsregisteret/api/enheter/${trimmedOrgnr}`;
-
+                    console.log(`DEBUG: fetchCompanyInfoFromBrregOrgnr called with orgnr: '${orgnr}'`);
+                    updatePeppolStatusUI('clear');
+                    const trimmedOrgnr = String(orgnr).replace(/\s+/g, ''); if (!/^\d{9}$/.test(trimmedOrgnr)) { console.log("DEBUG: fetchCompanyInfoFromBrregOrgnr: Invalid format."); brregStatusSpan.textContent = ''; brregStatusSpan.className = 'brreg-status'; return; }
+                    brregStatusSpan.textContent = 'Sjekker orgnr...'; brregStatusSpan.className = 'brreg-status searching';
+                    const apiUrl = `https://data.brreg.no/enhetsregisteret/api/enheter/${trimmedOrgnr}`; console.log(`DEBUG: Brreg API URL: ${apiUrl}`);
                     try {
-                        const response = await fetch(apiUrl);
-
+                        const response = await fetch(apiUrl); console.log(`DEBUG: Brreg API response status: ${response.status}`);
                         if (response.ok) {
-                            const data = await response.json();
+                            const data = await response.json(); let brregSuccess = false; console.log("DEBUG: Brreg API response data:", data);
                             if (data && data.navn) {
-                                if (companyNameInput.value.trim().toLowerCase() !== data.navn.toLowerCase() && companyNameInput.value.trim() !== '') {
-                                    // Name in field differs from Brreg record (and field wasn't empty)
-                                     companyNameInput.value = data.navn; // Overwrite for consistency
-                                     brregStatusSpan.textContent = '✓ Orgnavn oppdatert';
-                                     brregStatusSpan.className = 'brreg-status success';
-
-                                } else if (companyNameInput.value.trim() === '') {
-                                     // Field was empty, just fill it
-                                     companyNameInput.value = data.navn;
-                                     brregStatusSpan.textContent = '✓ Orgnavn funnet';
-                                     brregStatusSpan.className = 'brreg-status success';
-                                }
-                                 else {
-                                    // Name matched or field was empty, just confirm
-                                    brregStatusSpan.textContent = '✓ Orgnavn bekreftet';
-                                    brregStatusSpan.className = 'brreg-status success';
-                                }
-                                companyNameInput.classList.remove('error');
-                                orgNrInput.classList.remove('error');
-                            } else {
-                                brregStatusSpan.textContent = 'Fant orgnr, mangler navn';
-                                brregStatusSpan.className = 'brreg-status warning';
-                            }
-                        } else if (response.status === 404) {
-                            brregStatusSpan.textContent = 'Ugyldig orgnr (ikke funnet)';
-                            brregStatusSpan.className = 'brreg-status error';
-                            orgNrInput.classList.add('error');
-                        } else {
-                            brregStatusSpan.textContent = `API-feil (${response.status})`;
-                            brregStatusSpan.className = 'brreg-status error';
-                            console.error('Brreg orgnr lookup API error:', response.status, response.statusText);
-                        }
-                    } catch (error) {
-                        brregStatusSpan.textContent = 'Nettverksfeil';
-                        brregStatusSpan.className = 'brreg-status error';
-                        console.error('Error fetching from Brreg (orgnr):', error);
-                    }
+                                if (companyNameInput.value.trim().toLowerCase() !== data.navn.toLowerCase() && companyNameInput.value.trim() !== '') { companyNameInput.value = data.navn; } else if (companyNameInput.value.trim() === '') { companyNameInput.value = data.navn; }
+                                brregStatusSpan.textContent = '✓ Orgnavn bekreftet'; brregStatusSpan.className = 'brreg-status success'; companyNameInput.classList.remove('error'); orgNrInput.classList.remove('error'); brregSuccess = true;
+                            } else { brregStatusSpan.textContent = 'Fant orgnr, mangler navn'; brregStatusSpan.className = 'brreg-status warning'; }
+                            if (brregSuccess) { console.log("DEBUG: Brreg lookup successful, calling checkPeppolStatus..."); checkPeppolStatus(trimmedOrgnr); }
+                            else { console.log("DEBUG: Brreg lookup not fully successful, clearing Peppol UI."); updatePeppolStatusUI('clear'); }
+                        } else if (response.status === 404) { console.log("DEBUG: Brreg lookup returned 404."); brregStatusSpan.textContent = 'Ugyldig orgnr (ikke funnet)'; brregStatusSpan.className = 'brreg-status error'; orgNrInput.classList.add('error'); updatePeppolStatusUI('clear'); }
+                        else { console.error(`DEBUG: Brreg API HTTP error: ${response.status}`); brregStatusSpan.textContent = `API-feil (${response.status})`; brregStatusSpan.className = 'brreg-status error'; updatePeppolStatusUI('clear'); }
+                    } catch (error) { console.error('DEBUG: Error fetching from Brreg (orgnr):', error); brregStatusSpan.textContent = 'Nettverksfeil'; brregStatusSpan.className = 'brreg-status error'; updatePeppolStatusUI('clear'); }
                 }
 
-                // --- Koble søkefunksjoner til input-events ---
+                // Event listeners for Brreg/Peppol lookup
                 const debouncedNameSearch = debounce(searchBrregByName, DEBOUNCE_DELAY);
-                companyNameInput.addEventListener('input', (event) => {
-                    debouncedNameSearch(event.target.value);
-                });
-
-                companyNameInput.addEventListener('blur', () => {
-                    setTimeout(() => {
-                        if (suggestionsContainer) suggestionsContainer.style.display = 'none';
-                    }, 150);
-                });
-
-                suggestionsContainer.addEventListener('mousedown', (event) => {
-                    event.preventDefault();
-                });
-
-                orgNrInput.addEventListener('blur', (event) => {
-                    fetchCompanyInfoFromBrregOrgnr(event.target.value);
-                });
-
-                orgNrInput.addEventListener('input', () => {
-                    if (brregStatusSpan) {
-                        brregStatusSpan.textContent = '';
-                        brregStatusSpan.className = 'brreg-status';
-                    }
-                });
-
-                // --- SLUTT Brreg Oppslagslogikk ---
+                companyNameInput.addEventListener('input', (event) => { debouncedNameSearch(event.target.value); console.log("DEBUG: companyNameInput changed, clearing statuses."); updatePeppolStatusUI('clear'); if (brregStatusSpan) { brregStatusSpan.textContent = ''; brregStatusSpan.className = 'brreg-status'; } });
+                companyNameInput.addEventListener('blur', () => { setTimeout(() => { if (suggestionsContainer) suggestionsContainer.style.display = 'none'; }, 150); });
+                suggestionsContainer.addEventListener('mousedown', (event) => { event.preventDefault(); });
+                orgNrInput.addEventListener('blur', (event) => { fetchCompanyInfoFromBrregOrgnr(event.target.value); });
+                orgNrInput.addEventListener('input', () => { console.log("DEBUG: orgNrInput changed, clearing statuses."); if (brregStatusSpan) { brregStatusSpan.textContent = ''; brregStatusSpan.className = 'brreg-status'; } updatePeppolStatusUI('clear'); });
+                // --- END Brreg Lookup Logic ---
 
 
-                // --- Funksjon for å vise valideringsfeil ---
+                // Show validation error message
                 function showValidationError(message, fieldToFocus = null) {
-                    if (formFeedbackMessage) {
-                        formFeedbackMessage.textContent = message;
-                        formFeedbackMessage.className = 'error';
-                        formFeedbackMessage.style.display = 'block';
-                    }
-                    if (submitButton) {
-                        submitButton.disabled = false;
-                        submitButton.textContent = 'Lagre fakturapreferanser';
-                    }
-                    if (fieldToFocus) {
-                        fieldToFocus.classList.add('error');
-                        fieldToFocus.focus();
-                    }
+                    console.warn(`DEBUG: Validation Error: ${message}`, fieldToFocus || '');
+                    if (formFeedbackMessage) { formFeedbackMessage.textContent = message; formFeedbackMessage.className = 'error'; formFeedbackMessage.style.display = 'block'; }
+                    if (submitButton) { submitButton.disabled = false; submitButton.textContent = 'Lagre fakturapreferanser'; }
+                    if (fieldToFocus) { fieldToFocus.classList.add('error'); fieldToFocus.focus(); }
                 }
 
-                // --- Fjern feilmarkering på input ---
-                [companyNameInput, orgNrInput, contactPersonInput, contactEmailInput, billingEmailInput].forEach(input => {
-                    if (input) { // Check if input exists before adding listener
-                        input.addEventListener('input', () => {
-                            input.classList.remove('error');
-                            if (formFeedbackMessage && formFeedbackMessage.style.display !== 'none') {
-                                formFeedbackMessage.style.display = 'none';
-                            }
-                        });
-                    }
-                });
+                // Remove error class on input
+                [companyNameInput, orgNrInput, contactPersonInput, contactEmailInput, billingEmailInput].forEach(input => { if (input) { input.addEventListener('input', () => { input.classList.remove('error'); if (formFeedbackMessage && formFeedbackMessage.style.display !== 'none') { formFeedbackMessage.style.display = 'none'; } }); } });
 
-                // --- Håndtering av skjemainnsending ---
+                // Form submission handler
                 async function handleSubmitPreferences(event) {
-                    event.preventDefault();
-
-                    // Reset feilmeldinger
-                    if (formFeedbackMessage) {
-                        formFeedbackMessage.style.display = 'none';
-                        formFeedbackMessage.className = '';
-                    }
+                    event.preventDefault(); console.log("DEBUG: Form submitted.");
+                    if (formFeedbackMessage) { formFeedbackMessage.style.display = 'none'; formFeedbackMessage.className = ''; }
                     [companyNameInput, orgNrInput, contactPersonInput, contactEmailInput, billingEmailInput].forEach(input => input?.classList.remove('error'));
                     if (suggestionsContainer) suggestionsContainer.style.display = 'none';
 
-                    // Hent verdier
-                    const companyNameValue = companyNameInput?.value.trim();
-                    const contactPersonValue = contactPersonInput?.value.trim();
-                    const contactEmailValue = contactEmailInput?.value.trim();
-                    const deliveryMethodRadio = preferencesForm?.querySelector('input[name="Leveringsmetode"]:checked');
-                    const deliveryMethod = deliveryMethodRadio ? deliveryMethodRadio.value : null;
-                    const orgNrValue = orgNrInput?.value.replace(/\s+/g, '');
-                    const billingEmailValue = billingEmailInput?.value.trim();
+                    const companyNameValue = companyNameInput?.value.trim(); const contactPersonValue = contactPersonInput?.value.trim(); const contactEmailValue = contactEmailInput?.value.trim(); const deliveryMethodRadio = preferencesForm?.querySelector('input[name="Leveringsmetode"]:checked'); const deliveryMethod = deliveryMethodRadio ? deliveryMethodRadio.value : null; const orgNrValue = orgNrInput?.value.replace(/\s+/g, ''); const billingEmailValue = billingEmailInput?.value.trim();
 
-                    // --- START VALIDERING ---
-                    if (!companyNameValue) {
-                        showValidationError('Bedriftsnavn må fylles ut.', companyNameInput); return;
-                    }
-                    if (orgNrInput?.classList.contains('error') && brregStatusSpan?.textContent.includes('Ugyldig orgnr')) {
-                         showValidationError('Organisasjonsnummeret ble ikke funnet i Brreg. Vennligst korriger.', orgNrInput); return;
-                     }
-                    if (!contactPersonValue) {
-                        showValidationError('Kontaktperson (innsender) må fylles ut.', contactPersonInput); return;
-                    }
-                    if (!contactEmailValue) {
-                        showValidationError('E-post (innsender) må fylles ut.', contactEmailInput); return;
-                    }
-                    if (!/\S+@\S+\.\S+/.test(contactEmailValue)) {
-                        showValidationError('Vennligst skriv inn en gyldig e-postadresse for kontaktperson.', contactEmailInput); return;
-                    }
-
+                    // Validation
+                    if (!companyNameValue) { showValidationError('Bedriftsnavn må fylles ut.', companyNameInput); return; }
+                    if (orgNrInput?.classList.contains('error') && brregStatusSpan?.textContent.includes('Ugyldig orgnr')) { showValidationError('Organisasjonsnummeret ble ikke funnet i Brreg. Vennligst korriger.', orgNrInput); return; }
+                    if (!contactPersonValue) { showValidationError('Kontaktperson (innsender) må fylles ut.', contactPersonInput); return; }
+                    if (!contactEmailValue) { showValidationError('E-post (innsender) må fylles ut.', contactEmailInput); return; }
+                    if (!/\S+@\S+\.\S+/.test(contactEmailValue)) { showValidationError('Vennligst skriv inn en gyldig e-postadresse for kontaktperson.', contactEmailInput); return; }
                     if (deliveryMethod === 'EHF/Peppol') {
-                        if (!orgNrValue) {
-                            showValidationError('Organisasjonsnummer må fylles ut når EHF/Peppol er valgt.', orgNrInput); return;
-                        }
-                        if (!/^\d{9}$/.test(orgNrValue)) {
-                            showValidationError('Organisasjonsnummer må bestå av nøyaktig 9 siffer for EHF.', orgNrInput); return;
-                        }
+                        if (!orgNrValue) { showValidationError('Organisasjonsnummer må fylles ut når EHF/Peppol er valgt.', orgNrInput); return; }
+                        if (!/^\d{9}$/.test(orgNrValue)) { showValidationError('Organisasjonsnummer må bestå av nøyaktig 9 siffer for EHF.', orgNrInput); return; }
                     } else if (deliveryMethod === 'E-post (PDF)') {
-                        if (!billingEmailValue) {
-                            showValidationError('E-postadresse for faktura må fylles ut når E-post (PDF) er valgt.', billingEmailInput); return;
-                        }
-                        if (!/\S+@\S+\.\S+/.test(billingEmailValue)) {
-                            showValidationError('Vennligst skriv inn en gyldig e-postadresse for faktura.', billingEmailInput); return;
-                        }
+                        if (!billingEmailValue) { showValidationError('E-postadresse for faktura må fylles ut når E-post (PDF) er valgt.', billingEmailInput); return; }
+                        if (!/\S+@\S+\.\S+/.test(billingEmailValue)) { showValidationError('Vennligst skriv inn en gyldig e-postadresse for faktura.', billingEmailInput); return; }
                     }
-                    // --- SLUTT VALIDERING ---
+                    console.log("DEBUG: Validation passed.");
 
-                    if (submitButton) {
-                        submitButton.disabled = true;
-                        submitButton.textContent = 'Lagrer...';
-                    }
-
-                    const formData = new FormData(preferencesForm);
-                     if(orgNrValue) formData.set('Organisasjonsnummer', orgNrValue); // Send cleaned orgnr
-                    const formSpreeEndpoint = 'https://formspree.io/f/mvgkwjvn'; // ERSTATT MED DIN ENDPOINT
+                    if (submitButton) { submitButton.disabled = true; submitButton.textContent = 'Lagrer...'; }
+                    const formData = new FormData(preferencesForm); if(orgNrValue) formData.set('Organisasjonsnummer', orgNrValue);
+                    const formSpreeEndpoint = 'https://formspree.io/f/mvgkwjvn'; // DIN FORM ID HER
 
                     try {
-                        const response = await fetch(formSpreeEndpoint, {
-                            method: 'POST',
-                            body: formData,
-                            headers: { 'Accept': 'application/json' }
-                        });
-
+                        console.log("DEBUG: Sending data to Formspree...");
+                        const response = await fetch(formSpreeEndpoint, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
+                        console.log(`DEBUG: Formspree response status: ${response.status}`);
                         if (response.ok) {
-                            // SUKSESS
+                            console.log("DEBUG: Formspree submission successful.");
                             const paperText = `Fakturapreferanser mottatt for:\n\n${companyNameValue}\nOrgNr: ${orgNrValue || 'Ikke spesifisert'}\n\nMetode: ${deliveryMethod || 'Ikke spesifisert'}\nFaktura-epost: ${billingEmailValue || 'Ikke relevant'}\n\nInnsendt av: ${contactPersonValue} (${contactEmailValue})`;
-                             if(paperContent) paperContent.textContent = paperText;
-
-                             if(animationContainer) animationContainer.style.display = 'flex';
-                             if(paper) setTimeout(() => { paper.style.opacity = '1'; paper.style.transform = 'scale(1)'; }, 100);
-                             if(thankYouMessage) setTimeout(() => { thankYouMessage.style.display = 'block'; thankYouMessage.offsetHeight; thankYouMessage.style.opacity = '1'; }, 800);
-                             if(paper) setTimeout(() => { paper.classList.add('flying'); }, 2500);
-
-                            if (formFeedbackMessage) {
-                                formFeedbackMessage.textContent = 'Preferansene dine er lagret!';
-                                formFeedbackMessage.className = 'success';
-                                formFeedbackMessage.style.display = 'block';
-                            }
+                            if(paperContent) paperContent.textContent = paperText; if(animationContainer) animationContainer.style.display = 'flex'; if(paper) setTimeout(() => { paper.style.opacity = '1'; paper.style.transform = 'scale(1)'; }, 100); if(thankYouMessage) setTimeout(() => { thankYouMessage.style.display = 'block'; thankYouMessage.offsetHeight; thankYouMessage.style.opacity = '1'; }, 800); if(paper) setTimeout(() => { paper.classList.add('flying'); }, 2500);
+                            if (formFeedbackMessage) { formFeedbackMessage.textContent = 'Preferansene dine er lagret!'; formFeedbackMessage.className = 'success'; formFeedbackMessage.style.display = 'block'; }
                             if(preferencesForm) preferencesForm.reset();
-                            if (brregStatusSpan) {
-                                brregStatusSpan.textContent = '';
-                                brregStatusSpan.className = 'brreg-status';
-                            }
-
+                            if (brregStatusSpan) { brregStatusSpan.textContent = ''; brregStatusSpan.className = 'brreg-status'; } updatePeppolStatusUI('clear'); // Nullstill Peppol
                         } else {
-                            // FEIL fra Formspree
-                            const responseData = await response.json();
-                            let errorMessage = 'Kunne ikke lagre preferansene. Prøv igjen senere.';
-                            if (responseData && responseData.errors) {
-                                errorMessage = responseData.errors.map(error => error.message).join(', ');
-                            }
-                            console.error('Formspree submission error:', response.status, responseData);
-                            showValidationError(`Feil ved lagring: ${errorMessage}`);
+                            const responseData = await response.json(); console.error('DEBUG: Formspree submission error:', response.status, responseData); let errorMessage = 'Kunne ikke lagre preferansene.'; if (responseData && responseData.errors) { errorMessage = responseData.errors.map(error => error.message).join(', '); } showValidationError(`Feil ved lagring: ${errorMessage}`);
                         }
-
                     } catch (error) {
-                        console.error('Error submitting preferences form:', error);
-                        showValidationError('En nettverksfeil oppstod ved innsending. Sjekk tilkoblingen din.');
-                         if (submitButton) { // Ensure button is re-enabled on network error during submit
-                             submitButton.disabled = false;
-                             submitButton.textContent = 'Lagre fakturapreferanser';
-                         }
+                        console.error('DEBUG: Error submitting preferences form:', error); showValidationError('En nettverksfeil oppstod ved innsending.'); if (submitButton) { submitButton.disabled = false; submitButton.textContent = 'Lagre fakturapreferanser'; }
                     }
-                } // Slutt på handleSubmitPreferences
-
-
-                // --- Fest innsendingsfunksjon til skjema ---
-                if (preferencesForm) {
-                    preferencesForm.addEventListener('submit', handleSubmitPreferences);
                 }
 
-                // --- Håndtering av animasjonsslutt ---
-                if (paper) {
-                    paper.addEventListener('animationend', (event) => {
-                        if (event.animationName === 'fly-away' && paper.classList.contains('flying')) {
-                             if(animationContainer) animationContainer.style.display = 'none';
-                             paper.classList.remove('flying');
-                             if(thankYouMessage) { thankYouMessage.style.display = 'none'; thankYouMessage.style.opacity = '0'; }
-                             paper.style.opacity = '0'; paper.style.transform = 'scale(0.8)';
-                             if(paperContent) paperContent.textContent = '';
-                             if (submitButton) {
-                                submitButton.disabled = false;
-                                submitButton.textContent = 'Lagre fakturapreferanser';
-                             }
-                        }
-                    });
-                }
+                // Fest submit handler
+                if (preferencesForm) { preferencesForm.addEventListener('submit', handleSubmitPreferences); }
 
-                // --- Intersection Observer (plassert etter hovedlogikk) ---
-                 if ('IntersectionObserver' in window) {
-                    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-                    const observerCallback = (entries, observer) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('visible');
-                                observer.unobserve(entry.target);
-                            }
-                        });
-                    };
-                    const observer = new IntersectionObserver(observerCallback, observerOptions);
-                    const elementsToAnimate = document.querySelectorAll('.fade-in');
-                    elementsToAnimate.forEach(el => observer.observe(el));
-                 } else {
-                     // Fallback for eldre nettlesere: bare vis elementene
-                     const elementsToAnimate = document.querySelectorAll('.fade-in');
-                     elementsToAnimate.forEach(el => el.classList.add('visible'));
-                 }
+                // Håndtering av animasjonsslutt
+                if (paper) { paper.addEventListener('animationend', (event) => { if (event.animationName === 'fly-away' && paper.classList.contains('flying')) { console.log("DEBUG: Submit animation ended."); if(animationContainer) animationContainer.style.display = 'none'; paper.classList.remove('flying'); if(thankYouMessage) { thankYouMessage.style.display = 'none'; thankYouMessage.style.opacity = '0'; } paper.style.opacity = '0'; paper.style.transform = 'scale(0.8)'; if(paperContent) paperContent.textContent = ''; if (submitButton) { submitButton.disabled = false; submitButton.textContent = 'Lagre fakturapreferanser'; } if (brregStatusSpan) { brregStatusSpan.textContent = ''; brregStatusSpan.className = 'brreg-status'; } updatePeppolStatusUI('clear'); } }); }
 
+                // Intersection Observer
+                 if ('IntersectionObserver' in window) { const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 }; const observerCallback = (entries, observer) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } }); }; const observer = new IntersectionObserver(observerCallback, observerOptions); const elementsToAnimate = document.querySelectorAll('.fade-in'); elementsToAnimate.forEach(el => observer.observe(el)); } else { const elementsToAnimate = document.querySelectorAll('.fade-in'); elementsToAnimate.forEach(el => el.classList.add('visible')); }
 
-                 // --- Footer årstall (plassert etter hovedlogikk) ---
-                 const yearSpan = document.getElementById('year');
-                 if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+                 // Footer årstall
+                 const yearSpan = document.getElementById('year'); if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
 
+                 console.log("DEBUG: Script initialization complete.");
 
             }); // Slutt på DOMContentLoaded
 
         } catch (error) {
-            console.error("A critical JavaScript error occurred outside DOMContentLoaded:", error);
-            // Display a generic error message to the user if possible
-             const body = document.querySelector('body');
-             if (body) {
-                 body.innerHTML = '<div style="color:red; padding: 20px; text-align:center;">En alvorlig feil oppstod under lasting av siden. Vennligst prøv igjen senere eller kontakt support. Feildetaljer er logget til konsollen.</div>';
-             }
+            // Logg kritiske feil som skjer FØR DOMContentLoaded
+            console.error("CRITICAL JAVASCRIPT ERROR (before DOMContentLoaded):", error);
+            // Prøv å vise en enkel feilmelding uten å tømme body
+             const errorDiv = document.createElement('div');
+             errorDiv.textContent = 'En alvorlig feil oppstod under lasting av siden. Vennligst prøv igjen senere. Sjekk konsollen for detaljer.';
+             errorDiv.style.color = 'red'; errorDiv.style.padding = '20px'; errorDiv.style.border = '1px solid red'; errorDiv.style.margin = '20px';
+             document.body?.prepend(errorDiv); // Prøv å legge til øverst hvis body finnes
         }
     </script>
     <!-- === JAVASCRIPT SLUTT === -->
