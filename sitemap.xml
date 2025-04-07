@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://www.trendme.no/</loc>
-        <lastmod>2024-04-05T10:00:00+02:00</lastmod> <!-- Beholder opprinnelig dato for hjemmesiden -->
+        <lastmod>2025-04-04T12:00:00+02:00</lastmod> <!-- Beholder opprinnelig dato for hjemmesiden -->
         <priority>1.0</priority>
     </url>
     <url>
@@ -14,42 +14,42 @@
     <!-- === EKSISTERENDE BLOGGPOSTER (Dato beholdt som i ditt eksempel, men vurder å oppdatere til 2025 hvis de ble endret) === -->
     <url>
         <loc>https://www.trendme.no/blogg/posts/stjerne-vs-snofnugg-schema.html</loc>
-        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <lastmod>2025-04-04T12:00:00+02:00</lastmod>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://www.trendme.no/blogg/posts/medallion-arkitektur-fabric.html</loc>
-        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <lastmod>2025-04-04T12:00:00+02:00</lastmod>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://www.trendme.no/blogg/posts/sikre-data-med-rls-cls.html</loc>
-        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <lastmod>2025-04-04T12:00:00+02:00</lastmod>
         <priority>0.7</priority>
     </url>
      <url>
         <loc>https://www.trendme.no/blogg/posts/fabric-datainnhenting-metoder.html</loc>
-        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <lastmod>2025-04-04T12:00:00+02:00</lastmod>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://www.trendme.no/blogg/posts/fabric-capacity-og-prising.html</loc>
-        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <lastmod>2025-04-04T12:00:00+02:00</lastmod>
         <priority>0.7</priority>
     </url>
      <url>
         <loc>https://www.trendme.no/blogg/posts/fordeler-med-calculation-groups.html</loc>
-        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <lastmod>2025-04-04T12:00:00+02:00</lastmod>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://www.trendme.no/blogg/posts/fabric-warehouse-vs-lakehouse.html</loc>
-        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <lastmod>2025-04-04T12:00:00+02:00</lastmod>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://www.trendme.no/blogg/posts/hva-er-microsoft-fabric-introduksjon.html</loc>
-        <lastmod>2024-04-04T12:00:00+02:00</lastmod>
+        <lastmod>2025-04-04T12:00:00+02:00</lastmod>
         <priority>0.7</priority>
     </url>
 
