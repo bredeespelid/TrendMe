@@ -6,7 +6,7 @@
 
     <!-- === Spesifikk Metadata for denne posten === -->
     <title>Direct Lake, Import, DirectQuery: Forstå Fabric's Datamoduser | TrendMe Blogg</title>
-    <meta name="description" content="Hva er Direct Lake i Microsoft Fabric? En enkel forklaring på forskjellene mellom Import, DirectQuery og Direct Lake, og hvorfor det betyr raskere rapporter for deg.">
+    <meta name="description" content="Hva er Direct Lake i Microsoft Fabric? En dypere forklaring og sammenligning av Import, DirectQuery og Direct Lake, inkludert framing, fallback og kapasitetshensyn.">
     <!-- === SLUTT Spesifikk Metadata === -->
 
     <!-- Prioriter SVG -->
@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* === ALLE STILER (Lim inn dine eksisterende stiler her) === */
+        /* === ALLE STILER (inkl. justert tabell-CSS) === */
         :root {
             --dark-bg: #121212;
             --primary-fabric-dark: #6a0dad;
@@ -37,7 +37,6 @@
             --font-primary: 'Poppins', sans-serif;
             --transition-speed: 0.3s;
         }
-        /* Merk: Universellvelger * brukes kun her i CSS, ikke for tekstformatering */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         body {
@@ -111,8 +110,8 @@
         .article-body p {
             margin-bottom: 1.2rem; color: var(--text-medium); font-size: 1.05rem; line-height: 1.8;
         }
-        .article-body strong { color: var(--text-light); font-weight: 600; } /* Brukes for utheving */
-        .article-body a { /* Gjelder lenker i brødtekst */
+        .article-body strong { color: var(--text-light); font-weight: 600; }
+        .article-body a {
              color: var(--secondary-accent); text-decoration: none;
              border-bottom: 1px dotted var(--secondary-accent);
              transition: color 0.3s ease, border-bottom-color 0.3s ease;
@@ -161,8 +160,51 @@
             color: var(--text-medium); margin-top: 0.5rem;
         }
 
-        /* Tabell-styling (om nødvendig) */
-        /* ... (lim inn tabellstiler hvis du bruker tabeller) ... */
+        /* Tabell-styling (justert) */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 3rem 0;
+            font-size: 0.95rem;
+            overflow-x: auto; /* Beholder horisontal scroll ved behov */
+            /* display: block; -- FJERNET DENNE */
+        }
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid var(--card-border);
+            padding: 0.8rem 1rem;
+            text-align: left;
+            vertical-align: top;
+            white-space: normal; /* Tillat tekstbryting */
+        }
+        .comparison-table thead {
+            background-color: rgba(var(--secondary-accent-rgb), 0.1);
+        }
+        .comparison-table thead th {
+            color: var(--text-light);
+            font-weight: 600;
+            /* position: sticky; -- FJERNET DENNE FORELØPIG */
+            /* top: 0; */
+            background-color: rgba(var(--secondary-accent-rgb), 0.1); /* Tilbake til vanlig bakgrunn */
+        }
+        .comparison-table tbody tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+        .comparison-table strong {
+            color: var(--secondary-accent);
+            font-weight: 600;
+        }
+        /* Justering for fotnote i tabell */
+        .comparison-table tfoot td {
+            font-size: 0.85em;
+            text-align: left;
+            padding-top: 1em;
+            border-top: 2px solid var(--card-border); /* Tydeligere skille */
+        }
+        .comparison-table tfoot sup {
+             line-height: 0; /* Forhindrer ekstra linjeavstand for <sup> */
+        }
+
 
         .back-to-blog-link {
             display: inline-block; margin-top: 3rem; color: var(--secondary-accent);
@@ -188,8 +230,8 @@
              .article-body h3 { font-size: 1.4rem; }
              .article-body h4 { font-size: 1.2rem; }
              .article-body p { font-size: 1rem; }
-             /* .comparison-table { font-size: 0.9rem; } */
-             /* .comparison-table th, .comparison-table td { padding: 0.6rem 0.8rem; } */
+             .comparison-table { font-size: 0.9rem; }
+             .comparison-table th, .comparison-table td { padding: 0.6rem 0.8rem; }
          }
          @media (max-width: 500px) {
               .article-container h1 { font-size: 1.8rem; }
@@ -200,31 +242,23 @@
 
     </style>
 
-    <!-- === Schema.org Markup (JSON-LD) - VIKTIG FOR SEO === -->
+    <!-- === Schema.org Markup (JSON-LD) === -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
       "headline": "Direct Lake, Import, DirectQuery: Forstå Fabric's Datamoduser",
-      "description": "Hva er Direct Lake i Microsoft Fabric? En enkel forklaring på forskjellene mellom Import, DirectQuery og Direct Lake, og hvorfor det betyr raskere rapporter for deg.",
-      "image": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/blogg/pictures/placeholder-directlake.png", // BYTT UT med passende bilde-URL
-      "author": {
-        "@type": "Organization",
-        "name": "TrendMe"
-      },
+      "description": "Hva er Direct Lake i Microsoft Fabric? En dypere forklaring og sammenligning av Import, DirectQuery og Direct Lake, inkludert framing, fallback og kapasitetshensyn.",
+      "image": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/blogg/pictures/placeholder-directlake.png", // BYTT UT
+      "author": { "@type": "Organization", "name": "TrendMe" },
       "publisher": {
-        "@type": "Organization",
-        "name": "TrendMe",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png"
-        }
+        "@type": "Organization", "name": "TrendMe",
+        "logo": { "@type": "ImageObject", "url": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png" }
       },
-      "datePublished": "2025-04-04", // Settes til ønsket publiseringsdato
-      "dateModified": "2025-04-04"  // Settes til ønsket dato for siste endring
+      "datePublished": "2025-04-04",
+      "dateModified": "2025-04-04"
     }
     </script>
-    <!-- === SLUTT SCHEMA MARKUP === -->
 
 </head>
 <body>
@@ -250,11 +284,11 @@
             </p>
 
             <div class="article-body">
-                <p>Du har kanskje hørt om ulike datamoduser i Microsoft Fabric og Power BI, slik som Direct Lake, Import og DirectQuery, men hva betyr de egentlig i praksis? For en bedriftseier er det viktigste å forstå hvordan disse valgene påvirker rapportenes ytelse, hvor ferske dataene er, og hvor enkelt det er å administrere.</p>
-                <p>Tradisjonelt har Power BI gitt oss to hovedvalg for hvordan data hentes inn i rapporter. Microsoft Fabric introduserer en tredje, spennende mulighet: <strong>Direct Lake</strong>. La oss bryte ned hva disse betyr.</p>
+                <p>Du har kanskje hørt om ulike datamoduser i Microsoft Fabric og Power BI, slik som Direct Lake, Import og DirectQuery, men hva betyr de egentlig i praksis? For en bedriftseier er det viktigste å forstå hvordan disse valgene påvirker rapportenes ytelse, hvor ferske dataene er, og hvilke hensyn som må tas i bruk.</p>
+                <p>Tradisjonelt har Power BI gitt oss to hovedvalg for hvordan data hentes inn i rapporter. Microsoft Fabric introduserer en tredje, spennende mulighet: <strong>Direct Lake</strong>. La oss bryte ned hva disse betyr, og hva Direct Lake tilfører.</p>
 
                 <figure>
-                     <img src="https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/import_pre_fabric.png?raw=true" alt="Illustrasjon som viser dataflyt til Power BI via Import, DirectQuery og Direct Lake"> <!-- BYTT UT med passende bilde-URL -->
+                     <img src="https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/import_pre_fabric.png?raw=true" alt="Illustrasjon som viser dataflyt til Power BI via Import, DirectQuery og Direct Lake"> <!-- BYTT UT -->
                     <figcaption>Fra datakilde til rapport: Fabric tilbyr flere veier, med Direct Lake som en ny motorvei.</figcaption>
                 </figure>
 
@@ -266,7 +300,6 @@
                     <li><strong>Hvordan det fungerer:</strong> Data kopieres fra kildesystemet (f.eks. en database, Excel-fil) og lastes inn i Power BIs egen, høytytende minnebaserte motor (VertiPaq).</li>
                     <li><strong>Fordeler:</strong> <strong>Rask ytelse</strong> for rapportering og analyse, siden dataene ligger lokalt i Power BI. Gir full fleksibilitet med DAX (Power BIs formelspråk).</li>
                     <li><strong>Ulemper:</strong> Dataene er bare så ferske som sist de ble <strong>importert (oppdatert)</strong>. Krever planlagte oppdateringer. Kan ha begrensninger på datamengde (selv om dette er blitt mye bedre med Premium/Fabric-kapasiteter).</li>
-                    <li><strong>Analogi:</strong> Du låner bøker fra biblioteket og tar dem med hjem. Du har rask tilgang til bøkene du har hjemme, men de blir ikke oppdatert før du drar tilbake til biblioteket for å bytte dem ut.</li>
                 </ul>
 
                 <h3>2. DirectQuery-modus</h3>
@@ -274,7 +307,6 @@
                     <li><strong>Hvordan det fungerer:</strong> Power BI sender spørringer direkte til den opprinnelige datakilden hver gang en bruker interagerer med rapporten. Ingen data kopieres permanent inn i Power BI.</li>
                     <li><strong>Fordeler:</strong> Dataene i rapporten er alltid <strong>så ferske som dataene i kilden</strong>. Egner seg godt for svært store datasett som ikke får plass i Import-modus.</li>
                     <li><strong>Ulemper:</strong> <strong>Ytelsen avhenger helt av kildesystemet</strong>. Komplekse rapporter mot trege kilder kan bli langsomme. Ikke alle DAX-funksjoner er tilgjengelige.</li>
-                    <li><strong>Analogi:</strong> Du sitter på biblioteket og slår opp i bøkene der hver gang du trenger informasjon. Du får alltid den nyeste utgaven, men det kan ta tid å finne frem hvis biblioteket er stort og uoversiktlig.</li>
                 </ul>
 
                 <h2>Den Nye Stjernen: Direct Lake</h2>
@@ -282,47 +314,179 @@
 
                 <h3>Hva er Direct Lake?</h3>
                 <ul>
-                    <li><strong>Hvordan det fungerer:</strong> Direct Lake er en banebrytende teknologi som lar Power BI-motoren <strong>lese data direkte fra Delta-tabeller</strong> (det åpne formatet som brukes i Fabric Lakehouse/Warehouse) i OneLake. Det er <strong>ingen kopiering eller import</strong> av data inn i en separat Power BI-modell, og det er heller <strong>ingen oversettelse av spørringer</strong> slik som i DirectQuery. Power BI forstår Delta-formatet direkte.</li>
-                    <li><strong>Forutsetning:</strong> Dataene må ligge i et Fabric Lakehouse eller Warehouse.</li>
-                    <li><strong>Analogi:</strong> Tenk deg at biblioteket har digitalisert alle bøkene sine i et super-effektivt format. Nå kan du få tilgang til den nyeste informasjonen nesten like raskt som om du hadde boken hjemme, uten å måtte hente den fysisk eller vente på at bibliotekaren finner den for deg.</li>
+                    <li><strong>Hvordan det fungerer:</strong> Direct Lake er en banebrytende teknologi som lar Power BI-motoren <strong>lese data direkte fra Delta-tabeller</strong> (det åpne formatet som brukes i Fabric Lakehouse/Warehouse) i OneLake. Det er <strong>ingen kopiering eller import</strong> av data inn i en separat Power BI-modell, og det er heller <strong>ingen oversettelse av spørringer</strong> slik som i DirectQuery. Power BI forstår Delta-formatet direkte. Data lastes inn i minnet etter behov (on-demand) når en bruker spør etter dem.</li>
+                    <li><strong>Forutsetning:</strong> Dataene må ligge i et Fabric Lakehouse eller Warehouse på en Fabric-kapasitet.</li>
                 </ul>
 
                 <h3>Fordelene med Direct Lake: Det Beste fra Begge Verdener?</h3>
                 <p>Direct Lake kombinerer mange av fordelene fra både Import og DirectQuery:</p>
                 <ul>
                     <li><strong>Lynrask Ytelse:</strong> Ytelsen nærmer seg den du får med Import-modus, fordi Power BI leser de optimaliserte Delta/Parquet-filene direkte.</li>
-                    <li><strong>Ferske Data:</strong> Siden dataene leses direkte fra OneLake, reflekterer rapportene endringer i Lakehouse/Warehouse nesten umiddelbart (uten behov for å planlegge oppdatering av <strong>selve Power BI-modellen</strong>). Dataene i Lakehouse/Warehouse må selvfølgelig fortsatt oppdateres fra sine kilder.</li>
-                    <li><strong>Skalerbarhet for Store Datasett:</strong> Kan håndtere datasett som er for store for tradisjonell Import-modus, akkurat som DirectQuery.</li>
-                    <li><strong>Forenklet Dataflyt:</strong> Eliminerer behovet for å administrere og planlegge dataoppdateringer spesifikt for Power BI-modellen, noe som reduserer kompleksitet og potensielle feilkilder.</li>
-                    <li><strong>Samlet Plattform:</strong> Forsterker fordelen med Fabric som en samlet plattform der data lagres én gang i OneLake og kan brukes direkte av Power BI.</li>
+                    <li><strong>Oppdaterte Data (med kontroll):</strong> Siden dataene leses direkte fra OneLake, kan rapportene reflektere endringer i Lakehouse/Warehouse nesten umiddelbart hvis ønskelig. Dette styres via mekanismer kalt <strong>Framing</strong> og <strong>Automatic Updates</strong>.</li>
+                    <li><strong>Skalerbarhet for Store Datasett:</strong> Kan håndtere datasett som er for store for tradisjonell Import-modus, akkurat som DirectQuery (men med kapasitetsgrenser).</li>
+                    <li><strong>Forenklet Dataflyt:</strong> Reduserer behovet for å administrere og planlegge separate dataoppdateringer for selve Power BI-modellen.</li>
+                    <li><strong>Samlet Plattform:</strong> Forsterker fordelen med Fabric der data lagres én gang i OneLake og kan brukes direkte av Power BI.</li>
                 </ul>
 
-                <h2>Når Bruker Du Hva?</h2>
-                <p>Med Direct Lake som et nytt alternativ, hvordan velger du riktig modus?</p>
+                <h3>Hvordan Sikres Dataferskhet i Direct Lake? (Framing vs. Automatic Updates)</h3>
+                <p>Selv om Direct Lake leser direkte fra OneLake, betyr det ikke nødvendigvis at du alltid ser absolutt siste mikrosekunds endring. Du har kontroll:</p>
                 <ul>
-                    <li><strong>Direct Lake:</strong> Bør være <strong>standardvalget</strong> når dataene dine ligger i et Fabric Lakehouse eller Warehouse. Det gir den beste kombinasjonen av ytelse, skalerbarhet og ferskhet innenfor Fabric-økosystemet.</li>
+                    <li><strong>Framing:</strong> Dette er standardmetoden. Når en Direct Lake-modell oppdateres (manuelt, planlagt eller via API), skjer en rask operasjon kalt framing. Modellen sjekker da hvilke datafiler i OneLake som var de nyeste på det tidspunktet. Fremtidige spørringer vil bruke data fra disse filene. Dette gir <strong>konsistente resultater</strong> basert på et definert tidspunkt, noe som er bra under f.eks. større datalastinger.</li>
+                    <li><strong>Automatic Updates (Valgfritt):</strong> Du kan aktivere automatiske oppdateringer for en Direct Lake-modell. Da vil modellen automatisk plukke opp de aller nyeste datafilene som blir tilgjengelige i OneLake, uten å vente på en framing-operasjon. Dette gir mer <strong>nær sanntidsdata</strong>, men kan gi litt mindre forutsigbare resultater hvis underliggende data endres mens en bruker analyserer.</li>
+                </ul>
+                <p>Valget mellom disse avhenger av behovet for absolutt ferske data versus behovet for garantert konsistens under analyse.</p>
+
+                <h3>Fallback til DirectQuery og Kapasitetsgrenser</h3>
+                <p>Selv om Direct Lake er designet for høy ytelse, finnes det situasjoner der Power BI må falle tilbake til å bruke den tregere DirectQuery-metoden mot Lakehouse/Warehouse sin SQL-endepunkt:</p>
+                <ul>
+                    <li><strong>Visninger (Views):</strong> Hvis modellen din bruker visninger fra Lakehouse/Warehouse i stedet for direkte tabeller.</li>
+                    <li><strong>Sikkerhetsregler (RLS/OLS):</strong> Hvis du bruker sikkerhet på radnivå (RLS) eller objektnivå (OLS) definert i selve Lakehouse/Warehouse (SQL-endepunktet).</li>
+                    <li><strong>Kapasitetsgrenser:</strong> Hvis datamodellen overskrider visse grenser for din Fabric-kapasitet. Dette er et viktig punkt å forstå.</li>
+                    <li><strong>Komplekse Kolonnetyper/Funksjoner:</strong> Visse datatyper eller komplekse DAX-funksjoner kan også trigge fallback.</li>
+                </ul>
+
+                <h4>Direct Lake Kapasitetsgrenser og Fallback</h4>
+                <p>Hver Fabric-kapasitet (SKU) har bestemte grenser for hvor store Direct Lake-modeller den kan håndtere optimalt. Tabellen under viser noen nøkkelgrenser. Overskrider modellen grensen for <strong>Max model size on disk/OneLake (GB)</strong>, vil <strong>alle</strong> spørringer mot den modellen falle tilbake til DirectQuery.</p>
+
+                <table class="comparison-table">
+                     <thead>
+                        <tr>
+                            <th>Fabric SKU</th>
+                            <th>Max Parquet Files / Table</th>
+                            <th>Max Row Groups / Table</th>
+                            <th>Max Rows / Table (Millions)</th>
+                            <th>Max Model Size on Disk/OneLake (GB)</th>
+                            <th>Max Memory (GB) <sup>1</sup></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>F2</td><td>1,000</td><td>1,000</td><td>300</td><td>10</td><td>3</td></tr>
+                        <tr><td>F4</td><td>1,000</td><td>1,000</td><td>300</td><td>10</td><td>3</td></tr>
+                        <tr><td>F8</td><td>1,000</td><td>1,000</td><td>300</td><td>10</td><td>3</td></tr>
+                        <tr><td>F16</td><td>1,000</td><td>1,000</td><td>300</td><td>20</td><td>5</td></tr>
+                        <tr><td>F32</td><td>1,000</td><td>1,000</td><td>300</td><td>40</td><td>10</td></tr>
+                        <tr><td>F64/FT1/P1</td><td>5,000</td><td>5,000</td><td>1,500</td><td>Unlimited</td><td>25</td></tr>
+                        <tr><td>F128/P2</td><td>5,000</td><td>5,000</td><td>3,000</td><td>Unlimited</td><td>50</td></tr>
+                        <tr><td>F256/P3</td><td>5,000</td><td>5,000</td><td>6,000</td><td>Unlimited</td><td>100</td></tr>
+                        <tr><td>F512/P4</td><td>10,000</td><td>10,000</td><td>12,000</td><td>Unlimited</td><td>200</td></tr>
+                        <tr><td>F1024/P5</td><td>10,000</td><td>10,000</td><td>24,000</td><td>Unlimited</td><td>400</td></tr>
+                        <tr><td>F2048</td><td>10,000</td><td>10,000</td><td>24,000</td><td>Unlimited</td><td>400</td></tr>
+                    </tbody>
+                    <tfoot>
+                         <tr>
+                             <td colspan="6"> <!-- Justert colspan siden fotnoten gjelder hele bredden -->
+                                 <sup>1</sup> <strong>Max Memory</strong> er en øvre grense for hvor mye data som kan lastes inn i minnet for Direct Lake. Overskridelse trigger ikke nødvendigvis fallback, men kan påvirke ytelsen negativt på grunn av økt datautveksling (paging) mellom minne og OneLake.
+                             </td>
+                         </tr>
+                     </tfoot>
+                </table>
+
+                <p><strong>Hvorfor unngå fallback?</strong> Fallback til DirectQuery betyr vanligvis <strong>tregere rapportytelse</strong>. Det er derfor viktig å optimalisere Delta-tabellene i Lakehouse/Warehouse (f.eks. vedlikehold og V-Order) og velge riktig størrelse på Fabric-kapasiteten (SKU) for å unngå unødvendig fallback og ekstra kostnader.</p>
+
+
+                <h2>Sammenligning: Direct Lake vs. Import vs. DirectQuery</h2>
+                <p>Den andre tabellen gir en god oversikt over forskjellene i funksjonalitet:</p>
+                <!-- Lim inn den FORRIGE tabellen (capability comparison) her -->
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Egenskap</th>
+                            <th>Direct Lake</th>
+                            <th>Import</th>
+                            <th>DirectQuery</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Lisensiering</strong></td>
+                            <td>Kun Fabric Kapasitet (F-SKU)</td>
+                            <td>Alle Fabric/Power BI lisenser</td>
+                            <td>Alle Fabric/Power BI lisenser</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Datakilde</strong></td>
+                            <td>Kun Fabric Lakehouse/Warehouse</td>
+                            <td>Alle støttede kilder</td>
+                            <td>Kilder som støtter DirectQuery</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Ferskhet</strong></td>
+                            <td>Nesten sanntid (Auto Updates) eller ved oppdatering (Framing)</td>
+                            <td>Ved siste import/oppdatering</td>
+                            <td>Sanntid (som i kilden)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ytelse (Typisk)</strong></td>
+                            <td><strong>Høy</strong> (minnebasert lesing)</td>
+                            <td><strong>Høy</strong> (minnebasert)</td>
+                            <td><strong>Variabel</strong> (avhenger av kilde)</td>
+                        </tr>
+                         <tr>
+                            <td><strong>Datavolum</strong></td>
+                            <td>Store volum (men kapasitetsgrenser for minne/disk trigger fallback)</td>
+                            <td>Begrenset av minne (varierer med kapasitet)</td>
+                            <td>Store volum (ikke begrenset av Power BI-minne)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Modellkompleksitet (DAX)</strong></td>
+                            <td>Høy (med potensielt fallback)</td>
+                            <td>Høyest (full fleksibilitet)</td>
+                            <td>Begrenset (ikke alle funksjoner støttes)</td>
+                        </tr>
+                          <tr>
+                            <td><strong>Dataflyt/Oppdatering</strong></td>
+                            <td>Forenklet (ingen separat PBI-modell oppdatering)</td>
+                            <td>Krever separat PBI-modell oppdatering</td>
+                            <td>Ingen PBI-modell oppdatering nødvendig</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fallback til DirectQuery</strong></td>
+                            <td>Ja, i visse tilfeller (Views, RLS i kilde, grenser etc.)</td>
+                            <td>Nei</td>
+                            <td>Ikke relevant</td>
+                        </tr>
+                         <tr>
+                            <td><strong>Komposittmodeller</strong></td>
+                            <td>Nei (kan ikke blandes direkte med Import/DQ i samme modell) <sup>1</sup></td>
+                            <td>Ja (med DQ/Dual)</td>
+                            <td>Ja (med Import/Dual)</td>
+                        </tr>
+                    </tbody>
+                     <tfoot>
+                         <tr>
+                             <td colspan="4"> <!-- Justert colspan -->
+                                 <sup>1</sup> Man kan lage en komposittmodell <i>på toppen av</i> et Direct Lake datasett i Power BI Desktop.
+                             </td>
+                         </tr>
+                     </tfoot>
+                </table>
+
+
+                <h2>Når Bruker Du Hva? (Oppdatert Anbefaling)</h2>
+                <p>Med den nye innsikten, hvordan velger du riktig modus?</p>
+                <ul>
+                    <li><strong>Direct Lake:</strong> Bør være <strong>standardvalget</strong> når dataene dine ligger i et Fabric Lakehouse eller Warehouse. Konfigurer om du vil bruke standard framing eller automatic updates basert på ferskhetskrav. Vær obs på kapasitetsgrenser og andre situasjoner som kan føre til fallback, og design/optimaliser for å unngå det hvis mulig.</li>
                     <li><strong>Import:</strong> Fortsatt et godt valg for:
                         <ul>
                             <li>Mindre datasett der du trenger maksimal ytelse og full DAX-fleksibilitet.</li>
                             <li>Når datakilden din <strong>ikke</strong> er et Fabric Lakehouse/Warehouse.</li>
-                            <li>Scenarioer der du har svært spesifikke krav til modellering eller ytelsestuning som VertiPaq-motoren håndterer best.</li>
+                            <li>Når du trenger kompleks modellering som er best egnet for VertiPaq-motoren.</li>
                         </ul>
                     </li>
                     <li><strong>DirectQuery:</strong> Brukes primært når:
                         <ul>
-                            <li>Datakilden din er et støttet system <strong>utenfor</strong> Fabric (f.eks. en spesifikk SQL-database, Azure Analysis Services) som ikke enkelt kan flyttes eller speiles inn i Fabric.</li>
-                            <li>Du har et absolutt krav om sanntidsdata fra en kilde som ikke er i Fabric.</li>
-                            <li>Du trenger spesifikke DirectQuery-funksjoner som ikke dekkes av Direct Lake.</li>
+                            <li>Datakilden din er et støttet system <strong>utenfor</strong> Fabric og ikke kan flyttes/speiles.</li>
+                            <li>Du har et absolutt krav om sanntidsdata fra en ekstern kilde.</li>
+                            <li>Du <strong>må</strong> bruke funksjonalitet som trigger fallback, og aksepterer den potensielle ytelsesreduksjonen.</li>
                         </ul>
                     </li>
                 </ul>
-                <p><strong>En liten nyanse:</strong> Selv om Direct Lake er raskt, vil ytelsen fortsatt påvirkes av hvordan dataene er organisert i Lakehouse/Warehouse (f.eks. partisjonering, V-Order optimalisering). Og i noen svært komplekse DAX-scenarioer kan Power BI falle tilbake til en tregere spørremåte.</p>
 
-                <h2>Konklusjon: Raskere Innsikt, Enklere Administrasjon</h2>
-                <p>Direct Lake representerer en betydelig nyvinning i Microsoft Fabric. Ved å la Power BI lese data direkte fra OneLake uten kopiering eller kompleks spørreoversettelse, gir det en ytelse som ligner Import-modus, med ferskheten og skalerbarheten til DirectQuery.</p>
-                <p>For deg som bedriftseier betyr dette potensielt: raskere rapporter, mer oppdaterte data for beslutningstaking, og en enklere, mer robust dataarkitektur med færre ledd å administrere. Det er en nøkkelkomponent i Fabric's løfte om å forenkle og akselerere dataanalyse.</p>
-                <p>Er du usikker på hvilken datamodus som passer best for dine behov, eller hvordan du best utnytter Direct Lake i Fabric? Vi i TrendMe kan hjelpe deg med å designe den optimale løsningen.</p>
-                <p><a href="/#kontakt">Ta kontakt for en prat om hvordan vi kan gjøre dataene dine raskere og mer tilgjengelige!</a></p>
+                <h2>Konklusjon: Raskere Innsikt, Enklere Arkitektur (Med Viktige Hensyn)</h2>
+                <p>Direct Lake er en sentral innovasjon i Microsoft Fabric, og tilbyr en kraftfull kombinasjon av ytelsen fra Import-modus og ferskheten/skalerbarheten fra DirectQuery. For deg som bedriftseier betyr dette potensial for raskere rapporter, mer oppdaterte data for beslutningstaking, og en enklere dataarkitektur.</p>
+                <p>Det er imidlertid avgjørende å forstå mekanismene som styrer dataferskhet (framing/automatic updates) og ikke minst kapasitetsgrensene og andre situasjoner som kan føre til ytelsesreduserende fallback til DirectQuery. Riktig design av Lakehouse/Warehouse, optimalisering av Delta-tabeller og valg av passende Fabric-kapasitet er nøkkelen for å få mest mulig ut av Direct Lake.</p>
+                <p>Er du usikker på hvordan du best designer for Direct Lake, velger riktig kapasitet, eller navigerer i de ulike modusene i Fabric? Vi i TrendMe kan hjelpe deg.</p>
+                <p><a href="/#kontakt">Ta kontakt for en prat om hvordan vi kan optimalisere din dataflyt og rapportytelse!</a></p>
 
             </div> <!-- Slutt .article-body -->
 
@@ -338,7 +502,7 @@
         </div>
     </footer>
 
-    <!-- Minimal JavaScript (kun for footer årstall og evt. CSS variabler) -->
+    <!-- Minimal JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Oppdaterer årstall i footer
