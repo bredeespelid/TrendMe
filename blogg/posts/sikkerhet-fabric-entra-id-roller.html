@@ -94,6 +94,10 @@
             font-size: 0.9rem; color: var(--text-medium); margin-bottom: 2.5rem;
             display: block; border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem;
         }
+         /* Stil for author og reading-time */
+        .post-meta .author { font-weight: 600; color: var(--text-light); }
+        .post-meta .reading-time { margin-left: 5px; /* Juster etter behov */ }
+
         .article-body h2 {
             font-size: 2rem; color: var(--text-light); margin-top: 3rem; margin-bottom: 1.5rem;
             font-weight: 600; border-bottom: 2px solid var(--primary-fabric-light);
@@ -221,6 +225,7 @@
               .article-body h2 { font-size: 1.5rem; }
               .article-body h3 { font-size: 1.3rem; }
               .article-body h4 { font-size: 1.1rem; }
+              .comparison-table { display: block; overflow-x: auto; } /* Gjør tabell scrollbar */
          }
 
     </style>
@@ -232,10 +237,10 @@
       "@type": "BlogPosting",
       "headline": "Sikkerhet i Fabric: Styr på Tilganger med Entra ID og Roller",
       "description": "Forstå hvordan Microsoft Entra ID og ulike roller (Workspace vs Tenant Admin) styrer sikkerhet og tilgang i Microsoft Fabric. Lær beste praksis for tilgangskontroll.",
-      "image": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/blogg/pictures/placeholder-security.png", // BYTT UT med passende bilde-URL (f.eks. et ikon av en lås eller nøkkel)
+      "image": "https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/entra_ID.png?raw=true", // Oppdatert URL
       "author": {
-        "@type": "Organization", // Eller Person
-        "name": "TrendMe"
+        "@type": "Person", // Endret til Person
+        "name": "Brede Espelid" // Satt inn forfatter
       },
       "publisher": {
         "@type": "Organization",
@@ -246,7 +251,9 @@
         }
       },
       "datePublished": "2025-04-04", // Sett faktisk publiseringsdato
-      "dateModified": "2025-04-04" // Sett faktisk dato for siste endring
+      "dateModified": "2025-04-04", // Sett faktisk dato for siste endring
+      // Valgfritt: Legg til estimated reading time her også hvis du ønsker (timeRequired)
+      // "timeRequired": "PT8M" // ISO 8601 format for 8 minutter
     }
     </script>
     <!-- === SLUTT SCHEMA MARKUP === -->
@@ -271,10 +278,13 @@
 
             <h1>Sikkerhet i Fabric: Styr på Tilganger med Entra ID og Roller</h1>
 
+            <!-- === START ENDRING === -->
             <p class="post-meta">
-                Publisert: <time datetime="2025-04-04">04. April 2025</time>
-                <!-- Valgfritt: by <span class="author">Ditt Navn</span> -->
+                Publisert: <time datetime="2025-04-04">04. April 2025</time> |
+                av <span class="author">Brede Espelid</span> | <!-- ENDRE NAVN HVIS NØDVENDIG -->
+                <span class="reading-time">⏱️ ca. 8 min lesetid</span> <!-- Estimat, kan justeres -->
             </p>
+             <!-- === SLUTT ENDRING === -->
 
             <div class="article-body">
                 <p>Når du jobber med data, spesielt i en skybasert plattform som Microsoft Fabric, er sikkerhet ikke bare viktig – det er fundamentalt. Hvordan sikrer du at riktige personer har tilgang til riktige data og funksjoner, samtidig som du holder uvedkommende ute? Svaret ligger i en kombinasjon av Microsoft Entra ID (tidligere Azure Active Directory) og de ulike rollene og tillatelsene som finnes i Fabric.</p>
