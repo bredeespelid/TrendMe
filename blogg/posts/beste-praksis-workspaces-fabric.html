@@ -94,6 +94,10 @@
             font-size: 0.9rem; color: var(--text-medium); margin-bottom: 2.5rem;
             display: block; border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem;
         }
+        /* Lagt til stil for author og reading-time for potensiell fremtidig bruk */
+        .post-meta .author { font-weight: 600; color: var(--text-light); }
+        .post-meta .reading-time { margin-left: 5px; /* Juster etter behov */ }
+
         .article-body h2 {
             font-size: 2rem; color: var(--text-light); margin-top: 3rem; margin-bottom: 1.5rem;
             font-weight: 600; border-bottom: 2px solid var(--primary-fabric-light);
@@ -234,8 +238,8 @@
       "description": "Lær beste praksis for å organisere Microsoft Fabric workspaces. Få konkrete scenarioer for små, mellomstore og store bedrifter for optimal styring, sikkerhet og samarbeid.",
       "image": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/blogg/pictures/placeholder-workspace.png", // BYTT UT med passende bilde-URL
       "author": {
-        "@type": "Organization", // Eller Person
-        "name": "TrendMe"
+        "@type": "Person", // Endret fra Organization til Person
+        "name": "Brede Espelid" // Satt inn forfatternavn
       },
       "publisher": {
         "@type": "Organization",
@@ -247,6 +251,8 @@
       },
       "datePublished": "2025-04-04", // Sett faktisk publiseringsdato
       "dateModified": "2025-04-04" // Sett faktisk dato for siste endring
+      // Valgfritt: Legg til estimated reading time her også hvis du ønsker (timeRequired)
+      // "timeRequired": "PT7M" // ISO 8601 format for 7 minutter
     }
     </script>
     <!-- === SLUTT SCHEMA MARKUP === -->
@@ -271,10 +277,13 @@
 
             <h1>Mastering Fabric Workspaces: Beste Praksis for Hver Bedriftsstørrelse</h1>
 
+             <!-- === START ENDRING === -->
             <p class="post-meta">
-                Publisert: <time datetime="2025-04-04">04. April 2025</time>
-                <!-- Valgfritt: by <span class="author">Ditt Navn</span> -->
+                Publisert: <time datetime="2025-04-04">04. April 2025</time> |
+                av <span class="author">Brede Espelid</span> | <!-- ENDRE NAVN HVIS NØDVENDIG -->
+                <span class="reading-time">⏱️ ca. 7 min lesetid</span> <!-- Estimat, kan justeres -->
             </p>
+             <!-- === SLUTT ENDRING === -->
 
             <div class="article-body">
                 <p>Microsoft Fabric Workspaces er hjertet av dataplattformen din – de er containerne der du samler og organiserer alle elementene dine, fra Lakehouses og Warehouses til Power BI-rapporter og Notebooks. Å etablere gode rutiner og struktur for workspaces er ikke bare en "nice-to-have", det er <strong>avgjørende</strong> for effektiv styring, sikkerhet, samarbeid og vedlikehold.</p>
