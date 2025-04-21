@@ -94,6 +94,10 @@
             font-size: 0.9rem; color: var(--text-medium); margin-bottom: 2.5rem;
             display: block; border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem;
         }
+         /* Stil for author og reading-time */
+        .post-meta .author { font-weight: 600; color: var(--text-light); }
+        .post-meta .reading-time { margin-left: 5px; /* Juster etter behov */ }
+
         .article-body h2 {
             font-size: 2rem; color: var(--text-light); margin-top: 3rem; margin-bottom: 1.5rem;
             font-weight: 600; border-bottom: 2px solid var(--primary-fabric-light);
@@ -206,10 +210,10 @@
       "@type": "BlogPosting",
       "headline": "Vi Bruker en Avansert Dataplattform. Trenger Vi Virkelig Fabric?",
       "description": "En vurdering for bedriftseiere: Bør du supplere eller erstatte din eksisterende avanserte dataplattform med Microsoft Fabric? Fordeler, ulemper, modenhet og hybridtilnærminger.",
-      "image": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/blogg/pictures/placeholder-fabric-vs-advanced-platform.png", // BYTT UT med passende bilde-URL
+      "image": "https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/fabric_migration.png?raw=true", // Oppdatert bilde-URL
       "author": {
-        "@type": "Organization",
-        "name": "TrendMe"
+        "@type": "Person", // Endret til Person
+        "name": "Brede Espelid" // Satt inn forfatter
       },
       "publisher": {
         "@type": "Organization",
@@ -221,6 +225,8 @@
       },
       "datePublished": "2025-04-04", // Settes til ønsket publiseringsdato
       "dateModified": "2025-04-04"  // Settes til ønsket dato for siste endring
+      // Valgfritt: Legg til estimated reading time her også hvis du ønsker (timeRequired)
+      // "timeRequired": "PT9M" // ISO 8601 format for 9 minutter
     }
     </script>
     <!-- === SLUTT SCHEMA MARKUP === -->
@@ -244,9 +250,13 @@
 
             <h1>Vi Bruker en Avansert Dataplattform. Trenger Vi Virkelig Fabric?</h1>
 
+             <!-- === START ENDRING === -->
             <p class="post-meta">
-                Publisert: <time datetime="2025-04-04">04. April 2025</time>
+                Publisert: <time datetime="2025-04-04">04. April 2025</time> |
+                av <span class="author">Brede Espelid</span> | <!-- ENDRE NAVN HVIS NØDVENDIG -->
+                <span class="reading-time">⏱️ ca. 9 min lesetid</span> <!-- Estimat, kan justeres -->
             </p>
+             <!-- === SLUTT ENDRING === -->
 
             <div class="article-body">
                 <p>Har bedriften din investert i en etablert, avansert dataplattform for data engineering og kanskje maskinlæring? Da lurer du kanskje på om Microsoft Fabric, en nyere, samlet dataplattform, egentlig er relevant for dere. Er det verdt å vurdere et bytte, eller er det bare "enda et verktøy" som kompliserer ting?</p>
