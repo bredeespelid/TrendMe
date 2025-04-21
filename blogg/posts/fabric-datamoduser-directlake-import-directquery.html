@@ -94,6 +94,10 @@
             font-size: 0.9rem; color: var(--text-medium); margin-bottom: 2.5rem;
             display: block; border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem;
         }
+         /* Stil for author og reading-time */
+        .post-meta .author { font-weight: 600; color: var(--text-light); }
+        .post-meta .reading-time { margin-left: 5px; /* Juster etter behov */ }
+
         .article-body h2 {
             font-size: 2rem; color: var(--text-light); margin-top: 3rem; margin-bottom: 1.5rem;
             font-weight: 600; border-bottom: 2px solid var(--primary-fabric-light);
@@ -167,7 +171,6 @@
             margin: 3rem 0;
             font-size: 0.95rem;
             overflow-x: auto; /* Beholder horisontal scroll ved behov */
-            /* display: block; -- FJERNET DENNE */
         }
         .comparison-table th,
         .comparison-table td {
@@ -183,8 +186,6 @@
         .comparison-table thead th {
             color: var(--text-light);
             font-weight: 600;
-            /* position: sticky; -- FJERNET DENNE FORELØPIG */
-            /* top: 0; */
             background-color: rgba(var(--secondary-accent-rgb), 0.1); /* Tilbake til vanlig bakgrunn */
         }
         .comparison-table tbody tr:nth-child(even) {
@@ -249,14 +250,19 @@
       "@type": "BlogPosting",
       "headline": "Direct Lake, Import, DirectQuery: Forstå Fabric's Datamoduser",
       "description": "Hva er Direct Lake i Microsoft Fabric? En dypere forklaring og sammenligning av Import, DirectQuery og Direct Lake, inkludert framing, fallback og kapasitetshensyn.",
-      "image": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/blogg/pictures/placeholder-directlake.png", // BYTT UT
-      "author": { "@type": "Organization", "name": "TrendMe" },
+      "image": "https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/import_pre_fabric.png?raw=true", // Oppdatert URL
+      "author": {
+          "@type": "Person", // Endret til Person
+          "name": "Brede Espelid" // Satt inn forfatter
+       },
       "publisher": {
         "@type": "Organization", "name": "TrendMe",
         "logo": { "@type": "ImageObject", "url": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png" }
       },
       "datePublished": "2025-04-04",
       "dateModified": "2025-04-04"
+      // Valgfritt: Legg til estimated reading time her også hvis du ønsker (timeRequired)
+      // "timeRequired": "PT11M" // ISO 8601 format for 11 minutter
     }
     </script>
 
@@ -279,9 +285,14 @@
 
             <h1>Direct Lake, Import, DirectQuery: Forstå Fabric's Datamoduser</h1>
 
+            <!-- === START ENDRING === -->
             <p class="post-meta">
-                Publisert: <time datetime="2025-04-04">04. April 2025</time>
+                Publisert: <time datetime="2025-04-04">04. April 2025</time> |
+                av <span class="author">Brede Espelid</span> | <!-- ENDRE NAVN HVIS NØDVENDIG -->
+                <span class="reading-time">⏱️ ca. 11 min lesetid</span> <!-- Estimat, kan justeres -->
             </p>
+            <!-- === SLUTT ENDRING === -->
+
 
             <div class="article-body">
                 <p>Du har kanskje hørt om ulike datamoduser i Microsoft Fabric og Power BI, slik som Direct Lake, Import og DirectQuery, men hva betyr de egentlig i praksis? For en bedriftseier er det viktigste å forstå hvordan disse valgene påvirker rapportenes ytelse, hvor ferske dataene er, og hvilke hensyn som må tas i bruk.</p>
