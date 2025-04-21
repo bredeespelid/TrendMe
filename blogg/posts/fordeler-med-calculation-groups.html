@@ -94,6 +94,10 @@
             font-size: 0.9rem; color: var(--text-medium); margin-bottom: 2.5rem;
             display: block; border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem;
         }
+         /* Stil for author og reading-time */
+        .post-meta .author { font-weight: 600; color: var(--text-light); }
+        .post-meta .reading-time { margin-left: 5px; /* Juster etter behov */ }
+
         .article-body h2 {
             font-size: 2rem; color: var(--text-light); margin-top: 3rem; margin-bottom: 1.5rem;
             font-weight: 600; border-bottom: 2px solid var(--primary-fabric-light);
@@ -194,10 +198,10 @@
       "@type": "BlogPosting",
       "headline": "Færre Mål, Mer Innsikt: Fordelene med Calculation Groups i Power BI & Fabric",
       "description": "Lær hvordan Calculation Groups i Power BI og Microsoft Fabric drastisk kan redusere antall mål, forenkle vedlikehold og forbedre DAX-modeller.",
-      "image": "https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/calc_group.png?raw=true", // Bruker URL fra input. Bytt ut hvis du har et bedre bilde.
+      "image": "https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/calc_group.png?raw=true", // Oppdatert URL
       "author": {
-        "@type": "Organization", // Eller Person
-        "name": "TrendMe"
+        "@type": "Person", // Endret til Person
+        "name": "Brede Espelid" // Satt inn forfatter
       },
       "publisher": {
         "@type": "Organization",
@@ -208,7 +212,9 @@
         }
       },
       "datePublished": "2025-04-04", // Sett faktisk publiseringsdato
-      "dateModified": "2025-04-04" // Sett faktisk dato for siste endring
+      "dateModified": "2025-04-04", // Sett faktisk dato for siste endring
+      // Valgfritt: Legg til estimated reading time her også hvis du ønsker (timeRequired)
+      // "timeRequired": "PT9M" // ISO 8601 format for 9 minutter
     }
     </script>
     <!-- === SLUTT SCHEMA MARKUP === -->
@@ -233,10 +239,13 @@
 
             <h1>Færre Mål, Mer Innsikt: Fordelene med Calculation Groups i Power BI & Fabric</h1>
 
+            <!-- === START ENDRING === -->
             <p class="post-meta">
-                Publisert: <time datetime="2025-04-04">04. April 2025</time>
-                <!-- Valgfritt: by <span class="author">Ditt Navn</span> -->
+                Publisert: <time datetime="2025-04-04">04. April 2025</time> |
+                av <span class="author">Brede Espelid</span> | <!-- ENDRE NAVN HVIS NØDVENDIG -->
+                <span class="reading-time">⏱️ ca. 9 min lesetid</span> <!-- Estimat, kan justeres -->
             </p>
+            <!-- === SLUTT ENDRING === -->
 
             <!-- Fjernet <div class="post-content"> wrapper -->
             <div class="article-body">
