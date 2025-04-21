@@ -9,7 +9,7 @@
     <meta name="description" content="En guide til Microsoft Fabric Capacity (F-SKU) og prising. Forstå PAYG vs Reservasjon, Power BI lisenser (Free/Pro/PPU), F64-regelen, kostnader og optimalisering.">
     <!-- === SLUTT Spesifikk Metadata === -->
 
-   
+
     <!-- Prioriter SVG -->
     <link rel="icon" href="https://raw.githubusercontent.com/bredeespelid/TrendMe/d6598292124a1262a3bddf7f6830d938d4ec41d9/pictures/icon_etc/SVG.svg" type="image/svg+xml">
     <!-- Fallback PNG -->
@@ -96,6 +96,10 @@
             font-size: 0.9rem; color: var(--text-medium); margin-bottom: 2.5rem;
             display: block; border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem;
         }
+        /* Stil for author og reading-time */
+        .post-meta .author { font-weight: 600; color: var(--text-light); }
+        .post-meta .reading-time { margin-left: 5px; /* Juster etter behov */ }
+
         .article-body h2 {
             font-size: 2rem; color: var(--text-light); margin-top: 3rem; margin-bottom: 1.5rem;
             font-weight: 600; border-bottom: 2px solid var(--primary-fabric-light);
@@ -191,6 +195,8 @@
             color: var(--secondary-accent);
             font-weight: 600;
         }
+        /* Lagt til for spesifikke tabeller */
+        .comparison-table { /* Beholdes for evt. spesifikk styling senere */ }
 
         /* Spesifikk stil for notater */
         .note {
@@ -263,8 +269,8 @@
       "description": "En guide til Microsoft Fabric Capacity (F-SKU) og prising. Forstå PAYG vs Reservasjon, Power BI lisenser (Free/Pro/PPU), F64-regelen, kostnader og optimalisering.",
       "image": "https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/capacity_app.png?raw=true", // Bruker URL fra input. Bytt ut ved behov.
       "author": {
-        "@type": "Organization", // Eller Person
-        "name": "TrendMe"
+        "@type": "Person", // Endret til Person
+        "name": "Brede Espelid" // Satt inn forfatternavn
       },
       "publisher": {
         "@type": "Organization",
@@ -276,6 +282,8 @@
       },
       "datePublished": "2025-04-04", // Sett faktisk publiseringsdato
       "dateModified": "2025-04-04" // Sett faktisk dato for siste endring
+      // Valgfritt: Legg til estimated reading time her også hvis du ønsker (timeRequired)
+      // "timeRequired": "PT15M" // ISO 8601 format for 15 minutter
     }
     </script>
     <!-- === SLUTT SCHEMA MARKUP === -->
@@ -300,10 +308,13 @@
 
             <h1>Forstå Microsoft Fabric Capacity og Prising: En Komplett Guide</h1>
 
+            <!-- === START ENDRING === -->
             <p class="post-meta">
-                Publisert: <time datetime="2025-04-04">04. April 2025</time>
-                <!-- Valgfritt: by <span class="author">Ditt Navn</span> -->
+                Publisert: <time datetime="2025-04-04">04. April 2025</time> |
+                av <span class="author">Brede Espelid</span> | <!-- ENDRE NAVN HVIS NØDVENDIG -->
+                <span class="reading-time">⏱️ ca. 15 min lesetid</span> <!-- Estimat, kan justeres -->
             </p>
+            <!-- === SLUTT ENDRING === -->
 
             <!-- Fjernet <div class="post-content"> wrapper -->
             <div class="article-body">
