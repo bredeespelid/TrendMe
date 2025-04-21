@@ -110,8 +110,10 @@
             border-bottom: 1px solid var(--card-border);
             padding-bottom: 1.5rem;
         }
-        .post-meta time { /* Stil for tidspunkt */ }
-        .post-meta .author { /* Stil for forfatter */ }
+        /* Stil for author og reading-time */
+        .post-meta .author { font-weight: 600; color: var(--text-light); }
+        .post-meta .reading-time { margin-left: 5px; /* Juster etter behov */ }
+
 
         .featured-image { /* Valgfritt: Stil for hovedbilde */
             width: 100%;
@@ -288,6 +290,7 @@
              .article-body p { font-size: 1rem; }
              .comparison-table { font-size: 0.9rem; } /* Mindre tekst på små skjermer */
              .comparison-table th, .comparison-table td { padding: 0.6rem 0.8rem; }
+             .comparison-table { display: block; overflow-x: auto; } /* Gjør tabell scrollbar */
          }
          @media (max-width: 500px) {
               .article-container h1 { font-size: 1.8rem; }
@@ -304,10 +307,10 @@
       "@type": "BlogPosting",
       "headline": "Stjerne vs Snøfnugg: Velge Riktig Datamodell (Schema) i Fabric & Power BI",
       "description": "Forstå forskjellen mellom Stjerne- og Snøfnuggskjema (Star vs Snowflake Schema) for datamodellering i Microsoft Fabric og Power BI. Lær hvorfor stjerneskjemaet er anbefalt.",
-      "image": "https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/star_schema.png?raw=true", // Bruker URLen til stjerne-diagrammet som representativt bilde. Bytt ut hvis du har et bedre hovedbilde.
+      "image": "https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/star_schema.png?raw=true", // Oppdatert URL
       "author": {
-        "@type": "Organization", // Eller Person hvis en spesifikk forfatter
-        "name": "TrendMe"
+        "@type": "Person", // Endret til Person
+        "name": "Brede Espelid" // Satt inn forfatter
       },
       "publisher": {
         "@type": "Organization",
@@ -318,7 +321,9 @@
         }
       },
       "datePublished": "2025-04-04", // Sett faktisk publiseringsdato
-      "dateModified": "2025-04-04" // Sett faktisk dato for siste endring (kan være lik published)
+      "dateModified": "2025-04-04", // Sett faktisk dato for siste endring (kan være lik published)
+      // Valgfritt: Legg til estimated reading time her også hvis du ønsker (timeRequired)
+      // "timeRequired": "PT10M" // ISO 8601 format for 10 minutter
     }
     </script>
     <!-- === SLUTT SCHEMA MARKUP === -->
@@ -343,11 +348,13 @@
 
             <h1>Stjerne eller Snøfnugg? Velge Riktig Datamodell (Schema) i Fabric og Power BI</h1>
 
+            <!-- === START ENDRING === -->
             <p class="post-meta">
-                Publisert: <time datetime="2025-04-04">04. April 2025</time>
-                <!-- Valgfritt: Legg til forfatter -->
-                <!-- by <span class="author">Ditt Navn</span> -->
+                Publisert: <time datetime="2025-04-04">04. April 2025</time> |
+                av <span class="author">Brede Espelid</span> | <!-- ENDRE NAVN HVIS NØDVENDIG -->
+                <span class="reading-time">⏱️ ca. 10 min lesetid</span> <!-- Estimat, kan justeres -->
             </p>
+             <!-- === SLUTT ENDRING === -->
 
             <!-- <figure>
                 <img src="[sti/til/hovedbilde-schema.jpg]" alt="Illustrasjon av stjerne- og snøfnuggskjema" class="featured-image">
