@@ -227,9 +227,12 @@
                 </div>
 
                 <!-- SKJEMA FOR FAKTURAPREFERANSER -->
-                <form id="invoice-preferences-form" class="fade-in" style="transition-delay: 0.3s;" >
-                     <!-- Fjernet: <input type="hidden" name="_subject" value="Nye fakturapreferanser fra kunde"> -->
-                     <!-- (Dette var Formspree-spesifikt, ikke nødvendig for Apps Script) -->
+                <!-- ENDRET: action og method satt for Formspree -->
+                <form id="invoice-preferences-form"
+                      class="fade-in"
+                      style="transition-delay: 0.3s;"
+                      action="https://formspree.io/f/mvgkwjvn"
+                      method="POST">
 
                      <!-- Bedriftsnavn -->
                      <div class="form-group">
@@ -259,6 +262,9 @@
                      <div class="form-group">
                         <label for="pref-contact-email">E-post (for dette skjemaet):</label>
                         <input type="email" id="pref-contact-email" name="Epost (innsender)" required placeholder="Din e-postadresse">
+                         <!-- Formspree kan bruke dette feltet for _replyto hvis navnet er "email" eller "_replyto" -->
+                         <!-- Hvis du vil være sikker, kan du legge til: <input type="hidden" name="_replyto" id="hidden-replyto"> -->
+                         <!-- og sette verdien i JS: document.getElementById('hidden-replyto').value = contactEmailValue; -->
                     </div>
 
                     <hr style="border: none; border-top: 1px solid var(--card-border); margin: 2.5rem 0;">
@@ -457,7 +463,7 @@
 
                 // --- Fjern feilmarkering på input ---
                 [companyNameInput, orgNrInput, contactPersonInput, contactEmailInput, billingEmailInput].forEach(input => {
-                    input.addEventListener('input', () => {
+                    input?.addEventListener('input', () => { // Added safety check for input
                         input.classList.remove('error');
                         if (formFeedbackMessage.style.display !== 'none') {
                             formFeedbackMessage.style.display = 'none';
@@ -466,7 +472,7 @@
                 });
 
                 // ==================================================
-                // --- START: Håndtering av skjemainnsending (OPPDATERT) ---
+                // --- START: Håndtering av skjemainnsending (OPPDATERT for Formspree) ---
                 // ==================================================
                 async function handleSubmitPreferences(event) {
                     event.preventDefault();
@@ -474,7 +480,7 @@
                     // Reset feilmeldinger
                     formFeedbackMessage.style.display = 'none';
                     formFeedbackMessage.className = '';
-                    [companyNameInput, orgNrInput, contactPersonInput, contactEmailInput, billingEmailInput].forEach(input => input?.classList.remove('error'));
+                    [companyNameInput, orgNrInput, contactPersonInput, contactEmailInput, billingEmailInput].forEach(input => input?.classList.remove('error')); // Added safety check
                     suggestionsContainer.style.display = 'none';
 
                     // Hent verdier
@@ -505,53 +511,66 @@
                     submitButton.textContent = 'Lagrer...';
 
                     const formData = new FormData(preferencesForm);
-                     if(orgNrValue) formData.set('Organisasjonsnummer', orgNrValue); // Send cleaned orgnr
+                    if(orgNrValue) formData.set('Organisasjonsnummer', orgNrValue); // Send cleaned orgnr
+                    // Optional: Set _replyto specifically if needed
+                    // formData.set('_replyto', contactEmailValue);
 
-                    // ---------- ENDRE TIL DIN NETTAPP URL HER ----------
-                    const webAppUrl = 'https://script.google.com/macros/s/AKfycbxR6mFHXAjaGioO4MMWKFlEfmEpTOc27z-vLgncXbV635q7q1tZ5NPaVV3JQp0gM-WR1Q/exec';
-                    // const formSpreeEndpoint = 'https://formspree.io/f/mvgkwjvn'; // Gammel Formspree URL
+                    // ---------- ENDRE TIL DIN FORMSPREE URL HER ----------
+                    const formSpreeEndpoint = 'https://formspree.io/f/mvgkwjvn';
                     // ----------------------------------------------------
 
                     try {
-                        // Send data til Google Apps Script Web App
-                        const response = await fetch(webAppUrl, {
+                        // Send data til Formspree
+                        const response = await fetch(formSpreeEndpoint, {
                             method: 'POST',
-                            body: formData
-                            // mode: 'no-cors' // <-- Kan legges til HVIS du får CORS-feil, men da kan du ikke lese respons. Prøv uten først.
+                            body: formData,
+                            headers: {
+                                'Accept': 'application/json' // Viktig for AJAX-innsending til Formspree
+                            }
                         });
 
-                        // Viktig: Pga. CORS kan vi vanligvis IKKE lese response.ok eller response.body
-                        // fra en enkel Apps Script Web App kalt fra en annen side.
-                        // Vi antar derfor suksess hvis fetch-kallet fullførte uten å kaste
-                        // en nettverksfeil (som ville blitt fanget av catch-blokken nedenfor).
+                        if (response.ok) {
+                            // Suksess fra Formspree
+                            console.log('Innsending til Formspree var vellykket.');
 
-                        console.log('Innsending til Apps Script ser ut til å ha gått ok (nettverksmessig). Sjekk Google Sheet for bekreftelse.');
+                            // -------- START SUKSESS-HANDLING (Animasjon etc.) --------
+                            const paperText = `Fakturapreferanser mottatt for:\n\n${companyNameValue}\nOrgNr: ${orgNrValue || 'Ikke spesifisert'}\n\nMetode: ${deliveryMethod || 'Ikke spesifisert'}\nFaktura-epost: ${billingEmailValue || 'Ikke relevant'}\n\nInnsendt av: ${contactPersonValue} (${contactEmailValue})`;
+                            paperContent.textContent = paperText;
 
-                        // -------- START SUKSESS-HANDLING (Animasjon etc.) --------
-                        const paperText = `Fakturapreferanser mottatt for:\n\n${companyNameValue}\nOrgNr: ${orgNrValue || 'Ikke spesifisert'}\n\nMetode: ${deliveryMethod || 'Ikke spesifisert'}\nFaktura-epost: ${billingEmailValue || 'Ikke relevant'}\n\nInnsendt av: ${contactPersonValue} (${contactEmailValue})`;
-                         paperContent.textContent = paperText;
+                            animationContainer.style.display = 'flex';
+                            setTimeout(() => { paper.style.opacity = '1'; paper.style.transform = 'scale(1)'; }, 100);
+                            setTimeout(() => { thankYouMessage.style.display = 'block'; thankYouMessage.offsetHeight; thankYouMessage.style.opacity = '1'; }, 800);
+                            setTimeout(() => { paper.classList.add('flying'); }, 2500); // Starter fly-animasjon
 
-                         animationContainer.style.display = 'flex';
-                         setTimeout(() => { paper.style.opacity = '1'; paper.style.transform = 'scale(1)'; }, 100);
-                         setTimeout(() => { thankYouMessage.style.display = 'block'; thankYouMessage.offsetHeight; thankYouMessage.style.opacity = '1'; }, 800);
-                         setTimeout(() => { paper.classList.add('flying'); }, 2500); // Starter fly-animasjon
+                            formFeedbackMessage.textContent = 'Preferansene dine er mottatt!';
+                            formFeedbackMessage.className = 'success';
+                            formFeedbackMessage.style.display = 'block';
 
-                        formFeedbackMessage.textContent = 'Preferansene dine er mottatt!'; // Oppdatert melding
-                        formFeedbackMessage.className = 'success';
-                        formFeedbackMessage.style.display = 'block';
+                            preferencesForm.reset(); // Tøm skjemaet
+                            brregStatusSpan.textContent = ''; // Nullstill Brreg status
+                            brregStatusSpan.className = 'brreg-status';
+                            // Knappen blir re-aktivert i animasjonsslutt-hendelsen
 
-                        preferencesForm.reset(); // Tøm skjemaet
-                        brregStatusSpan.textContent = ''; // Nullstill Brreg status
-                        brregStatusSpan.className = 'brreg-status';
-                        // Knappen blir re-aktivert i animasjonsslutt-hendelsen
-
-                        // -------- SLUTT SUKSESS-HANDLING --------
-
+                            // -------- SLUTT SUKSESS-HANDLING --------
+                        } else {
+                             // Formspree returnerte en feil (f.eks. 4xx, 5xx)
+                             console.error('Formspree submission failed:', response.status, response.statusText);
+                             try {
+                                 const errorData = await response.json(); // Prøv å få feildetaljer
+                                 console.error('Formspree error details:', errorData);
+                                 // Vis en mer spesifikk feil hvis mulig, ellers generell
+                                 const errorMessage = errorData?.errors?.[0]?.message || 'En feil oppstod ved innsending hos Formspree.';
+                                 showValidationError(`Feil: ${errorMessage} Vennligst sjekk feltene og prøv igjen.`);
+                             } catch (jsonError) {
+                                 // Hvis responsen ikke var JSON
+                                 showValidationError('En feil oppstod ved innsending (kunne ikke lese feildetaljer). Prøv igjen.');
+                             }
+                         }
 
                     } catch (error) {
                         // Håndterer nettverksfeil eller andre feil under fetch-kallet
-                        console.error('Error submitting preferences form to Apps Script:', error);
-                        showValidationError('En feil oppstod ved innsending. Sjekk nettverkstilkoblingen din og prøv igjen. Hvis problemet vedvarer, kontakt support.');
+                        console.error('Error submitting preferences form to Formspree:', error);
+                        showValidationError('En nettverksfeil oppstod ved innsending. Sjekk tilkoblingen din og prøv igjen. Kontakt support hvis problemet vedvarer.');
                         // Knappen er allerede re-aktivert av showValidationError
                     }
                 }
