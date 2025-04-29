@@ -186,6 +186,41 @@
         @keyframes fly-away { 0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translate(120vw, -120vh) rotate(720deg) scale(0.1); opacity: 0; } }
         #paper.flying { animation: fly-away 2s ease-in forwards; }
 
+         /* === Stil for Microsoft Kalkulator-knapp === */
+         .resource-section {
+             text-align: center; /* Sentrerer knappen i sin container */
+             padding: 3rem 0 1rem 0; /* Litt luft over, mindre under */
+         }
+         .microsoft-calc-button {
+             display: inline-flex; /* For å justere logo og tekst */
+             align-items: center;  /* Sentrerer logo og tekst vertikalt */
+             gap: 0.8em;          /* Avstand mellom logo og tekst */
+             background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); /* Samme gradient som cta */
+             color: var(--text-dark); /* Samme tekstfarge som cta */
+             padding: 14px 30px; /* Litt justert padding kanskje */
+             text-decoration: none;
+             border-radius: 50px;
+             font-weight: 600;
+             transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease;
+             border: none;
+             cursor: pointer;
+             font-size: 1.05rem; /* Litt mindre eller samme som cta? */
+             box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3); /* Samme skygge som cta */
+             white-space: nowrap; /* Forhindre at teksten brytes på store skjermer */
+         }
+         .microsoft-calc-button .ms-logo {
+             width: 1.4em; /* Juster størrelsen etter ønske */
+             height: 1.4em;
+             /* SVG'en skaleres proporsjonalt */
+             /* Ingen fill nødvendig her, siden SVG-koden har det */
+             vertical-align: middle; /* Hjelper med justering */
+         }
+         .microsoft-calc-button:hover {
+             transform: translateY(-5px) scale(1.05); /* Samme hover-effekt som cta */
+             box-shadow: 0 10px 25px var(--glow-color); /* Samme hover-skygge som cta */
+         }
+         /* === SLUTT Stil for Microsoft Kalkulator-knapp === */
+
         /* --- RESPONSIVITET --- */
         @media (max-width: 992px) {
              header nav { flex-direction: column; align-items: center; min-height: auto; }
@@ -224,6 +259,28 @@
 	        .team-member .om-image img { width: 180px; height: 180px; }
 	        #paper { width: 90%; max-width: 280px; height: auto; min-height: 350px; }
 	        #thank-you-message { font-size: 1.2rem; }
+
+            /* JUSTERING FOR KALKULATOR-KNAPP PÅ MINDRE SKJERMER */
+            .microsoft-calc-button {
+                font-size: 0.95rem; /* Litt mindre tekst */
+                padding: 12px 25px; /* Mindre padding */
+                white-space: normal; /* Tillat tekstbryting */
+                text-align: center; /* Sentrer teksten hvis den bryter */
+                gap: 0.6em; /* Litt mindre gap */
+            }
+            .microsoft-calc-button .ms-logo {
+                width: 1.2em; /* Juster logo-størrelse også */
+                height: 1.2em;
+            }
+            .resource-section .section-header h2 {
+                font-size: 1.8rem; /* Juster header-størrelsen i denne seksjonen også */
+            }
+            .resource-section .section-header p {
+                font-size: 0.95rem; /* Juster p-størrelsen i denne seksjonen */
+            }
+             .resource-section {
+                 padding: 2.5rem 0 0.5rem 0; /* Mindre padding for seksjonen */
+             }
 	    }
         @media (max-width: 480px) {
             header .logo { font-size: 1.5rem; }
@@ -238,6 +295,26 @@
             #paper { max-width: 240px; min-height: 300px; padding: 15px; }
             #paper-content { font-size: 0.8rem;}
             #thank-you-message { font-size: 1.1rem; }
+
+            /* Ekstra finjustering for kalkulator-knapp på veldig små skjermer */
+            .microsoft-calc-button {
+                font-size: 0.9rem;
+                padding: 10px 20px;
+                gap: 0.5em;
+            }
+            .microsoft-calc-button .ms-logo {
+                 width: 1.1em;
+                 height: 1.1em;
+             }
+            .resource-section .section-header h2 {
+                font-size: 1.6rem;
+            }
+             .resource-section .section-header p {
+                 font-size: 0.9rem;
+             }
+              .resource-section {
+                  padding: 2rem 0 0.5rem 0;
+              }
         }
         @media (min-width: 1800px) {
             header ul { flex-wrap: nowrap; }
@@ -336,41 +413,6 @@
              /* max-width: 90%; */
         }
         /* === SLUTT PÅ LOKAL OVERSTYRING FOR TEAM-MEDLEMMER === */
-
-         /* === Stil for Microsoft Kalkulator-knapp === */
-         .resource-section {
-             text-align: center; /* Sentrerer knappen i sin container */
-             padding: 3rem 0 1rem 0; /* Litt luft over, mindre under */
-         }
-         .microsoft-calc-button {
-             display: inline-flex; /* For å justere logo og tekst */
-             align-items: center;  /* Sentrerer logo og tekst vertikalt */
-             gap: 0.8em;          /* Avstand mellom logo og tekst */
-             background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); /* Samme gradient som cta */
-             color: var(--text-dark); /* Samme tekstfarge som cta */
-             padding: 14px 30px; /* Litt justert padding kanskje */
-             text-decoration: none;
-             border-radius: 50px;
-             font-weight: 600;
-             transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease;
-             border: none;
-             cursor: pointer;
-             font-size: 1.05rem; /* Litt mindre eller samme som cta? */
-             box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3); /* Samme skygge som cta */
-             white-space: nowrap; /* Forhindre at teksten brytes */
-         }
-         .microsoft-calc-button .ms-logo {
-             width: 1.4em; /* Juster størrelsen etter ønske */
-             height: 1.4em;
-             /* SVG'en skaleres proporsjonalt */
-             /* Ingen fill nødvendig her, siden SVG-koden har det */
-             vertical-align: middle; /* Hjelper med justering */
-         }
-         .microsoft-calc-button:hover {
-             transform: translateY(-5px) scale(1.05); /* Samme hover-effekt som cta */
-             box-shadow: 0 10px 25px var(--glow-color); /* Samme hover-skygge som cta */
-         }
-         /* === SLUTT Stil for Microsoft Kalkulator-knapp === */
 
     </style>
     <!-- === CSS STILER SLUTT === -->
