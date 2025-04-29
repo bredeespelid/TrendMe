@@ -337,6 +337,41 @@
         }
         /* === SLUTT PÅ LOKAL OVERSTYRING FOR TEAM-MEDLEMMER === */
 
+         /* === Stil for Microsoft Kalkulator-knapp === */
+         .resource-section {
+             text-align: center; /* Sentrerer knappen i sin container */
+             padding: 3rem 0 1rem 0; /* Litt luft over, mindre under */
+         }
+         .microsoft-calc-button {
+             display: inline-flex; /* For å justere logo og tekst */
+             align-items: center;  /* Sentrerer logo og tekst vertikalt */
+             gap: 0.8em;          /* Avstand mellom logo og tekst */
+             background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); /* Samme gradient som cta */
+             color: var(--text-dark); /* Samme tekstfarge som cta */
+             padding: 14px 30px; /* Litt justert padding kanskje */
+             text-decoration: none;
+             border-radius: 50px;
+             font-weight: 600;
+             transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease;
+             border: none;
+             cursor: pointer;
+             font-size: 1.05rem; /* Litt mindre eller samme som cta? */
+             box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3); /* Samme skygge som cta */
+             white-space: nowrap; /* Forhindre at teksten brytes */
+         }
+         .microsoft-calc-button .ms-logo {
+             width: 1.4em; /* Juster størrelsen etter ønske */
+             height: 1.4em;
+             /* SVG'en skaleres proporsjonalt */
+             /* Ingen fill nødvendig her, siden SVG-koden har det */
+             vertical-align: middle; /* Hjelper med justering */
+         }
+         .microsoft-calc-button:hover {
+             transform: translateY(-5px) scale(1.05); /* Samme hover-effekt som cta */
+             box-shadow: 0 10px 25px var(--glow-color); /* Samme hover-skygge som cta */
+         }
+         /* === SLUTT Stil for Microsoft Kalkulator-knapp === */
+
     </style>
     <!-- === CSS STILER SLUTT === -->
 
@@ -353,7 +388,8 @@
                 <li><a href="#om-fabric">Om Fabric</a></li>
                 <li><a href="#fabric-tjenester">Fabric Tjenester</a></li>
                 <li><a href="#powerbi-tjenester">Power BI Tjenester</a></li>
-                 <!--  <li><a href="#prosjekter">Kundecaser</a></li>=== --> 
+                <!-- Legger til lenke til Ressurser i nav -->
+                <li><a href="#ressurser">Ressurser</a></li>
                 <li><a href="#om">Om Oss</a></li>
                 <li><a href="#kontakt">Kontakt</a></li>
                 <li><a href="/blogg">Blogg</a></li>
@@ -363,7 +399,6 @@
     </header>
 
     <main>
-        <!-- *** RESTEN AV MAIN-INNHOLDET (HERO, TJENESTER ETC.) SKAL VÆRE HER *** -->
         <!-- Hero Seksjon -->
         <section id="hjem" class="hero">
             <div class="container">
@@ -375,9 +410,6 @@
             </div>
         </section>
 
-
-
-	    
         <!-- Hvorfor Fabric Seksjon -->
         <section id="hvorfor-fabric" class="section">
              <div class="container">
@@ -386,22 +418,6 @@
                      <h2>Hvorfor Velge Microsoft Fabric?</h2>
                      <p>Gå utover tradisjonell dataanalyse. Microsoft Fabric er en ende-til-ende, AI-drevet SaaS-plattform som samler dataintegrasjon, engineering, warehousing, datavitenskap, sanntidsanalyse og business intelligence på ett sted.</p>
                  </div>
-
-		     <!--
-                 <div class="feature-grid">
-                     <div class="feature-item fade-in slide-up" style="transition-delay: 0.2s;">
-                         <h3>Samlet Plattform</h3>
-                         <p>Integrerer nøkkelkomponenter som Data Factory, Synapse og Power BI – reduserer verktøysprawl, kostnader og kompleksitet.</p>
-                     </div>
-                     <div class="feature-item fade-in slide-up" style="transition-delay: 0.4s;">
-                         <h3>AI-drevet Innsikt</h3>
-                         <p>Utnytt innebygd Copilot og Azure AI for raskere innsikt, automatisering av dataoppgaver og smartere forretningsbeslutninger.</p>
-                     </div>
-                      <div class="feature-item fade-in slide-up" style="transition-delay: 0.6s;">
-                         <h3>OneLake Sentrert</h3>
-                         <p>En felles, logisk datasjø (OneLake) eliminerer datasiloer, forenkler datadeling og styrker data governance på tvers av organisasjonen.</p>
-                     </div>
-                 </div>-->
              </div>
          </section>
 
@@ -583,37 +599,38 @@
               </div>
           </section>
 
-<!-- 
-<section id="prosjekter" class="section">
-    <div class="container">
-        <div class="section-header fade-in">
-            <span>Resultater & Erfaring</span>
-            <h2>Utvalgte Kundecaser i Microsoft Fabric & Power BI</h2>
-            <p>Se eksempler på hvordan vi har hjulpet bedrifter med å løse reelle utfordringer og oppnå konkrete resultater med Microsoft Fabric og Power BI.</p>
-        </div>
-        <div class="accordion-list fade-in" style="transition-delay: 0.3s;">
-            <div class="accordion-item">
-                <button class="accordion-title">
-                    <span class="tittel-tekst">Retail: Vellykket Migrering til Fabric ga Raskere Innsikt og Kostnadsreduksjon</span>
-                    <span class="ikon">+</span>
-                </button>
-                <div class="accordion-content">
-                    <p>Ledet full migrering av eksisterende rapporteringsløsning til Microsoft Fabric for en ledende retail-kjede...</p>
-                    <h4>Nøkkelpunkter i Løsningen:</h4>
-                    <ul>
-                        <li>Design og implementering av Medallion-arkitektur i OneLake.</li>
-                        <li>Automatisert datainnhenting fra diverse kilder via API-integrasjoner og Data Factory Pipelines.</li>
-                    </ul>
-                    <h4>Resultater:</h4>
-                    <p>Oppnådde betydelig reduksjon i kjøretid for rapporter...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
--->
+         <!-- === START: Seksjon for Ekstra Ressurser/Verktøy (Kalkulator-knapp) === -->
+         <section id="ressurser" class="resource-section section"> <!-- Lagt til ID for nav-lenke -->
+             <div class="container">
+                  <div class="section-header fade-in">
+                      <!-- Valgfri liten header for seksjonen -->
+                      <span>Nyttige Ressurser</span> <!-- Bruker samme stil som andre section headers -->
+                      <h2>Verktøy for Planlegging</h2>
+                      <p>Bruk Microsofts offisielle verktøy for å få et estimat på ditt kapasitetsbehov i Fabric.</p>
+                  </div>
+                 <a href="https://www.microsoft.com/en-us/microsoft-fabric/capacity-estimator"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="microsoft-calc-button fade-in"
+                    style="transition-delay: 0.2s;"
+                    data-bi-cn="Microsoft Fabric Capacity Estimator Link" /* Optional for tracking */
+                    data-bi-bhvr="100" /* Optional for tracking */ >
 
-
+                     <!-- Innebygd SVG for Microsoft-logoen -->
+                     <svg class="ms-logo" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                         <path fill="#f25022" d="M1 1h9v9H1z"></path>
+                         <path fill="#00a4ef" d="M1 11h9v9H1z"></path>
+                         <path fill="#7fba00" d="M11 1h9v9h-9z"></path>
+                         <path fill="#ffb900" d="M11 11h9v9h-9z"></path>
+                     </svg>
+                     <span>Microsoft Fabric Capacity Estimator</span>
+                 </a>
+                 <p style="margin-top: 1.5rem; color: var(--text-medium); font-size: 0.9rem;" class="fade-in" style="transition-delay: 0.3s;">
+                     Åpner Microsofts offisielle verktøy i en ny fane.
+                 </p>
+             </div>
+         </section>
+         <!-- === SLUTT Seksjon for Ekstra Ressurser/Verktøy === -->
 
 		<!-- Om Oss Seksjon -->
 		<section id="om" class="section">
@@ -764,27 +781,26 @@
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     let targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    try {
-                         let targetElement = document.querySelector(targetId);
-                         if (targetElement) {
-                            const headerOffset = header ? header.offsetHeight : 0;
-                            const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                            const offsetPosition = elementPosition - headerOffset - 20; // Litt ekstra padding
-                            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                        } else {
-                            if (!targetId.startsWith('#')) {
-                                window.location.href = targetId;
+                    // Check if it's a local link or an external/page link
+                    if (targetId.startsWith('#')) {
+                        // It's a local anchor link
+                         if (targetId === '#') return; // Avoid scrolling for '#' link
+                         try {
+                             let targetElement = document.querySelector(targetId);
+                             if (targetElement) {
+                                const headerOffset = header ? header.offsetHeight : 0;
+                                const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                                const offsetPosition = elementPosition - headerOffset - 20; // Litt ekstra padding
+                                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                             } else {
                                 console.warn(`Smooth scroll target element not found for selector: ${targetId}`);
                             }
-                        }
-                    } catch (error) {
-                         if (!targetId.startsWith('#')) {
-                            window.location.href = targetId;
-                         } else {
+                        } catch (error) {
                              console.error(`Error finding element for smooth scroll: ${targetId}`, error);
-                         }
+                        }
+                    } else {
+                         // It's likely an external link or a link to another page
+                         window.location.href = targetId;
                     }
                 });
             });
