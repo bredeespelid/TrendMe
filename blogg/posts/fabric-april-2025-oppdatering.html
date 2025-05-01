@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- === Spesifikk Metadata for denne posten === -->
+    <title>Microsoft Fabric April 2025: Oppsummering av Nyheter | TrendMe Blogg</title>
+    <meta name="description" content="En oppsummert oversikt over de viktigste nyhetene i Microsoft Fabric for april 2025, inkludert AI, Data Warehouse, Real-Time Intelligence og database-forbedringer.">
+    <!-- === SLUTT Spesifikk Metadata === -->
+
+    <!-- Prioriter SVG -->
+    <link rel="icon" href="https://raw.githubusercontent.com/bredeespelid/TrendMe/d6598292124a1262a3bddf7f6830d938d4ec41d9/pictures/icon_etc/SVG.svg" type="image/svg+xml">
+    <!-- Fallback PNG -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/bredeespelid/TrendMe/blob/main/pictures/icon_etc/icon.png?raw=true">
+    <!-- === END FAVICON === -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* === ALLE STILER (Samme som før, men uten img-spesifikke regler om nødvendig) === */
+        :root {
+            --dark-bg: #121212;
+            --primary-fabric-dark: #6a0dad;
+            --primary-fabric-light: #9370db;
+            --secondary-accent: #00c6ff;
+            --secondary-accent-rgb: 0, 198, 255;
+            --glow-color: rgba(0, 198, 255, 0.5);
+            --text-light: #e0e0e0;
+            --text-medium: #b0b0b0;
+            --text-dark: #1f1f1f;
+            --card-bg: rgba(40, 40, 40, 0.8);
+            --card-bg-hover: rgba(55, 55, 55, 0.9);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --font-primary: 'Poppins', sans-serif;
+            --transition-speed: 0.3s;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.7;
+            color: var(--text-light);
+            background-color: var(--dark-bg);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        .container { max-width: 1200px; margin: auto; padding: 0 25px; }
+        .section { padding: 4rem 0; }
+
+        /* === HEADER === */
+        header {
+            background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); color: var(--text-light);
+            padding: 0.8rem 0; position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease;
+        }
+        header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
+        header .logo a {
+            font-size: 1.8rem; font-weight: 700; letter-spacing: 1px;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+            text-decoration: none;
+        }
+        header ul { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; }
+        header ul li { margin-left: 20px; }
+        header ul li a {
+            display: flex; align-items: center; color: var(--text-medium); text-decoration: none;
+            padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px;
+            font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative;
+            overflow: hidden; white-space: nowrap;
+        }
+        header ul li a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%;
+            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            transition: width var(--transition-speed) ease, left var(--transition-speed) ease;
+            transform: translateX(-50%);
+        }
+        header ul li a:hover { color: var(--text-light); }
+        header ul li a:hover::after { width: 70%; left: 50%; }
+
+        /* === ARTIKKEL-SPESIFIKKE STILER === */
+        .article-section { padding: 3rem 0 4rem 0; }
+        .article-container { max-width: 800px; margin: auto; padding: 0 25px; }
+        .article-container h1 {
+            font-size: 2.8rem; font-weight: 700; color: var(--text-light);
+            margin-bottom: 1rem; line-height: 1.3;
+            background: linear-gradient(90deg, var(--text-light), var(--secondary-accent));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .post-meta {
+            font-size: 0.9rem; color: var(--text-medium); margin-bottom: 2.5rem;
+            display: block; border-bottom: 1px solid var(--card-border); padding-bottom: 1.5rem;
+        }
+        .post-meta .author { font-weight: 600; color: var(--text-light); }
+        .post-meta .reading-time { margin-left: 5px; }
+
+        .article-body h2 {
+            font-size: 2rem; color: var(--text-light); margin-top: 3rem; margin-bottom: 1.5rem;
+            font-weight: 600; border-bottom: 2px solid var(--primary-fabric-light);
+            padding-bottom: 0.5rem; display: inline-block;
+        }
+        .article-body h3 {
+            font-size: 1.6rem; color: var(--text-light); margin-top: 2.5rem; margin-bottom: 1rem;
+            font-weight: 600;
+        }
+         .article-body h4 {
+            font-size: 1.3rem; color: var(--text-light); margin-top: 2rem; margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        .article-body p {
+            margin-bottom: 1.2rem; color: var(--text-medium); font-size: 1.05rem; line-height: 1.8;
+        }
+        .article-body strong { color: var(--text-light); font-weight: 600; }
+        .article-body a {
+             color: var(--secondary-accent); text-decoration: none;
+             border-bottom: 1px dotted var(--secondary-accent);
+             transition: color 0.3s ease, border-bottom-color 0.3s ease;
+        }
+        .article-body a:hover {
+             color: var(--primary-fabric-light); border-bottom-color: var(--primary-fabric-light);
+        }
+        .article-body ul, .article-body ol {
+            margin-left: 25px; margin-bottom: 1.5rem; padding-left: 1rem;
+        }
+        .article-body li { margin-bottom: 0.7rem; color: var(--text-medium); line-height: 1.7; }
+        .article-body ul li::marker { color: var(--secondary-accent); font-size: 1.2em; }
+        .article-body ol { list-style-type: decimal; }
+        .article-body ol li::marker { color: var(--secondary-accent); font-weight: bold; }
+        .article-body ul ul, .article-body ol ol { margin-top: 0.5rem; margin-bottom: 0.8rem; }
+        .article-body ul ul li::marker { color: var(--primary-fabric-light); font-size: 1em; }
+
+        .article-body blockquote {
+            border-left: 4px solid var(--secondary-accent); margin: 2rem 0; padding: 1rem 1.5rem;
+            background-color: rgba(var(--secondary-accent-rgb), 0.05); color: var(--text-light);
+            font-style: italic; border-radius: 0 8px 8px 0;
+        }
+        .article-body blockquote p { margin-bottom: 0; }
+        .article-body code {
+            background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.5em; border-radius: 4px;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.9em; color: var(--text-light);
+        }
+        .article-body pre {
+            background-color: rgba(0, 0, 0, 0.5); border: 1px solid var(--card-border);
+            border-radius: 8px; padding: 1.5rem; overflow-x: auto; margin: 2rem 0;
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 0.95em; line-height: 1.6; color: #c5c8c6;
+        }
+        .article-body pre code {
+            background-color: transparent; padding: 0; border-radius: 0;
+            color: inherit; font-size: inherit;
+        }
+        /* Ingen img-styling nødvendig nå */
+
+        .back-to-blog-link {
+            display: inline-block; margin-top: 3rem; color: var(--secondary-accent);
+            text-decoration: none; font-weight: 600; transition: color 0.3s ease;
+        }
+        .back-to-blog-link:hover { color: var(--primary-fabric-light); }
+
+        /* === FOOTER === */
+        footer {
+            background-color: #0a0a0a; color: var(--text-medium); text-align: center;
+            padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border);
+        }
+        footer p { margin-bottom: 1rem; font-size: 0.9rem; }
+
+         /* === RESPONSIVITET === */
+         @media (max-width: 768px) {
+             header nav { flex-direction: column; align-items: center; }
+             header .logo { margin-bottom: 15px; }
+             header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+             header ul li { margin: 5px 8px; }
+             .article-container h1 { font-size: 2.2rem; }
+             .article-body h2 { font-size: 1.7rem; }
+             .article-body h3 { font-size: 1.4rem; }
+             .article-body h4 { font-size: 1.2rem; }
+             .article-body p { font-size: 1rem; }
+         }
+         @media (max-width: 500px) {
+              .article-container h1 { font-size: 1.8rem; }
+              .article-body h2 { font-size: 1.5rem; }
+              .article-body h3 { font-size: 1.3rem; }
+              .article-body h4 { font-size: 1.1rem; }
+         }
+    </style>
+
+    <!-- === Schema.org Markup (JSON-LD) - OPPDATERT === -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Microsoft Fabric April 2025: Oppsummering av Nyheter",
+      "description": "En oppsummert oversikt over de viktigste nyhetene i Microsoft Fabric for april 2025, inkludert AI, Data Warehouse, Real-Time Intelligence og database-forbedringer.",
+      "image": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/blogg/pictures/fabric-update-generic.png", // Behold generisk bilde for deling etc.
+      "author": {
+        "@type": "Person",
+        "name": "Brede Espelid"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "TrendMe",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://raw.githubusercontent.com/bredeespelid/TrendMe/main/pictures/icon_etc/icon.png"
+        }
+      },
+      "datePublished": "2025-05-01",
+      "dateModified": "2025-05-01"
+      // "timeRequired": "PT9M" // Justert estimat
+    }
+    </script>
+    <!-- === SLUTT SCHEMA MARKUP === -->
+
+</head>
+<body>
+
+    <header id="main-header">
+        <nav class="container">
+            <div class="logo"><a href="/">TrendMe</a></div>
+            <ul>
+                <li><a href="../">Tilbake til Bloggen</a></li>
+                <li><a href="/">Til TrendMe Hovedside</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Artikkelinnhold -->
+    <main class="section article-section">
+        <div class="article-container">
+
+            <h1>Microsoft Fabric April 2025: Oppsummering av Nyheter</h1>
+
+            <p class="post-meta">
+                Publisert: <time datetime="2025-05-01">1. Mai 2025</time> |
+                av <span class="author">Brede Espelid</span> |
+                <span class="reading-time">⏱️ ca. 9 min lesetid</span> <!-- Justert estimat -->
+            </p>
+
+            <div class="article-body">
+                <p>April 2025-oppdateringen for Microsoft Fabric bringer en rekke forbedringer og nye funksjoner. Her er en oppsummering av høydepunktene, inkludert mer tilgjengelig AI, nyheter for Data Warehouse og sanntidsanalyse.</p>
+                <p><em>Merk: Microsoft tilbyr også ressurser som gratis sertifiseringstrekninger og læringsøkter for Fabric-brukere.</em></p>
+
+                <h2 id="general">Generelt</h2>
+                <h3>Lavere terskel for AI og Copilot</h3>
+                <p>En viktig nyhet er at kravet for å bruke Copilot og AI-funksjoner i Fabric nå er senket til <strong>F2 SKU</strong>. Dette gjør avanserte AI-verktøy som Copilot, data agents og AI Functions tilgjengelig for langt flere brukere og team, selv om ytelsen vil være begrenset av kapasitetens størrelse på de minste SKU-ene. Målet er å la flere eksperimentere og øke produktiviteten med AI.</p>
+
+                <h2 id="datascience">Data Science</h2>
+                <h3>Low-code AI i Notebooks (Preview)</h3>
+                <p>En ny AI/ML-fane i Fabric Notebooks gir low-code tilgang til verktøy som Data Wrangler, AutoML og Copilot. Spesielt nyttig er et nytt grensesnitt for å anvende AI-funksjoner (som LLM-basert databerikelse) direkte på pandas eller Spark DataFrames med minimal kodeskriving.</p>
+
+                <h3>Forbedret Data Wrangler med AI (Preview)</h3>
+                <p>Data Wrangler får snart flere AI-drevne funksjoner:</p>
+                <ul>
+                    <li><strong>Automatiske forslag:</strong> Regelbasert AI foreslår relevante datarensoperasjoner.</li>
+                    <li><strong>Copilot for kode:</strong> Generer egendefinerte operasjoner ved hjelp av naturlig språk.</li>
+                    <li><strong>Pandas til PySpark-oversettelse:</strong> AI hjelper med å oversette egendefinert pandas-kode (også Copilot-generert) til PySpark ved eksport.</li>
+                </ul>
+
+                <h2 id="datawarehouse">Data Warehouse</h2>
+                <h3>Kolonnemanipulering (GA)</h3>
+                <p>To etterlengtede funksjoner er nå generelt tilgjengelige (GA):</p>
+                <ul>
+                    <li><code>ALTER TABLE DROP COLUMN</code>: For enkelt å fjerne kolonner (støttes ikke for Lakehouse-tabeller eller ved tidsreiser før dropping).</li>
+                    <li><code>sp_rename</code> for kolonner: Gir mulighet til å endre kolonnenavn uten nedetid (støttes ikke i Lakehouse).</li>
+                </ul>
+
+                <h3>Sesjonsbaserte #temp-tabeller (GA)</h3>
+                <p>Du kan nå opprette sesjonsomfattende midlertidige tabeller (<code>#temp</code>) for å håndtere mellomliggende resultater i batchjobber. Disse kan være enten:</p>
+                <ul>
+                    <li><strong>Ikke-distribuerte (mdf-basert):</strong> <code>CREATE TABLE #navn (...)</code></li>
+                    <li><strong>Distribuerte (Parquet-basert):</strong> <code>CREATE TABLE #navn (...) WITH (DISTRIBUTION=...)</code></li>
+                </ul>
+                <p>Dette gir fleksibilitet for ulike behov. Se <a href="https://learn.microsoft.com/en-us/fabric/data-warehouse/temporary-tables" target="_blank">dokumentasjonen</a> for detaljer.</p>
+
+                <h3>Migration Assistant for Data Warehouse (Preview)</h3>
+                <p>En ny, innebygd assistent forenkler migrering fra <strong>Azure Synapse Analytics (Data Warehouse)</strong> til Fabric Data Warehouse. Verktøyet hjelper med å vurdere, migrere metadata (med automatisk skjemakonvertering), kopiere data og omdirigere tilkoblinger, støttet av AI-assistanse.</p>
+
+                <h3>OPENROWSET-funksjonen (GA)</h3>
+                <p><code>OPENROWSET</code> er nå GA, og lar deg spørre direkte mot Parquet- og CSV-filer i ADLS eller Blob Storage (<code>SELECT * FROM OPENROWSET(BULK 'sti/til/fil.parquet')</code>). Dette er nyttig for å inspisere data før lasting, håndtere partisjonerte data, komplekse Parquet-typer, tilpasse utdataskjema (<code>WITH</code>-klausul) og bruke i <code>CTAS</code>/<code>INSERT SELECT</code> for transformasjon underveis.</p>
+
+                <h3>BULK INSERT-setningen (GA)</h3>
+                <p><code>BULK INSERT</code> (<code>BULK INSERT tabell FROM 'sti/til/fil'</code>) er nå GA. Den ligner <code>COPY INTO</code>, men dens styrke ligger i kompatibilitet med tradisjonell SQL Server/Azure SQL-syntaks, noe som forenkler migrering av eksisterende T-SQL-baserte lasteskript (inkludert støtte for bcp-formater og kodetabeller).</p>
+
+                <h2 id="rti">Real-Time Intelligence (RTI)</h2>
+                <h3>OpenAI Plugins for Eventhouse</h3>
+                <p>To nye plugins lar deg bruke OpenAI direkte i KQL:</p>
+                <ul>
+                    <li><code>ai_embed_text</code>: Genererer tekst-embeddings.</li>
+                    <li><code>ai_chat_completion</code>: Bruker modeller som ChatGPT for dataanalyse.</li>
+                </ul>
+                <p>Disse er nyttige for RAG-applikasjoner og databerikelse.</p>
+
+                <h3>Nytt i Kusto Detective Agency</h3>
+                <p>En ny Fabric-spesifikk utfordring ("Digibus") er lansert for å lære RTI-verktøy (Eventstream, Eventhouse, Dashboard, Activator) og KQL gjennom en engasjerende case.</p>
+
+                <h3>Bedre Azure Monitor-integrasjon i KQL Queryset</h3>
+                <p>Application Insights (AI) og Log Analytics (LA) behandles nå som førsteklasses datakilder i KQL Queryset, på lik linje med Eventhouse og ADX. Dette forenkler spørringer på tvers av disse tjenestene.</p>
+
+                <h3>Forbedret Low-Code Datautforskning</h3>
+                <p>Flere forbedringer i datautforskningen (i Real-Time Dashboard-fliser og KQL Database):</p>
+                <ul>
+                    <li><strong>Hierarkisk kolonnepane:</strong> Gir oversikt over datatyper og statistikk.</li>
+                    <li><strong>Fokusmodus:</strong> Fokuser enten på visualisering eller resultatgrid.</li>
+                    <li><strong>Høyreklikk-handlinger:</strong> Raske handlinger direkte i gridet.</li>
+                    <li><strong>Filterbygger med OR:</strong> Mer fleksible WHERE-betingelser.</li>
+                    <li><strong>Datetime-velger:</strong> Enklere valg av dato/tid for filtrering.</li>
+                </ul>
+
+                <h3>Forbedret Overvåking i Eventhouse</h3>
+                <p>Eventhouse System Overview og KQL Database monitoring får flere forbedringer:</p>
+                <ul>
+                    <li>Ny metrikk for <strong>inntatte rader over tid</strong>.</li>
+                    <li>Ny fane for <strong>topp inntatte databaser</strong> (viser rader og feil).</li>
+                    <li>Forbedret "Topp 10"-visning med <strong>cache miss-rate</strong> for spørringer.</li>
+                    <li><strong>Eventhouse-detaljer</strong> er flyttet til et sidepanel fra menylinjen.</li>
+                </ul>
+
+                <h3>Eventstream Real-time Weather Connector</h3>
+                <p>En ny connector for sanntids værdata er tilgjengelig i Eventstream, med en tilhørende <a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID" target="_blank">demovideo</a> (merk: faktisk video-URL mangler i kildetekst) som viser hvordan den settes opp.</p>
+
+                <h2 id="databases">Databases (SQL Database)</h2>
+                <h3>Generelle Forbedringer</h3>
+                <ul>
+                    <li><strong>Nye regioner:</strong> Støtte for Australia Southeast, Italy North, Japan East, Poland Central, WestUS3.</li>
+                    <li><strong>Backup-fakturering:</strong> Fra 1. april 2025 faktureres backup-lagring som overstiger tildelt databasestørrelse. Automatiske backuper kjører fortsatt (full ukentlig, diff. hver 12t, logg hvert 10min).</li>
+                    <li><strong>Ytelsesdashboard:</strong> Viser nå ledende blokkerende spørringer.</li>
+                    <li><strong>Terraform, REST API, CLI-støtte:</strong> Muliggjør IaC og automatisering for SQL-databaser.</li>
+                    <li><strong>Pipeline-integrasjon:</strong> SQL DB kan nå brukes som kilde i Stored Procedure/Script-aktiviteter uten manuell tilkoblingsinfo.</li>
+                    <li><strong>Grafdatabase-støtte:</strong> T-SQL-støtte for å lage og spørre grafdatabaser (noder, kanter) med <code>MATCH</code>-klausulen.</li>
+                </ul>
+
+                <h2 id="datafactory">Data Factory</h2>
+                <h3>Mirroring for Firewalled Snowflake (Preview)</h3>
+                <p>Det er nå mulig å speile data fra Snowflake-instanser som er beskyttet av en brannmur. Dette krever bruk av en VNet data gateway eller on-premises data gateway for sikker tilkobling.</p>
+
+              
+            </div> <!-- Slutt .article-body -->
+
+            <a href="../" class="back-to-blog-link">← Tilbake til Bloggoversikten</a>
+
+        </div> <!-- Slutt .article-container -->
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
+            <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
+        </div>
+    </footer>
+
+    <!-- Minimal JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Oppdaterer årstall i footer
+            const yearSpan = document.getElementById('year');
+            if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+            // Setter CSS variabel for RGBA bruk (hvis nødvendig)
+            document.documentElement.style.setProperty('--secondary-accent-rgb', '0, 198, 255');
+        });
+    </script>
+
+</body>
+</html>
