@@ -7,11 +7,11 @@
     <meta name="description" content="TrendMe hjelper norske virksomheter med rådgivning og implementering av Microsoft Fabric. Fra strategi og migrering til optimalisering og Power BI-integrasjon.">
     <title>Microsoft Fabric Rådgivning & Implementering | TrendMe</title>
 
-    <!-- === FAVICON  === -->
+    <!-- === FAVICON (Oppdatert med Cloudinary URLer) === -->
     <!-- Prioriter SVG -->
-    <link rel="icon" href="https://raw.githubusercontent.com/bredeespelid/TrendMe/d6598292124a1262a3bddf7f6830d938d4ec41d9/pictures/icon_etc/SVG.svg" type="image/svg+xml">
+    <link rel="icon" href="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189579/SVG_yqf4t8.svg" type="image/svg+xml">
     <!-- Fallback PNG -->
-    <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/bredeespelid/TrendMe/blob/main/pictures/icon_etc/icon.png?raw=true">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189607/icon_rdwy3d.png">
     <!-- === END FAVICON === -->
 
 
@@ -66,6 +66,7 @@
         header ul li a:hover::after { width: 70%; left: 50%; }
 
         /* --- Hero & Generell Seksjon Styling --- */
+        /* TODO: Erstatt 'fabric-background.jpg' med Cloudinary URL når den er lastet opp */
         .hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 0 4rem 0; position: relative; overflow: hidden; background: linear-gradient(160deg, rgba(106, 13, 173, 0.3) 0%, rgba(18, 18, 18, 0.8) 70%), url('fabric-background.jpg') no-repeat center center/cover; background-color: #1a1a2e; }
         .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top left, rgba(147, 112, 219, 0.1), transparent 40%), radial-gradient(circle at bottom right, rgba(0, 198, 255, 0.1), transparent 50%); animation: pulse-glow 10s infinite alternate ease-in-out; z-index: 1; }
         @keyframes pulse-glow { from { opacity: 0.5; } to { opacity: 1; } }
@@ -93,6 +94,7 @@
         .feature-icon { font-size: 3rem; margin-bottom: 1rem; color: var(--secondary-accent); display: inline-block; width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-fabric-light), var(--secondary-accent)); border-radius: 50%; line-height: 60px; color: var(--dark-bg); font-weight: bold; }
         .feature-item h3 { font-size: 1.4rem; margin-bottom: 0.8rem; color: var(--text-light); }
         .feature-item p { font-size: 0.95rem; color: var(--text-medium); }
+        /* TODO: Erstatt 'tech-pattern.png' med Cloudinary URL når den er lastet opp */
         .services-bg { background: linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.95)), url('tech-pattern.png'); background-color: #16161d; }
         .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
         .service-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 2.5rem 2rem; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease; overflow: hidden; position: relative; }
@@ -125,34 +127,16 @@
         .accordion-content ul li { margin-bottom: 0.5rem; padding-left: 0; color: var(--text-medium); }
         .accordion-content ul li::before { content: none; }
 
-        /* --- Om Oss Styling (Opprinnelig) --- */
+        /* --- Om Oss Styling (Opprinnelig - FORTSATT KOMMENTERT UT) --- */
+        /*
         #om { background: var(--dark-bg); }
-        /* Grunnleggende container oppsett for Om Oss */
-        #om .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center; /* Skal sentrere team-medlemmene horisontalt */
-            gap: 4rem; /* Avstand mellom elementer */
-        }
-        /* Grunnleggende stil for hvert teammedlem */
-        .team-member {
-             flex: 1 1 300px; /* Tillat vekst/krympt, basis 300px */
-             min-width: 300px; /* Minimum bredde */
-             max-width: 450px; /* Maksimum bredde, hindrer at de blir for brede */
-             display: flex;
-             flex-direction: column;
-             align-items: center; /* Skal sentrere innholdet (bilde/tekst) vertikalt */
-             text-align: center; /* Skal sentrere teksten */
-             /* Fjern unødvendig margin siden gap brukes */
-             margin: 0;
-        }
-        .team-member .om-image { margin-bottom: 1.5rem; flex-shrink: 0; }
-        .team-member .om-image img { width: 200px; height: 200px; object-fit: cover; border-radius: 50%; border: 5px solid var(--card-border); box-shadow: 0 0 25px rgba(147, 112, 219, 0.3); }
-        .team-member .om-text h3 { font-size: 1.6rem; color: var(--text-light); margin-bottom: 1rem; font-weight: 600; }
-        .team-member .om-text p { color: var(--text-medium); margin-bottom: 1rem; font-size: 1rem; }
-        .team-member .om-text strong { color: var(--text-light); }
+        #om .container { ... }
+        .team-member { ... }
+        .team-member .om-image img { ... }
+        */
 
         /* --- Kontakt & Footer Styling --- */
+        /* TODO: Erstatt 'contact-bg.jpg' med Cloudinary URL når den er lastet opp */
         #kontakt { position: relative; background: linear-gradient(rgba(18,18,18,0.95), rgba(18,18,18,0.98)), url('contact-bg.jpg') no-repeat center center/cover; background-color: var(--dark-bg); }
         #contact-form { max-width: 700px; margin: 0 auto; background: var(--card-bg); padding: 3rem; border-radius: 15px; border: 1px solid var(--card-border); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
         .form-group { margin-bottom: 1.8rem; position: relative; }
@@ -234,8 +218,8 @@
              .hero .typing-container { font-size: 1.2rem; }
              .section-header h2 { font-size: 2.4rem; }
              .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-             #om .container { gap: 3rem; }
-             .team-member { max-width: 400px; }
+             /* #om .container { gap: 3rem; } */ /* Også kommentert ut siden #om er det */
+             /* .team-member { max-width: 400px; } */
         }
 	    @media (max-width: 768px) {
 	        header ul li { margin: 3px 5px; margin-left: 5px; }
@@ -255,8 +239,8 @@
 	        .accordion-title { font-size: 1.1rem; padding: 1.2rem 0.8rem; }
 	        .accordion-content { padding: 0 1rem; font-size: 0.95rem; }
 	        .accordion-content.aktiv { padding: 1rem 1rem 2rem 1rem; }
-	        .team-member { min-width: unset; width: 90%; max-width: 400px; flex: 0 0 auto !important; /* Tvinger den til ikke å strekke seg mer enn bredden */ }
-	        .team-member .om-image img { width: 180px; height: 180px; }
+	        /* .team-member { min-width: unset; width: 90%; max-width: 400px; flex: 0 0 auto !important; } */
+	        /* .team-member .om-image img { width: 180px; height: 180px; } */
 	        #paper { width: 90%; max-width: 280px; height: auto; min-height: 350px; }
 	        #thank-you-message { font-size: 1.2rem; }
 
@@ -289,9 +273,9 @@
             .section-header h2 { font-size: 1.8rem; }
             .footer-links img { width: 24px; height: 24px;}
             .footer-links a { margin: 0 8px;}
-            .team-member .om-image img { width: 150px; height: 150px; }
-            .team-member .om-text h3 { font-size: 1.4rem; }
-            .team-member .om-text p { font-size: 0.95rem; }
+            /* .team-member .om-image img { width: 150px; height: 150px; } */
+            /* .team-member .om-text h3 { font-size: 1.4rem; } */
+            /* .team-member .om-text p { font-size: 0.95rem; } */
             #paper { max-width: 240px; min-height: 300px; padding: 15px; }
             #paper-content { font-size: 0.8rem;}
             #thank-you-message { font-size: 1.1rem; }
@@ -321,98 +305,19 @@
             header ul li { margin-top: 0; margin-bottom: 0; margin-left: 20px; }
         }
 
-		/* --- === FORENKLET OVERSTYRING FOR TEAM-MEDLEMMER LAYOUT (JUSTERT) === --- */
-		/* Sikrer at containeren ER en flex container og sentrerer barna */
-		#om .container {
-			display: flex !important;
-			flex-wrap: wrap !important;
-			justify-content: center !important; /* SENTRERING PÅ CONTAINER */
-			gap: 4rem !important;
-		}
-		/* Anvender flex-egenskaper og nullstillinger på ALLE team-medlemmer */
-		#om .container > .team-member {
-             /* Viktigste flex-egenskaper */
-             flex-grow: 1 !important;    /* Tillat vekst */
-             flex-shrink: 1 !important;  /* Tillat krymping */
-             flex-basis: 300px !important;/* Startbredde (juster 300px) */
-
-             /* Breddebegrensninger */
-             min-width: 300px !important; /* Juster */
-             max-width: 450px !important; /* Juster */
-
-             /* Nullstill potensielle problemstiftere */
-             width: auto !important; /* La flex styre */
-             margin: 0 !important;   /* La gap styre */
-             padding: 0 !important; /* Nullstill padding på selve kortet (internt innhold har egen padding) */
-             float: none !important;
-             clear: none !important;
-             position: relative !important;
-             order: 0 !important; /* Nullstill eventuell rekkefølgeendring */
-
-			 /* Sikre at den internt er flex column og sentrerer innholdet */
-			 display: flex !important;
-			 flex-direction: column !important;
-			 align-items: center !important; /* SENTRERING INNI TEAM-MEMBER (vertikalt) */
-			 text-align: center !important;   /* SENTRERING AV TEKST INNI TEAM-MEMBER */
-		}
-		/* --- SLUTT PÅ OVERSTYRING FOR TEAM-MEDLEMMER --- */
-
-        /* === LOKAL OVERSTYRING FOR Å TVINGE SENTERSTILLING AV #om HEADER === */
-        /* Tving selve header-blokken (#om .section-header) til å sentrere tekst og inline-block elementer */
-        #om .section-header {
-            text-align: center !important; /* Tvinger tekstjustering */
-            /* Sikrer at selve blokken er sentrert hvis den mot formodning ikke tar full bredde */
-            margin-left: auto !important;
-            margin-right: auto !important;
-            width: 100%; /* Sørger for at den tar bredden den trenger for sentrering */
-            max-width: 100%; /* Forhindrer uventet krymping */
-        }
-        /* Sikre at H2 (som er inline-block) faktisk blir behandlet som sentrert */
-        #om .section-header h2 {
-            display: inline-block !important; /* Bekrefter inline-block for text-align sentrering */
-            margin-left: auto !important;  /* Prøver å sentrere H2 hvis den ikke er det */
-            margin-right: auto !important; /* Prøver å sentrere H2 hvis den ikke er det */
-        }
-        /* Sikre at ::after pseudo-elementet (understreken) er sentrert under H2 */
-        #om .section-header h2::after {
-            left: 50% !important;
-            transform: translateX(-50%) !important;
-        }
-        /* Tving P-elementet til å sentrere seg selv og sin tekst */
-        #om .section-header p {
-            max-width: 700px; /* Behold gjerne denne */
-            margin: 1.5rem auto 0 auto !important; /* Tvinger auto L/R margin for blokk-sentrering */
-            text-align: center !important; /* Tvinger tekst-sentrering inni P */
-        }
-        /* === SLUTT PÅ LOKAL OVERSTYRING FOR HEADER === */
-
-        /* === NY LOKAL OVERSTYRING FOR Å TVINGE SENTERSTILLING AV #om TEAM-MEDLEMMER === */
-        /* Tving selve team-member blokken til å sentrere innholdet (igjen, for sikkerhets skyld) */
-        #om .team-member {
-            align-items: center !important; /* Sentrerer bilde/tekst-blokk vertikalt */
-            text-align: center !important; /* Sentrerer all tekst */
-            /* Tvinger horisontal sentrering av selve blokken i flex-konteksten,
-               selv om justify-content:center på containeren burde håndtere dette */
-            margin-left: auto !important;
-            margin-right: auto !important;
-        }
-        /* Tving sentrering på spesifikke elementer inni team-member */
-        #om .team-member .om-image {
-            margin-left: auto !important;
-            margin-right: auto !important;
-        }
-        #om .team-member .om-text h3 {
-             text-align: center !important;
-        }
-        #om .team-member .om-text p {
-             text-align: center !important;
-             /* Sikrer at p tar nok plass til at sentrering er synlig */
-             margin-left: auto !important;
-             margin-right: auto !important;
-             /* Du kan eventuelt justere max-width hvis teksten er veldig kort */
-             /* max-width: 90%; */
-        }
-        /* === SLUTT PÅ LOKAL OVERSTYRING FOR TEAM-MEDLEMMER === */
+        /* --- CSS OVERSTYRINGER OSV (Kommentert ut siden #om er det) --- */
+        /*
+		#om .container { display: flex !important; flex-wrap: wrap !important; justify-content: center !important; gap: 4rem !important; }
+		#om .container > .team-member { flex-grow: 1 !important; flex-shrink: 1 !important; flex-basis: 300px !important; min-width: 300px !important; max-width: 450px !important; width: auto !important; margin: 0 !important; padding: 0 !important; float: none !important; clear: none !important; position: relative !important; order: 0 !important; display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; }
+		#om .section-header { text-align: center !important; margin-left: auto !important; margin-right: auto !important; width: 100%; max-width: 100%; }
+		#om .section-header h2 { display: inline-block !important; margin-left: auto !important; margin-right: auto !important; }
+		#om .section-header h2::after { left: 50% !important; transform: translateX(-50%) !important; }
+		#om .section-header p { max-width: 700px; margin: 1.5rem auto 0 auto !important; text-align: center !important; }
+		#om .team-member { align-items: center !important; text-align: center !important; margin-left: auto !important; margin-right: auto !important; }
+		#om .team-member .om-image { margin-left: auto !important; margin-right: auto !important; }
+		#om .team-member .om-text h3 { text-align: center !important; }
+		#om .team-member .om-text p { text-align: center !important; margin-left: auto !important; margin-right: auto !important; }
+        */
 
     </style>
     <!-- === CSS STILER SLUTT === -->
@@ -430,7 +335,6 @@
                 <li><a href="#om-fabric">Om Fabric</a></li>
                 <li><a href="#fabric-tjenester">Fabric Tjenester</a></li>
                 <li><a href="#powerbi-tjenester">Power BI Tjenester</a></li>
-                <!-- Legger til lenke til Ressurser i nav -->
                 <li><a href="#ressurser">Ressurser</a></li>
 		    <!-- 
                 <li><a href="#om">Om Oss</a></li>
@@ -462,6 +366,7 @@
                      <h2>Hvorfor Velge Microsoft Fabric?</h2>
                      <p>Gå utover tradisjonell dataanalyse. Microsoft Fabric er en ende-til-ende, AI-drevet SaaS-plattform som samler dataintegrasjon, engineering, warehousing, datavitenskap, sanntidsanalyse og business intelligence på ett sted.</p>
                  </div>
+                 <!-- .feature-grid kan legges til her hvis du har innhold for det -->
              </div>
          </section>
 
@@ -540,7 +445,7 @@
              </div>
          </section>
 
-         <!-- Fabric Tjenester Seksjon -->
+         <!-- Fabric Tjenester Seksjon (Oppdatert med Cloudinary URLer) -->
          <section id="fabric-tjenester" class="section">
              <div class="container">
                   <div class="section-header fade-in">
@@ -551,7 +456,8 @@
                  <div class="service-grid">
                     <div class="service-card fade-in slide-left" style="transition-delay: 0.2s;">
                           <div class="service-icon-container">
-                              <img src="https://github.com/bredeespelid/TrendMe/blob/main/pictures/main_page/lakehouse.png?raw=true" alt="Microsoft Fabric Lakehouse ikon" class="service-icon">
+                              <!-- Oppdatert Lakehouse ikon -->
+                              <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189619/lakehouse_put05u.png" alt="Microsoft Fabric Lakehouse ikon" class="service-icon">
                           </div>
                          <h3>Fabric Strategi & Arkitektur</h3>
                          <ul>
@@ -564,7 +470,8 @@
                      </div>
                      <div class="service-card fade-in" style="transition-delay: 0.4s;">
                           <div class="service-icon-container">
-                              <img src="https://github.com/bredeespelid/TrendMe/blob/main/pictures/main_page/data_factory.png?raw=true" alt="Microsoft Fabric Data Factory ikon" class="service-icon">
+                              <!-- Oppdatert Data Factory ikon -->
+                              <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189635/data_factory_nv6wje.png" alt="Microsoft Fabric Data Factory ikon" class="service-icon">
                           </div>
                          <h3>Data Engineering & Migrering til Fabric</h3>
                          <ul>
@@ -577,7 +484,8 @@
                      </div>
                      <div class="service-card fade-in slide-right" style="transition-delay: 0.6s;">
                           <div class="service-icon-container">
-                              <img src="https://github.com/bredeespelid/TrendMe/blob/main/pictures/main_page/real_time_analytics.png?raw=true" alt="Microsoft Fabric Real-time Analytics ikon" class="service-icon">
+                              <!-- Oppdatert Real-time Analytics ikon -->
+                              <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189644/real_time_analytics_misdlc.png" alt="Microsoft Fabric Real-time Analytics ikon" class="service-icon">
                           </div>
                          <h3>Sanntidsanalyse & AI i Fabric</h3>
                          <ul>
@@ -592,7 +500,7 @@
              </div>
          </section>
 
-         <!-- Power BI Tjenester Seksjon -->
+         <!-- Power BI Tjenester Seksjon (Oppdatert med Cloudinary URLer) -->
           <section id="powerbi-tjenester" class="section services-bg">
               <div class="container">
                    <div class="section-header fade-in">
@@ -603,7 +511,8 @@
                    <div class="service-grid">
                       <div class="service-card fade-in slide-left" style="transition-delay: 0.2s;">
                           <div class="service-icon-container">
-                               <img src="https://github.com/bredeespelid/TrendMe/blob/main/pictures/main_page/powerbi_logo.png?raw=true" alt="Power BI rapport og dashboard ikon" class="service-icon pbi-logo">
+                               <!-- Oppdatert Power BI logo ikon -->
+                               <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189652/powerbi_logo_s9snvf.png" alt="Power BI rapport og dashboard ikon" class="service-icon pbi-logo">
                            </div>
                           <h3>Power BI Rapportering & Dashboard Design</h3>
                           <ul>
@@ -616,7 +525,8 @@
                       </div>
                       <div class="service-card fade-in" style="transition-delay: 0.4s;">
                           <div class="service-icon-container">
-                               <img src="https://github.com/bredeespelid/TrendMe/blob/main/pictures/main_page/powerbi_datamodellering.png?raw=true" alt="Power BI datamodellering og DAX ikon" class="service-icon">
+                               <!-- Oppdatert Power BI datamodellering ikon -->
+                               <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189662/powerbi_datamodellering_khn6sc.png" alt="Power BI datamodellering og DAX ikon" class="service-icon">
                            </div>
                           <h3>Datamodellering & DAX Optimalisering</h3>
                           <ul>
@@ -629,7 +539,8 @@
                       </div>
                        <div class="service-card fade-in slide-right" style="transition-delay: 0.6s;">
                           <div class="service-icon-container">
-                               <img src="https://github.com/bredeespelid/TrendMe/blob/main/pictures/main_page/powerbi_governence.png?raw=true" alt="Power BI administrasjon og governance ikon" class="service-icon">
+                               <!-- Oppdatert Power BI governance ikon -->
+                               <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189707/powerbi_governence_gcgm2o.png" alt="Power BI administrasjon og governance ikon" class="service-icon">
                            </div>
                           <h3>Power BI Governance</h3>
                           <ul>
@@ -644,11 +555,10 @@
           </section>
 
          <!-- === START: Seksjon for Ekstra Ressurser/Verktøy (Kalkulator-knapp) === -->
-         <section id="ressurser" class="resource-section section"> <!-- Lagt til ID for nav-lenke -->
+         <section id="ressurser" class="resource-section section">
              <div class="container">
                   <div class="section-header fade-in">
-                      <!-- Valgfri liten header for seksjonen -->
-                      <span>Nyttige Ressurser</span> <!-- Bruker samme stil som andre section headers -->
+                      <span>Nyttige Ressurser</span>
                       <h2>Verktøy for Planlegging</h2>
                       <p>Bruk Microsofts offisielle verktøy for å få et estimat på ditt kapasitetsbehov i Fabric.</p>
                   </div>
@@ -656,11 +566,7 @@
                     target="_blank"
                     rel="noopener noreferrer"
                     class="microsoft-calc-button fade-in"
-                    style="transition-delay: 0.2s;"
-                    data-bi-cn="Microsoft Fabric Capacity Estimator Link" /* Optional for tracking */
-                    data-bi-bhvr="100" /* Optional for tracking */ >
-
-                     <!-- Innebygd SVG for Microsoft-logoen -->
+                    style="transition-delay: 0.2s;">
                      <svg class="ms-logo" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                          <path fill="#f25022" d="M1 1h9v9H1z"></path>
                          <path fill="#00a4ef" d="M1 11h9v9H1z"></path>
@@ -676,58 +582,10 @@
          </section>
          <!-- === SLUTT Seksjon for Ekstra Ressurser/Verktøy === -->
 
-		<!-- Om Oss Seksjon -->
+		<!-- Om Oss Seksjon (Fortsatt kommentert ut) -->
 	    <!--
-		<section id="om" class="section">
-			 <div class="container"> 
-				 <div class="section-header fade-in">
-					 <span>Vårt Team</span>
-					 <h2>Møt Dine Partnere i Dataanalyse</h2>
-					 <p>Vi kombinerer teknisk dybde i Microsoft Fabric og Power BI med solid forretningsforståelse for å levere løsninger som skaper reell verdi.</p>
-				 </div>
-				
-					 <div class="team-member fade-in slide-left" style="transition-delay: 0.2s;">
-						 <div class="om-image">
-								<img src="https://media.licdn.com/dms/image/v2/D4E03AQGFN5oKY0Yyxg/profile-displayphoto-shrink_800_800/B4EZX92ehyHgAc-/0/1743720672611?e=1749081600&v=beta&t=XoCc9kuLGNrVYBLcuhOtj9CKgF7EXMiHi4fmqcZMLVM" alt="Brede Nicolai Espelid, Grunnlegger, CTO & CFO hos TrendMe">
-						 </div>
-						 <div class="om-text">
-							 <h3>Brede</h3>
-								<p>
-								  Grunnlegger av TrendMe, et sideprosjekt ved siden av studier i Business Analytics og Finans ved NHH. Kombinerer akademisk innsikt med praktisk erfaring innen regnskap og dataanalyse, og utvikler teknisk ekspertise i Microsoft Fabric og Power BI, kombinert med solid forretningsforståelse.
-								</p>
-								<p>
-								  Erfaring med migrering til Microsoft Fabric, design av skalerbare arkitekturer i OneLake, samt implementering av automatiserte dataløsninger ved bruk av Data Factory og Spark.
-								</p>
-								<p>
-								  Drevet av ønsket om å hjelpe bedrifter med å transformere data til strategisk innsikt.
-								</p>
-								<p><strong>Sertifiseringer:</strong> Microsoft Certified: Fabric Analytics Engineer Associate (DP-600)</p>
-
-						 </div>
-					 </div>
-
-					 <div class="team-member fade-in slide-right" style="transition-delay: 0.4s;">
-						 <div class="om-image">
-							 <img src="https://media.licdn.com/dms/image/v2/D4D03AQEW-QLXtdJGrA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1718370433252?e=1749081600&v=beta&t=jrkhW3MPx2ot6jbw4lJFDNuXjxK0bPGFB_GUifGvBUY" alt="Ulrik, Partner & CEO hos TrendMe">
-						 </div>
-						 <div class="om-text">
-							 <h3>Ulrik</h3>
-							 <p>
-								 Ulrik er Partner, og vår spesialist innen Power BI. Han har hovedansvaret for å omsette data til konkret forretningsverdi gjennom utvikling av effektive og innsiktsgivende dashboards.
-							 </p>
-							 <p>
-								 Han er dyktig til å kartlegge reelle behov og visualisere data slik at det støtter gode beslutninger. Bakgrunn fra økonomirollerog salgsledelse gir verdifull kommersiell forståelse, og sikrer at løsningene er forretningsmessig relevante.
-							 </p>
-							 <p>
-								 Fokuset er å bygge bro mellom data og beslutningstakere for maksimal effekt.
-							 </p>
-						 </div>
-					 </div>
-
-
-
-		 </section> <!-- Slutten på #om -->
-
+		<section id="om" class="section"> ... </section>
+        -->
 
         <!-- Kontakt Seksjon -->
         <section id="kontakt" class="section">
@@ -737,7 +595,6 @@
                     <h2>Klar for å Utnytte Potensialet i Microsoft Fabric?</h2>
                     <p>Fyll ut skjemaet under for en uforpliktende samtale om hvordan TrendMe kan hjelpe din bedrift med Microsoft Fabric rådgivning, implementering eller optimalisering.</p>
                 </div>
-
                 <!-- Kontaktskjema -->
                 <form id="contact-form" class="fade-in" style="transition-delay: 0.3s;">
                     <div class="form-group">
@@ -773,7 +630,7 @@
         <div class="container">
             <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
             <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
-		<p>Org.nr.: 935 389 763</p>
+		    <p>Org.nr.: 935 389 763</p>
             <div class="footer-links">
              </div>
         </div>
@@ -791,7 +648,7 @@
 
     <!-- === JAVASCRIPT START === -->
     <script>
-        // All JavaScript-kode her (ingen endringer gjort i JS)
+        // All JavaScript-kode her (Ingen endringer trengs i JS for bildebyttet)
         document.addEventListener('DOMContentLoaded', function() {
 
             // --- Intersection Observer for animasjoner ---
