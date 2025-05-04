@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="TrendMe Blogg: Innsikt og artikler om Microsoft Fabric, Power BI, dataanalyse og business intelligence fra våre konsulenter.">
     <title>TrendMe Blogg | Microsoft Fabric & Power BI Innsikt</title>
-        
+
     <!-- === FAVICON  === -->
     <!-- Prioriter SVG -->
-    <link rel="icon" href="https://raw.githubusercontent.com/bredeespelid/TrendMe/d6598292124a1262a3bddf7f6830d938d4ec41d9/pictures/icon_etc/SVG.svg" type="image/svg+xml">
+    <link rel="icon" href="https://res.cloudinary.com/dm2movu5v/image/upload/v1746189579/SVG_yqf4t8.svg" type="image/svg+xml">
     <!-- Fallback PNG -->
-    <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/bredeespelid/TrendMe/blob/main/pictures/icon_etc/icon.png?raw=true">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dm2movu5v/image/upload/v1746189607/icon_rdwy3d.png">
     <!-- === END FAVICON === -->
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -362,6 +362,31 @@
         .illustration-fabric-intro img.fabric-logo-img { display: block; max-width: 100%; max-height: 100%; height: 80%; width: auto; object-fit: contain; opacity: 0; transform-origin: center center; animation: img-logo-appear-scale 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards; transition: filter 0.4s ease-out; /* Behøvde bare filter transition */ }
         a.blog-card:hover .illustration-fabric-intro img.fabric-logo-img { filter: drop-shadow(0 0 10px var(--secondary-accent, #00c6ff)); }
 
+        /* --- [NYE] Stiler for Bildene (Data Modes, Security, Workspace, Comparison) --- */
+        .illustration-data-modes-card img.fabric-data-modes-img,
+        .illustration-security-card img.fabric-security-img,
+        .illustration-workspace-card img.fabric-workspace-img,
+        .illustration-comparison-card img.fabric-vs-platform-img {
+            display: block;
+            max-width: 90%; /* Juster etter behov */
+            max-height: 90%; /* Juster etter behov */
+            height: auto;
+            width: auto;
+            object-fit: contain;
+            opacity: 0;
+            transform-origin: center center;
+            animation: img-logo-appear-scale 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards; /* Gjenbruker animasjon */
+            transition: filter 0.4s ease-out;
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); /* Liten skygge som default */
+        }
+        a.blog-card:hover .illustration-data-modes-card img.fabric-data-modes-img,
+        a.blog-card:hover .illustration-security-card img.fabric-security-img,
+        a.blog-card:hover .illustration-workspace-card img.fabric-workspace-img,
+        a.blog-card:hover .illustration-comparison-card img.fabric-vs-platform-img {
+             filter: drop-shadow(0 0 10px var(--secondary-accent, #00c6ff)) drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); /* Legger til glow på hover */
+        }
+
+
         /* ================================================================ */
         /* === SLUTT: FORBEDREDE INLINE SVG/CSS ANIMASJONER === */
         /* ================================================================ */
@@ -467,7 +492,7 @@
                     <div class="card-image">
                         <div class="css-illustration illustration-fabric-intro"> <!-- Gjenbruker Fabric logo-illustrasjon -->
                             <img class="fabric-logo-img"
-                                 src="https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/fabric_logo.png?raw=true"
+                                 src="https://res.cloudinary.com/dm2movu5v/image/upload/v1746392572/fabric_logo_heqccn.png"
                                  alt="Microsoft Fabric Logo">
                         </div>
                     </div>
@@ -629,9 +654,8 @@
                     <div class="card-image">
                         <div class="css-illustration illustration-data-modes-card">
                             <img class="fabric-data-modes-img"
-                                 src="https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/direct_lake.png?raw=true"
+                                 src="https://res.cloudinary.com/dm2movu5v/image/upload/v1746392592/direct_lake_bilrnk.png"
                                  alt="Illustrasjon av dataflyt for Direct Lake, Import og DirectQuery">
-                             <!-- Kommentaren kan stå her, utenfor img-taggen -->
                         </div>
                     </div>
                     <div class="card-content">
@@ -640,15 +664,14 @@
                     </div>
                 </a>
                 <!-- === SLUTT KORT [Nummer] === -->
-                
+
                 <!-- === KORT [Nummer] (Fabric Sikkerhet Entra ID) - Bruker Bilde-URL === -->
                 <a href="posts/sikkerhet-fabric-entra-id-roller.html" class="blog-card"> <!-- Oppdatert filnavn -->
                     <div class="card-image">
                         <div class="css-illustration illustration-security-card"> <!-- Spesifikk klasse for dette kortet om nødvendig -->
                             <img class="fabric-security-img"
-                                 src="https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/ms_security.png?raw=true"
+                                 src="https://res.cloudinary.com/dm2movu5v/image/upload/v1746392601/ms_security_r4hyhy.png"
                                  alt="Illustrasjon av sikkerhet og tilgangskontroll i Fabric">
-                            <!-- Kommentarer kan stå her, utenfor selve taggen -->
                         </div>
                     </div>
                     <div class="card-content">
@@ -658,15 +681,14 @@
                 </a>
                 <!-- === SLUTT KORT [Nummer] === -->
 
-                
+
                 <!-- === KORT [Nummer] (Beste Praksis Workspaces) - Bruker Bilde-URL === -->
                 <a href="posts/beste-praksis-workspaces-fabric.html" class="blog-card">
                     <div class="card-image">
                         <div class="css-illustration illustration-workspace-card">
                             <img class="fabric-workspace-img"
-                                 src="https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/workspace.png?raw=true"
+                                 src="https://res.cloudinary.com/dm2movu5v/image/upload/v1746392607/workspace_wotsuo.png"
                                  alt="Illustrasjon av organisering av Fabric Workspaces">
-                            <!-- Kommentarer kan stå her ETTER taggen, eller før den, eller fjernes -->
                         </div>
                     </div>
                     <div class="card-content">
@@ -676,15 +698,14 @@
                 </a>
                 <!-- === SLUTT KORT [Nummer] === -->
 
-                
+
                 <!-- === KORT [Nummer] (Fabric vs Avansert Plattform) - Bruker Bilde-URL === -->
                 <a href="posts/fabric-vs-avansert-dataplattform.html" class="blog-card"> <!-- Justert filnavn -->
                     <div class="card-image">
                         <div class="css-illustration illustration-comparison-card">
                             <img class="fabric-vs-platform-img"
-                                 src="https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/different_techs.png?raw=true"
+                                 src="https://res.cloudinary.com/dm2movu5v/image/upload/v1746392610/different_techs_m093wu.png"
                                  alt="Veikryss som viser valg mellom Fabric og en etablert plattform">
-                            <!-- Kommentar står nå etter img-taggen -->
                         </div>
                     </div>
                     <div class="card-content">
@@ -693,15 +714,14 @@
                     </div>
                 </a>
                 <!-- === SLUTT KORT [Nummer] === -->
-                
+
                  <!-- === KORT 1 (Intro Fabric) - Using Image URL (PNG from GitHub) === -->
                  <a href="posts/hva-er-microsoft-fabric-introduksjon.html" class="blog-card">
                     <div class="card-image">
                         <div class="css-illustration illustration-fabric-intro">
                             <img class="fabric-logo-img"
-                                 src="https://github.com/bredeespelid/TrendMe/blob/main/blogg/pictures/fabric_logo.png?raw=true"
+                                 src="https://res.cloudinary.com/dm2movu5v/image/upload/v1746392572/fabric_logo_heqccn.png"
                                  alt="Microsoft Fabric Logo">
-                                 <!-- Kommentaren er nå flyttet UTENFOR eller fjernet -->
                         </div>
                     </div>
                     <div class="card-content">
