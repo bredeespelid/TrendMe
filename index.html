@@ -4,16 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- SEO Optimalisert Tittel og Beskrivelse -->
-    <meta name="description" content="TrendMe hjelper norske virksomheter med rådgivning og implementering av Microsoft Fabric. Fra strategi og migrering til optimalisering og Power BI-integrasjon.">
-    <title>Microsoft Fabric Rådgivning & Implementering | TrendMe</title>
+    <meta name="description" content="TrendMe hjelper norske virksomheter med rådgivning og implementering innen data, AI, sky og moderne teknologi – inkludert Microsoft Fabric og Power BI.">
+    <title>TrendMe | Rådgivning & Implementering av Moderne Teknologi</title>
 
-    <!-- === FAVICON (Oppdatert med Cloudinary URLer) === -->
-    <!-- Prioriter SVG -->
+    <!-- === FAVICON === -->
     <link rel="icon" href="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189579/SVG_yqf4t8.svg" type="image/svg+xml">
-    <!-- Fallback PNG -->
     <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189607/icon_rdwy3d.png">
     <!-- === END FAVICON === -->
-
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,29 +20,28 @@
     <style>
         :root {
             --dark-bg: #121212;
-            --primary-fabric-dark: #6a0dad;
-            --primary-fabric-light: #9370db;
-            --secondary-accent: #00c6ff;
+            --primary-accent-dark: #0078d4;
+            --primary-accent-light: #00c6ff;
+            --secondary-accent: #9370db;
             --glow-color: rgba(0, 198, 255, 0.5);
             --text-light: #e0e0e0;
             --text-medium: #b0b0b0;
-            --text-dark: #1f1f1f; /* Mørk tekst for lys bakgrunn (som papiret) */
+            --text-dark: #1f1f1f;
             --card-bg: rgba(40, 40, 40, 0.8);
             --card-border: rgba(255, 255, 255, 0.1);
             --font-primary: 'Poppins', sans-serif;
             --transition-speed: 0.3s;
-            --transition-slow: 0.5s; /* For accordion */
-            --error-color: #ff6b6b; /* For feilmeldinger */
-            /* Lagt til for suggestions */
+            --transition-slow: 0.5s;
+            --error-color: #ff6b6b;
             --suggestions-bg: rgba(50, 50, 50, 0.95);
             --suggestions-hover-bg: rgba(60, 60, 60, 0.98);
+            --header-height: 70px;
         }
-        /* --- Grunnleggende og Hjelpeklasser --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--secondary-accent) var(--dark-bg); }
+        html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--primary-accent-light) var(--dark-bg); }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--dark-bg); }
-        ::-webkit-scrollbar-thumb { background-color: var(--secondary-accent); border-radius: 10px; border: 2px solid var(--dark-bg); }
+        ::-webkit-scrollbar-thumb { background-color: var(--primary-accent-light); border-radius: 10px; border: 2px solid var(--dark-bg); }
         body { font-family: var(--font-primary); line-height: 1.7; color: var(--text-light); background-color: var(--dark-bg); overflow-x: hidden; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
         .container { max-width: 1200px; margin: auto; padding: 0 25px; }
         .fade-in { opacity: 0; transition: opacity 1s ease-out, transform 0.8s ease-out; }
@@ -54,52 +50,57 @@
         .slide-right { transform: translateX(40px); }
         .visible { opacity: 1; transform: translate(0, 0) !important; }
 
-        /* --- Header & Navigasjon --- */
-        header { background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text-light); padding: 0.8rem 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease; }
-        header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
-        header .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 0; }
-        header ul { list-style: none; display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; margin-top: 0; padding: 0; }
-        header ul li { margin-left: 20px; margin-top: 2px; margin-bottom: 2px; }
+        header { background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text-light); padding: 0.5rem 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease; height: var(--header-height); }
+        header nav { display: flex; justify-content: space-between; align-items: center; height: 100%; }
+        .logo-link { display: flex; align-items: center; height: 100%; }
+        .logo-img { display: block; max-height: calc(var(--header-height) - 25px); width: auto; transition: transform 0.3s ease; }
+        .logo-img:hover { transform: scale(1.05); }
+        header ul { list-style: none; display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; margin-top: 0; padding: 0; height: 100%; }
+        header ul li { margin-left: 20px; }
         header ul li a { display: flex; align-items: center; color: var(--text-medium); text-decoration: none; padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px; font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative; overflow: hidden; white-space: nowrap; }
-        header ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); transition: width var(--transition-speed) ease, left var(--transition-speed) ease; transform: translateX(-50%); }
+        header ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); transition: width var(--transition-speed) ease, left var(--transition-speed) ease; transform: translateX(-50%); }
         header ul li a:hover { color: var(--text-light); }
         header ul li a:hover::after { width: 70%; left: 50%; }
 
-        /* --- Hero & Generell Seksjon Styling --- */
-        /* TODO: Erstatt 'fabric-background.jpg' med Cloudinary URL når den er lastet opp */
-        .hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 0 4rem 0; position: relative; overflow: hidden; background: linear-gradient(160deg, rgba(106, 13, 173, 0.3) 0%, rgba(18, 18, 18, 0.8) 70%), url('fabric-background.jpg') no-repeat center center/cover; background-color: #1a1a2e; }
-        .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top left, rgba(147, 112, 219, 0.1), transparent 40%), radial-gradient(circle at bottom right, rgba(0, 198, 255, 0.1), transparent 50%); animation: pulse-glow 10s infinite alternate ease-in-out; z-index: 1; }
+        .hero { min-height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 0 4rem 0; position: relative; overflow: hidden; background: linear-gradient(160deg, rgba(0, 120, 212, 0.2) 0%, rgba(18, 18, 18, 0.9) 70%), linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); background-color: #1a1a2e; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top left, rgba(0, 198, 255, 0.1), transparent 40%), radial-gradient(circle at bottom right, rgba(147, 112, 219, 0.1), transparent 50%); animation: pulse-glow 10s infinite alternate ease-in-out; z-index: 1; }
         @keyframes pulse-glow { from { opacity: 0.5; } to { opacity: 1; } }
         .hero .container { position: relative; z-index: 2; }
-        .hero h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; background: linear-gradient(90deg, var(--text-light), var(--secondary-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; animation: text-focus-in 1.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both; }
+        .hero h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; background: linear-gradient(90deg, var(--text-light), var(--primary-accent-light)); -webkit-background-clip: text; background-clip: text; color: transparent; animation: text-focus-in 1.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both; }
         @keyframes text-focus-in { 0% { filter: blur(12px); opacity: 0; } 100% { filter: blur(0px); opacity: 1; } }
         .hero .typing-container { font-size: 1.4rem; color: var(--text-medium); margin-bottom: 2.5rem; min-height: 1.8em; }
-        .typing-cursor { display: inline-block; width: 10px; height: 1.4rem; background-color: var(--secondary-accent); margin-left: 5px; animation: blink 0.7s infinite; vertical-align: bottom; }
+        .typing-cursor { display: inline-block; width: 10px; height: 1.4rem; background-color: var(--primary-accent-light); margin-left: 5px; animation: blink 0.7s infinite; vertical-align: bottom; }
         @keyframes blink { 50% { opacity: 0; } }
-        .cta-button { display: inline-block; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); color: var(--text-dark); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease, opacity var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3); }
+        .cta-button { display: inline-block; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); color: var(--text-dark); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease, opacity var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 5px 15px var(--glow-color); }
         .cta-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px var(--glow-color); }
         .cta-button:disabled { background: gray; cursor: not-allowed; opacity: 0.7; transform: none; box-shadow: none; }
 
         .section { padding: 6rem 0; overflow: hidden; }
         .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-header span { display: block; font-size: 1rem; color: var(--secondary-accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 600; }
+        .section-header span { display: block; font-size: 1rem; color: var(--primary-accent-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 600; }
         .section-header h2 { font-size: 2.8rem; font-weight: 700; color: var(--text-light); margin-bottom: 1rem; position: relative; display: inline-block; }
-        .section-header h2::after { content: ''; position: absolute; width: 60px; height: 4px; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); bottom: -15px; left: 50%; transform: translateX(-50%); border-radius: 2px; }
+        .section-header h2::after { content: ''; position: absolute; width: 60px; height: 4px; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); bottom: -15px; left: 50%; transform: translateX(-50%); border-radius: 2px; }
         .section-header p { max-width: 700px; margin: 1.5rem auto 0 auto; color: var(--text-medium); font-size: 1.1rem; }
 
-        /* --- Feature & Service Card Styling --- */
-        #hvorfor-fabric .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem; }
-        .feature-item { text-align: center; background: var(--card-bg); padding: 2rem 1.5rem; border-radius: 10px; border: 1px solid var(--card-border); transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
-        .feature-item:hover { transform: translateY(-8px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); }
-        .feature-icon { font-size: 3rem; margin-bottom: 1rem; color: var(--secondary-accent); display: inline-block; width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-fabric-light), var(--secondary-accent)); border-radius: 50%; line-height: 60px; color: var(--dark-bg); font-weight: bold; }
-        .feature-item h3 { font-size: 1.4rem; margin-bottom: 0.8rem; color: var(--text-light); }
-        .feature-item p { font-size: 0.95rem; color: var(--text-medium); }
-        /* TODO: Erstatt 'tech-pattern.png' med Cloudinary URL når den er lastet opp */
-        .services-bg { background: linear-gradient(rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0.95)), url('tech-pattern.png'); background-color: #16161d; }
+        /* === Tjenester Tabs Styling === */
+        .tabs-container { max-width: 900px; margin: 3rem auto 0; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--card-border); overflow: hidden; }
+        .tab-buttons { display: flex; background-color: rgba(50, 50, 50, 0.6); border-bottom: 1px solid var(--card-border); }
+        .tab-button { flex-grow: 1; /* Fordeler plassen likt */ padding: 1rem 1.5rem; background: none; border: none; color: var(--text-medium); font-family: var(--font-primary); font-size: 1.1rem; font-weight: 600; cursor: pointer; text-align: center; transition: color var(--transition-speed) ease, background-color var(--transition-speed) ease, border-bottom-color var(--transition-speed) ease; border-bottom: 3px solid transparent; /* For aktiv indikator */ white-space: nowrap; }
+        .tab-button:hover { color: var(--text-light); background-color: rgba(60, 60, 60, 0.7); }
+        .tab-button.active { color: var(--primary-accent-light); border-bottom-color: var(--primary-accent-light); background-color: rgba(40, 40, 40, 0.9); }
+        .tab-content-container { padding: 2.5rem 2rem; }
+        .tab-pane { display: none; /* Skjult som standard */ animation: fadeInContent 0.5s ease-out forwards; }
+        .tab-pane.active { display: block; }
+        .tab-pane h3 { font-size: 1.6rem; margin-bottom: 1rem; color: var(--text-light); }
+        .tab-pane p { font-size: 1rem; color: var(--text-medium); line-height: 1.8; }
+        @keyframes fadeInContent { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* === END Tjenester Tabs Styling === */
+
+        .services-bg { background: linear-gradient(rgba(18, 18, 18, 0.95), rgba(18, 18, 18, 0.98)), #16161d; }
         .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
         .service-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 2.5rem 2rem; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease; overflow: hidden; position: relative; }
         .service-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, var(--glow-color) 0%, transparent 50%); transform: rotate(0deg); transition: opacity 0.8s ease, transform 1s ease; opacity: 0; z-index: 0; }
-        .service-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); border-color: var(--secondary-accent); }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); border-color: var(--primary-accent-light); }
         .service-card:hover::before { opacity: 1; }
         .service-card > * { position: relative; z-index: 1; }
         .service-icon-container { margin-bottom: 1.5rem; text-align: center; min-height: 65px; display: flex; justify-content: center; align-items: center; }
@@ -108,44 +109,36 @@
         .service-card h3 { font-size: 1.6rem; margin-bottom: 1rem; color: var(--text-light); text-align: center; }
         .service-card ul { list-style: none; padding: 0; margin-top: 1.5rem; }
         .service-card ul li { margin-bottom: 0.8rem; position: relative; padding-left: 25px; color: var(--text-medium); font-size: 0.95rem; }
-        .service-card ul li::before { content: '>'; position: absolute; left: 0; color: var(--secondary-accent); font-weight: bold; font-size: 1.2rem; line-height: 1; top: 2px; transition: transform var(--transition-speed) ease; }
+        .service-card ul li::before { content: '>'; position: absolute; left: 0; color: var(--primary-accent-light); font-weight: bold; font-size: 1.2rem; line-height: 1; top: 2px; transition: transform var(--transition-speed) ease; }
         .service-card:hover ul li::before { transform: translateX(3px); }
 
-        /* --- Styling for Accordion --- */
+        /* Accordion Styling */
         .accordion-list { max-width: 900px; margin: 2rem auto 0 auto; }
         .accordion-item { border-bottom: 1px solid var(--card-border); margin-bottom: 1rem; }
         .accordion-title { background: none; border: none; color: var(--text-light); cursor: pointer; padding: 1.5rem 1rem; width: 100%; text-align: left; font-size: 1.3rem; font-weight: 600; font-family: inherit; display: flex; justify-content: space-between; align-items: center; transition: background-color var(--transition-speed) ease; }
-        .accordion-title:hover, .accordion-title.aktiv { color: var(--secondary-accent); }
+        .accordion-title:hover, .accordion-title.aktiv { color: var(--primary-accent-light); }
         .accordion-title span.tittel-tekst { flex-grow: 1; margin-right: 1rem; }
         .accordion-title span.ikon { font-size: 1.5rem; transition: transform var(--transition-slow) ease; transform-origin: center; display: inline-block; }
         .accordion-title.aktiv span.ikon { transform: rotate(45deg); }
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height var(--transition-slow) ease-out, padding var(--transition-slow) ease-out; padding: 0 1.5rem; color: var(--text-medium); font-size: 1rem; line-height: 1.8; }
-        .accordion-content.aktiv { padding: 1.5rem 1.5rem 2.5rem 1.5rem; /* max-height settes av JS */ }
+        .accordion-content.aktiv { padding: 1.5rem 1.5rem 2.5rem 1.5rem; overflow-y: auto; }
         .accordion-content img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 1.5rem; border: 1px solid var(--card-border); }
         .accordion-content h4 { color: var(--text-light); margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.1rem; }
         .accordion-content ul { list-style: disc; padding-left: 25px; margin-top: 1rem; margin-bottom: 1rem; }
         .accordion-content ul li { margin-bottom: 0.5rem; padding-left: 0; color: var(--text-medium); }
         .accordion-content ul li::before { content: none; }
 
-        /* --- Om Oss Styling (Opprinnelig - FORTSATT KOMMENTERT UT) --- */
-        /*
-        #om { background: var(--dark-bg); }
-        #om .container { ... }
-        .team-member { ... }
-        .team-member .om-image img { ... }
-        */
+        #om-oss { background: var(--dark-bg); }
 
-        /* --- Kontakt & Footer Styling --- */
-        /* TODO: Erstatt 'contact-bg.jpg' med Cloudinary URL når den er lastet opp */
-        #kontakt { position: relative; background: linear-gradient(rgba(18,18,18,0.95), rgba(18,18,18,0.98)), url('contact-bg.jpg') no-repeat center center/cover; background-color: var(--dark-bg); }
+        #kontakt { position: relative; background: linear-gradient(rgba(18,18,18,0.95), rgba(18,18,18,0.98)), linear-gradient(135deg, #16213e 0%, #0f3460 100%); background-color: var(--dark-bg); }
         #contact-form { max-width: 700px; margin: 0 auto; background: var(--card-bg); padding: 3rem; border-radius: 15px; border: 1px solid var(--card-border); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
         .form-group { margin-bottom: 1.8rem; position: relative; }
         .form-group label { display: block; margin-bottom: 0.7rem; font-weight: 600; color: var(--text-medium); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
         .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group textarea { width: 100%; padding: 1rem; border: 1px solid var(--card-border); border-radius: 8px; font-family: inherit; font-size: 1rem; background-color: rgba(50, 50, 50, 0.5); color: var(--text-light); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--secondary-accent); box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.2); }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-accent-light); box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.2); }
         .form-group textarea { resize: vertical; min-height: 120px; }
         #contact-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; }
-        #form-error-message { color: var(--error-color); }
+        #form-error-message { color: var(--error-color); margin-top: 1rem; text-align: center; display: none; }
 
         footer { background-color: #0a0a0a; color: var(--text-medium); text-align: center; padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border); }
         footer p { margin-bottom: 1rem; font-size: 0.9rem; }
@@ -154,62 +147,31 @@
         .footer-links img { width: 28px; height: 28px; vertical-align: middle; filter: none; transition: filter var(--transition-speed) ease; }
         .footer-links a:hover { transform: scale(1.15); opacity: 1; }
 
-        /* === Brreg NAME suggestions (Kontakt skjema) === */
         .suggestions-container { position: absolute; left: 0; right: 0; top: 100%; background-color: var(--suggestions-bg); border: 1px solid var(--card-border); border-top: none; border-radius: 0 0 8px 8px; z-index: 10; max-height: 200px; overflow-y: auto; display: none; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
         .suggestions-container ul { list-style: none; margin: 0; padding: 0; }
         .suggestions-container li { padding: 0.8rem 1rem; cursor: pointer; color: var(--text-light); border-bottom: 1px solid var(--card-border); transition: background-color 0.2s ease; }
         .suggestions-container li:last-child { border-bottom: none; }
-        .suggestions-container li:hover { background-color: var(--suggestions-hover-bg); color: var(--secondary-accent); }
+        .suggestions-container li:hover { background-color: var(--suggestions-hover-bg); color: var(--primary-accent-light); }
         .suggestions-container .no-results { padding: 0.8rem 1rem; color: var(--text-medium); font-style: italic; }
 
-        /* === ANIMASJONSKODE === */
         #animation-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(18, 18, 18, 0.9); display: none; justify-content: center; align-items: center; flex-direction: column; z-index: 1100; overflow: hidden; }
         #paper { background-color: #fff; width: 300px; height: 400px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); border: 1px solid var(--card-border); padding: 20px; box-sizing: border-box; opacity: 0; transform: scale(0.8); transition: opacity 0.5s ease-out, transform 0.5s ease-out; position: relative; overflow: hidden; }
         #paper-content { font-family: var(--font-primary); font-size: 0.9rem; color: var(--text-dark); white-space: pre-wrap; word-wrap: break-word; max-height: 100%; overflow-y: auto; }
-        #thank-you-message { margin-top: 20px; font-size: 1.5rem; color: var(--secondary-accent); font-weight: bold; text-align: center; display: none; opacity: 0; transition: opacity 0.5s ease-in 0.2s; }
+        #thank-you-message { margin-top: 20px; font-size: 1.5rem; color: var(--primary-accent-light); font-weight: bold; text-align: center; display: none; opacity: 0; transition: opacity 0.5s ease-in 0.2s; }
         @keyframes fly-away { 0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translate(120vw, -120vh) rotate(720deg) scale(0.1); opacity: 0; } }
         #paper.flying { animation: fly-away 2s ease-in forwards; }
 
-         /* === Stil for Microsoft Kalkulator-knapp === */
-         .resource-section {
-             text-align: center; /* Sentrerer knappen i sin container */
-             padding: 3rem 0 1rem 0; /* Litt luft over, mindre under */
-         }
-         .microsoft-calc-button {
-             display: inline-flex; /* For å justere logo og tekst */
-             align-items: center;  /* Sentrerer logo og tekst vertikalt */
-             gap: 0.8em;          /* Avstand mellom logo og tekst */
-             background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); /* Samme gradient som cta */
-             color: var(--text-dark); /* Samme tekstfarge som cta */
-             padding: 14px 30px; /* Litt justert padding kanskje */
-             text-decoration: none;
-             border-radius: 50px;
-             font-weight: 600;
-             transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease;
-             border: none;
-             cursor: pointer;
-             font-size: 1.05rem; /* Litt mindre eller samme som cta? */
-             box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3); /* Samme skygge som cta */
-             white-space: nowrap; /* Forhindre at teksten brytes på store skjermer */
-         }
-         .microsoft-calc-button .ms-logo {
-             width: 1.4em; /* Juster størrelsen etter ønske */
-             height: 1.4em;
-             /* SVG'en skaleres proporsjonalt */
-             /* Ingen fill nødvendig her, siden SVG-koden har det */
-             vertical-align: middle; /* Hjelper med justering */
-         }
-         .microsoft-calc-button:hover {
-             transform: translateY(-5px) scale(1.05); /* Samme hover-effekt som cta */
-             box-shadow: 0 10px 25px var(--glow-color); /* Samme hover-skygge som cta */
-         }
-         /* === SLUTT Stil for Microsoft Kalkulator-knapp === */
+         .resource-section { text-align: center; padding: 3rem 0 1rem 0; }
+         .microsoft-calc-button { display: inline-flex; align-items: center; gap: 0.8em; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); color: var(--text-dark); padding: 14px 30px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.05rem; box-shadow: 0 5px 15px var(--glow-color); white-space: nowrap; }
+         .microsoft-calc-button .ms-logo { width: 1.4em; height: 1.4em; vertical-align: middle; }
+         .microsoft-calc-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px var(--glow-color); }
 
         /* --- RESPONSIVITET --- */
         @media (max-width: 992px) {
-             header nav { flex-direction: column; align-items: center; min-height: auto; }
-             header .logo { margin-bottom: 15px; }
-             header ul { justify-content: center; margin-top: 10px; }
+             header nav { flex-direction: column; align-items: center; height: auto; min-height: var(--header-height); }
+             .logo-link { margin-bottom: 10px; height: auto; }
+             .logo-img { max-height: 40px; }
+             header ul { justify-content: center; margin-top: 0; height: auto; flex-wrap: wrap; }
              header ul li { margin: 4px 6px; margin-left: 6px; }
              header ul li a { padding: 8px 12px; font-size: 0.9rem; white-space: normal; }
              header ul li a::after { bottom: 4px; }
@@ -218,10 +180,11 @@
              .hero .typing-container { font-size: 1.2rem; }
              .section-header h2 { font-size: 2.4rem; }
              .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-             /* #om .container { gap: 3rem; } */ /* Også kommentert ut siden #om er det */
-             /* .team-member { max-width: 400px; } */
+             /* Tabs Responsivitet */
+             .tab-button { font-size: 1rem; padding: 0.9rem 1rem; white-space: normal; } /* Tillat wrapping */
         }
 	    @media (max-width: 768px) {
+            header { height: auto; min-height: var(--header-height); }
 	        header ul li { margin: 3px 5px; margin-left: 5px; }
 	        header ul li a { padding: 6px 10px; font-size: 0.85rem; }
 	        header ul li a::after { bottom: 3px; }
@@ -235,90 +198,49 @@
 	        .section-header p { font-size: 1rem; }
 	        #contact-form { padding: 2rem; }
 	        .service-grid { grid-template-columns: 1fr; }
-	        .feature-grid { grid-template-columns: 1fr; }
+	        /* Feature grid ikke lenger brukt i #tjenester */
 	        .accordion-title { font-size: 1.1rem; padding: 1.2rem 0.8rem; }
 	        .accordion-content { padding: 0 1rem; font-size: 0.95rem; }
 	        .accordion-content.aktiv { padding: 1rem 1rem 2rem 1rem; }
-	        /* .team-member { min-width: unset; width: 90%; max-width: 400px; flex: 0 0 auto !important; } */
-	        /* .team-member .om-image img { width: 180px; height: 180px; } */
 	        #paper { width: 90%; max-width: 280px; height: auto; min-height: 350px; }
 	        #thank-you-message { font-size: 1.2rem; }
-
-            /* JUSTERING FOR KALKULATOR-KNAPP PÅ MINDRE SKJERMER */
-            .microsoft-calc-button {
-                font-size: 0.95rem; /* Litt mindre tekst */
-                padding: 12px 25px; /* Mindre padding */
-                white-space: normal; /* Tillat tekstbryting */
-                text-align: center; /* Sentrer teksten hvis den bryter */
-                gap: 0.6em; /* Litt mindre gap */
-            }
-            .microsoft-calc-button .ms-logo {
-                width: 1.2em; /* Juster logo-størrelse også */
-                height: 1.2em;
-            }
-            .resource-section .section-header h2 {
-                font-size: 1.8rem; /* Juster header-størrelsen i denne seksjonen også */
-            }
-            .resource-section .section-header p {
-                font-size: 0.95rem; /* Juster p-størrelsen i denne seksjonen */
-            }
-             .resource-section {
-                 padding: 2.5rem 0 0.5rem 0; /* Mindre padding for seksjonen */
-             }
+            .microsoft-calc-button { font-size: 0.95rem; padding: 12px 25px; white-space: normal; text-align: center; gap: 0.6em; }
+            .microsoft-calc-button .ms-logo { width: 1.2em; height: 1.2em; }
+            .resource-section .section-header h2 { font-size: 1.8rem; }
+            .resource-section .section-header p { font-size: 0.95rem; }
+             .resource-section { padding: 2.5rem 0 0.5rem 0; }
+             .logo-img { max-height: 35px; }
+             /* Tabs Responsivitet */
+             .tab-buttons { flex-direction: column; /* Stack buttons vertikalt */ border-bottom: none; }
+             .tab-button { width: 100%; border-bottom: 1px solid var(--card-border); border-left: 3px solid transparent; /* Bruk venstre bord for aktiv indikator */ border-bottom-color: transparent !important; /* Fjern bunn-border */ }
+             .tab-button:last-child { border-bottom: none; }
+             .tab-button.active { border-left-color: var(--primary-accent-light); border-bottom-color: transparent !important; /* Sikre at bunn-border er borte */ }
+             .tab-content-container { padding: 2rem 1.5rem; }
+             .tab-pane h3 { font-size: 1.4rem;}
+             .tab-pane p { font-size: 0.95rem; }
 	    }
         @media (max-width: 480px) {
-            header .logo { font-size: 1.5rem; }
             header ul li a { padding: 6px 8px; font-size: 0.8rem; }
             .hero h1 { font-size: 2rem; }
             .section-header h2 { font-size: 1.8rem; }
             .footer-links img { width: 24px; height: 24px;}
             .footer-links a { margin: 0 8px;}
-            /* .team-member .om-image img { width: 150px; height: 150px; } */
-            /* .team-member .om-text h3 { font-size: 1.4rem; } */
-            /* .team-member .om-text p { font-size: 0.95rem; } */
             #paper { max-width: 240px; min-height: 300px; padding: 15px; }
             #paper-content { font-size: 0.8rem;}
             #thank-you-message { font-size: 1.1rem; }
-
-            /* Ekstra finjustering for kalkulator-knapp på veldig små skjermer */
-            .microsoft-calc-button {
-                font-size: 0.9rem;
-                padding: 10px 20px;
-                gap: 0.5em;
-            }
-            .microsoft-calc-button .ms-logo {
-                 width: 1.1em;
-                 height: 1.1em;
-             }
-            .resource-section .section-header h2 {
-                font-size: 1.6rem;
-            }
-             .resource-section .section-header p {
-                 font-size: 0.9rem;
-             }
-              .resource-section {
-                  padding: 2rem 0 0.5rem 0;
-              }
+            .microsoft-calc-button { font-size: 0.9rem; padding: 10px 20px; gap: 0.5em; }
+            .microsoft-calc-button .ms-logo { width: 1.1em; height: 1.1em; }
+            .resource-section .section-header h2 { font-size: 1.6rem; }
+            .resource-section .section-header p { font-size: 0.9rem; }
+             .resource-section { padding: 2rem 0 0.5rem 0; }
+             /* Tabs Responsivitet */
+             .tab-button { font-size: 0.95rem; padding: 0.8rem 1rem; }
+             .tab-content-container { padding: 1.5rem 1rem; }
         }
         @media (min-width: 1800px) {
             header ul { flex-wrap: nowrap; }
             header ul li { margin-top: 0; margin-bottom: 0; margin-left: 20px; }
         }
-
-        /* --- CSS OVERSTYRINGER OSV (Kommentert ut siden #om er det) --- */
-        /*
-		#om .container { display: flex !important; flex-wrap: wrap !important; justify-content: center !important; gap: 4rem !important; }
-		#om .container > .team-member { flex-grow: 1 !important; flex-shrink: 1 !important; flex-basis: 300px !important; min-width: 300px !important; max-width: 450px !important; width: auto !important; margin: 0 !important; padding: 0 !important; float: none !important; clear: none !important; position: relative !important; order: 0 !important; display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; }
-		#om .section-header { text-align: center !important; margin-left: auto !important; margin-right: auto !important; width: 100%; max-width: 100%; }
-		#om .section-header h2 { display: inline-block !important; margin-left: auto !important; margin-right: auto !important; }
-		#om .section-header h2::after { left: 50% !important; transform: translateX(-50%) !important; }
-		#om .section-header p { max-width: 700px; margin: 1.5rem auto 0 auto !important; text-align: center !important; }
-		#om .team-member { align-items: center !important; text-align: center !important; margin-left: auto !important; margin-right: auto !important; }
-		#om .team-member .om-image { margin-left: auto !important; margin-right: auto !important; }
-		#om .team-member .om-text h3 { text-align: center !important; }
-		#om .team-member .om-text p { text-align: center !important; margin-left: auto !important; margin-right: auto !important; }
-        */
-
     </style>
     <!-- === CSS STILER SLUTT === -->
 
@@ -327,18 +249,16 @@
 
     <header id="main-header">
         <nav class="container">
-		<!--
-            <div class="logo">TrendMe</div>-->
+            <a href="#hjem" class="logo-link">
+                <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189579/SVG_yqf4t8.svg" alt="TrendMe Logo" class="logo-img">
+            </a>
             <ul>
                 <li><a href="#hjem">Hjem</a></li>
-                <li><a href="#hvorfor-fabric">Hvorfor Fabric</a></li>
-                <li><a href="#om-fabric">Om Fabric</a></li>
-                <li><a href="#fabric-tjenester">Fabric Tjenester</a></li>
-                <li><a href="#powerbi-tjenester">Power BI Tjenester</a></li>
+                <li><a href="#om-oss">Om Oss</a></li>
+                <li><a href="#tjenester">Tjenester</a></li>
+                <li><a href="#fabric-tjenester">Fabric</a></li>
+                <li><a href="#powerbi-tjenester">Power BI</a></li>
                 <li><a href="#ressurser">Ressurser</a></li>
-		    <!-- 
-                <li><a href="#om">Om Oss</a></li>
-		    -->
                 <li><a href="#kontakt">Kontakt</a></li>
                 <li><a href="/blogg">Blogg</a></li>
                 <li><a href="/faktura">Faktura</a></li>
@@ -350,7 +270,7 @@
         <!-- Hero Seksjon -->
         <section id="hjem" class="hero">
             <div class="container">
-                <h1 class="fade-in">Microsoft Fabric Rådgivning: Fra Strategi til Verdi</h1>
+                <h1 class="fade-in">Naviger Fremtiden med Riktig Teknologi</h1>
                 <div class="typing-container fade-in" style="animation-delay: 0.5s;">
                     <span id="typing-text"></span><span class="typing-cursor"></span>
                 </div>
@@ -358,25 +278,73 @@
             </div>
         </section>
 
-        <!-- Hvorfor Fabric Seksjon -->
-        <section id="hvorfor-fabric" class="section">
+        <!-- Om Oss Seksjon (Tekst oppdatert) -->
+        <section id="om-oss" class="section">
              <div class="container">
                  <div class="section-header fade-in">
-                     <span>Fremtiden for Dataanalyse</span>
-                     <h2>Hvorfor Velge Microsoft Fabric?</h2>
-                     <p>Gå utover tradisjonell dataanalyse. Microsoft Fabric er en ende-til-ende, AI-drevet SaaS-plattform som samler dataintegrasjon, engineering, warehousing, datavitenskap, sanntidsanalyse og business intelligence på ett sted.</p>
+                     <span>Hvem Vi Er</span>
+                     <h2>Teknologi som Skaper Verdi</h2>
+                     <!-- Paragraf oppdatert -->
+                     <p>Hos TrendMe brenner vi for teknologi og hvordan den kan forbedre og effektivisere virksomheter. Vår misjon er å kontinuerlig følge med på de nyeste trendene – fra kunstig intelligens og avansert dataanalyse til skyteknologi og automatisering. Vi driver dette prosjektet med engasjement ved siden av studier og jobb, og hjelper våre kunder å velge og implementere teknologi som gir konkrete resultater.</p>
+                     <p style="margin-top: 1rem;">Vi oversetter teknologiske muligheter til praktiske løsninger for din bedrift.</p>
                  </div>
-                 <!-- .feature-grid kan legges til her hvis du har innhold for det -->
              </div>
          </section>
 
-        <!-- Om Fabric Seksjon -->
+         <!-- Tjenester Oversikt Seksjon (Ny Tab-struktur) -->
+         <section id="tjenester" class="section services-bg">
+             <div class="container">
+                 <div class="section-header fade-in">
+                     <span>Våre Kjerneområder</span>
+                     <h2>Fra Strategi til Implementering</h2>
+                     <p>Vi tilbyr et bredt spekter av rådgivnings- og implementeringstjenester tilpasset dine behov. Vi jobber på tvers av flere nøkkelområder for å hjelpe deg å utnytte teknologi effektivt:</p>
+                 </div>
+                 <!-- Tabs Container -->
+                 <div class="tabs-container fade-in" style="transition-delay: 0.2s;">
+                     <div class="tab-buttons" role="tablist">
+                         <button class="tab-button active" id="tab-data" data-target="#pane-data" role="tab" aria-controls="pane-data" aria-selected="true">Data & Analyse</button>
+                         <button class="tab-button" id="tab-ai" data-target="#pane-ai" role="tab" aria-controls="pane-ai" aria-selected="false">AI & Maskinlæring</button>
+                         <button class="tab-button" id="tab-sky" data-target="#pane-sky" role="tab" aria-controls="pane-sky" aria-selected="false">Sky & Infrastruktur</button>
+                     </div>
+                     <div class="tab-content-container">
+                         <div class="tab-pane active" id="pane-data" role="tabpanel" aria-labelledby="tab-data">
+                             <h3>Data & Analyse</h3>
+                             <!-- Tekst oppdatert uten parentes -->
+                             <p>Utnytt kraften i dine data. Vi hjelper med alt fra dataplattformstrategi og valg av verktøy som Microsoft Fabric, til BI-løsninger med Power BI, datavarehus og innsiktsgenerering.</p>
+                         </div>
+                         <div class="tab-pane" id="pane-ai" role="tabpanel" aria-labelledby="tab-ai">
+                             <h3>AI & Maskinlæring</h3>
+                             <p>Utforsk mulighetene med kunstig intelligens. Vi bistår med å identifisere use cases, utvikle modeller og integrere AI for økt effektivitet og innovasjon.</p>
+                         </div>
+                         <div class="tab-pane" id="pane-sky" role="tabpanel" aria-labelledby="tab-sky">
+                             <h3>Sky & Infrastruktur</h3>
+                             <p>Optimaliser din skyreise. Vi tilbyr rådgivning rundt skyarkitektur, migrering, kostnadsstyring og sikkerhet på plattformer som Azure.</p>
+                         </div>
+                     </div>
+                 </div>
+                 <p style="text-align: center; margin-top: 3rem; color: var(--text-medium);" class="fade-in" style="transition-delay: 0.4s;">Nedenfor finner du mer detaljert informasjon om noen av våre spesialiserte tjenester innen data og analyse.</p>
+             </div>
+         </section>
+
+
+        <!-- Hvorfor Moderne Dataanalyse Seksjon (Overskrift oppdatert) -->
+        <section id="hvorfor-moderne-data" class="section">
+             <div class="container">
+                 <div class="section-header fade-in">
+                     <span>Fremtiden for Dataanalyse</span>
+                     <h2>Verdien av Moderne Dataanalyse</h2> <!-- Overskrift endret -->
+                     <p>Tradisjonell dataanalyse kan være kompleks og fragmentert. Moderne plattformer tilbyr en mer helhetlig tilnærming. Et ledende eksempel er <strong>Microsoft Fabric</strong> – en ende-til-ende, AI-drevet SaaS-plattform som samler dataintegrasjon, engineering, warehousing, datavitenskap, sanntidsanalyse og business intelligence på ett sted.</p>
+                 </div>
+             </div>
+         </section>
+
+        <!-- Om Fabric Seksjon (Dypdykk) -->
         <section id="om-fabric" class="section services-bg">
              <div class="container">
                  <div class="section-header fade-in">
-                     <span>Bakgrunn & Visjon</span>
+                     <span>Dypdykk Teknologi</span>
                      <h2>Historien Bak Microsoft Fabric</h2>
-                     <p>Forstå hvorfor Fabric ble utviklet, problemene det løser for bedrifter, og hvordan det representerer fremtiden for dataanalyse.</p>
+                     <p>Som en del av vår ekspertise innen dataanalyse, har vi inngående kjennskap til ledende plattformer som Microsoft Fabric. Her kan du lære mer om bakgrunnen for Fabric, problemene det løser, og hvorfor det representerer en viktig trend innen dataanalyse.</p>
                  </div>
                  <div class="accordion-list fade-in" style="transition-delay: 0.3s;">
                     <div class="accordion-item">
@@ -401,7 +369,6 @@
                                  <li>Høy integrasjonskompleksitet</li>
                                  <li>Datasiloer og duplisering</li>
                                  <li>Utfordringer med data governance og sikkerhet</li>
-                
                              </ul>
                          </div>
                      </div>
@@ -445,18 +412,17 @@
              </div>
          </section>
 
-         <!-- Fabric Tjenester Seksjon (Oppdatert med Cloudinary URLer) -->
+         <!-- Fabric Tjenester Seksjon -->
          <section id="fabric-tjenester" class="section">
              <div class="container">
                   <div class="section-header fade-in">
-                     <span>Våre Spesialiteter</span>
+                     <span>Spesialiserte Tjenester</span>
                      <h2>Våre Microsoft Fabric Tjenester</h2>
-                     <p>Vi tilbyr ende-til-ende rådgivning og implementering for å sikre at din bedrift får maksimal verdi fra Microsoft Fabric.</p>
+                     <p>For virksomheter som velger å satse på Microsoft Fabric, tilbyr TrendMe dyptgående rådgivning og implementeringstjenester for å sikre maksimal verdiutnyttelse.</p>
                  </div>
                  <div class="service-grid">
                     <div class="service-card fade-in slide-left" style="transition-delay: 0.2s;">
                           <div class="service-icon-container">
-                              <!-- Oppdatert Lakehouse ikon -->
                               <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189619/lakehouse_put05u.png" alt="Microsoft Fabric Lakehouse ikon" class="service-icon">
                           </div>
                          <h3>Fabric Strategi & Arkitektur</h3>
@@ -470,7 +436,6 @@
                      </div>
                      <div class="service-card fade-in" style="transition-delay: 0.4s;">
                           <div class="service-icon-container">
-                              <!-- Oppdatert Data Factory ikon -->
                               <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189635/data_factory_nv6wje.png" alt="Microsoft Fabric Data Factory ikon" class="service-icon">
                           </div>
                          <h3>Data Engineering & Migrering til Fabric</h3>
@@ -484,7 +449,6 @@
                      </div>
                      <div class="service-card fade-in slide-right" style="transition-delay: 0.6s;">
                           <div class="service-icon-container">
-                              <!-- Oppdatert Real-time Analytics ikon -->
                               <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189644/real_time_analytics_misdlc.png" alt="Microsoft Fabric Real-time Analytics ikon" class="service-icon">
                           </div>
                          <h3>Sanntidsanalyse & AI i Fabric</h3>
@@ -500,18 +464,18 @@
              </div>
          </section>
 
-         <!-- Power BI Tjenester Seksjon (Oppdatert med Cloudinary URLer) -->
+         <!-- Power BI Tjenester Seksjon (Tekst justert) -->
           <section id="powerbi-tjenester" class="section services-bg">
               <div class="container">
                    <div class="section-header fade-in">
-                      <span>Visualisering & Innsikt</span>
-                      <h2>Power BI Tjenester & Optimalisering for Fabric</h2>
-                      <p>Vi leverer kvalitetssikre Power BI-løsninger, sømløst integrert og optimalisert for Microsoft Fabric, inkludert DirectLake for lynrask innsikt.</p>
+                      <span>Spesialiserte Tjenester</span>
+                      <h2>Power BI Tjenester & Optimalisering</h2>
+                      <!-- Paragraf justert uten parentes -->
+                      <p>Som en sentral del av vår dataanalyse-ekspertise, leverer vi kvalitetssikre Power BI-løsninger – enten frittstående eller sømløst integrert med plattformer som Microsoft Fabric, inkludert bruk av DirectLake for rask innsikt.</p>
                   </div>
                    <div class="service-grid">
                       <div class="service-card fade-in slide-left" style="transition-delay: 0.2s;">
                           <div class="service-icon-container">
-                               <!-- Oppdatert Power BI logo ikon -->
                                <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189652/powerbi_logo_s9snvf.png" alt="Power BI rapport og dashboard ikon" class="service-icon pbi-logo">
                            </div>
                           <h3>Power BI Rapportering & Dashboard Design</h3>
@@ -525,7 +489,6 @@
                       </div>
                       <div class="service-card fade-in" style="transition-delay: 0.4s;">
                           <div class="service-icon-container">
-                               <!-- Oppdatert Power BI datamodellering ikon -->
                                <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189662/powerbi_datamodellering_khn6sc.png" alt="Power BI datamodellering og DAX ikon" class="service-icon">
                            </div>
                           <h3>Datamodellering & DAX Optimalisering</h3>
@@ -539,7 +502,6 @@
                       </div>
                        <div class="service-card fade-in slide-right" style="transition-delay: 0.6s;">
                           <div class="service-icon-container">
-                               <!-- Oppdatert Power BI governance ikon -->
                                <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189707/powerbi_governence_gcgm2o.png" alt="Power BI administrasjon og governance ikon" class="service-icon">
                            </div>
                           <h3>Power BI Governance</h3>
@@ -554,7 +516,7 @@
               </div>
           </section>
 
-         <!-- === START: Seksjon for Ekstra Ressurser/Verktøy (Kalkulator-knapp) === -->
+         <!-- Ressurser Seksjon -->
          <section id="ressurser" class="resource-section section">
              <div class="container">
                   <div class="section-header fade-in">
@@ -580,22 +542,15 @@
                  </p>
              </div>
          </section>
-         <!-- === SLUTT Seksjon for Ekstra Ressurser/Verktøy === -->
-
-		<!-- Om Oss Seksjon (Fortsatt kommentert ut) -->
-	    <!--
-		<section id="om" class="section"> ... </section>
-        -->
 
         <!-- Kontakt Seksjon -->
         <section id="kontakt" class="section">
             <div class="container">
                  <div class="section-header fade-in">
                      <span>Ta Neste Steg</span>
-                    <h2>Klar for å Utnytte Potensialet i Microsoft Fabric?</h2>
-                    <p>Fyll ut skjemaet under for en uforpliktende samtale om hvordan TrendMe kan hjelpe din bedrift med Microsoft Fabric rådgivning, implementering eller optimalisering.</p>
+                    <h2>Ta kontakt for en uforpliktende teknologiprat</h2>
+                    <p>Fyll ut skjemaet for en uforpliktende samtale om hvordan vi kan hjelpe din bedrift med dataanalyse, AI, sky, Microsoft Fabric, Power BI eller andre teknologiske løsninger.</p>
                 </div>
-                <!-- Kontaktskjema -->
                 <form id="contact-form" class="fade-in" style="transition-delay: 0.3s;">
                     <div class="form-group">
                         <label for="name">Navn:</label>
@@ -617,10 +572,10 @@
                     </div>
                     <div class="form-group">
                         <label for="message">Hva kan vi hjelpe deg med?</label>
-                        <textarea id="message" name="message" rows="6" required placeholder="F.eks. behov for Fabric strategi, migrering fra Synapse, Power BI optimalisering..."></textarea>
+                        <textarea id="message" name="message" rows="6" required placeholder="F.eks. behov for teknologistrategi, AI-muligheter, Fabric-vurdering, Power BI-optimalisering..."></textarea>
                     </div>
                     <button type="submit" class="cta-button">Send Forespørsel om Konsultasjon</button>
-                    <p id="form-error-message" style="color: var(--error-color); margin-top: 1rem; text-align: center; display: none;"></p>
+                    <p id="form-error-message"></p>
                 </form>
             </div>
         </section>
@@ -629,7 +584,7 @@
     <footer>
         <div class="container">
             <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
-            <p>Din partner for Microsoft Fabric og Power BI rådgivning.</p>
+            <p>Rådgivning og implementering av moderne teknologi.</p>
 		    <p>Org.nr.: 935 389 763</p>
             <div class="footer-links">
              </div>
@@ -648,10 +603,9 @@
 
     <!-- === JAVASCRIPT START === -->
     <script>
-        // All JavaScript-kode her (Ingen endringer trengs i JS for bildebyttet)
         document.addEventListener('DOMContentLoaded', function() {
 
-            // --- Intersection Observer for animasjoner ---
+            // --- Intersection Observer ---
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
             const observerCallback = (entries, observer) => {
                 entries.forEach(entry => {
@@ -670,23 +624,25 @@
                 observer.observe(el);
             });
 
-            // --- Smooth scrolling justert for header ---
+            // --- Smooth scrolling ---
             const navLinks = document.querySelectorAll('header nav a[href^="#"]');
             const header = document.getElementById('main-header');
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
-                    e.preventDefault();
                     let targetId = this.getAttribute('href');
-                    // Check if it's a local link or an external/page link
                     if (targetId.startsWith('#')) {
-                        // It's a local anchor link
-                         if (targetId === '#') return; // Avoid scrolling for '#' link
+                        e.preventDefault();
+                        if (targetId === '#') {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            return;
+                        }
                          try {
                              let targetElement = document.querySelector(targetId);
                              if (targetElement) {
                                 const headerOffset = header ? header.offsetHeight : 0;
                                 const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                                const offsetPosition = elementPosition - headerOffset - 20; // Litt ekstra padding
+                                const stickyHeaderOffset = (window.getComputedStyle(header).position === 'sticky' && header.getBoundingClientRect().top <= 0) ? headerOffset : 0;
+                                const offsetPosition = elementPosition - stickyHeaderOffset - 20;
                                 window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                             } else {
                                 console.warn(`Smooth scroll target element not found for selector: ${targetId}`);
@@ -694,9 +650,6 @@
                         } catch (error) {
                              console.error(`Error finding element for smooth scroll: ${targetId}`, error);
                         }
-                    } else {
-                         // It's likely an external link or a link to another page
-                         window.location.href = targetId;
                     }
                 });
             });
@@ -704,63 +657,108 @@
              // --- Skrivemaskineffekt ---
              const typingTextElement = document.getElementById('typing-text');
              if (typingTextElement) {
-                 const textToType = "Reduser datakompleksitet. Akselerer innsikt. Optimaliser kostnader. Sikre governance.";
+                 const textToType = "Følger trender. Implementerer løsninger. Skaper verdi. Fra Data & AI til Sky.";
                  let charIndex = 0;
                  function typeChar() {
                      if (charIndex < textToType.length) {
                          if (charIndex === 0) typingTextElement.textContent = '';
                          typingTextElement.textContent += textToType.charAt(charIndex);
                          charIndex++;
-                         setTimeout(typeChar, 80);
+                         setTimeout(typeChar, 60);
                      }
                  }
                  setTimeout(typeChar, 1800);
              }
 
-            // --- Generell Accordion Logikk ---
+            // --- Accordion Logikk (Oppdatert) ---
             const accordionTitles = document.querySelectorAll('.accordion-title');
             accordionTitles.forEach(title => {
                 title.addEventListener('click', function() {
+                    const parentItem = this.closest('.accordion-item');
+                    if (!parentItem) return;
+
+                    const content = parentItem.querySelector('.accordion-content');
+                    const icon = this.querySelector('.ikon');
+                    const isAlreadyActive = this.classList.contains('aktiv');
+
+                    // Lukk alle andre i samme liste
                     const parentList = this.closest('.accordion-list');
                     if (parentList) {
-                         parentList.querySelectorAll('.accordion-item').forEach(otherItem => {
+                        parentList.querySelectorAll('.accordion-item').forEach(otherItem => {
                             const otherTitle = otherItem.querySelector('.accordion-title');
                             const otherContent = otherItem.querySelector('.accordion-content');
                             if (otherTitle !== this && otherTitle.classList.contains('aktiv')) {
                                 otherTitle.classList.remove('aktiv');
-                                if(otherContent) {
+                                if (otherContent) {
                                     otherContent.style.maxHeight = null;
                                     otherContent.classList.remove('aktiv');
                                 }
                                 const otherIcon = otherTitle.querySelector('.ikon');
-                                if(otherIcon) otherIcon.textContent = '+';
+                                if (otherIcon) otherIcon.textContent = '+';
                             }
                         });
                     }
-                    this.classList.toggle('aktiv');
-                    const content = this.nextElementSibling;
-                    const icon = this.querySelector('.ikon');
-                    if (content && content.classList.contains('accordion-content')) {
-                        if (content.style.maxHeight) {
+
+                    // Håndter den klikkede
+                    if (isAlreadyActive) {
+                        this.classList.remove('aktiv');
+                        if (content) {
                             content.style.maxHeight = null;
                             content.classList.remove('aktiv');
-                            if(icon) icon.textContent = '+';
-                        } else {
-                            content.classList.add('aktiv');
-                            content.style.maxHeight = content.scrollHeight + "px";
-                            if(icon) icon.textContent = '−';
                         }
+                        if (icon) icon.textContent = '+';
                     } else {
-                         console.warn("Accordion content not found immediately after title:", this);
+                        this.classList.add('aktiv');
+                        if (content) {
+                            content.classList.add('aktiv');
+                            // Mål scrollHeight *etter* klassen er lagt til og display er block
+                             requestAnimationFrame(() => {
+                                content.style.maxHeight = content.scrollHeight + "px";
+                            });
+                        }
+                        if (icon) icon.textContent = '−';
                     }
                 });
             });
+
+            // --- Tjenester Tabs Logikk ---
+            const tabButtonsContainer = document.querySelector('.tab-buttons');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+
+            if (tabButtonsContainer && tabPanes.length > 0) {
+                tabButtonsContainer.addEventListener('click', (e) => {
+                    const clickedButton = e.target.closest('.tab-button');
+                    if (!clickedButton) return; // Klikket ikke på en knapp
+
+                    const targetId = clickedButton.getAttribute('data-target');
+                    const targetPane = document.querySelector(targetId);
+
+                    if (!targetPane) return; // Fant ikke innholdspanelet
+
+                    // Fjern 'active' fra alle knapper i denne containeren
+                    tabButtonsContainer.querySelectorAll('.tab-button').forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-selected', 'false');
+                    });
+
+                    // Fjern 'active' fra alle paneler
+                    tabPanes.forEach(pane => {
+                        pane.classList.remove('active');
+                    });
+
+                    // Legg til 'active' på klikket knapp og målpanel
+                    clickedButton.classList.add('active');
+                    clickedButton.setAttribute('aria-selected', 'true');
+                    targetPane.classList.add('active');
+                });
+            }
+
 
             // --- Footer årstall ---
             const yearSpan = document.getElementById('year');
             if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
 
-             // === START KODE FOR KONTAKTSKJEMA BEDRIFTSSØK ===
+            // === Bedriftssøk (Brreg) ===
             function debounce(func, wait) {
                 let timeout;
                 return function executedFunction(...args) {
@@ -773,9 +771,7 @@
             const companySuggestionsUl = companySuggestionsContainer?.querySelector('ul');
             const MIN_SEARCH_LENGTH = 3;
             const DEBOUNCE_DELAY = 350;
-             if (!contactCompanyInput || !companySuggestionsContainer || !companySuggestionsUl) {
-                 console.error("CRITICAL: Missing elements required for company search functionality in the contact form.");
-             } else {
+             if (contactCompanyInput && companySuggestionsContainer && companySuggestionsUl) {
                 async function searchContactCompanyByName(searchTerm) {
                     const trimmedSearch = searchTerm.trim();
                     if (trimmedSearch.length < MIN_SEARCH_LENGTH) {
@@ -799,16 +795,21 @@
                             } else { companySuggestionsUl.innerHTML = '<li class="no-results">Ingen treff funnet.</li>'; }
                         } else { console.error('Brreg name search API error:', response.status, response.statusText); companySuggestionsUl.innerHTML = '<li class="no-results">Feil ved søk.</li>'; }
                     } catch (error) { console.error('Error fetching Brreg by name:', error); companySuggestionsUl.innerHTML = '<li class="no-results">Nettverksfeil.</li>'; }
-                    if (companySuggestionsUl.childNodes.length > 0) { companySuggestionsContainer.style.display = 'block'; } else { companySuggestionsContainer.style.display = 'none'; }
+                    if (companySuggestionsUl.childNodes.length > 0 && companySuggestionsUl.firstElementChild?.textContent !== 'Ingen treff funnet.' && companySuggestionsUl.firstElementChild?.textContent !== 'Feil ved søk.' && companySuggestionsUl.firstElementChild?.textContent !== 'Nettverksfeil.') {
+                         companySuggestionsContainer.style.display = 'block';
+                    } else if(companySuggestionsUl.childNodes.length === 0) {
+                         companySuggestionsContainer.style.display = 'none';
+                    }
                 }
                 const debouncedContactNameSearch = debounce(searchContactCompanyByName, DEBOUNCE_DELAY);
                 contactCompanyInput.addEventListener('input', (event) => { debouncedContactNameSearch(event.target.value); });
                 contactCompanyInput.addEventListener('blur', () => { setTimeout(() => { if (companySuggestionsContainer) { companySuggestionsContainer.style.display = 'none'; } }, 150); });
                 companySuggestionsContainer.addEventListener('mousedown', (event) => { event.preventDefault(); });
+             } else {
+                  console.error("CRITICAL: Missing elements required for company search functionality in the contact form.");
              }
-            // === SLUTT KODE FOR KONTAKTSKJEMA BEDRIFTSSØK ===
 
-            // === KODE FOR KONTAKTSKJEMA-ANIMASJON OG FORMSPREE SUBMIT ===
+            // === Kontaktskjema Animasjon & Formspree Submit ===
             const contactForm = document.getElementById('contact-form');
             const animationContainer = document.getElementById('animation-container');
             const paper = document.getElementById('paper');
@@ -820,15 +821,11 @@
             const phoneInput = document.getElementById('phone');
             const submitButton = contactForm?.querySelector('button[type="submit"]');
             const formErrorMessage = document.getElementById('form-error-message');
-             if (!contactForm || !animationContainer || !paper || !paperContent || !thankYouMessage || !nameInput || !emailInput || !messageInput || !contactCompanyInput || !phoneInput || !submitButton || !formErrorMessage) {
-                  console.error("CRITICAL: Missing elements required for contact form submission or animation.");
-                  if (formErrorMessage) { formErrorMessage.textContent = "En feil oppstod med skjemaet. Prøv å laste siden på nytt."; formErrorMessage.style.display = "block"; }
-                  if (submitButton) submitButton.disabled = true;
-             } else {
+             if (contactForm && animationContainer && paper && paperContent && thankYouMessage && nameInput && emailInput && messageInput && contactCompanyInput && phoneInput && submitButton && formErrorMessage) {
                 async function handleSubmit(event) {
                     event.preventDefault();
                     const originalButtonText = submitButton.textContent; submitButton.disabled = true; submitButton.textContent = 'Sender...'; formErrorMessage.style.display = 'none';
-                    const formData = new FormData(contactForm); const formSpreeEndpoint = 'https://formspree.io/f/xyzenqnp';
+                    const formData = new FormData(contactForm); const formSpreeEndpoint = 'https://formspree.io/f/xyzenqnp'; // ENDRE TIL DIN FORMSPREE ENDPOINT
                     try {
                         const response = await fetch(formSpreeEndpoint, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
                         if (response.ok) {
@@ -857,8 +854,12 @@
                         contactForm.reset(); submitButton.disabled = false; submitButton.textContent = 'Send Forespørsel om Konsultasjon';
                     }
                 });
+             } else {
+                  console.error("CRITICAL: Missing elements required for contact form submission or animation.");
+                  if (formErrorMessage) { formErrorMessage.textContent = "En feil oppstod med skjemaet. Prøv å laste siden på nytt."; formErrorMessage.style.display = "block"; }
+                  if (submitButton) submitButton.disabled = true;
              }
-            // === SLUTT KODE FOR KONTAKTSKJEMA-ANIMASJON OG FORMSPREE SUBMIT ===
+
         }); // Slutt på DOMContentLoaded
     </script>
     <!-- === JAVASCRIPT SLUTT === -->
