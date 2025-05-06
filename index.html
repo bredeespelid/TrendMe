@@ -168,8 +168,8 @@
         }
         .carousel-slide .slide-link { display: inline-block; text-decoration: none; color: var(--primary-accent-dark); font-weight: 600; padding: 8px 15px; border: 1px solid var(--primary-accent-dark); border-radius: 20px; transition: background-color var(--transition-speed), color var(--transition-speed); align-self: flex-start; margin-top: auto; }
         .carousel-slide .slide-link:hover { background-color: var(--primary-accent-dark); color: var(--bg-light); }
-        .carousel-message-placeholder { width: 100%; display: flex; justify-content: center; align-items: center; padding: 2rem; min-height: 250px; font-style: italic; background: var(--bg-light); border: 1px solid var(--card-border-light); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); border-radius: 12px; }
-        .carousel-message-placeholder .loading-message { color: var(--text-dark-muted); }
+        .carousel-message-placeholder { width: 100%; display: flex; justify-content: center; align-items: center; padding: 2rem; min-height: 250px; /* font-style: italic; -- fjernet herfra, legges på p taggene inni */ background: var(--bg-light); border: 1px solid var(--card-border-light); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); border-radius: 12px; }
+        .carousel-message-placeholder .loading-message { color: var(--text-dark-muted); font-style: italic; }
         .carousel-message-placeholder .error-message { color: var(--error-color); font-weight: normal; font-style: normal;}
         .carousel-button { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.85); border: 1px solid var(--card-border-light); color: var(--text-dark-primary); border-radius: 50%; width: 40px; height: 40px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: background-color var(--transition-speed), color var(--transition-speed), box-shadow var(--transition-speed), opacity var(--transition-speed); box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
         .carousel-button:hover { background-color: var(--primary-accent-dark); color: var(--bg-light); box-shadow: 0 4px 12px rgba(0, 120, 212, 0.25); }
@@ -179,6 +179,38 @@
         .carousel-dots { text-align: center; margin-top: 1.5rem; }
         .carousel-dot { display: inline-block; width: 10px; height: 10px; background-color: #ccc; border-radius: 50%; margin: 0 5px; cursor: pointer; transition: background-color var(--transition-speed), transform var(--transition-speed); }
         .carousel-dot.active { background-color: var(--primary-accent-dark); transform: scale(1.3); }
+
+        /* === NYTT: RSS Feed Lasteanimasjon === */
+        .loading-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px; /* Total høyde for animasjonsområdet */
+        }
+        .loading-animation .bar {
+            width: 6px;
+            height: 25px;
+            margin: 0 2px;
+            background-color: var(--primary-accent-dark);
+            border-radius: 3px;
+            animation: loading-bar-wave 1.2s infinite ease-in-out;
+        }
+        .loading-animation .bar:nth-child(1) { animation-delay: 0s; }
+        .loading-animation .bar:nth-child(2) { animation-delay: 0.1s; }
+        .loading-animation .bar:nth-child(3) { animation-delay: 0.2s; }
+        .loading-animation .bar:nth-child(4) { animation-delay: 0.3s; }
+        .loading-animation .bar:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes loading-bar-wave {
+            0%, 40%, 100% {
+                transform: scaleY(0.4);
+            }
+            20% {
+                transform: scaleY(1.0);
+            }
+        }
+        /* === SLUTT: RSS Feed Lasteanimasjon === */
+
 
         @media (max-width: 992px) {
              header nav { flex-direction: column; align-items: center; height: auto; min-height: var(--header-height); }
@@ -542,7 +574,7 @@
                          <div class="carousel-viewport">
                              <div class="carousel-track">
                                  <div class="carousel-message-placeholder">
-                                     <p class="loading-message">Laster siste nytt...</p>
+                                     <!-- Innhold settes av JavaScript -->
                                  </div>
                              </div>
                          </div>
@@ -839,25 +871,23 @@
                 }
 
                 let cutOffPoint = -1;
-                let lastPeriod = text.lastIndexOf('.', targetLength + 15); // Se litt lenger for punktum
-                if (lastPeriod > targetLength * 0.6 && lastPeriod <= targetLength + 15) { // Sørg for at punktum er "fornuftig" plassert
+                let lastPeriod = text.lastIndexOf('.', targetLength + 15);
+                if (lastPeriod > targetLength * 0.6 && lastPeriod <= targetLength + 15) {
                     cutOffPoint = lastPeriod + 1;
                 } else {
                     let lastSpace = text.lastIndexOf(' ', targetLength);
-                    if (lastSpace > targetLength * 0.6) { // Sørg for at mellomrom er "fornuftig" plassert
+                    if (lastSpace > targetLength * 0.6) {
                         cutOffPoint = lastSpace;
                     }
                 }
 
                 if (cutOffPoint !== -1 && cutOffPoint < text.length) {
-                    // Hvis vi kutter og det er mer tekst, legg til "..."
                     let truncatedText = text.substring(0, cutOffPoint).trimEnd();
-                    // Unngå doble punktum hvis vi kuttet ved et punktum
                     if (truncatedText.endsWith('.')) {
-                        return truncatedText + ".."; // Blir til ...
+                        return truncatedText + "..";
                     }
                     return truncatedText + "...";
-                } else { // Fallback til hardere kutt hvis ingen god brytning
+                } else {
                     let shortText = text.substring(0, targetLength);
                     if (text.charAt(targetLength) !== ' ' && shortText.lastIndexOf(' ') > -1) {
                         shortText = shortText.substring(0, shortText.lastIndexOf(' '));
@@ -910,16 +940,23 @@
                 fabricTotalSlides = Math.min(items.length, fabricMaxItems);
 
                 if (fabricTotalSlides === 0) {
-                    fabricCarouselMessagePlaceholder.innerHTML = '<p class="loading-message">Ingen nylige oppdateringer funnet.</p>';
-                    fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder);
+                    // MODIFISERT: Innhold for "ingen oppdateringer"
+                    fabricCarouselMessagePlaceholder.innerHTML = `
+                        <div style="text-align: center;">
+                            <p class="loading-message">Ingen nylige oppdateringer funnet.</p>
+                        </div>`;
+                    if (fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) {
+                         fabricCarouselTrack.innerHTML = ''; // Sørg for at det er tomt før du legger til
+                         fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder);
+                    }
                     if (fabricCarouselPrevButton) fabricCarouselPrevButton.style.display = 'none';
                     if (fabricCarouselNextButton) fabricCarouselNextButton.style.display = 'none';
                     if (fabricCarouselDotsContainer) fabricCarouselDotsContainer.innerHTML = '';
                     return;
                 }
-                if (fabricCarouselMessagePlaceholder.parentNode === fabricCarouselTrack) {
-                    fabricCarouselTrack.removeChild(fabricCarouselMessagePlaceholder);
-                }
+                // Hvis vi har items, sørger vi for at placeholder ikke er i track før vi legger til slides.
+                // Dette håndteres uansett av fabricCarouselTrack.innerHTML = ''; nedenfor hvis items.length > 0.
+                // Så fjerning av placeholder her er egentlig dekket.
 
                 for (let i = 0; i < fabricTotalSlides; i++) {
                     const item = items[i];
@@ -928,7 +965,7 @@
                         const link = item.querySelector("link")?.textContent.trim() || '#';
                         const pubDateStr = item.querySelector("pubDate")?.textContent.trim();
                         const descriptionHTML = item.querySelector("description")?.textContent.trim() || '';
-                        const descriptionText = fabricCarousel_sanitizeAndTruncateDescription(descriptionHTML, 160); // targetLength på 160
+                        const descriptionText = fabricCarousel_sanitizeAndTruncateDescription(descriptionHTML, 160);
                         const pubDate = pubDateStr ? new Date(pubDateStr).toLocaleDateString('no-NO', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
                         const slideDiv = document.createElement('div');
                         slideDiv.classList.add('carousel-slide');
@@ -949,9 +986,27 @@
 
             async function fetchFabricUpdates() {
                 if (!fabricCarouselTrack || !fabricCarouselMessagePlaceholder) { logFabricUpdate("Nødv. karusellelementer mangler.", true); return; }
-                fabricCarouselMessagePlaceholder.innerHTML = '<p class="loading-message">Laster siste nytt...</p>';
-                if (fabricCarouselTrack.children.length === 0 || (fabricCarouselTrack.children.length === 1 && fabricCarouselTrack.firstChild === fabricCarouselMessagePlaceholder)) {/*OK*/}
-                else { fabricCarouselTrack.innerHTML = ''; fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder); }
+                
+                // MODIFISERT: Viser lasteanimasjon
+                fabricCarouselMessagePlaceholder.innerHTML = `
+                    <div style="text-align: center;">
+                        <p class="loading-message" style="margin-bottom: 15px;">Laster siste nytt...</p>
+                        <div class="loading-animation">
+                            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                        </div>
+                    </div>`;
+
+                // Sørg for at placeholderen er det eneste innholdet i tracken før lasting
+                if (fabricCarouselTrack.children.length === 0 || (fabricCarouselTrack.children.length === 1 && fabricCarouselTrack.firstChild === fabricCarouselMessagePlaceholder)) {
+                    // OK, placeholder er allerede der eller track er tom (vil bli lagt til)
+                    if (fabricCarouselTrack.children.length === 0) {
+                        fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder);
+                    }
+                } else { // Flere elementer, tøm og legg til placeholder
+                    fabricCarouselTrack.innerHTML = ''; 
+                    fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder);
+                }
+
 
                 let response;
                 try {
@@ -965,14 +1020,21 @@
                         if (!response.ok) throw new Error(`Proxy HTTP-feil: ${response.status}`);
                     } catch (proxyError) {
                         logFabricUpdate(`Proxy-henting feilet: ${proxyError.message}`, true);
-                        fabricCarouselMessagePlaceholder.innerHTML = `<p class="error-message">Kunne ikke laste oppdateringer.</p>`;
+                        // MODIFISERT: Innhold for feilmelding
+                        fabricCarouselMessagePlaceholder.innerHTML = `<div style="text-align: center;"><p class="error-message">Kunne ikke laste oppdateringer.</p></div>`;
+                        // Sørg for at den er i track hvis den ikke er det
                         if (fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) { fabricCarouselTrack.innerHTML = ''; fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder); }
                         if (fabricCarouselPrevButton) fabricCarouselPrevButton.style.display = 'none';
                         if (fabricCarouselNextButton) fabricCarouselNextButton.style.display = 'none';
                         return;
                     }
                 }
-                if (!response) { fabricCarouselMessagePlaceholder.innerHTML = `<p class="error-message">Ingen respons.</p>`; return; }
+                if (!response) { 
+                    // MODIFISERT: Innhold for feilmelding
+                    fabricCarouselMessagePlaceholder.innerHTML = `<div style="text-align: center;"><p class="error-message">Ingen respons fra serveren.</p></div>`;
+                    if (fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) { fabricCarouselTrack.innerHTML = ''; fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder); }
+                    return; 
+                }
                 try {
                     const xmlData = await response.text();
                     const parser = new DOMParser();
@@ -983,7 +1045,8 @@
                     fabricCarousel_populateAndInit(items);
                 } catch (error) {
                     logFabricUpdate(`Feil ved behandling av respons: ${error.message}`, true);
-                    fabricCarouselMessagePlaceholder.innerHTML = `<p class="error-message">Klarte ikke behandle data.</p>`;
+                     // MODIFISERT: Innhold for feilmelding
+                    fabricCarouselMessagePlaceholder.innerHTML = `<div style="text-align: center;"><p class="error-message">Klarte ikke behandle data fra feeden.</p></div>`;
                     if (fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) { fabricCarouselTrack.innerHTML = ''; fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder); }
                     if (fabricCarouselPrevButton) fabricCarouselPrevButton.style.display = 'none';
                     if (fabricCarouselNextButton) fabricCarouselNextButton.style.display = 'none';
@@ -1001,7 +1064,7 @@
                         autoSlideInterval = setInterval(() => fabricCarousel_showSlide(fabricCarouselCurrentIndex + 1), 7000);
                    }
                 });
-            } else { logFabricUpdate("Nødv. karusellelementer ikke funnet.", true); }
+            } else { logFabricUpdate("Nødv. karusellelementer ikke funnet for RSS-feed.", true); }
         });
     </script>
 </body>
