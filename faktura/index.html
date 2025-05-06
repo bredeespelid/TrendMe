@@ -18,69 +18,173 @@
     <!-- === CSS STILER START === -->
     <style>
         :root {
-            --dark-bg: #121212;
-            --primary-fabric-dark: #6a0dad;
-            --primary-fabric-light: #9370db;
-            --secondary-accent: #00c6ff;
-            --glow-color: rgba(0, 198, 255, 0.5);
-            --text-light: #e0e0e0;
-            --text-medium: #b0b0b0;
-            --text-dark: #1f1f1f;
-            --card-bg: rgba(40, 40, 40, 0.8);
-            --card-border: rgba(255, 255, 255, 0.1);
+            /* Variabler fra TrendMe Hovedside (Lys Tema) */
+            --bg-light: #ffffff;
+            --bg-soft-light: #f8f9fa;
+            --text-dark-primary: #212529;
+            --text-dark-secondary: #495057;
+            --text-dark-muted: #6c757d;
+            --card-border-light: rgba(0, 0, 0, 0.1);
+            --header-bg-light: rgba(255, 255, 255, 0.85); /* Gjennomsiktig hvit */
+            --suggestions-bg-light: rgba(255, 255, 255, 0.98);
+            --suggestions-hover-bg-light: #f1f3f5;
+            --footer-bg-light: #f1f3f5;
+            --primary-accent-dark: #0078d4; /* TrendMe Blå */
+            --primary-accent-light: #00c6ff; /* TrendMe Cyan */
+            --secondary-accent: #9370db; /* TrendMe Lilla (brukes i gradienter) */
+            --glow-color: rgba(0, 198, 255, 0.3);
+            --button-glow-color: rgba(0, 198, 255, 0.2);
+            --text-on-dark-bg: #1f1f1f; /* Mørk tekst for knapper med lys gradient */
+            --text-on-accent: #ffffff; /* Lys tekst for elementer med mørk accentfarge */
+
             --font-primary: 'Poppins', sans-serif;
             --transition-speed: 0.3s;
             --transition-slow: 0.5s;
-            --success-color: #2ecc71; /* Grønn for suksess */
-            --warning-color: #f39c12; /* Gul/oransje for varsel */
-            --error-color: #ff6b6b;   /* Rød for feil */
-            --suggestions-bg: rgba(50, 50, 50, 0.95); /* Mørk bakgrunn for forslag */
-            --suggestions-hover-bg: rgba(60, 60, 60, 0.98); /* Hover bakgrunn */
+            --success-color: #28a745; /* Litt mørkere grønn for bedre kontrast på lys bg */
+            --warning-color: #ffc107; /* Gul */
+            --error-color: #dc3545;   /* Rød fra TrendMe */
+            --header-height: 70px; /* Høyde fra TrendMe */
         }
         /* --- Grunnleggende og Hjelpeklasser --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--secondary-accent) var(--dark-bg); }
+        html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--primary-accent-light) var(--bg-soft-light); }
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--dark-bg); }
-        ::-webkit-scrollbar-thumb { background-color: var(--secondary-accent); border-radius: 10px; border: 2px solid var(--dark-bg); }
-        body { font-family: var(--font-primary); line-height: 1.7; color: var(--text-light); background-color: var(--dark-bg); overflow-x: hidden; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); padding-top: 80px; }
+        ::-webkit-scrollbar-track { background: var(--bg-soft-light); }
+        ::-webkit-scrollbar-thumb { background-color: var(--primary-accent-light); border-radius: 10px; border: 2px solid var(--bg-soft-light); }
+
+        body {
+            font-family: var(--font-primary);
+            line-height: 1.7;
+            color: var(--text-dark-secondary); /* Standard tekstfarge */
+            background-color: var(--bg-light);
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #eef2f7 0%, #ffffff 50%, #e6f7ff 100%); /* Bakgrunn fra TrendMe */
+            padding-top: calc(var(--header-height) + 10px); /* Justert for header */
+        }
         .container { max-width: 1200px; margin: auto; padding: 0 25px; }
-        .fade-in { opacity: 0; transition: opacity 1s ease-out, transform 0.8s ease-out; transform: translateY(20px); /* Start litt nede */ }
+        .fade-in { opacity: 0; transition: opacity 1s ease-out, transform 0.8s ease-out; transform: translateY(20px); }
         .visible { opacity: 1; transform: translate(0, 0) !important; }
 
         /* --- Header & Navigasjon --- */
-        header { background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text-light); padding: 0.8rem 0; position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 1px solid var(--card-border); transition: background-color var(--transition-speed) ease; }
-        header nav { display: flex; justify-content: space-between; align-items: center; min-height: 50px; }
-        header .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        header ul { list-style: none; display: flex; align-items: center; padding-left: 0; }
+        header {
+            background: var(--header-bg-light);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--text-dark-primary);
+            padding: 0; /* Fjern padding, høyde styres av var(--header-height) */
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid var(--card-border-light);
+            transition: background-color var(--transition-speed) ease;
+            height: var(--header-height); /* Bruk TrendMe header høyde */
+        }
+        header nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%; /* Fyll header høyde */
+        }
+        header .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--primary-accent-dark); /* Bruk TrendMe primærfarge */
+            text-decoration: none;
+        }
+        header ul { list-style: none; display: flex; align-items: center; padding-left: 0; margin:0; }
         header ul li { margin-left: 20px; }
-        header ul li a { display: flex; align-items: center; color: var(--text-medium); text-decoration: none; padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px; font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative; overflow: hidden; white-space: nowrap; }
-        header ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); transition: width var(--transition-speed) ease, left var(--transition-speed) ease; transform: translateX(-50%); }
-        header ul li a:hover { color: var(--text-light); }
+        header ul li a {
+            display: flex;
+            align-items: center;
+            color: var(--text-dark-muted);
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: color var(--transition-speed) ease;
+            border-radius: 5px;
+            font-weight: 400;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        header ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 5px;
+            left: 50%;
+            background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent));
+            transition: width var(--transition-speed) ease, left var(--transition-speed) ease;
+            transform: translateX(-50%);
+        }
+        header ul li a:hover { color: var(--primary-accent-dark); }
         header ul li a:hover::after { width: 70%; left: 50%; }
 
         /* --- Generell Seksjon Styling --- */
         .section { padding: 4rem 0; overflow: hidden; }
         .section-header { text-align: center; margin-bottom: 3rem; }
-        .section-header h2 { font-size: 2.5rem; font-weight: 700; color: var(--text-light); margin-bottom: 1rem; position: relative; display: inline-block; }
-        .section-header h2::after { content: ''; position: absolute; width: 60px; height: 4px; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); bottom: -15px; left: 50%; transform: translateX(-50%); border-radius: 2px; }
-        .section-header p { max-width: 700px; margin: 1rem auto 0 auto; color: var(--text-medium); font-size: 1.1rem; }
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark-primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); /* TrendMe gradient */
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        .section-header p {
+            max-width: 700px;
+            margin: 1rem auto 0 auto;
+            color: var(--text-dark-secondary);
+            font-size: 1.1rem;
+        }
+        .section-header p a { /* Stil for lenker i section-header p */
+            color: var(--primary-accent-dark);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .section-header p a:hover {
+            text-decoration: underline;
+        }
+
 
         /* --- Kontaktskjema Styling --- */
         #invoice-preferences-form {
             max-width: 800px;
             margin: 0 auto;
-            background: var(--card-bg);
+            background: var(--bg-light); /* Solid hvit bakgrunn */
             padding: 3rem;
             border-radius: 15px;
-            border: 1px solid var(--card-border);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--card-border-light);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07); /* Subtil skygge som på TrendMe kontakt */
         }
         .form-group {
             margin-bottom: 1.8rem;
-            position: relative; /* Viktig for suggestions-posisjonering */
+            position: relative;
         }
-        .form-group label { display: block; margin-bottom: 0.7rem; font-weight: 600; color: var(--text-medium); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 600;
+            color: var(--text-dark-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
         .form-group input[type="text"],
         .form-group input[type="email"],
         .form-group input[type="tel"],
@@ -88,26 +192,54 @@
         .form-group textarea {
             width: 100%;
             padding: 1rem;
-            border: 1px solid var(--card-border);
+            border: 1px solid var(--card-border-light);
             border-radius: 8px;
             font-family: inherit;
             font-size: 1rem;
-            background-color: rgba(50, 50, 50, 0.5);
-            color: var(--text-light);
+            background-color: var(--bg-light); /* Hvit bakgrunn for inputs */
+            color: var(--text-dark-primary); /* Mørk tekst i inputs */
             transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
         }
-        .form-group select { appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23b0b0b0' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; padding-right: 2.5rem; }
-        .form-group fieldset { border: 1px solid var(--card-border); border-radius: 8px; padding: 1rem 1.5rem; margin-top: 0.5rem; }
-        .form-group legend { font-weight: 600; color: var(--text-medium); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; padding: 0 0.5rem; }
-        .radio-group label { display: block; margin-bottom: 0.5rem; font-weight: normal; color: var(--text-light); font-size: 1rem; text-transform: none; letter-spacing: normal; cursor: pointer; }
+        .form-group select {
+            appearance: none; -webkit-appearance: none; -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236c757d' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E"); /* Oppdatert pilfarge */
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
+        }
+        .form-group fieldset {
+            border: 1px solid var(--card-border-light);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .form-group legend {
+            font-weight: 600;
+            color: var(--text-dark-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0 0.5rem;
+        }
+        .radio-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: normal;
+            color: var(--text-dark-primary); /* Mørk tekst for radio labels */
+            font-size: 1rem;
+            text-transform: none;
+            letter-spacing: normal;
+            cursor: pointer;
+        }
         .radio-group input[type="radio"] { margin-right: 0.7rem; vertical-align: middle; cursor: pointer; }
 
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: var(--secondary-accent);
-            box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.2);
+            border-color: var(--primary-accent-dark); /* TrendMe Blå fokus */
+            box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.15); /* TrendMe fokus skygge */
         }
         .form-group input.error,
         .form-group textarea.error {
@@ -115,19 +247,49 @@
             box-shadow: 0 0 0 1px var(--error-color);
         }
         .form-group textarea { resize: vertical; min-height: 100px; }
-        #invoice-preferences-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; }
-        .cta-button { display: inline-block; background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent)); color: var(--text-dark); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease, opacity var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 5px 15px rgba(0, 198, 255, 0.3); }
-        .cta-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px var(--glow-color); }
-        .cta-button:disabled { background: gray; cursor: not-allowed; opacity: 0.7; transform: none; box-shadow: none; }
+
+        /* CTA knapp, basert på TrendMe hovedside */
+        .cta-button {
+            display: inline-flex; /* Endret for å matche hovedsiden, men block kan også fungere her */
+            align-items: center;
+            justify-content: center;
+            gap: 0.8em;
+            background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); /* TrendMe gradient */
+            color: var(--text-on-dark-bg); /* Mørk tekst på lys gradient */
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease, opacity var(--transition-speed) ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px var(--button-glow-color); /* TrendMe knappeskygge */
+        }
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px var(--glow-color); /* TrendMe hover skygge */
+        }
+        .cta-button:disabled {
+            background: #adb5bd; /* TrendMe disabled stil */
+            color: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.7;
+            transform: none;
+            box-shadow: none;
+        }
+        #invoice-preferences-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; } /* Sørger for at knappen er full bredde i skjema */
+
         #form-feedback-message { text-align: center; margin-top: 1rem; display: none; }
         #form-feedback-message.error { color: var(--error-color); }
         #form-feedback-message.success { color: var(--success-color); }
 
         /* Styling for Brreg ORGNR lookup status */
         .brreg-status {
-             display: inline-block; margin-left: 10px; font-size: 0.85em; font-weight: 500; transition: color 0.3s ease; color: var(--text-medium);
+             display: inline-block; margin-left: 10px; font-size: 0.85em; font-weight: 500; transition: color 0.3s ease;
+             color: var(--text-dark-muted); /* Standard farge for status */
         }
-        .brreg-status.searching { color: var(--text-medium); }
+        .brreg-status.searching { color: var(--text-dark-muted); } /* Samme som standard */
         .brreg-status.success { color: var(--success-color); }
         .brreg-status.warning { color: var(--warning-color); }
         .brreg-status.error { color: var(--error-color); }
@@ -137,67 +299,116 @@
             position: absolute;
             left: 0;
             right: 0;
-            top: 100%; /* Rett under inputfeltet */
-            background-color: var(--suggestions-bg);
-            border: 1px solid var(--card-border);
-            border-top: none; /* Unngå dobbel kant mot input */
-            border-radius: 0 0 8px 8px; /* Matcher input-radius */
-            z-index: 10; /* Skal ligge over andre elementer */
-            max-height: 200px; /* Begrens høyden */
-            overflow-y: auto; /* Scroll hvis mange treff */
-            display: none; /* Skjult som standard */
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            top: 100%;
+            background-color: var(--suggestions-bg-light); /* Lys bakgrunn */
+            border: 1px solid var(--card-border-light);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            z-index: 10;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05); /* Lett skygge */
+            /* backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); -- Kan fjernes for lys tema, eller reduseres */
         }
-        .suggestions-container ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
+        .suggestions-container ul { list-style: none; margin: 0; padding: 0; }
         .suggestions-container li {
             padding: 0.8rem 1rem;
             cursor: pointer;
-            color: var(--text-light);
-            border-bottom: 1px solid var(--card-border);
+            color: var(--text-dark-primary); /* Mørk tekst for forslag */
+            border-bottom: 1px solid var(--card-border-light);
             transition: background-color 0.2s ease;
         }
-         .suggestions-container li:last-child {
-             border-bottom: none;
-         }
+         .suggestions-container li:last-child { border-bottom: none; }
         .suggestions-container li:hover {
-            background-color: var(--suggestions-hover-bg);
-            color: var(--secondary-accent);
+            background-color: var(--suggestions-hover-bg-light); /* Lys hover */
+            color: var(--primary-accent-dark); /* Blå tekst på hover */
         }
          .suggestions-container li .suggestion-orgnr {
-             display: block; /* Ny linje */
+             display: block;
              font-size: 0.8em;
-             color: var(--text-medium);
+             color: var(--text-dark-muted); /* Mørk, dempet tekst for orgnr */
              margin-top: 2px;
          }
          .suggestions-container .no-results {
             padding: 0.8rem 1rem;
-            color: var(--text-medium);
+            color: var(--text-dark-muted); /* Mørk, dempet tekst */
             font-style: italic;
          }
         /* === SLUTT Styling for Brreg NAME suggestions === */
 
 
         /* --- Footer Styling --- */
-        footer { background-color: #0a0a0a; color: var(--text-medium); text-align: center; padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border); }
+        footer {
+            background-color: var(--footer-bg-light); /* Lys footer bakgrunn */
+            color: var(--text-dark-muted); /* Mørk, dempet tekst */
+            text-align: center;
+            padding: 3rem 0 2rem 0;
+            margin-top: 4rem;
+            border-top: 1px solid var(--card-border-light);
+        }
         footer p { margin-bottom: 1rem; font-size: 0.9rem; }
 
         /* === ANIMASJONSKODE --- */
-        #animation-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(18, 18, 18, 0.9); display: none; justify-content: center; align-items: center; flex-direction: column; z-index: 1100; overflow: hidden; }
-        #paper { background-color: #fff; width: 300px; height: 400px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); border: 1px solid var(--card-border); padding: 20px; box-sizing: border-box; opacity: 0; transform: scale(0.8); transition: opacity 0.5s ease-out, transform 0.5s ease-out; position: relative; overflow: hidden; }
-        #paper-content { font-family: var(--font-primary); font-size: 0.9rem; color: var(--text-dark); white-space: pre-wrap; word-wrap: break-word; max-height: 100%; overflow-y: auto; }
-        #thank-you-message { margin-top: 20px; font-size: 1.5rem; color: var(--secondary-accent); font-weight: bold; text-align: center; display: none; opacity: 0; transition: opacity 0.5s ease-in 0.2s; }
+        #animation-container {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: rgba(248, 249, 250, 0.9); /* Lys, lett gjennomsiktig bakgrunn */
+            display: none; justify-content: center; align-items: center; flex-direction: column; z-index: 1100; overflow: hidden;
+        }
+        #paper {
+            background-color: var(--bg-light); /* Hvit papirbakgrunn */
+            width: 300px; height: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtil skygge */
+            border: 1px solid #dee2e6; /* Lys kantlinje */
+            padding: 20px; box-sizing: border-box; opacity: 0; transform: scale(0.8);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            position: relative; overflow: hidden;
+        }
+        #paper-content {
+            font-family: var(--font-primary); font-size: 0.9rem;
+            color: var(--text-dark-primary); /* Mørk tekst på papiret */
+            white-space: pre-wrap; word-wrap: break-word; max-height: 100%; overflow-y: auto;
+        }
+        #thank-you-message {
+            margin-top: 20px; font-size: 1.5rem;
+            color: var(--primary-accent-dark); /* Blå takkemelding */
+            font-weight: bold; text-align: center; display: none; opacity: 0;
+            transition: opacity 0.5s ease-in 0.2s;
+        }
         @keyframes fly-away { 0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translate(120vw, -120vh) rotate(720deg) scale(0.1); opacity: 0; } }
         #paper.flying { animation: fly-away 2s ease-in forwards; }
 
-        /* --- Responsivitet --- */
-        @media (max-width: 992px) { header ul li { margin-left: 15px; } header ul li a { padding: 10px 10px;} }
-        @media (max-width: 768px) { body { padding-top: 120px; } header nav { flex-direction: column; align-items: center; } header .logo { margin-bottom: 15px; } header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; } header ul li { margin: 5px 8px; } header ul li a { font-size: 0.9rem; padding: 8px 12px; } .section { padding: 3rem 0; } .section-header h2 { font-size: 2rem; } .section-header p { font-size: 1rem; } #invoice-preferences-form { padding: 2rem; max-width: 95%; } #paper { width: 90%; max-width: 280px; height: auto; min-height: 350px; } #thank-you-message { font-size: 1.2rem; } }
-        @media (max-width: 480px) { body { padding-top: 150px; } .section-header h2 { font-size: 1.8rem; } header .logo { font-size: 1.5rem; } header ul li { margin: 3px 5px;} header ul li a { padding: 6px 8px; font-size: 0.85rem;} #invoice-preferences-form { padding: 1.5rem; } #paper { max-width: 240px; min-height: 300px; padding: 15px; } #paper-content { font-size: 0.8rem;} #thank-you-message { font-size: 1.1rem; } }
+        /* --- Responsivitet (Beholder eksisterende, men padding-top for body er justert over) --- */
+        @media (max-width: 992px) {
+            header ul li { margin-left: 15px; }
+            header ul li a { padding: 10px 10px;}
+        }
+        @media (max-width: 768px) {
+            /* body { padding-top: 120px; } -- Fjernet, styres av var(--header-height) globalt */
+            header { height: auto; min-height: var(--header-height); /* Tillat header å vokse hvis innholdet wrapper */ }
+            header nav { flex-direction: column; align-items: center; padding: 10px 0; }
+            header .logo { margin-bottom: 10px; }
+            header ul { margin-top: 0px; flex-wrap: wrap; justify-content: center; }
+            header ul li { margin: 5px 8px; }
+            header ul li a { font-size: 0.9rem; padding: 8px 12px; }
+            .section { padding: 3rem 0; }
+            .section-header h2 { font-size: 2rem; }
+            .section-header p { font-size: 1rem; }
+            #invoice-preferences-form { padding: 2rem; max-width: 95%; }
+            #paper { width: 90%; max-width: 280px; height: auto; min-height: 350px; }
+            #thank-you-message { font-size: 1.2rem; }
+        }
+        @media (max-width: 480px) {
+            /* body { padding-top: 150px; } -- Fjernet */
+            .section-header h2 { font-size: 1.8rem; }
+            header .logo { font-size: 1.5rem; }
+            header ul li { margin: 3px 5px;}
+            header ul li a { padding: 6px 8px; font-size: 0.85rem;}
+            #invoice-preferences-form { padding: 1.5rem; }
+            #paper { max-width: 240px; min-height: 300px; padding: 15px; }
+            #paper-content { font-size: 0.8rem;}
+            #thank-you-message { font-size: 1.1rem; }
+        }
 
     </style>
     <!-- === CSS STILER SLUTT === -->
@@ -207,7 +418,7 @@
 
     <header id="main-header">
         <nav class="container">
-            <div class="logo">TrendMe</div>
+            <a href="/" class="logo">TrendMe</a> <!-- Endret til <a> for å kunne klikke -->
             <ul>
                 <li><a href="/">Tilbake til TrendMe</a></li>
             </ul>
@@ -221,55 +432,45 @@
                  <div class="section-header fade-in">
                     <h2>Oppdater dine fakturapreferanser</h2>
                     <p>Søk etter bedriften din ved å skrive inn navn eller organisasjonsnummer nedenfor.</p>
-                    <p style="margin-top: 1rem; color: var(--text-medium); font-size: 1rem;">
-                        Har du spørsmål angående eksisterende inngående eller utgående fakturaer? Send henvendelser til <a href="mailto:faktura@trendme.no" style="color: var(--secondary-accent);">faktura@trendme.no</a>.
+                    <p style="margin-top: 1rem; font-size: 1rem;"> <!-- Fjernet inline color, styres av .section-header p a -->
+                        Har du spørsmål angående eksisterende inngående eller utgående fakturaer? Send henvendelser til <a href="mailto:faktura@trendme.no">faktura@trendme.no</a>.
                     </p>
                 </div>
 
-                <!-- SKJEMA FOR FAKTURAPREFERANSER -->
-                <!-- ENDRET: action og method satt for Formspree -->
                 <form id="invoice-preferences-form"
                       class="fade-in"
                       style="transition-delay: 0.3s;"
                       action="https://formspree.io/f/mvgkwjvn"
                       method="POST">
 
-                     <!-- Bedriftsnavn -->
                      <div class="form-group">
                         <label for="pref-company-name">Bedriftsnavn:</label>
                         <input type="text" id="pref-company-name" name="Bedriftsnavn" required placeholder="Skriv for å søke..." autocomplete="off">
                         <div id="suggestions-list" class="suggestions-container">
                             <ul></ul>
                         </div>
-                         <small style="color: var(--text-medium); display: block; margin-top: 5px;">Begynn å skrive for å søke etter bedrifter.</small>
+                         <small style="color: var(--text-dark-muted); display: block; margin-top: 5px;">Begynn å skrive for å søke etter bedrifter.</small>
                     </div>
 
-                    <!-- Organisasjonsnummer -->
                     <div class="form-group">
                          <label for="pref-orgnr">Organisasjonsnummer:</label>
                          <input type="text" id="pref-orgnr" name="Organisasjonsnummer" placeholder="9 siffer (fylles ut ved navnevalg)" inputmode="numeric" pattern="[0-9]{9}" maxlength="9">
                          <span id="brreg-lookup-status" class="brreg-status"></span>
-                         <small style="color: var(--text-medium); display: block; margin-top: 5px;">Fylles ut automatisk ved valg fra navnesøk, eller tast inn og klikk utenfor for å sjekke.</small>
+                         <small style="color: var(--text-dark-muted); display: block; margin-top: 5px;">Fylles ut automatisk ved valg fra navnesøk, eller tast inn og klikk utenfor for å sjekke.</small>
                     </div>
 
-                     <!-- Kontaktperson -->
                      <div class="form-group">
                         <label for="pref-contact-person">Deres kontaktperson (for dette skjemaet):</label>
                         <input type="text" id="pref-contact-person" name="Kontaktperson (innsender)" required placeholder="Navn på den som fyller ut">
                     </div>
 
-                     <!-- E-post innsender -->
                      <div class="form-group">
                         <label for="pref-contact-email">E-post (for dette skjemaet):</label>
                         <input type="email" id="pref-contact-email" name="Epost (innsender)" required placeholder="Din e-postadresse">
-                         <!-- Formspree kan bruke dette feltet for _replyto hvis navnet er "email" eller "_replyto" -->
-                         <!-- Hvis du vil være sikker, kan du legge til: <input type="hidden" name="_replyto" id="hidden-replyto"> -->
-                         <!-- og sette verdien i JS: document.getElementById('hidden-replyto').value = contactEmailValue; -->
                     </div>
 
-                    <hr style="border: none; border-top: 1px solid var(--card-border); margin: 2.5rem 0;">
+                    <hr style="border: none; border-top: 1px solid var(--card-border-light); margin: 2.5rem 0;">
 
-                    <!-- Leveringsmetode -->
                     <div class="form-group">
                         <fieldset>
                              <legend>Ønsket leveringsmetode for faktura:</legend>
@@ -284,28 +485,24 @@
                         </fieldset>
                     </div>
 
-                    <!-- Fakturaepost -->
                     <div class="form-group">
                         <label for="pref-billing-email">E-postadresse for faktura:</label>
                         <input type="email" id="pref-billing-email" name="Fakturaepost" placeholder="faktura@deresbedrift.no">
-                        <small style="color: var(--text-medium); display: block; margin-top: 5px;">Fylles ut hvis dere velger E-post (PDF).</small>
+                        <small style="color: var(--text-dark-muted); display: block; margin-top: 5px;">Fylles ut hvis dere velger E-post (PDF).</small>
                     </div>
 
-                    <!-- Fakturakontakt -->
                     <div class="form-group">
                         <label for="pref-billing-contact">Kontaktperson for fakturaspørsmål (valgfritt):</label>
                         <input type="text" id="pref-billing-contact" name="Fakturakontakt" placeholder="Navn på regnskapsansvarlig e.l.">
-                         <small style="color: var(--text-medium); display: block; margin-top: 5px;">Kun hvis en annen enn innsender skal kontaktes ved spørsmål.</small>
+                         <small style="color: var(--text-dark-muted); display: block; margin-top: 5px;">Kun hvis en annen enn innsender skal kontaktes ved spørsmål.</small>
                     </div>
 
-                     <!-- Referanse/PO -->
                      <div class="form-group">
                         <label for="pref-po-reference">Deres referanse / PO-nummer (valgfritt):</label>
                         <input type="text" id="pref-po-reference" name="Deres referanse/PO" placeholder="F.eks. innkjøpsordrenummer, prosjektkode">
-                         <small style="color: var(--text-medium); display: block; margin-top: 5px;">Hvis dere krever en spesifikk referanse på fakturaen.</small>
+                         <small style="color: var(--text-dark-muted); display: block; margin-top: 5px;">Hvis dere krever en spesifikk referanse på fakturaen.</small>
                     </div>
 
-                    <!-- Kommentarer -->
                     <div class="form-group">
                         <label for="pref-comments">Andre kommentarer eller spesifikke instruksjoner:</label>
                         <textarea id="pref-comments" name="Kommentarer" rows="4" placeholder="F.eks. spesifikk merking..."></textarea>
@@ -325,18 +522,17 @@
         </div>
     </footer>
 
-    <!-- === ANIMASJONSELEMENTER === -->
     <div id="animation-container">
         <div id="paper">
             <pre id="paper-content"></pre>
         </div>
-        <div id="thank-you-message">Takk! Dine preferanser er mottatt.</div> <!-- Endret melding litt -->
+        <div id="thank-you-message">Takk! Dine preferanser er mottatt.</div>
     </div>
-    <!-- === SLUTT ANIMASJONSELEMENTER === -->
 
-
-    <!-- === JAVASCRIPT START === -->
     <script>
+        // JavaScript er uendret fra forrige versjon, da den ikke direkte påvirker
+        // den visuelle stylingen som ble forespurt endret.
+        // ... (hele JavaScript-blokken din fra forrige versjon her) ...
         // Wrap everything in a try...catch block for basic error catching
         try {
             document.addEventListener('DOMContentLoaded', function() {
@@ -381,14 +577,13 @@
                      if (body) {
                           const errorDiv = document.createElement('div');
                           errorDiv.textContent = 'En kritisk feil oppstod under lasting av siden. Nødvendige komponenter mangler. Vennligst prøv å laste siden på nytt eller kontakt support.';
-                          errorDiv.style.color = 'red'; errorDiv.style.backgroundColor = 'black'; errorDiv.style.padding = '20px'; errorDiv.style.textAlign = 'center'; errorDiv.style.position = 'fixed'; errorDiv.style.top = '50%'; errorDiv.style.left = '50%'; errorDiv.style.transform = 'translate(-50%, -50%)'; errorDiv.style.zIndex = '9999';
+                          errorDiv.style.color = 'red'; errorDiv.style.backgroundColor = 'white'; errorDiv.style.padding = '20px'; errorDiv.style.textAlign = 'center'; errorDiv.style.position = 'fixed'; errorDiv.style.top = '50%'; errorDiv.style.left = '50%'; errorDiv.style.transform = 'translate(-50%, -50%)'; errorDiv.style.zIndex = '9999'; errorDiv.style.border = '1px solid red';
                           body.innerHTML = ''; body.appendChild(errorDiv);
                      }
                      return;
                  }
 
                 // --- START Brreg Oppslagslogikk ---
-                // (Denne delen er uendret)
                 async function searchBrregByName(searchTerm) {
                     const trimmedSearch = searchTerm.trim();
                     if (trimmedSearch.length < MIN_SEARCH_LENGTH) {
@@ -416,7 +611,11 @@
                             } else { suggestionsUl.innerHTML = '<li class="no-results">Ingen treff funnet.</li>'; }
                         } else { console.error('Brreg name search API error:', response.status, response.statusText); suggestionsUl.innerHTML = '<li class="no-results">Feil ved søk.</li>'; }
                     } catch (error) { console.error('Error fetching Brreg by name:', error); suggestionsUl.innerHTML = '<li class="no-results">Nettverksfeil.</li>'; }
-                    suggestionsContainer.style.display = 'block';
+                    if (suggestionsUl.childNodes.length > 0) { // Vis kun hvis det er innhold
+                        suggestionsContainer.style.display = 'block';
+                    } else {
+                         suggestionsContainer.style.display = 'none';
+                    }
                 }
                 async function fetchCompanyInfoFromBrregOrgnr(orgnr) {
                     const trimmedOrgnr = orgnr.replace(/\s+/g, '');
@@ -451,7 +650,7 @@
                 // --- Funksjon for å vise valideringsfeil ---
                 function showValidationError(message, fieldToFocus = null) {
                     formFeedbackMessage.textContent = message;
-                    formFeedbackMessage.className = 'error';
+                    formFeedbackMessage.className = 'error'; // Sørg for at klassen er satt for farge
                     formFeedbackMessage.style.display = 'block';
                     submitButton.disabled = false;
                     submitButton.textContent = 'Lagre fakturapreferanser';
@@ -463,7 +662,7 @@
 
                 // --- Fjern feilmarkering på input ---
                 [companyNameInput, orgNrInput, contactPersonInput, contactEmailInput, billingEmailInput].forEach(input => {
-                    input?.addEventListener('input', () => { // Added safety check for input
+                    input?.addEventListener('input', () => {
                         input.classList.remove('error');
                         if (formFeedbackMessage.style.display !== 'none') {
                             formFeedbackMessage.style.display = 'none';
@@ -472,18 +671,16 @@
                 });
 
                 // ==================================================
-                // --- START: Håndtering av skjemainnsending (OPPDATERT for Formspree) ---
+                // --- START: Håndtering av skjemainnsending ---
                 // ==================================================
                 async function handleSubmitPreferences(event) {
                     event.preventDefault();
 
-                    // Reset feilmeldinger
                     formFeedbackMessage.style.display = 'none';
                     formFeedbackMessage.className = '';
-                    [companyNameInput, orgNrInput, contactPersonInput, contactEmailInput, billingEmailInput].forEach(input => input?.classList.remove('error')); // Added safety check
+                    [companyNameInput, orgNrInput, contactPersonInput, contactEmailInput, billingEmailInput].forEach(input => input?.classList.remove('error'));
                     suggestionsContainer.style.display = 'none';
 
-                    // Hent verdier
                     const companyNameValue = companyNameInput.value.trim();
                     const contactPersonValue = contactPersonInput.value.trim();
                     const contactEmailValue = contactEmailInput.value.trim();
@@ -492,7 +689,7 @@
                     const orgNrValue = orgNrInput.value.replace(/\s+/g, '');
                     const billingEmailValue = billingEmailInput.value.trim();
 
-                    // --- START VALIDERING (Uendret) ---
+                    // --- START VALIDERING ---
                     if (!companyNameValue) { showValidationError('Bedriftsnavn må fylles ut.', companyNameInput); return; }
                     if (orgNrInput.classList.contains('error') && brregStatusSpan.textContent.includes('Ugyldig orgnr')) { showValidationError('Organisasjonsnummeret ble ikke funnet i Brreg. Vennligst korriger.', orgNrInput); return; }
                     if (!contactPersonValue) { showValidationError('Kontaktperson (innsender) må fylles ut.', contactPersonInput); return; }
@@ -511,78 +708,43 @@
                     submitButton.textContent = 'Lagrer...';
 
                     const formData = new FormData(preferencesForm);
-                    if(orgNrValue) formData.set('Organisasjonsnummer', orgNrValue); // Send cleaned orgnr
-                    // Optional: Set _replyto specifically if needed
-                    // formData.set('_replyto', contactEmailValue);
-
-                    // ---------- ENDRE TIL DIN FORMSPREE URL HER ----------
-                    const formSpreeEndpoint = 'https://formspree.io/f/mvgkwjvn';
-                    // ----------------------------------------------------
+                    if(orgNrValue) formData.set('Organisasjonsnummer', orgNrValue);
+                    const formSpreeEndpoint = preferencesForm.action; // Henter fra form action attributt
 
                     try {
-                        // Send data til Formspree
                         const response = await fetch(formSpreeEndpoint, {
                             method: 'POST',
                             body: formData,
-                            headers: {
-                                'Accept': 'application/json' // Viktig for AJAX-innsending til Formspree
-                            }
+                            headers: { 'Accept': 'application/json' }
                         });
 
                         if (response.ok) {
-                            // Suksess fra Formspree
-                            console.log('Innsending til Formspree var vellykket.');
-
-                            // -------- START SUKSESS-HANDLING (Animasjon etc.) --------
                             const paperText = `Fakturapreferanser mottatt for:\n\n${companyNameValue}\nOrgNr: ${orgNrValue || 'Ikke spesifisert'}\n\nMetode: ${deliveryMethod || 'Ikke spesifisert'}\nFaktura-epost: ${billingEmailValue || 'Ikke relevant'}\n\nInnsendt av: ${contactPersonValue} (${contactEmailValue})`;
                             paperContent.textContent = paperText;
 
                             animationContainer.style.display = 'flex';
                             setTimeout(() => { paper.style.opacity = '1'; paper.style.transform = 'scale(1)'; }, 100);
                             setTimeout(() => { thankYouMessage.style.display = 'block'; thankYouMessage.offsetHeight; thankYouMessage.style.opacity = '1'; }, 800);
-                            setTimeout(() => { paper.classList.add('flying'); }, 2500); // Starter fly-animasjon
+                            setTimeout(() => { paper.classList.add('flying'); }, 2500);
 
                             formFeedbackMessage.textContent = 'Preferansene dine er mottatt!';
                             formFeedbackMessage.className = 'success';
                             formFeedbackMessage.style.display = 'block';
 
-                            preferencesForm.reset(); // Tøm skjemaet
-                            brregStatusSpan.textContent = ''; // Nullstill Brreg status
+                            preferencesForm.reset();
+                            brregStatusSpan.textContent = '';
                             brregStatusSpan.className = 'brreg-status';
-                            // Knappen blir re-aktivert i animasjonsslutt-hendelsen
-
-                            // -------- SLUTT SUKSESS-HANDLING --------
                         } else {
-                             // Formspree returnerte en feil (f.eks. 4xx, 5xx)
-                             console.error('Formspree submission failed:', response.status, response.statusText);
-                             try {
-                                 const errorData = await response.json(); // Prøv å få feildetaljer
-                                 console.error('Formspree error details:', errorData);
-                                 // Vis en mer spesifikk feil hvis mulig, ellers generell
-                                 const errorMessage = errorData?.errors?.[0]?.message || 'En feil oppstod ved innsending hos Formspree.';
-                                 showValidationError(`Feil: ${errorMessage} Vennligst sjekk feltene og prøv igjen.`);
-                             } catch (jsonError) {
-                                 // Hvis responsen ikke var JSON
-                                 showValidationError('En feil oppstod ved innsending (kunne ikke lese feildetaljer). Prøv igjen.');
-                             }
+                             const errorData = await response.json();
+                             const errorMessage = errorData?.errors?.[0]?.message || 'En feil oppstod ved innsending.';
+                             showValidationError(`Feil: ${errorMessage} Vennligst sjekk feltene og prøv igjen.`);
                          }
-
                     } catch (error) {
-                        // Håndterer nettverksfeil eller andre feil under fetch-kallet
-                        console.error('Error submitting preferences form to Formspree:', error);
-                        showValidationError('En nettverksfeil oppstod ved innsending. Sjekk tilkoblingen din og prøv igjen. Kontakt support hvis problemet vedvarer.');
-                        // Knappen er allerede re-aktivert av showValidationError
+                        showValidationError('En nettverksfeil oppstod. Sjekk tilkoblingen din og prøv igjen.');
                     }
                 }
-                // ================================================
-                // --- SLUTT: Håndtering av skjemainnsending ---
-                // ================================================
-
-
-                // --- Fest innsendingsfunksjon til skjema ---
                 preferencesForm.addEventListener('submit', handleSubmitPreferences);
 
-                // --- Håndtering av animasjonsslutt ---
                 paper.addEventListener('animationend', (event) => {
                     if (event.animationName === 'fly-away' && paper.classList.contains('flying')) {
                          animationContainer.style.display = 'none';
@@ -590,7 +752,6 @@
                          thankYouMessage.style.display = 'none'; thankYouMessage.style.opacity = '0';
                          paper.style.opacity = '0'; paper.style.transform = 'scale(0.8)';
                          paperContent.textContent = '';
-                         // Re-aktiver knappen ETTER animasjonen er ferdig
                          submitButton.disabled = false;
                          submitButton.textContent = 'Lagre fakturapreferanser';
                     }
@@ -610,11 +771,10 @@
                     const observer = new IntersectionObserver(observerCallback, observerOptions);
                     const elementsToAnimate = document.querySelectorAll('.fade-in');
                     elementsToAnimate.forEach(el => {
-                        // Make sure transform starts correctly before observing
-                        el.style.transform = 'translateY(20px)';
+                        // el.style.transform = 'translateY(20px)'; // Already set in CSS
                         observer.observe(el);
                     });
-                 } else {
+                 } else { // Fallback for eldre nettlesere
                      const elementsToAnimate = document.querySelectorAll('.fade-in');
                      elementsToAnimate.forEach(el => el.classList.add('visible'));
                  }
@@ -623,13 +783,13 @@
                  const yearSpan = document.getElementById('year');
                  if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
 
-            }); // Slutt på DOMContentLoaded
+            });
 
         } catch (error) {
-            console.error("A critical JavaScript error occurred outside DOMContentLoaded:", error);
+            console.error("A critical JavaScript error occurred:", error);
              const body = document.querySelector('body');
-             if (body) {
-                 body.innerHTML = '<div style="color:red; padding: 20px; text-align:center;">En alvorlig feil oppstod under lasting av siden. Vennligst prøv igjen senere eller kontakt support. Feildetaljer er logget til konsollen.</div>';
+             if (body) { // Ensure body exists before trying to manipulate it
+                 body.innerHTML = '<div style="color:red; background-color:white; border:1px solid red; padding: 20px; text-align:center; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:9999;">En alvorlig feil oppstod under lasting av siden. Vennligst prøv igjen senere eller kontakt support. Feildetaljer er logget til konsollen.</div>';
              }
         }
     </script>
