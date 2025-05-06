@@ -7,9 +7,7 @@
     <title>TrendMe Blogg | Microsoft Fabric & Power BI Innsikt</title>
 
     <!-- === FAVICON  === -->
-    <!-- Prioriter SVG -->
     <link rel="icon" href="https://res.cloudinary.com/dm2movu5v/image/upload/v1746189579/SVG_yqf4t8.svg" type="image/svg+xml">
-    <!-- Fallback PNG -->
     <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dm2movu5v/image/upload/v1746189607/icon_rdwy3d.png">
     <!-- === END FAVICON === -->
 
@@ -18,85 +16,92 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* === GRUNNLEGGENDE OG LAYOUT (Fra hovedblogg) === */
+        /* === GRUNNLEGGENDE OG LAYOUT (TILPASSET LYST TEMA) === */
         :root {
-            --dark-bg: #121212;
-            --primary-fabric-dark: #6a0dad; /* Mørk lilla */
-            --primary-fabric-light: #9370db; /* Lys lilla */
-            --secondary-accent: #00c6ff;   /* Lys blå */
-            --secondary-accent-rgb: 0, 198, 255; /* Definert for RGBA bruk */
-            --glow-color: rgba(0, 198, 255, 0.5);
-            --text-light: #e0e0e0;
-            --text-medium: #b0b0b0;
-            --text-dark: #1f1f1f;
-            --card-bg: rgba(40, 40, 40, 0.8);
-            --card-bg-hover: rgba(55, 55, 55, 0.9);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --bronze: #cd7f32;
-            --bronze-rgb: 205, 127, 50; /* Definert for RGBA bruk */
-            --silver: #c0c0c0;
-            --silver-rgb: 192, 192, 192; /* Definert for RGBA bruk */
-            --gold: #ffd700;
-            --gold-rgb: 255, 215, 0;   /* Definert for RGBA bruk */
-            --warning-color: #ffcc00;
+            /* Variabler fra TrendMe Hovedside (Lys Tema) */
+            --bg-light: #ffffff;
+            --bg-soft-light: #f8f9fa;
+            --text-dark-primary: #212529;
+            --text-dark-secondary: #495057;
+            --text-dark-muted: #6c757d;
+            --card-border-light: rgba(0, 0, 0, 0.1);
+            --header-bg-light: rgba(255, 255, 255, 0.85);
+            --footer-bg-light: #f1f3f5;
+            --primary-accent-dark: #0078d4; /* TrendMe Blå */
+            --primary-accent-light: #00c6ff; /* TrendMe Cyan */
+            --secondary-accent: #9370db; /* TrendMe Lilla */
+            --glow-color: rgba(0, 198, 255, 0.3); /* For hover-effekter */
+
+            /* Beholder noen farger for SVG-illustrasjoner, men de vil brukes mer bevisst */
+            --bronze: #b08d57; /* Litt justert for bedre synlighet på lys bakgrunn om nødvendig */
+            --silver: #a8a8a8; /* Litt justert */
+            --gold: #cfb53b;   /* Litt justert */
+            --bronze-rgb: 176, 141, 87;
+            --silver-rgb: 168, 168, 168;
+            --gold-rgb: 207, 181, 59;
+            --primary-fabric-dark-for-svg: #6a0dad; /* Brukes i SVG, kan trenge justering */
+            --primary-fabric-light-for-svg: #9370db;/* Brukes i SVG, kan trenge justering */
+            --secondary-accent-for-svg: #00c6ff; /* Brukes i SVG */
+            --secondary-accent-rgb: 0, 198, 255; /* For SVG */
+
+
             --font-primary: 'Poppins', sans-serif;
-            --transition-speed: 0.3s; /* Endret til 0.3s fra hovedblogg */
-            --anim-duration-base: 3.5s; /* Beholder denne for animasjonslogikk */
+            --transition-speed: 0.3s;
+            --anim-duration-base: 3.5s;
+            --header-height: 70px; /* Fra TrendMe */
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--primary-accent-light) var(--bg-soft-light); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-soft-light); }
+        ::-webkit-scrollbar-thumb { background-color: var(--primary-accent-light); border-radius: 10px; border: 2px solid var(--bg-soft-light); }
+
         body {
             font-family: var(--font-primary);
             line-height: 1.7;
-            color: var(--text-light);
-            background-color: var(--dark-bg);
+            color: var(--text-dark-secondary); /* Standard tekstfarge for lyst tema */
+            background-color: var(--bg-light);
             overflow-x: hidden;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: linear-gradient(135deg, #eef2f7 0%, #ffffff 50%, #e6f7ff 100%); /* Bakgrunn fra TrendMe */
+            padding-top: var(--header-height); /* For sticky header */
         }
         .container { max-width: 1200px; margin: auto; padding: 0 25px; }
         .section { padding: 4rem 0; }
 
-        /* === HEADER (Fra hovedblogg) === */
+        /* === HEADER (TILPASSET LYST TEMA) === */
         header {
-            background: rgba(18, 18, 18, 0.8);
+            background: var(--header-bg-light);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            color: var(--text-light);
-            padding: 0.8rem 0;
+            color: var(--text-dark-primary);
+            padding: 0; /* Høyde styres av var */
             position: sticky;
             top: 0;
+            width: 100%;
             z-index: 1000;
-            border-bottom: 1px solid var(--card-border);
+            border-bottom: 1px solid var(--card-border-light);
             transition: background-color var(--transition-speed) ease;
+            height: var(--header-height);
         }
         header nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            min-height: 50px;
+            height: 100%;
         }
         header .logo a {
             font-size: 1.8rem;
             font-weight: 700;
             letter-spacing: 1px;
-            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-decoration: none; /* Fjern understrek */
+            color: var(--primary-accent-dark); /* TrendMe logo farge */
+            text-decoration: none;
         }
-        header ul {
-            list-style: none;
-            display: flex;
-            align-items: center;
-            margin: 0;
-            padding: 0;
-        }
+        header ul { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; }
         header ul li { margin-left: 20px; }
         header ul li a {
             display: flex;
             align-items: center;
-            color: var(--text-medium);
+            color: var(--text-dark-muted);
             text-decoration: none;
             padding: 10px 15px;
             transition: color var(--transition-speed) ease;
@@ -115,15 +120,15 @@
             height: 2px;
             bottom: 5px;
             left: 50%;
-            background: linear-gradient(90deg, var(--primary-fabric-light), var(--secondary-accent));
+            background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); /* TrendMe gradient */
             transition: width var(--transition-speed) ease, left var(--transition-speed) ease;
             transform: translateX(-50%);
         }
-        header ul li a:hover { color: var(--text-light); }
+        header ul li a:hover { color: var(--primary-accent-dark); }
         header ul li a:hover::after { width: 70%; left: 50%; }
 
 
-        /* === HERO SEKSJON (Fra hovedblogg) === */
+        /* === HERO SEKSJON (TILPASSET LYST TEMA) === */
         .hero {
             min-height: 40vh;
             display: flex;
@@ -133,16 +138,11 @@
             padding: 4rem 0 2rem 0;
             position: relative;
             overflow: hidden;
-            /* Vurder å bruke samme bakgrunn som hovedbloggen eller en nøytral */
-            background: linear-gradient(160deg, rgba(106, 13, 173, 0.2) 0%, rgba(18, 18, 18, 0.7) 60%);
-            background-color: #1a1a2e;
+            background: linear-gradient(160deg, rgba(0, 198, 255, 0.05) 0%, rgba(255, 255, 255, 0.6) 70%), linear-gradient(135deg, #eef2f7 0%, #ffffff 100%); /* Lysere gradient */
         }
-        .hero::before { /* Lett glød-effekt */
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle at top left, rgba(147, 112, 219, 0.05), transparent 30%), radial-gradient(circle at bottom right, rgba(0, 198, 255, 0.08), transparent 40%);
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at top left, rgba(0, 198, 255, 0.03), transparent 30%), radial-gradient(circle at bottom right, rgba(147, 112, 219, 0.04), transparent 40%);
             animation: pulse-glow 10s infinite alternate ease-in-out;
             z-index: 1;
         }
@@ -153,16 +153,13 @@
             font-weight: 700;
             margin-bottom: 1rem;
             line-height: 1.2;
-            background: linear-gradient(90deg, var(--text-light), var(--secondary-accent));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: var(--text-dark-primary); /* Mørk primærtekst */
             animation: text-focus-in 1s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
         }
         @keyframes text-focus-in { 0% { filter: blur(12px); opacity: 0; } 100% { filter: blur(0px); opacity: 1; } }
         .hero p.subtitle {
             font-size: 1.3rem;
-            color: var(--text-medium);
+            color: var(--text-dark-secondary); /* Mørk sekundærtekst */
             margin-top: 0.5rem;
             max-width: 700px;
             margin-left: auto;
@@ -170,300 +167,311 @@
         }
 
 
-        /* === BLOGG GRID & KORT (Kombinert) === */
+        /* === BLOGG GRID & KORT (TILPASSET LYST TEMA) === */
         .blog-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr); /* Matcher hovedblogg */
+            grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
         }
         a.blog-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
+            background: var(--bg-light); /* Hvit kortbakgrunn */
+            border: 1px solid var(--card-border-light); /* Lys kantlinje */
             border-radius: 12px;
             overflow: hidden;
-            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background-color var(--transition-speed) ease;
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease;
             display: flex;
             flex-direction: column;
             text-decoration: none;
-            color: inherit;
-            opacity: 0; /* For JS fade-in */
-            transform: translateY(20px); /* For JS fade-in */
+            color: var(--text-dark-secondary); /* Standard tekstfarge for kortinnhold */
+            opacity: 0;
+            transform: translateY(20px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03); /* Lett skygge som TrendMe kort */
         }
         a.blog-card:hover {
-            transform: translateY(-8px); /* Matcher hovedblogg */
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
-            background-color: var(--card-bg-hover);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08); /* Mer markant skygge på hover */
+            border-color: var(--primary-accent-light); /* Lys blå kant på hover */
         }
 
-        /* CARD IMAGE - Spesifikk for denne filen for å holde animasjoner */
         .card-image {
             width: 100%;
-            height: 180px; /* Matcher hovedblogg */
+            height: 180px;
             overflow: hidden;
-            /* FJERN bakgrunn/padding som var her før for å matche hovedblogg */
-            /* background: radial-gradient... */
-            /* background-color: #1a1e2a; */
-            /* padding: 15px; */
-            display: flex; /* Behøves for sentrering av innhold */
+            display: flex;
             align-items: center;
             justify-content: center;
-            position: relative; /* Behøves for absolutt posisjonerte elementer inni? */
+            position: relative;
+            background-color: var(--bg-soft-light); /* Svært lys grå for bildebakgrunn, hvis bildet ikke fyller helt */
         }
-
-        /* FJERN generell .card-image svg regel, stiler settes per illustrasjon nå */
-        /*
-        .card-image svg {
-            width: 85%; height: 85%;
-            max-width: 120px; max-height: 120px;
-            overflow: visible;
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4));
-        }
-        a.blog-card:hover .card-image svg {
-             transform: scale(1.05);
-             filter: drop-shadow(3px 6px 10px var(--glow-color));
-             transition: transform 0.4s ease-out, filter 0.4s ease-out;
-        }
-        */
 
         .card-content {
-            padding: 1.5rem; /* Matcher hovedblogg */
+            padding: 1.5rem;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
         .card-title {
-            font-size: 1.3rem; /* Matcher hovedblogg */
+            font-size: 1.3rem;
             font-weight: 600;
-            color: var(--text-light);
+            color: var(--text-dark-primary); /* Mørk titteltekst */
             margin-bottom: 0.5rem;
-            line-height: 1.3; /* Matcher hovedblogg */
+            line-height: 1.3;
         }
         .card-meta {
-            font-size: 0.85rem; /* Matcher hovedblogg */
-            color: var(--text-medium);
+            font-size: 0.85rem;
+            color: var(--text-dark-muted); /* Mørk, dempet metatekst */
             margin-top: auto;
             padding-top: 0.75rem;
         }
 
         /* ================================================================ */
-        /* === START: FORBEDREDE INLINE SVG/CSS ANIMASJONER (BEHOLDT) === */
+        /* === START: SVGs/CSS ANIMASJONER (Farger for SVG kan trenge justering) === */
+        /* Gradients og farger i SVGene bruker ofte CSS variabler som nå er endret. */
+        /* Noen farger er hardkodet i SVGene, de forblir. */
+        /* Størrelse og grunnleggende animasjon er beholdt. */
+        /* Glow-effekter på hover vil bruke --glow-color fra lyst tema. */
         /* ================================================================ */
 
-         /* --- 1. Star/Snowflake (BEHOLDT) --- */
+         /* --- 1. Star/Snowflake --- */
          @keyframes starflake-single-rotate { from { transform: rotate(0deg) scale(0.9); } to   { transform: rotate(180deg) scale(1); } }
          @keyframes starflake-single-fade-star { 0%, 40% { opacity: 1; } 60%, 100% { opacity: 0; } }
          @keyframes starflake-single-fade-flake { 0%, 40% { opacity: 0; } 60%, 100% { opacity: 1; } }
          @keyframes starflake-svg-fade-in { from { opacity: 0; } to { opacity: 1; } }
-         .illustration-star-snowflake { /* Container for å sikre størrelse */ width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-         .illustration-star-snowflake svg { opacity: 0; animation: starflake-svg-fade-in 0.5s ease-out forwards, starflake-single-rotate calc(var(--anim-duration-base) * 0.8) ease-in-out 0.5s 1 forwards; width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
+         .illustration-star-snowflake { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+         .illustration-star-snowflake svg { opacity: 0; animation: starflake-svg-fade-in 0.5s ease-out forwards, starflake-single-rotate calc(var(--anim-duration-base) * 0.8) ease-in-out 0.5s 1 forwards; width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.15)); /* Subtilere skygge for lyst tema */ }
          .illustration-star-snowflake svg .star-use, .illustration-star-snowflake svg .flake-use-pro { fill: none; stroke: url(#starFlakeGradient); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transform-origin: center; }
          .illustration-star-snowflake svg .star-use { animation: starflake-single-fade-star calc(var(--anim-duration-base) * 0.8) ease-in-out 0.5s 1 forwards; }
          .illustration-star-snowflake svg .flake-use-pro { opacity: 0; animation: starflake-single-fade-flake calc(var(--anim-duration-base) * 0.8) ease-in-out 0.5s 1 forwards; }
          .illustration-star-snowflake svg .flake-core { stroke-width: 1.8; }
          .illustration-star-snowflake svg .flake-arm { stroke-width: 1.5; }
          .illustration-star-snowflake svg .flake-branch { stroke-width: 1.2; }
-         a.blog-card:hover .illustration-star-snowflake svg { filter: drop-shadow(3px 6px 10px var(--glow-color)); transition: filter 0.4s ease-out; } /* Kun glow hover */
+         a.blog-card:hover .illustration-star-snowflake svg { filter: drop-shadow(2px 3px 5px var(--glow-color)); transition: filter 0.4s ease-out; }
 
 
-        /* --- 2. Medallion Flow Logic (BEHOLDT) --- */
+        /* --- 2. Medallion Flow Logic --- */
         @keyframes draw-flow-line { to { stroke-dashoffset: 0; } }
         @keyframes layer-appear-fade { from { opacity: 0; transform: scale(0.9); } to   { opacity: 1; transform: scale(1); } }
-        @keyframes gold-pulse { 0%, 100% { filter: drop-shadow(0 0 2px var(--gold)); opacity: 0.8; } 50% { filter: drop-shadow(0 0 6px var(--gold)); opacity: 1; } }
+        @keyframes gold-pulse { 0%, 100% { filter: drop-shadow(0 0 1px var(--gold)); opacity: 0.8; } 50% { filter: drop-shadow(0 0 3px var(--gold)); opacity: 1; } }
         .illustration-medallion { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-        .illustration-medallion svg { width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
+        .illustration-medallion svg { width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.15)); }
         .illustration-medallion svg .layer-shape { stroke-width: 1.5; rx: 5; opacity: 0; transform-origin: center; animation: layer-appear-fade 0.8s ease-out forwards; }
-        .illustration-medallion svg .bronze-layer { fill: rgba(var(--bronze-rgb), 0.3); stroke: var(--bronze); animation-delay: 0.3s; }
-        .illustration-medallion svg .silver-layer { fill: rgba(var(--silver-rgb), 0.3); stroke: var(--silver); animation-delay: 1.1s; }
-        .illustration-medallion svg .gold-layer { fill: rgba(var(--gold-rgb), 0.3); stroke: var(--gold); animation: layer-appear-fade 0.8s ease-out 1.9s forwards, gold-pulse calc(var(--anim-duration-base) * 0.7) ease-in-out infinite alternate 2.7s; }
-        .illustration-medallion svg .flow-arrow { fill: none; stroke: var(--text-medium); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 50; stroke-dashoffset: 50; animation: draw-flow-line 0.8s ease-out forwards; marker-end: url(#arrowhead-medallion); }
+        /* Farger for lagene defineres nå av --bronze, --silver, --gold variabler */
+        .illustration-medallion svg .bronze-layer { fill: rgba(var(--bronze-rgb), 0.2); stroke: var(--bronze); animation-delay: 0.3s; } /* Lysere fill */
+        .illustration-medallion svg .silver-layer { fill: rgba(var(--silver-rgb), 0.2); stroke: var(--silver); animation-delay: 1.1s; } /* Lysere fill */
+        .illustration-medallion svg .gold-layer { fill: rgba(var(--gold-rgb), 0.2); stroke: var(--gold); animation: layer-appear-fade 0.8s ease-out 1.9s forwards, gold-pulse calc(var(--anim-duration-base) * 0.7) ease-in-out infinite alternate 2.7s; } /* Lysere fill */
+        .illustration-medallion svg .flow-arrow { fill: none; stroke: var(--text-dark-muted); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 50; stroke-dashoffset: 50; animation: draw-flow-line 0.8s ease-out forwards; marker-end: url(#arrowhead-medallion); }
+        .illustration-medallion svg #arrowhead-medallion path { fill: var(--text-dark-muted); } /* Farge for pilspiss */
         .illustration-medallion svg #arrow-bronze-silver { animation-delay: 0.6s; }
         .illustration-medallion svg .arrow-silver-gold { animation-delay: 1.4s; }
-        .illustration-medallion svg .layer-text { font-size: 10px; fill: var(--text-light); text-anchor: middle; dominant-baseline: middle; font-weight: 600; opacity: 0; animation: layer-appear-fade 0.8s ease-out forwards; }
+        .illustration-medallion svg .layer-text { font-size: 10px; fill: var(--text-dark-primary); text-anchor: middle; dominant-baseline: middle; font-weight: 600; opacity: 0; animation: layer-appear-fade 0.8s ease-out forwards; } /* Mørk tekst */
         .illustration-medallion svg .bronze-text { animation-delay: 0.3s; }
         .illustration-medallion svg .silver-text { animation-delay: 1.1s; }
         .illustration-medallion svg .gold-text { animation-delay: 1.9s; }
-        a.blog-card:hover .illustration-medallion svg .layer-shape { filter: brightness(1.2) drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); transition: filter 0.3s ease; } /* La til drop-shadow */
-        a.blog-card:hover .illustration-medallion svg .flow-arrow { stroke: var(--secondary-accent); transition: stroke 0.3s ease; }
+        a.blog-card:hover .illustration-medallion svg .layer-shape { filter: brightness(1.1) drop-shadow(1px 2px 3px rgba(0,0,0,0.2)); transition: filter 0.3s ease; }
+        a.blog-card:hover .illustration-medallion svg .flow-arrow { stroke: var(--primary-accent-dark); transition: stroke 0.3s ease; }
+        a.blog-card:hover .illustration-medallion svg #arrowhead-medallion path { fill: var(--primary-accent-dark); }
 
 
-        /* --- 3. Data Ingestion (BEHOLDT) --- */
+        /* --- 3. Data Ingestion --- */
         @keyframes particle-fall-into-funnel-v14 { 0% { transform: translateY(-15px); opacity: 0; } 30% { opacity: 1; transform: translateY(0px); } 100% { transform: translateY(50px) scale(0.5); opacity: 0; } }
         @keyframes fade-in-static-v14 { from { opacity: 0; } to { opacity: 1; } }
         .illustration-ingestion { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-        .illustration-ingestion svg { width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
+        .illustration-ingestion svg { width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.15)); }
         .illustration-ingestion svg .funnel-static-v14 { opacity: 0; animation: fade-in-static-v14 0.8s ease-out 0.3s forwards; }
-        .illustration-ingestion svg .funnel-top-v14 { fill: rgba(var(--secondary-accent-rgb), 0.15); stroke: var(--secondary-accent); stroke-width: 1; }
-        .illustration-ingestion svg .funnel-pipe-v14 { fill: none; stroke: var(--secondary-accent); stroke-width: 1; }
-        .illustration-ingestion svg .fall-particle-v14 { fill: var(--primary-fabric-light); opacity: 0; transform-origin: center; animation: particle-fall-into-funnel-v14 1.5s ease-in forwards; }
+        .illustration-ingestion svg .funnel-top-v14 { fill: rgba(var(--secondary-accent-rgb), 0.1); stroke: var(--secondary-accent-for-svg); stroke-width: 1; } /* Lysere fill */
+        .illustration-ingestion svg .funnel-pipe-v14 { fill: none; stroke: var(--secondary-accent-for-svg); stroke-width: 1; }
+        .illustration-ingestion svg .fall-particle-v14 { fill: var(--primary-fabric-light-for-svg); opacity: 0; transform-origin: center; animation: particle-fall-into-funnel-v14 1.5s ease-in forwards; }
         .illustration-ingestion svg #p1 { animation-delay: 0.8s; }
-        .illustration-ingestion svg #p2 { animation-delay: 1.0s; fill: var(--secondary-accent); }
+        .illustration-ingestion svg #p2 { animation-delay: 1.0s; fill: var(--secondary-accent-for-svg); }
         .illustration-ingestion svg #p3 { animation-delay: 1.2s; }
         .illustration-ingestion svg #p4 { animation-delay: 1.4s; fill: var(--gold); }
         .illustration-ingestion svg #p5 { animation-delay: 1.6s; }
         .illustration-ingestion svg #p6 { animation-delay: 1.8s; fill: var(--silver); }
-        a.blog-card:hover .illustration-ingestion svg .funnel-static-v14 { filter: brightness(1.2) drop-shadow(3px 6px 10px var(--glow-color)); transition: filter 0.3s ease; } /* La til glow */
+        a.blog-card:hover .illustration-ingestion svg .funnel-static-v14 { filter: brightness(1.1) drop-shadow(2px 3px 5px var(--glow-color)); transition: filter 0.3s ease; }
 
 
-        /* --- 4. Capacity/Pricing Meter (BEHOLDT) --- */
+        /* --- 4. Capacity/Pricing Meter --- */
         @keyframes meter-fill-single { from { stroke-dashoffset: 251.2; } to { stroke-dashoffset: 63; } }
         @keyframes fade-in-text { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         .illustration-capacity { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-        .illustration-capacity svg { width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
-        .illustration-capacity svg .meter-bg { fill: none; stroke: var(--card-border); stroke-width: 6; opacity: 0; animation: fade-in-text 1s ease-out 0.2s forwards; }
-        .illustration-capacity svg .meter-value { fill: none; stroke: url(#capacityGradient); stroke-width: 7; stroke-linecap: round; stroke-dasharray: 251.2; stroke-dashoffset: 251.2; transform: rotate(-90deg); transform-origin: 50% 50%; animation: meter-fill-single 1.8s cubic-bezier(0.64, 0, 0.78, 1) 0.5s 1 forwards; --color: var(--secondary-accent); }
-        .illustration-capacity svg .meter-text { font-size: 18px; font-weight: 600; fill: var(--text-light); text-anchor: middle; opacity: 0; animation: fade-in-text 1s ease-out 1.8s forwards; }
-        a.blog-card:hover .illustration-capacity svg { filter: drop-shadow(3px 6px 10px var(--glow-color)); transition: filter 0.4s ease-out; } /* La til glow */
+        .illustration-capacity svg { width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.15)); }
+        .illustration-capacity svg .meter-bg { fill: none; stroke: var(--card-border-light); stroke-width: 6; opacity: 0; animation: fade-in-text 1s ease-out 0.2s forwards; }
+        .illustration-capacity svg .meter-value { fill: none; stroke: url(#capacityGradient); stroke-width: 7; stroke-linecap: round; stroke-dasharray: 251.2; stroke-dashoffset: 251.2; transform: rotate(-90deg); transform-origin: 50% 50%; animation: meter-fill-single 1.8s cubic-bezier(0.64, 0, 0.78, 1) 0.5s 1 forwards; }
+        /* Capacity gradient bruker --primary-fabric-dark, --primary-fabric-light, --secondary-accent som definert i SVG <defs> */
+        .illustration-capacity svg .meter-text { font-size: 18px; font-weight: 600; fill: var(--text-dark-primary); text-anchor: middle; opacity: 0; animation: fade-in-text 1s ease-out 1.8s forwards; } /* Mørk tekst */
+        a.blog-card:hover .illustration-capacity svg { filter: drop-shadow(2px 3px 5px var(--glow-color)); transition: filter 0.4s ease-out; }
 
 
-        /* --- 5. RLS/CLS Table Grid (BEHOLDT) --- */
+        /* --- 5. RLS/CLS Table Grid --- */
         @keyframes grid-cell-appear { from { opacity: 0; transform: scale(0.7); } to   { opacity: 1; transform: scale(1); } }
-        @keyframes highlight-cell { from { opacity: 0; } to   { opacity: 0.4; } }
-        @keyframes highlight-cell-strong { from { opacity: 0; } to { opacity: 0.7; } }
+        @keyframes highlight-cell { from { opacity: 0; } to   { opacity: 0.2; } } /* Lavere opacity for lysere bakgrunn */
+        @keyframes highlight-cell-strong { from { opacity: 0; } to { opacity: 0.4; } } /* Lavere opacity */
         @keyframes lock-appear-scale { from { opacity: 0; transform: scale(0.5) rotate(-45deg); } to   { opacity: 1; transform: scale(1) rotate(0deg); } }
         .illustration-security { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-        .illustration-security svg { width: 95%; height: 95%; /* Litt større pga bredere viewbox */ max-width: 140px; max-height: 120px; overflow: visible; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
-        .illustration-security svg .grid-cell { fill: none; stroke: var(--text-medium); stroke-width: 0.8; opacity: 0; transform-origin: center; animation: grid-cell-appear 0.6s ease-out forwards; }
+        .illustration-security svg { width: 95%; height: 95%; max-width: 140px; max-height: 120px; overflow: visible; filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.15)); }
+        .illustration-security svg .grid-cell { fill: none; stroke: var(--text-dark-muted); stroke-width: 0.8; opacity: 0; transform-origin: center; animation: grid-cell-appear 0.6s ease-out forwards; }
         .illustration-security svg g:nth-child(1) rect { animation-delay: 0.3s; } .illustration-security svg g:nth-child(2) rect { animation-delay: 0.4s; } .illustration-security svg g:nth-child(3) rect { animation-delay: 0.5s; } .illustration-security svg g:nth-child(4) rect { animation-delay: 0.4s; } .illustration-security svg g:nth-child(5) rect { animation-delay: 0.5s; } .illustration-security svg g:nth-child(6) rect { animation-delay: 0.6s; } .illustration-security svg g:nth-child(7) rect { animation-delay: 0.5s; } .illustration-security svg g:nth-child(8) rect { animation-delay: 0.6s; } .illustration-security svg g:nth-child(9) rect { animation-delay: 0.7s; }
-        .illustration-security svg .highlight-rect-row { fill: var(--primary-fabric-light); opacity: 0; animation: highlight-cell 0.8s ease-out 1.0s forwards; }
-        .illustration-security svg .highlight-cell-col { fill: var(--primary-fabric-light); opacity: 0; animation: highlight-cell-strong 0.8s ease-out 1.0s forwards; }
-        .illustration-security svg .dimmed-cell-col { fill: var(--text-dark); opacity: 0; animation: highlight-cell 0.8s ease-out 1.0s forwards; animation-fill-mode: forwards; }
+        .illustration-security svg .highlight-rect-row { fill: var(--primary-accent-light); opacity: 0; animation: highlight-cell 0.8s ease-out 1.0s forwards; } /* Bruker TrendMe cyan */
+        .illustration-security svg .highlight-cell-col { fill: var(--primary-accent-light); opacity: 0; animation: highlight-cell-strong 0.8s ease-out 1.0s forwards; }
+        .illustration-security svg .dimmed-cell-col { fill: var(--text-dark-muted); opacity: 0; animation: highlight-cell 0.8s ease-out 1.0s forwards; animation-fill-mode: forwards; } /* Lysere for dimming */
         .illustration-security svg .lock-icon-group { opacity: 0; transform-origin: center; animation: lock-appear-scale 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55) 1.3s forwards; }
-        .illustration-security svg .lock-icon-group path { fill: var(--secondary-accent); }
-        a.blog-card:hover .illustration-security svg { filter: drop-shadow(3px 6px 10px var(--glow-color)); transition: filter 0.4s ease-out; } /* La til glow */
+        .illustration-security svg .lock-icon-group path { fill: var(--primary-accent-dark); } /* TrendMe Blå for lås */
+        a.blog-card:hover .illustration-security svg { filter: drop-shadow(2px 3px 5px var(--glow-color)); transition: filter 0.4s ease-out; }
 
 
-        /* --- 6. Calculation Groups Stack (BEHOLDT) --- */
+        /* --- 6. Calculation Groups Stack --- */
         @keyframes stack-appear { 0% { transform: translate(0, 20px) rotate(0deg) scale(0.8); opacity: 0; } 60% { transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--r, 0deg)) scale(1.05); opacity: 0.8; } 100% { transform: translate(var(--tx, 0px), var(--ty, 0px)) rotate(var(--r, 0deg)) scale(1); opacity: 1; } }
         .illustration-calc-groups { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-        .illustration-calc-groups svg { width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); }
-        .illustration-calc-groups svg .card-stack { fill: none; stroke-width: 2; rx: 5; transform-origin: center; opacity: 0; animation: stack-appear 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; transition: transform 0.3s ease-out; } /* Added transition here */
-        .illustration-calc-groups svg .card-stack-1 { stroke: var(--secondary-accent); --tx: 0px; --ty: 0px; --r: 0deg; animation-delay: 0.5s; }
-        .illustration-calc-groups svg .card-stack-2 { stroke: var(--primary-fabric-light); --tx: -4px; --ty: -4px; --r: -3deg; animation-delay: 0.7s; }
+        .illustration-calc-groups svg { width: 85%; height: 85%; max-width: 120px; max-height: 120px; overflow: visible; filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.15)); }
+        .illustration-calc-groups svg .card-stack { fill: none; stroke-width: 2; rx: 5; transform-origin: center; opacity: 0; animation: stack-appear 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; transition: transform 0.3s ease-out; }
+        .illustration-calc-groups svg .card-stack-1 { stroke: var(--secondary-accent-for-svg); --tx: 0px; --ty: 0px; --r: 0deg; animation-delay: 0.5s; }
+        .illustration-calc-groups svg .card-stack-2 { stroke: var(--primary-fabric-light-for-svg); --tx: -4px; --ty: -4px; --r: -3deg; animation-delay: 0.7s; }
         .illustration-calc-groups svg .card-stack-3 { stroke: var(--gold); --tx: -8px; --ty: -8px; --r: -6deg; animation-delay: 0.9s; }
-        a.blog-card:hover .illustration-calc-groups svg .card-stack { transform: translate(var(--tx), calc(var(--ty) - 3px)) rotate(var(--r)); filter: drop-shadow(3px 6px 10px var(--glow-color)); } /* lagt til glow */
+        a.blog-card:hover .illustration-calc-groups svg .card-stack { transform: translate(var(--tx), calc(var(--ty) - 3px)) rotate(var(--r)); filter: drop-shadow(2px 3px 5px var(--glow-color)); }
 
 
-        /* --- 7. Warehouse vs Lakehouse (BEHOLDT) --- */
+        /* --- 7. Warehouse vs Lakehouse --- */
         @keyframes wh-lh-appear { from { opacity: 0; } to { opacity: 1; } }
         @keyframes wave-hover-animate { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
         .illustration-wh-lh { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-        .illustration-wh-lh svg { display: block; width: 100%; height: 100%; max-width: none; max-height: none; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); transition: filter 0.4s ease-out; /* Added transition */ }
+        .illustration-wh-lh svg { display: block; width: 100%; height: 100%; max-width: none; max-height: none; filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.15)); transition: filter 0.4s ease-out; }
         .illustration-wh-lh svg #main-lakehouse-icon { opacity: 0; animation: wh-lh-appear 0.8s ease-out 0.4s forwards; transform-origin: center center; transform: translate(65px, 38px) scale(1.4); }
-        .illustration-wh-lh svg .cube-face { fill: rgba(var(--primary-fabric-light-rgb), 0.15); stroke: var(--primary-fabric-light); stroke-width: 1.5; stroke-linejoin: round; }
-        .illustration-wh-lh svg .cube-edge { stroke: var(--primary-fabric-light); stroke-width: 1.5; }
-        .illustration-wh-lh svg .lh-wave { fill: none; stroke: var(--secondary-accent); stroke-width: 2; stroke-linecap: round; transition: transform 0.3s ease-out; }
+        /* Defs i SVG bruker --primary-fabric-light og --secondary-accent, som nå er fra lyst tema. */
+        /* Men jeg har også lagt til -for-svg varianter hvis de trengs for å overstyre */
+        .illustration-wh-lh svg .cube-face { fill: rgba(var(--primary-accent-dark-rgb, var(--secondary-accent-rgb)), 0.1); stroke: var(--primary-accent-dark, var(--secondary-accent-for-svg)); stroke-width: 1.5; stroke-linejoin: round; }
+        .illustration-wh-lh svg .cube-edge { stroke: var(--primary-accent-dark, var(--secondary-accent-for-svg)); stroke-width: 1.5; }
+        .illustration-wh-lh svg .lh-wave { fill: none; stroke: var(--primary-accent-light, var(--secondary-accent-for-svg)); stroke-width: 2; stroke-linecap: round; transition: transform 0.3s ease-out; }
         a.blog-card:hover .illustration-wh-lh svg .lh-wave { animation: wave-hover-animate 1.2s ease-in-out infinite; }
-        a.blog-card:hover .illustration-wh-lh svg { filter: drop-shadow(3px 6px 10px var(--glow-color)); } /* La til glow på hele svg */
+        a.blog-card:hover .illustration-wh-lh svg { filter: drop-shadow(2px 3px 5px var(--glow-color)); }
 
 
-        /* --- 8. Fabric Intro Logo Build (BEHOLDT - Image URL) --- */
+        /* --- 8. Fabric Intro Logo Build (Image) & Andre Bilder --- */
         @keyframes img-logo-appear-scale { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
-        .illustration-fabric-intro { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
-        .illustration-fabric-intro img.fabric-logo-img { display: block; max-width: 100%; max-height: 100%; height: 80%; width: auto; object-fit: contain; opacity: 0; transform-origin: center center; animation: img-logo-appear-scale 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards; transition: filter 0.4s ease-out; /* Behøvde bare filter transition */ }
-        a.blog-card:hover .illustration-fabric-intro img.fabric-logo-img { filter: drop-shadow(0 0 10px var(--secondary-accent, #00c6ff)); }
+        .illustration-fabric-intro,
+        .illustration-data-modes-card,
+        .illustration-security-card,
+        .illustration-workspace-card,
+        .illustration-comparison-card { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
 
-        /* --- [NYE] Stiler for Bildene (Data Modes, Security, Workspace, Comparison) --- */
+        .illustration-fabric-intro img.fabric-logo-img,
         .illustration-data-modes-card img.fabric-data-modes-img,
         .illustration-security-card img.fabric-security-img,
         .illustration-workspace-card img.fabric-workspace-img,
         .illustration-comparison-card img.fabric-vs-platform-img {
             display: block;
-            max-width: 90%; /* Juster etter behov */
-            max-height: 90%; /* Juster etter behov */
+            max-width: 90%;
+            max-height: 90%;
             height: auto;
             width: auto;
             object-fit: contain;
             opacity: 0;
             transform-origin: center center;
-            animation: img-logo-appear-scale 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards; /* Gjenbruker animasjon */
+            animation: img-logo-appear-scale 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
             transition: filter 0.4s ease-out;
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); /* Liten skygge som default */
+            filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.1)); /* Subtilere skygge for bilder */
         }
+        a.blog-card:hover .illustration-fabric-intro img.fabric-logo-img,
         a.blog-card:hover .illustration-data-modes-card img.fabric-data-modes-img,
         a.blog-card:hover .illustration-security-card img.fabric-security-img,
         a.blog-card:hover .illustration-workspace-card img.fabric-workspace-img,
         a.blog-card:hover .illustration-comparison-card img.fabric-vs-platform-img {
-             filter: drop-shadow(0 0 10px var(--secondary-accent, #00c6ff)) drop-shadow(2px 4px 6px rgba(0,0,0,0.4)); /* Legger til glow på hover */
+             filter: drop-shadow(0 0 8px var(--glow-color)) drop-shadow(1px 2px 3px rgba(0,0,0,0.1));
         }
 
-
         /* ================================================================ */
-        /* === SLUTT: FORBEDREDE INLINE SVG/CSS ANIMASJONER === */
+        /* === SLUTT: SVG/CSS ANIMASJONER === */
         /* ================================================================ */
 
-        /* === FOOTER (Fra hovedblogg) === */
+        /* === FOOTER (TILPASSET LYST TEMA) === */
         footer {
-            background-color: #0a0a0a;
-            color: var(--text-medium);
+            background-color: var(--footer-bg-light); /* Lys footer bakgrunn */
+            color: var(--text-dark-muted); /* Mørk, dempet tekst */
             text-align: center;
             padding: 3rem 0 2rem 0;
             margin-top: 4rem;
-            border-top: 1px solid var(--card-border);
+            border-top: 1px solid var(--card-border-light);
         }
         footer p {
             margin-bottom: 1rem;
             font-size: 0.9rem;
         }
 
-        /* === RESPONSIVITET (Fra hovedblogg) === */
+        /* === RESPONSIVITET (Beholder eksisterende, men header tilpasses globalt) === */
         @media (max-width: 1100px) {
-            .blog-grid { grid-template-columns: repeat(3, 1fr); } /* 3 kolonner */
+            .blog-grid { grid-template-columns: repeat(3, 1fr); }
         }
         @media (max-width: 768px) {
-            .blog-grid { grid-template-columns: repeat(2, 1fr); } /* 2 kolonner */
-            header nav { flex-direction: column; align-items: center; }
-            header .logo { margin-bottom: 15px; }
-            header ul { margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+            .blog-grid { grid-template-columns: repeat(2, 1fr); }
+            header { height: auto; min-height: var(--header-height); /* La header vokse */ }
+            header nav { flex-direction: column; align-items: center; padding: 10px 0; }
+            header .logo { margin-bottom: 10px; }
+            header ul { margin-top: 0px; flex-wrap: wrap; justify-content: center; }
             header ul li { margin: 5px 8px; }
             .hero { min-height: 30vh; }
             .hero h1 { font-size: 2.2rem; }
         }
         @media (max-width: 500px) {
-            .blog-grid { grid-template-columns: 1fr; } /* 1 kolonne */
+            .blog-grid { grid-template-columns: 1fr; }
             .hero h1 { font-size: 1.8rem; }
         }
     </style>
-     <!-- RGB Vars Script beholdes uendret -->
      <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
              const style = getComputedStyle(document.documentElement);
              const hexToRgb = hex => {
-                 // Robust hexToRgb funksjon
                  hex = hex.trim();
-                 if (!hex.startsWith('#')) return '128, 128, 128';
+                 if (!hex.startsWith('#')) return '128, 128, 128'; // Fallback grå
                  let shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
                  hex = hex.replace(shorthandRegex, function(m, r, g, b) { return r + r + g + g + b + b; });
                  let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-                 if (!result) return '128, 128, 128';
+                 if (!result) return '128, 128, 128'; // Fallback grå
                  const r = parseInt(result[1], 16);
                  const g = parseInt(result[2], 16);
                  const b = parseInt(result[3], 16);
                  return `${r}, ${g}, ${b}`;
              };
 
-             // Funksjon for å sette RGB-variabler trygt
              const setRgbVar = (varName, fallback) => {
                  try {
                      const val = style.getPropertyValue(varName).trim();
-                     document.documentElement.style.setProperty(`${varName}-rgb`, hexToRgb(val));
+                     // Sjekk om val faktisk er en hex-kode før konvertering
+                     if (val && val.startsWith('#')) {
+                         document.documentElement.style.setProperty(`${varName}-rgb`, hexToRgb(val));
+                     } else if (val) { // Hvis det er en navngitt farge eller rgb() allerede, prøv å bruke den
+                         document.documentElement.style.setProperty(`${varName}-rgb`, val); // Dette er kanskje ikke alltid korrekt forventet RGB-format
+                         // For navngitte farger, ville en mer kompleks konvertering trengs, men vi bruker fallback for enkelhet
+                         console.warn(`CSS variable ${varName} (${val}) is not a hex code. RGB conversion might be inaccurate or use fallback.`);
+                         if (!val.includes(',')) { // Hvis det ikke ser ut som RGB
+                             document.documentElement.style.setProperty(`${varName}-rgb`, fallback);
+                         }
+                     } else {
+                         throw new Error("Variable not found or empty");
+                     }
                  } catch (e) {
-                     console.warn(`Could not process CSS variable ${varName}. Using fallback.`);
+                     console.warn(`Could not process CSS variable ${varName}. Using fallback for RGB: ${fallback}. Error: ${e.message}`);
                      document.documentElement.style.setProperty(`${varName}-rgb`, fallback);
                  }
              };
 
-             setRgbVar('--primary-fabric-dark', '106, 13, 173');
-             setRgbVar('--primary-fabric-light', '147, 112, 219');
-             setRgbVar('--secondary-accent', '0, 198, 255');
-             setRgbVar('--bronze', '205, 127, 50');
-             setRgbVar('--silver', '192, 192, 192');
-             setRgbVar('--gold', '255, 215, 0');
+            // Primærfarger fra lyst tema som kan trenge RGB-versjoner
+            setRgbVar('--primary-accent-dark', '0, 120, 212');
+            setRgbVar('--primary-accent-light', '0, 198, 255');
+            setRgbVar('--secondary-accent', '147, 112, 219');
+
+            // SVG-spesifikke farger (hvis de er forskjellige fra hovedtemaet)
+            setRgbVar('--bronze', '176, 141, 87');
+            setRgbVar('--silver', '168, 168, 168');
+            setRgbVar('--gold', '207, 181, 59');
+            setRgbVar('--primary-fabric-dark-for-svg', '106, 13, 173');
+            setRgbVar('--primary-fabric-light-for-svg', '147, 112, 219');
+            setRgbVar('--secondary-accent-for-svg', '0, 198, 255');
+
         });
     </script>
 </head>
 <body>
 
-    <!-- Header (Struktur beholdes) -->
+    <!-- Header -->
     <header id="main-header">
         <nav class="container">
             <div class="logo"><a href="/">TrendMe</a></div>
@@ -473,7 +481,7 @@
         </nav>
     </header>
 
-    <!-- Hero Seksjon (Struktur beholdes) -->
+    <!-- Hero Seksjon -->
      <section id="blogg-hero" class="hero">
         <div class="container">
             <h1>TrendMe Blogg</h1>
@@ -481,16 +489,16 @@
         </div>
     </section>
 
-    <!-- Hovedinnhold (Struktur beholdes, men innholdet i kortene er fra animasjonsfilen) -->
+    <!-- Hovedinnhold -->
     <main class="section">
         <div class="container">
             <div class="blog-grid">
 
 
                 <!-- === KORT FOR APRIL 2025 OPPDATERING === -->
-                <a href="posts/fabric-april-2025-oppdatering.html" class="blog-card"> <!-- Juster href hvis filnavnet er annerledes -->
+                <a href="posts/fabric-april-2025-oppdatering.html" class="blog-card">
                     <div class="card-image">
-                        <div class="css-illustration illustration-fabric-intro"> <!-- Gjenbruker Fabric logo-illustrasjon -->
+                        <div class="css-illustration illustration-fabric-intro">
                             <img class="fabric-logo-img"
                                  src="https://res.cloudinary.com/dm2movu5v/image/upload/v1746392572/fabric_logo_heqccn.png"
                                  alt="Microsoft Fabric Logo">
@@ -503,15 +511,15 @@
                 </a>
                 <!-- === SLUTT KORT APRIL 2025 === -->
 
-                <!-- === KORT 8 (Stjerne/Snøfnugg) - Mer Detaljert Snøfnugg === -->
+                <!-- === KORT 8 (Stjerne/Snøfnugg) === -->
                 <a href="posts/stjerne-vs-snofnugg-schema.html" class="blog-card">
                     <div class="card-image">
                         <div class="css-illustration illustration-star-snowflake">
                             <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
                                 <defs>
                                     <linearGradient id="starFlakeGradient" gradientTransform="rotate(45)">
-                                        <stop offset="0%" stop-color="var(--primary-fabric-light)" />
-                                        <stop offset="100%" stop-color="var(--secondary-accent)" />
+                                        <stop offset="0%" stop-color="var(--primary-accent-light)" /> /* Bruker tema farge */
+                                        <stop offset="100%" stop-color="var(--secondary-accent)" /> /* Bruker tema farge */
                                     </linearGradient>
                                     <path id="star-shape-pro" d="M50,10 L61.8,36.4 L90.9,36.4 L68.2,54.5 L79.1,80.9 L50,65 L20.9,80.9 L31.8,54.5 L9.1,36.4 L38.2,36.4 Z"/>
                                     <g id="flake-shape-pro-v2">
@@ -537,15 +545,20 @@
                 </a>
                 <!-- === SLUTT KORT 8 === -->
 
-                <!-- === KORT 7 (Medallion) - Flow Logic Illustrasjon === -->
+                <!-- === KORT 7 (Medallion) === -->
                 <a href="posts/medallion-arkitektur-fabric.html" class="blog-card">
                     <div class="card-image">
                          <div class="css-illustration illustration-medallion">
                               <svg viewBox="0 0 120 100" preserveAspectRatio="xMidYMid meet">
                                   <defs>
-                                      <marker id="arrowhead-medallion" markerWidth="8" markerHeight="6" refX="4" refY="3" orient="auto" markerUnits="strokeWidth"> <path d="M0,0 L8,3 L0,6 Z" fill="var(--text-medium)" /> </marker>
-                                      <!-- Innebygd stil beholdes, men RGB variabler settes av JS nå -->
-                                      <style> .bronze-layer { fill: rgba(var(--bronze-rgb), 0.3); stroke: var(--bronze); } .silver-layer { fill: rgba(var(--silver-rgb), 0.3); stroke: var(--silver); } .gold-layer { fill: rgba(var(--gold-rgb), 0.3); stroke: var(--gold); } </style>
+                                      <marker id="arrowhead-medallion" markerWidth="8" markerHeight="6" refX="4" refY="3" orient="auto" markerUnits="strokeWidth"> <path d="M0,0 L8,3 L0,6 Z" /> </marker>
+                                      <!-- Stil for farger i SVG (bruker CSS variabler) -->
+                                      <style>
+                                          .bronze-layer { fill: rgba(var(--bronze-rgb), 0.2); stroke: var(--bronze); }
+                                          .silver-layer { fill: rgba(var(--silver-rgb), 0.2); stroke: var(--silver); }
+                                          .gold-layer { fill: rgba(var(--gold-rgb), 0.2); stroke: var(--gold); }
+                                          #arrowhead-medallion path { fill: var(--text-dark-muted); }
+                                      </style>
                                   </defs>
                                   <g> <rect class="layer-shape bronze-layer" x="35" y="75" width="50" height="20"/> <text class="layer-text bronze-text" x="60" y="86">BRONZE</text> </g>
                                   <g> <rect class="layer-shape silver-layer" x="35" y="40" width="50" height="20"/> <text class="layer-text silver-text" x="60" y="51">SILVER</text> </g>
@@ -563,7 +576,7 @@
                 </a>
                 <!-- === SLUTT KORT 7 === -->
 
-                <!-- === KORT 6 (Datainnhenting) - Simple Funnel Drop v14 (Single Run) === -->
+                <!-- === KORT 6 (Datainnhenting) === -->
                 <a href="posts/fabric-datainnhenting-metoder.html" class="blog-card">
                     <div class="card-image">
                         <div class="css-illustration illustration-ingestion">
@@ -580,12 +593,12 @@
                  </a>
                  <!-- === SLUTT KORT 6 === -->
 
-                  <!-- === KORT 5 (Capacity/Prising) - Roligere Meter === -->
+                  <!-- === KORT 5 (Capacity/Prising) === -->
                  <a href="posts/fabric-capacity-og-prising.html" class="blog-card">
                      <div class="card-image">
                           <div class="css-illustration illustration-capacity">
                                <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-                                  <defs> <linearGradient id="capacityGradient" gradientTransform="rotate(90)"> <stop offset="0%" stop-color="var(--primary-fabric-dark)" /> <stop offset="50%" stop-color="var(--primary-fabric-light)" /> <stop offset="100%" stop-color="var(--secondary-accent)" /> </linearGradient> </defs>
+                                  <defs> <linearGradient id="capacityGradient" gradientTransform="rotate(90)"> <stop offset="0%" stop-color="var(--primary-accent-dark)" /> <stop offset="50%" stop-color="var(--primary-accent-light)" /> <stop offset="100%" stop-color="var(--secondary-accent)" /> </linearGradient> </defs>
                                   <circle class="meter-bg" cx="50" cy="50" r="40" /> <circle class="meter-value" cx="50" cy="50" r="40" /> <text class="meter-text" x="50" y="58">CU</text>
                               </svg>
                           </div>
@@ -597,7 +610,7 @@
                  </a>
                  <!-- === SLUTT KORT 5 === -->
 
-                <!-- === KORT 4 (RLS/CLS) - Table Grid Illustrasjon (FIXED CLS) === -->
+                <!-- === KORT 4 (RLS/CLS) === -->
                 <a href="posts/sikre-data-med-rls-cls.html" class="blog-card">
                     <div class="card-image">
                          <div class="css-illustration illustration-security">
@@ -616,7 +629,7 @@
                 </a>
                 <!-- === SLUTT KORT 4 === -->
 
-                <!-- === KORT 3 (Calculation Groups) - Stack Animation (Single Run) === -->
+                <!-- === KORT 3 (Calculation Groups) === -->
                 <a href="posts/fordeler-med-calculation-groups.html" class="blog-card">
                     <div class="card-image">
                          <div class="css-illustration illustration-calc-groups">
@@ -632,7 +645,7 @@
                 </a>
                 <!-- === SLUTT KORT 3 === -->
 
-                <!-- === KORT 2 (Warehouse vs Lakehouse) - KUN Lakehouse Sentrert === -->
+                <!-- === KORT 2 (Warehouse vs Lakehouse) === -->
                 <a href="posts/fabric-warehouse-vs-lakehouse.html" class="blog-card">
                     <div class="card-image">
                         <div class="css-illustration illustration-wh-lh">
@@ -649,8 +662,8 @@
                 </a>
                 <!-- === SLUTT KORT 2 === -->
 
-                <!-- === KORT [Nummer] (Fabric Datamoduser) - Bruker Bilde-URL === -->
-                <a href="posts/fabric-datamoduser-directlake-import-directquery.html" class="blog-card"> <!-- Juster filnavn ved behov -->
+                <!-- === KORT (Fabric Datamoduser) - Bruker Bilde-URL === -->
+                <a href="posts/fabric-datamoduser-directlake-import-directquery.html" class="blog-card">
                     <div class="card-image">
                         <div class="css-illustration illustration-data-modes-card">
                             <img class="fabric-data-modes-img"
@@ -663,12 +676,12 @@
                          <span class="card-meta"><time datetime="2025-04-16">16. April 2025</time></span>
                     </div>
                 </a>
-                <!-- === SLUTT KORT [Nummer] === -->
+                <!-- === SLUTT KORT === -->
 
-                <!-- === KORT [Nummer] (Fabric Sikkerhet Entra ID) - Bruker Bilde-URL === -->
-                <a href="posts/sikkerhet-fabric-entra-id-roller.html" class="blog-card"> <!-- Oppdatert filnavn -->
+                <!-- === KORT (Fabric Sikkerhet Entra ID) - Bruker Bilde-URL === -->
+                <a href="posts/sikkerhet-fabric-entra-id-roller.html" class="blog-card">
                     <div class="card-image">
-                        <div class="css-illustration illustration-security-card"> <!-- Spesifikk klasse for dette kortet om nødvendig -->
+                        <div class="css-illustration illustration-security-card">
                             <img class="fabric-security-img"
                                  src="https://res.cloudinary.com/dm2movu5v/image/upload/v1746392601/ms_security_r4hyhy.png"
                                  alt="Illustrasjon av sikkerhet og tilgangskontroll i Fabric">
@@ -676,13 +689,13 @@
                     </div>
                     <div class="card-content">
                         <h3 class="card-title">Sikkerhet i Fabric: Styr på Tilganger med Entra ID og Roller</h3>
-                         <span class="card-meta"><time datetime="2025-04-12">12. April 2025</time></span> <!-- Dato fra blogginnlegget -->
+                         <span class="card-meta"><time datetime="2025-04-12">12. April 2025</time></span>
                     </div>
                 </a>
-                <!-- === SLUTT KORT [Nummer] === -->
+                <!-- === SLUTT KORT === -->
 
 
-                <!-- === KORT [Nummer] (Beste Praksis Workspaces) - Bruker Bilde-URL === -->
+                <!-- === KORT (Beste Praksis Workspaces) - Bruker Bilde-URL === -->
                 <a href="posts/beste-praksis-workspaces-fabric.html" class="blog-card">
                     <div class="card-image">
                         <div class="css-illustration illustration-workspace-card">
@@ -696,11 +709,11 @@
                          <span class="card-meta"><time datetime="2025-04-10">10. April 2025</time></span>
                     </div>
                 </a>
-                <!-- === SLUTT KORT [Nummer] === -->
+                <!-- === SLUTT KORT === -->
 
 
-                <!-- === KORT [Nummer] (Fabric vs Avansert Plattform) - Bruker Bilde-URL === -->
-                <a href="posts/fabric-vs-avansert-dataplattform.html" class="blog-card"> <!-- Justert filnavn -->
+                <!-- === KORT (Fabric vs Avansert Plattform) - Bruker Bilde-URL === -->
+                <a href="posts/fabric-vs-avansert-dataplattform.html" class="blog-card">
                     <div class="card-image">
                         <div class="css-illustration illustration-comparison-card">
                             <img class="fabric-vs-platform-img"
@@ -713,9 +726,9 @@
                          <span class="card-meta"><time datetime="2025-04-07">07. April 2025</time></span>
                     </div>
                 </a>
-                <!-- === SLUTT KORT [Nummer] === -->
+                <!-- === SLUTT KORT === -->
 
-                 <!-- === KORT 1 (Intro Fabric) - Using Image URL (PNG from GitHub) === -->
+                 <!-- === KORT 1 (Intro Fabric) - Using Image URL === -->
                  <a href="posts/hva-er-microsoft-fabric-introduksjon.html" class="blog-card">
                     <div class="card-image">
                         <div class="css-illustration illustration-fabric-intro">
@@ -735,7 +748,7 @@
         </div> <!-- Slutt .container -->
     </main>
 
-    <!-- Footer (Struktur beholdes) -->
+    <!-- Footer -->
     <footer>
         <div class="container">
             <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
@@ -743,48 +756,33 @@
         </div>
     </footer>
 
-    <!-- === JavaScript (Fra hovedblogg) === -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            // --- Footer årstall ---
             const yearSpan = document.getElementById('year');
             if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
 
-            // --- Intersection Observer for fade-in animasjon ---
-             const observerOptions = {
-                 root: null, // Bruker viewport som root
-                 rootMargin: '0px',
-                 threshold: 0.1 // Utløs når 10% av elementet er synlig
-             };
-
+             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
              const observerCallback = (entries, observer) => {
                  entries.forEach(entry => {
                      if (entry.isIntersecting) {
-                         // Legg til en klasse for animasjon, eller sett stil direkte
                          entry.target.style.opacity = '1';
                          entry.target.style.transform = 'translateY(0)';
-                         entry.target.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-                         // Slutt å observere elementet når det er animert
+                         // Overgangen er nå i CSS, så ingen grunn til å sette den her
+                         // entry.target.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
                          observer.unobserve(entry.target);
                      }
                  });
              };
-
              const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-             // Observer alle bloggkortene
              const elementsToAnimate = document.querySelectorAll('a.blog-card');
-             elementsToAnimate.forEach(el => {
-                 // Startstil settes via CSS (opacity: 0, transform: translateY(20px))
-                 observer.observe(el);
-             });
+             elementsToAnimate.forEach(el => { observer.observe(el); });
 
-             // --- RGB Variabel Setter (Fra forrige animasjonsfil, robust versjon) ---
+             // RGB Variabel Setter (Beholdt som før, men med justerte fallbacks for lyst tema)
              const style = getComputedStyle(document.documentElement);
              const hexToRgb = hex => {
                  hex = hex.trim();
-                 if (!hex.startsWith('#')) return '128, 128, 128';
+                 if (!hex.startsWith('#')) return '128, 128, 128'; // Fallback grå
                  let shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
                  hex = hex.replace(shorthandRegex, function(m, r, g, b) { return r + r + g + g + b + b; });
                  let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -797,18 +795,31 @@
              const setRgbVar = (varName, fallback) => {
                  try {
                      const val = style.getPropertyValue(varName).trim();
-                     document.documentElement.style.setProperty(`${varName}-rgb`, hexToRgb(val));
+                     if (val && val.startsWith('#')) {
+                         document.documentElement.style.setProperty(`${varName}-rgb`, hexToRgb(val));
+                     } else if (val && val.includes(',')) { // Anta at det er en RGB streng
+                         document.documentElement.style.setProperty(`${varName}-rgb`, val);
+                     }
+                      else { throw new Error("Variable not found, empty, or not a hex/rgb string."); }
                  } catch (e) {
-                     console.warn(`Could not process CSS variable ${varName}. Using fallback.`);
+                     console.warn(`Could not process CSS variable ${varName}. Using fallback for RGB: ${fallback}. Error: ${e.message}`);
                      document.documentElement.style.setProperty(`${varName}-rgb`, fallback);
                  }
              };
-             setRgbVar('--primary-fabric-dark', '106, 13, 173');
-             setRgbVar('--primary-fabric-light', '147, 112, 219');
-             setRgbVar('--secondary-accent', '0, 198, 255');
-             setRgbVar('--bronze', '205, 127, 50');
-             setRgbVar('--silver', '192, 192, 192');
-             setRgbVar('--gold', '255, 215, 0');
+
+            setRgbVar('--primary-accent-dark', '0, 120, 212');      // Fra TrendMe --primary-accent-dark
+            setRgbVar('--primary-accent-light', '0, 198, 255');   // Fra TrendMe --primary-accent-light
+            setRgbVar('--secondary-accent', '147, 112, 219');     // Fra TrendMe --secondary-accent
+
+            setRgbVar('--bronze', '176, 141, 87');                 // Egen definisjon for SVG
+            setRgbVar('--silver', '168, 168, 168');                 // Egen definisjon for SVG
+            setRgbVar('--gold', '207, 181, 59');                   // Egen definisjon for SVG
+
+            // For SVG-spesifikke farger, hvis de skal være annerledes enn hovedtemaets aksentfarger
+            setRgbVar('--primary-fabric-dark-for-svg', '106, 13, 173');
+            setRgbVar('--primary-fabric-light-for-svg', '147, 112, 219');
+            setRgbVar('--secondary-accent-for-svg', '0, 198, 255');
+
 
         });
     </script>
