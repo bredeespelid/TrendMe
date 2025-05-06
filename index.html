@@ -85,16 +85,15 @@
         /* === Tjenester Tabs Styling === */
         .tabs-container { max-width: 900px; margin: 3rem auto 0; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--card-border); overflow: hidden; }
         .tab-buttons { display: flex; background-color: rgba(50, 50, 50, 0.6); border-bottom: 1px solid var(--card-border); }
-        .tab-button { flex-grow: 1; /* Fordeler plassen likt */ padding: 1rem 1.5rem; background: none; border: none; color: var(--text-medium); font-family: var(--font-primary); font-size: 1.1rem; font-weight: 600; cursor: pointer; text-align: center; transition: color var(--transition-speed) ease, background-color var(--transition-speed) ease, border-bottom-color var(--transition-speed) ease; border-bottom: 3px solid transparent; /* For aktiv indikator */ white-space: nowrap; }
+        .tab-button { flex-grow: 1; padding: 1rem 1.5rem; background: none; border: none; color: var(--text-medium); font-family: var(--font-primary); font-size: 1.1rem; font-weight: 600; cursor: pointer; text-align: center; transition: color var(--transition-speed) ease, background-color var(--transition-speed) ease, border-bottom-color var(--transition-speed) ease; border-bottom: 3px solid transparent; white-space: nowrap; }
         .tab-button:hover { color: var(--text-light); background-color: rgba(60, 60, 60, 0.7); }
         .tab-button.active { color: var(--primary-accent-light); border-bottom-color: var(--primary-accent-light); background-color: rgba(40, 40, 40, 0.9); }
         .tab-content-container { padding: 2.5rem 2rem; }
-        .tab-pane { display: none; /* Skjult som standard */ animation: fadeInContent 0.5s ease-out forwards; }
+        .tab-pane { display: none; animation: fadeInContent 0.5s ease-out forwards; }
         .tab-pane.active { display: block; }
         .tab-pane h3 { font-size: 1.6rem; margin-bottom: 1rem; color: var(--text-light); }
         .tab-pane p { font-size: 1rem; color: var(--text-medium); line-height: 1.8; }
         @keyframes fadeInContent { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        /* === END Tjenester Tabs Styling === */
 
         .services-bg { background: linear-gradient(rgba(18, 18, 18, 0.95), rgba(18, 18, 18, 0.98)), #16161d; }
         .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
@@ -166,6 +165,59 @@
          .microsoft-calc-button .ms-logo { width: 1.4em; height: 1.4em; vertical-align: middle; }
          .microsoft-calc-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px var(--glow-color); }
 
+        /* === Styling for Siste Fabric Nyheter === */
+        .fabric-updates-list {
+            background: var(--card-bg); /* Bruk eksisterende card bakgrunn */
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 1.5rem 2rem;
+            font-size: 0.95rem;
+            max-width: 700px; /* Matcher bredden i HTML */
+            margin: 0 auto;    /* Sentrerer listen */
+            text-align: left; /* Overstyrer text-align: center fra .resource-section */
+        }
+        .fabric-updates-list ul { /* Legg til stil for ul */
+             list-style-type: none;
+             padding-left: 0;
+             margin: 0; /* Fjern default margin */
+        }
+        .fabric-updates-list .fabric-update-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Litt mer diskret skillelinje */
+        }
+        .fabric-updates-list .fabric-update-item:last-child {
+            border-bottom: none;
+        }
+        .fabric-updates-list .fabric-update-item a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600; /* Litt uthevet tittel */
+            transition: color var(--transition-speed) ease;
+            display: block; /* Gjør hele området klikkbart */
+        }
+        .fabric-updates-list .fabric-update-item a:hover {
+            color: var(--primary-accent-light);
+        }
+        .fabric-updates-list .fabric-update-date {
+            font-size: 0.8em;
+            color: var(--text-medium);
+            display: block;
+            margin-top: 0.3rem;
+        }
+        .fabric-updates-list .loading-message,
+        .fabric-updates-list .error-message { /* Sørg for at disse meldingene er stylet */
+            color: var(--text-medium);
+            text-align: center;
+            padding: 1rem 0;
+            font-style: italic; /* Legg til kursiv */
+        }
+        .fabric-updates-list .error-message {
+            color: var(--error-color);
+            font-weight: normal;
+            font-style: normal; /* Fjern kursiv for feil */
+        }
+
+
         /* --- RESPONSIVITET --- */
         @media (max-width: 992px) {
              header nav { flex-direction: column; align-items: center; height: auto; min-height: var(--header-height); }
@@ -180,8 +232,7 @@
              .hero .typing-container { font-size: 1.2rem; }
              .section-header h2 { font-size: 2.4rem; }
              .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-             /* Tabs Responsivitet */
-             .tab-button { font-size: 1rem; padding: 0.9rem 1rem; white-space: normal; } /* Tillat wrapping */
+             .tab-button { font-size: 1rem; padding: 0.9rem 1rem; white-space: normal; }
         }
 	    @media (max-width: 768px) {
             header { height: auto; min-height: var(--header-height); }
@@ -198,7 +249,6 @@
 	        .section-header p { font-size: 1rem; }
 	        #contact-form { padding: 2rem; }
 	        .service-grid { grid-template-columns: 1fr; }
-	        /* Feature grid ikke lenger brukt i #tjenester */
 	        .accordion-title { font-size: 1.1rem; padding: 1.2rem 0.8rem; }
 	        .accordion-content { padding: 0 1rem; font-size: 0.95rem; }
 	        .accordion-content.aktiv { padding: 1rem 1rem 2rem 1rem; }
@@ -210,14 +260,16 @@
             .resource-section .section-header p { font-size: 0.95rem; }
              .resource-section { padding: 2.5rem 0 0.5rem 0; }
              .logo-img { max-height: 35px; }
-             /* Tabs Responsivitet */
-             .tab-buttons { flex-direction: column; /* Stack buttons vertikalt */ border-bottom: none; }
-             .tab-button { width: 100%; border-bottom: 1px solid var(--card-border); border-left: 3px solid transparent; /* Bruk venstre bord for aktiv indikator */ border-bottom-color: transparent !important; /* Fjern bunn-border */ }
+             .tab-buttons { flex-direction: column; border-bottom: none; }
+             .tab-button { width: 100%; border-bottom: 1px solid var(--card-border); border-left: 3px solid transparent; border-bottom-color: transparent !important; }
              .tab-button:last-child { border-bottom: none; }
-             .tab-button.active { border-left-color: var(--primary-accent-light); border-bottom-color: transparent !important; /* Sikre at bunn-border er borte */ }
+             .tab-button.active { border-left-color: var(--primary-accent-light); border-bottom-color: transparent !important; }
              .tab-content-container { padding: 2rem 1.5rem; }
              .tab-pane h3 { font-size: 1.4rem;}
              .tab-pane p { font-size: 0.95rem; }
+             /* Fabric updates responsivitet */
+             .fabric-updates-container h3 { font-size: 1.6rem; }
+             .fabric-updates-list { padding: 1rem 1.5rem; }
 	    }
         @media (max-width: 480px) {
             header ul li a { padding: 6px 8px; font-size: 0.8rem; }
@@ -233,9 +285,11 @@
             .resource-section .section-header h2 { font-size: 1.6rem; }
             .resource-section .section-header p { font-size: 0.9rem; }
              .resource-section { padding: 2rem 0 0.5rem 0; }
-             /* Tabs Responsivitet */
              .tab-button { font-size: 0.95rem; padding: 0.8rem 1rem; }
              .tab-content-container { padding: 1.5rem 1rem; }
+             /* Fabric updates responsivitet */
+             .fabric-updates-container h3 { font-size: 1.5rem; }
+             .fabric-updates-list { padding: 1rem; }
         }
         @media (min-width: 1800px) {
             header ul { flex-wrap: nowrap; }
@@ -278,20 +332,19 @@
             </div>
         </section>
 
-        <!-- Om Oss Seksjon (Tekst oppdatert) -->
+        <!-- Om Oss Seksjon -->
         <section id="om-oss" class="section">
              <div class="container">
                  <div class="section-header fade-in">
                      <span>Hvem Vi Er</span>
                      <h2>Teknologi som Skaper Verdi</h2>
-                     <!-- Paragraf oppdatert -->
                      <p>Hos TrendMe brenner vi for teknologi og hvordan den kan forbedre og effektivisere virksomheter. Vår misjon er å kontinuerlig følge med på de nyeste trendene – fra kunstig intelligens og avansert dataanalyse til skyteknologi og automatisering. Vi driver dette prosjektet med engasjement ved siden av studier og jobb, og hjelper våre kunder å velge og implementere teknologi som gir konkrete resultater.</p>
                      <p style="margin-top: 1rem;">Vi oversetter teknologiske muligheter til praktiske løsninger for din bedrift.</p>
                  </div>
              </div>
          </section>
 
-         <!-- Tjenester Oversikt Seksjon (Ny Tab-struktur) -->
+         <!-- Tjenester Oversikt Seksjon -->
          <section id="tjenester" class="section services-bg">
              <div class="container">
                  <div class="section-header fade-in">
@@ -299,7 +352,6 @@
                      <h2>Fra Strategi til Implementering</h2>
                      <p>Vi tilbyr et bredt spekter av rådgivnings- og implementeringstjenester tilpasset dine behov. Vi jobber på tvers av flere nøkkelområder for å hjelpe deg å utnytte teknologi effektivt:</p>
                  </div>
-                 <!-- Tabs Container -->
                  <div class="tabs-container fade-in" style="transition-delay: 0.2s;">
                      <div class="tab-buttons" role="tablist">
                          <button class="tab-button active" id="tab-data" data-target="#pane-data" role="tab" aria-controls="pane-data" aria-selected="true">Data & Analyse</button>
@@ -309,7 +361,6 @@
                      <div class="tab-content-container">
                          <div class="tab-pane active" id="pane-data" role="tabpanel" aria-labelledby="tab-data">
                              <h3>Data & Analyse</h3>
-                             <!-- Tekst oppdatert uten parentes -->
                              <p>Utnytt kraften i dine data. Vi hjelper med alt fra dataplattformstrategi og valg av verktøy som Microsoft Fabric, til BI-løsninger med Power BI, datavarehus og innsiktsgenerering.</p>
                          </div>
                          <div class="tab-pane" id="pane-ai" role="tabpanel" aria-labelledby="tab-ai">
@@ -327,18 +378,18 @@
          </section>
 
 
-        <!-- Hvorfor Moderne Dataanalyse Seksjon (Overskrift oppdatert) -->
+        <!-- Hvorfor Moderne Dataanalyse Seksjon -->
         <section id="hvorfor-moderne-data" class="section">
              <div class="container">
                  <div class="section-header fade-in">
                      <span>Fremtiden for Dataanalyse</span>
-                     <h2>Verdien av Moderne Dataanalyse</h2> <!-- Overskrift endret -->
+                     <h2>Verdien av Moderne Dataanalyse</h2>
                      <p>Tradisjonell dataanalyse kan være kompleks og fragmentert. Moderne plattformer tilbyr en mer helhetlig tilnærming. Et ledende eksempel er <strong>Microsoft Fabric</strong> – en ende-til-ende, AI-drevet SaaS-plattform som samler dataintegrasjon, engineering, warehousing, datavitenskap, sanntidsanalyse og business intelligence på ett sted.</p>
                  </div>
              </div>
          </section>
 
-        <!-- Om Fabric Seksjon (Dypdykk) -->
+        <!-- Om Fabric Seksjon -->
         <section id="om-fabric" class="section services-bg">
              <div class="container">
                  <div class="section-header fade-in">
@@ -464,13 +515,12 @@
              </div>
          </section>
 
-         <!-- Power BI Tjenester Seksjon (Tekst justert) -->
+         <!-- Power BI Tjenester Seksjon -->
           <section id="powerbi-tjenester" class="section services-bg">
               <div class="container">
                    <div class="section-header fade-in">
                       <span>Spesialiserte Tjenester</span>
                       <h2>Power BI Tjenester & Optimalisering</h2>
-                      <!-- Paragraf justert uten parentes -->
                       <p>Som en sentral del av vår dataanalyse-ekspertise, leverer vi kvalitetssikre Power BI-løsninger – enten frittstående eller sømløst integrert med plattformer som Microsoft Fabric, inkludert bruk av DirectLake for rask innsikt.</p>
                   </div>
                    <div class="service-grid">
@@ -516,13 +566,13 @@
               </div>
           </section>
 
-         <!-- Ressurser Seksjon -->
+         <!-- Ressurser Seksjon (Inkluderer nå Fabric Updates) -->
          <section id="ressurser" class="resource-section section">
              <div class="container">
                   <div class="section-header fade-in">
                       <span>Nyttige Ressurser</span>
-                      <h2>Verktøy for Planlegging</h2>
-                      <p>Bruk Microsofts offisielle verktøy for å få et estimat på ditt kapasitetsbehov i Fabric.</p>
+                      <h2>Verktøy og Oppdateringer</h2> <!-- Overskrift oppdatert -->
+                      <p>Bruk Microsofts offisielle verktøy for å estimere ditt kapasitetsbehov, og hold deg oppdatert på det siste fra Fabric-teamet.</p> <!-- Tekst oppdatert -->
                   </div>
                  <a href="https://www.microsoft.com/en-us/microsoft-fabric/capacity-estimator"
                     target="_blank"
@@ -540,6 +590,19 @@
                  <p style="margin-top: 1.5rem; color: var(--text-medium); font-size: 0.9rem;" class="fade-in" style="transition-delay: 0.3s;">
                      Åpner Microsofts offisielle verktøy i en ny fane.
                  </p>
+
+                 <!-- === Ny seksjon for Siste Fabric Nyheter === -->
+                 <div class="fabric-updates-container fade-in" style="margin-top: 4rem; transition-delay: 0.4s;">
+                     <h3 style="font-size: 1.8rem; color: var(--text-light); margin-bottom: 1.5rem; text-align: center;">
+                         Siste Oppdateringer om Microsoft Fabric
+                     </h3>
+                     <div id="fabric-latest-updates" class="fabric-updates-list">
+                         <p class="loading-message">Laster siste nytt...</p>
+                         <!-- Nyheter vil bli lastet her av JavaScript -->
+                     </div>
+                 </div>
+                 <!-- === SLUTT Ny seksjon for Siste Fabric Nyheter === -->
+
              </div>
          </section>
 
@@ -630,19 +693,16 @@
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     let targetId = this.getAttribute('href');
-                    if (targetId.startsWith('#')) {
+                    // Sjekk om lenken er til en intern seksjon på siden
+                    if (targetId && targetId.startsWith('#') && targetId.length > 1) {
                         e.preventDefault();
-                        if (targetId === '#') {
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                            return;
-                        }
                          try {
                              let targetElement = document.querySelector(targetId);
                              if (targetElement) {
                                 const headerOffset = header ? header.offsetHeight : 0;
                                 const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
                                 const stickyHeaderOffset = (window.getComputedStyle(header).position === 'sticky' && header.getBoundingClientRect().top <= 0) ? headerOffset : 0;
-                                const offsetPosition = elementPosition - stickyHeaderOffset - 20;
+                                const offsetPosition = elementPosition - stickyHeaderOffset - 20; // Juster offset her om nødvendig
                                 window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                             } else {
                                 console.warn(`Smooth scroll target element not found for selector: ${targetId}`);
@@ -650,7 +710,11 @@
                         } catch (error) {
                              console.error(`Error finding element for smooth scroll: ${targetId}`, error);
                         }
+                    } else if (targetId === '#hjem') { // Håndter #hjem spesifikt
+                         e.preventDefault();
+                         window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
+                    // La vanlige lenker (som /blogg, /faktura) fungere normalt
                 });
             });
 
@@ -670,18 +734,15 @@
                  setTimeout(typeChar, 1800);
              }
 
-            // --- Accordion Logikk (Oppdatert) ---
+            // --- Accordion Logikk ---
             const accordionTitles = document.querySelectorAll('.accordion-title');
             accordionTitles.forEach(title => {
                 title.addEventListener('click', function() {
                     const parentItem = this.closest('.accordion-item');
                     if (!parentItem) return;
-
                     const content = parentItem.querySelector('.accordion-content');
                     const icon = this.querySelector('.ikon');
                     const isAlreadyActive = this.classList.contains('aktiv');
-
-                    // Lukk alle andre i samme liste
                     const parentList = this.closest('.accordion-list');
                     if (parentList) {
                         parentList.querySelectorAll('.accordion-item').forEach(otherItem => {
@@ -689,32 +750,21 @@
                             const otherContent = otherItem.querySelector('.accordion-content');
                             if (otherTitle !== this && otherTitle.classList.contains('aktiv')) {
                                 otherTitle.classList.remove('aktiv');
-                                if (otherContent) {
-                                    otherContent.style.maxHeight = null;
-                                    otherContent.classList.remove('aktiv');
-                                }
+                                if (otherContent) { otherContent.style.maxHeight = null; otherContent.classList.remove('aktiv'); }
                                 const otherIcon = otherTitle.querySelector('.ikon');
                                 if (otherIcon) otherIcon.textContent = '+';
                             }
                         });
                     }
-
-                    // Håndter den klikkede
                     if (isAlreadyActive) {
                         this.classList.remove('aktiv');
-                        if (content) {
-                            content.style.maxHeight = null;
-                            content.classList.remove('aktiv');
-                        }
+                        if (content) { content.style.maxHeight = null; content.classList.remove('aktiv'); }
                         if (icon) icon.textContent = '+';
                     } else {
                         this.classList.add('aktiv');
                         if (content) {
                             content.classList.add('aktiv');
-                            // Mål scrollHeight *etter* klassen er lagt til og display er block
-                             requestAnimationFrame(() => {
-                                content.style.maxHeight = content.scrollHeight + "px";
-                            });
+                             requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; });
                         }
                         if (icon) icon.textContent = '−';
                     }
@@ -724,35 +774,23 @@
             // --- Tjenester Tabs Logikk ---
             const tabButtonsContainer = document.querySelector('.tab-buttons');
             const tabPanes = document.querySelectorAll('.tab-pane');
-
             if (tabButtonsContainer && tabPanes.length > 0) {
                 tabButtonsContainer.addEventListener('click', (e) => {
                     const clickedButton = e.target.closest('.tab-button');
-                    if (!clickedButton) return; // Klikket ikke på en knapp
-
+                    if (!clickedButton) return;
                     const targetId = clickedButton.getAttribute('data-target');
                     const targetPane = document.querySelector(targetId);
-
-                    if (!targetPane) return; // Fant ikke innholdspanelet
-
-                    // Fjern 'active' fra alle knapper i denne containeren
+                    if (!targetPane) return;
                     tabButtonsContainer.querySelectorAll('.tab-button').forEach(btn => {
                         btn.classList.remove('active');
                         btn.setAttribute('aria-selected', 'false');
                     });
-
-                    // Fjern 'active' fra alle paneler
-                    tabPanes.forEach(pane => {
-                        pane.classList.remove('active');
-                    });
-
-                    // Legg til 'active' på klikket knapp og målpanel
+                    tabPanes.forEach(pane => { pane.classList.remove('active'); });
                     clickedButton.classList.add('active');
                     clickedButton.setAttribute('aria-selected', 'true');
                     targetPane.classList.add('active');
                 });
             }
-
 
             // --- Footer årstall ---
             const yearSpan = document.getElementById('year');
@@ -859,6 +897,167 @@
                   if (formErrorMessage) { formErrorMessage.textContent = "En feil oppstod med skjemaet. Prøv å laste siden på nytt."; formErrorMessage.style.display = "block"; }
                   if (submitButton) submitButton.disabled = true;
              }
+
+            // === Logikk for å hente og vise Siste Microsoft Fabric Nyheter ===
+            const fabricUpdatesContainer = document.getElementById('fabric-latest-updates');
+            const fabricMaxItems = 3; // Vis kun de 3 siste
+            const fabricRssFeedUrl = 'https://blog.fabric.microsoft.com/en-us/blog/feed/';
+            const fabricProxyUrl = 'https://api.allorigins.win/raw?url='; // Proxy for CORS
+
+            function logFabricUpdate(message, isError = false) {
+                // Forenklet logging kun til konsoll for produksjon
+                console[isError ? 'error' : 'log']("FabricUpdate: " + message);
+            }
+
+            function displayFabricUpdates(xmlData) {
+                logFabricUpdate("Starter visning av Fabric-oppdateringer.");
+                if (!fabricUpdatesContainer) {
+                    logFabricUpdate("FEIL: Container 'fabric-latest-updates' ikke funnet.", true);
+                    return;
+                }
+
+                try {
+                    const parser = new DOMParser();
+                    const firstChars = xmlData.substring(0,100).trim();
+                    if (!firstChars.toLowerCase().startsWith('<?xml') && !firstChars.toLowerCase().startsWith('<rss')) {
+                        logFabricUpdate("FEIL: Mottatte data for Fabric ser ikke ut til å være XML.", true);
+                        fabricUpdatesContainer.innerHTML = `<p class="error-message">Kunne ikke laste inn oppdateringer (feil format).</p>`;
+                        return;
+                    }
+
+                    const xmlDoc = parser.parseFromString(xmlData.trim(), "text/xml");
+                    const parserError = xmlDoc.getElementsByTagName("parsererror");
+
+                    if (parserError.length > 0) {
+                        let errorDetails = parserError[0]?.textContent || "Ukjent XML parsefeil";
+                        logFabricUpdate("XML Parseringsfeil for Fabric: " + errorDetails, true);
+                        fabricUpdatesContainer.innerHTML = `<p class="error-message">Klarte ikke å behandle nyhetsfeeden.</p>`;
+                        return;
+                    }
+
+                    const items = xmlDoc.querySelectorAll("item");
+                    logFabricUpdate(`Antall Fabric-items funnet: ${items.length}`);
+
+                    if (items.length === 0) {
+                        fabricUpdatesContainer.innerHTML = '<p class="loading-message">Ingen nylige oppdateringer funnet.</p>'; // Bruker loading-message stil
+                        return;
+                    }
+
+                    fabricUpdatesContainer.innerHTML = ''; // Tøm "Laster..."
+                    let count = 0;
+                    const ul = document.createElement('ul');
+                    // Stil er satt via CSS
+                    fabricUpdatesContainer.appendChild(ul); // Legg til ul før løkken
+
+                    items.forEach((item, index) => {
+                        if (count >= fabricMaxItems) return;
+
+                        try {
+                            const title = item.querySelector("title")?.textContent.trim() || 'Ukjent tittel';
+                            const link = item.querySelector("link")?.textContent.trim() || '#';
+                            const pubDateStr = item.querySelector("pubDate")?.textContent.trim();
+
+                            const pubDate = pubDateStr
+                                ? new Date(pubDateStr).toLocaleDateString('no-NO', {
+                                    year: 'numeric', month: 'short', day: 'numeric'
+                                  })
+                                : '';
+
+                            const listItem = document.createElement('li');
+                            listItem.classList.add('fabric-update-item');
+                            listItem.innerHTML = `
+                                <a href="${link}" target="_blank" rel="noopener noreferrer" title="${title}">${title}</a>
+                                ${pubDate ? `<span class="fabric-update-date">${pubDate}</span>` : ''}
+                            `;
+                            ul.appendChild(listItem); // Legg til li i ul
+                            count++;
+                        } catch (e) {
+                            logFabricUpdate(`Feil ved behandling av Fabric item ${index + 1}: ${e.message}`, true);
+                        }
+                    });
+                    logFabricUpdate(`${count} Fabric-oppdateringer lagt til.`);
+
+                } catch (error) {
+                    logFabricUpdate(`Global feil i displayFabricUpdates: ${error.message}`, true);
+                    if (fabricUpdatesContainer) {
+                        fabricUpdatesContainer.innerHTML = `<p class="error-message">En feil oppstod ved visning av oppdateringer.</p>`;
+                    }
+                }
+            }
+
+            async function fetchFabricUpdates() {
+                logFabricUpdate(`Henter Fabric-oppdateringer fra: ${fabricRssFeedUrl}`);
+                if (!fabricUpdatesContainer) return;
+
+                // Sett "Laster..." meldingen (allerede i HTML, men kan settes her for dynamisk)
+                // fabricUpdatesContainer.innerHTML = `<p class="loading-message">Laster siste nytt...</p>`;
+
+                let response;
+                let usedProxy = false;
+
+                try {
+                    logFabricUpdate("Prøver direkte henting av Fabric-feed...");
+                    response = await fetch(fabricRssFeedUrl);
+                    if (!response.ok) {
+                        // Ikke kast feil umiddelbart, logg og prøv proxy
+                        logFabricUpdate(`Direkte henting feilet (status ${response.status}). Prøver proxy.`, true);
+                        // Sett response til null for å tvinge proxy-forsøk
+                        response = null;
+                         // Kast feil for å gå til catch-blokken som prøver proxy
+                        throw new Error(`Direkte HTTP-feil: ${response?.status || 'Ukjent status'}`);
+                    } else {
+                         logFabricUpdate("Direkte henting av Fabric-feed vellykket.");
+                    }
+                } catch (directError) {
+                     // Denne catchen fanger nå både nettverksfeil og feil kastet ovenfor
+                    logFabricUpdate(`Direkte henting feilet: ${directError.message}. Prøver proxy.`, true);
+                    usedProxy = true;
+                    const proxyFetchUrl = `${fabricProxyUrl}${encodeURIComponent(fabricRssFeedUrl)}`;
+                    logFabricUpdate(`Fabric Proxy URL: ${proxyFetchUrl}`);
+                    try {
+                        response = await fetch(proxyFetchUrl);
+                        if (!response.ok) {
+                            throw new Error(`Proxy HTTP-feil: ${response.status}`);
+                        }
+                        logFabricUpdate("Proxy-henting av Fabric-feed vellykket.");
+                    } catch (proxyError) {
+                        logFabricUpdate(`Proxy-henting av Fabric-feed feilet: ${proxyError.message}`, true);
+                        if (fabricUpdatesContainer) {
+                            fabricUpdatesContainer.innerHTML = `<p class="error-message">Kunne ikke laste inn de siste oppdateringene for øyeblikket.</p>`;
+                        }
+                        return; // Avslutt hvis begge feiler
+                    }
+                }
+
+                // Hvis vi kommer hit, *bør* vi ha en gyldig response
+                if (!response) {
+                     logFabricUpdate("Ingen gyldig respons etter direkte/proxy-forsøk.", true);
+                      if (fabricUpdatesContainer) {
+                            fabricUpdatesContainer.innerHTML = `<p class="error-message">Kunne ikke hente data (ingen respons).</p>`;
+                        }
+                     return;
+                }
+
+                try {
+                    const xmlData = await response.text();
+                    logFabricUpdate(`Mottok ${xmlData.length} bytes Fabric XML-data ${usedProxy ? 'via proxy' : 'direkte'}.`);
+                    displayFabricUpdates(xmlData); // Kall visningsfunksjonen
+                } catch (error) {
+                    logFabricUpdate(`Feil ved lesing av Fabric-respons: ${error.message}`, true);
+                    if (fabricUpdatesContainer) {
+                        fabricUpdatesContainer.innerHTML = `<p class="error-message">Klarte ikke behandle data fra nyhetsfeeden.</p>`;
+                    }
+                }
+            }
+
+            // Kjør funksjonen for å hente Fabric-nyheter kun hvis elementet finnes
+            if (fabricUpdatesContainer) {
+                fetchFabricUpdates();
+            } else {
+                logFabricUpdate("Container 'fabric-latest-updates' ikke funnet, hopper over henting av Fabric-nyheter.");
+            }
+            // === SLUTT på Logikk for Siste Microsoft Fabric Nyheter ===
+
 
         }); // Slutt på DOMContentLoaded
     </script>
