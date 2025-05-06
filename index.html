@@ -851,6 +851,7 @@
             const fabricMaxItems = 10;
             const fabricRssFeedUrl = 'https://blog.fabric.microsoft.com/en-us/blog/feed/';
             const fabricProxyUrl = 'https://api.allorigins.win/raw?url=';
+            const FABRIC_RETRY_DELAY = 10000; // Vent 10 sekunder før nytt forsøk
 
             let fabricCarouselCurrentIndex = 0;
             let fabricCarouselSlides = [];
@@ -936,17 +937,17 @@
 
             function fabricCarousel_populateAndInit(items) {
                 if (!fabricCarouselTrack || !fabricCarouselMessagePlaceholder) return;
-                fabricCarouselTrack.innerHTML = ''; fabricCarouselSlides = [];
+                fabricCarouselTrack.innerHTML = ''; // Tømmer track, fjerner lasteanimasjon/placeholder
+                fabricCarouselSlides = [];
                 fabricTotalSlides = Math.min(items.length, fabricMaxItems);
 
                 if (fabricTotalSlides === 0) {
-                    // MODIFISERT: Innhold for "ingen oppdateringer"
                     fabricCarouselMessagePlaceholder.innerHTML = `
                         <div style="text-align: center;">
                             <p class="loading-message">Ingen nylige oppdateringer funnet.</p>
                         </div>`;
                     if (fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) {
-                         fabricCarouselTrack.innerHTML = ''; // Sørg for at det er tomt før du legger til
+                         fabricCarouselTrack.innerHTML = '';
                          fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder);
                     }
                     if (fabricCarouselPrevButton) fabricCarouselPrevButton.style.display = 'none';
@@ -954,9 +955,6 @@
                     if (fabricCarouselDotsContainer) fabricCarouselDotsContainer.innerHTML = '';
                     return;
                 }
-                // Hvis vi har items, sørger vi for at placeholder ikke er i track før vi legger til slides.
-                // Dette håndteres uansett av fabricCarouselTrack.innerHTML = ''; nedenfor hvis items.length > 0.
-                // Så fjerning av placeholder her er egentlig dekket.
 
                 for (let i = 0; i < fabricTotalSlides; i++) {
                     const item = items[i];
@@ -984,77 +982,67 @@
                 }
             }
 
-            async function fetchFabricUpdates() {
-                if (!fabricCarouselTrack || !fabricCarouselMessagePlaceholder) { logFabricUpdate("Nødv. karusellelementer mangler.", true); return; }
-                
-                // MODIFISERT: Viser lasteanimasjon
-                fabricCarouselMessagePlaceholder.innerHTML = `
-                    <div style="text-align: center;">
-                        <p class="loading-message" style="margin-bottom: 15px;">Laster siste nytt...</p>
-                        <div class="loading-animation">
-                            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
-                        </div>
-                    </div>`;
+            // NY, MODIFISERT fetchFabricUpdates
+            async function fetchFabricUpdates(isInitialCall = true) {
+                if (!fabricCarouselTrack || !fabricCarouselMessagePlaceholder) {
+                    logFabricUpdate("Nødv. karusellelementer mangler. Kan ikke starte henting.", true);
+                    return;
+                }
 
-                // Sørg for at placeholderen er det eneste innholdet i tracken før lasting
-                if (fabricCarouselTrack.children.length === 0 || (fabricCarouselTrack.children.length === 1 && fabricCarouselTrack.firstChild === fabricCarouselMessagePlaceholder)) {
-                    // OK, placeholder er allerede der eller track er tom (vil bli lagt til)
-                    if (fabricCarouselTrack.children.length === 0) {
+                const isLoadingAnimationVisible = fabricCarouselMessagePlaceholder.querySelector('.loading-animation');
+                if (isInitialCall || !isLoadingAnimationVisible) {
+                    fabricCarouselMessagePlaceholder.innerHTML = `
+                        <div style="text-align: center;">
+                            <p class="loading-message" style="margin-bottom: 15px;">Laster siste nytt...</p>
+                            <div class="loading-animation">
+                                <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+                            </div>
+                        </div>`;
+
+                    if (fabricCarouselTrack.children.length === 0 || fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) {
+                        fabricCarouselTrack.innerHTML = '';
                         fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder);
                     }
-                } else { // Flere elementer, tøm og legg til placeholder
-                    fabricCarouselTrack.innerHTML = ''; 
-                    fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder);
                 }
+                
+                if (fabricCarouselPrevButton) fabricCarouselPrevButton.style.display = 'none';
+                if (fabricCarouselNextButton) fabricCarouselNextButton.style.display = 'none';
 
 
-                let response;
                 try {
-                    response = await fetch(fabricRssFeedUrl);
-                    if (!response.ok) throw new Error(`Direkte HTTP-feil: ${response.status}`);
-                } catch (directError) {
-                    logFabricUpdate(`Direkte henting feilet: ${directError.message}. Prøver proxy.`, true);
-                    const proxyFetchUrl = `${fabricProxyUrl}${encodeURIComponent(fabricRssFeedUrl)}`;
+                    let response;
                     try {
+                        response = await fetch(fabricRssFeedUrl);
+                        if (!response.ok) throw new Error(`Direkte HTTP-feil: ${response.status}`);
+                        logFabricUpdate("Hentet direkte fra RSS feed.");
+                    } catch (directError) {
+                        logFabricUpdate(`Direkte henting feilet: ${directError.message}. Prøver proxy.`, true);
+                        const proxyFetchUrl = `${fabricProxyUrl}${encodeURIComponent(fabricRssFeedUrl)}`;
                         response = await fetch(proxyFetchUrl);
                         if (!response.ok) throw new Error(`Proxy HTTP-feil: ${response.status}`);
-                    } catch (proxyError) {
-                        logFabricUpdate(`Proxy-henting feilet: ${proxyError.message}`, true);
-                        // MODIFISERT: Innhold for feilmelding
-                        fabricCarouselMessagePlaceholder.innerHTML = `<div style="text-align: center;"><p class="error-message">Kunne ikke laste oppdateringer.</p></div>`;
-                        // Sørg for at den er i track hvis den ikke er det
-                        if (fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) { fabricCarouselTrack.innerHTML = ''; fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder); }
-                        if (fabricCarouselPrevButton) fabricCarouselPrevButton.style.display = 'none';
-                        if (fabricCarouselNextButton) fabricCarouselNextButton.style.display = 'none';
-                        return;
+                        logFabricUpdate("Hentet via proxy.");
                     }
-                }
-                if (!response) { 
-                    // MODIFISERT: Innhold for feilmelding
-                    fabricCarouselMessagePlaceholder.innerHTML = `<div style="text-align: center;"><p class="error-message">Ingen respons fra serveren.</p></div>`;
-                    if (fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) { fabricCarouselTrack.innerHTML = ''; fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder); }
-                    return; 
-                }
-                try {
+
                     const xmlData = await response.text();
                     const parser = new DOMParser();
                     const xmlDoc = parser.parseFromString(xmlData.trim(), "text/xml");
                     const parserError = xmlDoc.getElementsByTagName("parsererror");
-                    if (parserError.length > 0) throw new Error("XML Parsefeil: " + (parserError[0]?.textContent || "Ukjent"));
+                    if (parserError.length > 0) {
+                        throw new Error("XML Parsefeil: " + (parserError[0]?.textContent || "Ukjent feil under XML parsing"));
+                    }
+
                     const items = Array.from(xmlDoc.querySelectorAll("item"));
+                    logFabricUpdate(`Behandlet ${items.length} items fra feed.`);
                     fabricCarousel_populateAndInit(items);
+
                 } catch (error) {
-                    logFabricUpdate(`Feil ved behandling av respons: ${error.message}`, true);
-                     // MODIFISERT: Innhold for feilmelding
-                    fabricCarouselMessagePlaceholder.innerHTML = `<div style="text-align: center;"><p class="error-message">Klarte ikke behandle data fra feeden.</p></div>`;
-                    if (fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) { fabricCarouselTrack.innerHTML = ''; fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder); }
-                    if (fabricCarouselPrevButton) fabricCarouselPrevButton.style.display = 'none';
-                    if (fabricCarouselNextButton) fabricCarouselNextButton.style.display = 'none';
+                    logFabricUpdate(`Feil under henting/parsing: ${error.message}. Prøver igjen om ${FABRIC_RETRY_DELAY / 1000} sekunder.`, true);
+                    setTimeout(() => fetchFabricUpdates(false), FABRIC_RETRY_DELAY);
                 }
             }
 
             if (fabricCarouselWrapper && fabricCarouselTrack && fabricCarouselPrevButton && fabricCarouselNextButton && fabricCarouselDotsContainer && fabricCarouselMessagePlaceholder) {
-                fetchFabricUpdates();
+                fetchFabricUpdates(true); // Start det første forsøket
                 fabricCarouselPrevButton.addEventListener('click', () => { if (autoSlideInterval) clearInterval(autoSlideInterval); fabricCarousel_showSlide(fabricCarouselCurrentIndex - 1); });
                 fabricCarouselNextButton.addEventListener('click', () => { if (autoSlideInterval) clearInterval(autoSlideInterval); fabricCarousel_showSlide(fabricCarouselCurrentIndex + 1); });
                 fabricCarouselWrapper.addEventListener('mouseenter', () => { if (autoSlideInterval) clearInterval(autoSlideInterval); });
