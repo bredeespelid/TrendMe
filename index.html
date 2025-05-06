@@ -3,27 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- SEO Optimalisert Tittel og Beskrivelse -->
-    <meta name="description" content="TrendMe hjelper norske virksomheter med rådgivning og implementering innen data, AI, sky og moderne teknologi – inkludert Microsoft Fabric og Power BI.">
     <title>TrendMe | Rådgivning & Implementering av Moderne Teknologi</title>
-
-    <!-- === FAVICON === -->
+    <meta name="description" content="TrendMe hjelper norske virksomheter med rådgivning og implementering innen data, AI, sky og moderne teknologi – inkludert Microsoft Fabric og Power BI.">
     <link rel="icon" href="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189579/SVG_yqf4t8.svg" type="image/svg+xml">
     <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189607/icon_rdwy3d.png">
-    <!-- === END FAVICON === -->
-
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <!-- === CSS STILER START === -->
     <style>
         :root {
-            /* Lyse tema farger */
             --bg-light: #ffffff;
             --bg-soft-light: #f8f9fa;
             --text-dark-primary: #212529;
@@ -40,34 +30,29 @@
             --glow-color: rgba(0, 198, 255, 0.3);
             --button-glow-color: rgba(0, 198, 255, 0.2);
             --text-on-accent: #ffffff;
-            --text-on-dark-bg: #1f1f1f; /* Tekst på lys knapp */
+            --text-on-dark-bg: #1f1f1f;
             --font-primary: 'Poppins', sans-serif;
             --transition-speed: 0.3s;
             --transition-slow: 0.5s;
             --error-color: #dc3545;
             --header-height: 70px;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--primary-accent-light) var(--bg-soft-light); }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-soft-light); }
         ::-webkit-scrollbar-thumb { background-color: var(--primary-accent-light); border-radius: 10px; border: 2px solid var(--bg-soft-light); }
-
-        body {
-            font-family: var(--font-primary); line-height: 1.7; color: var(--text-dark-secondary); background-color: var(--bg-light); overflow-x: hidden; background: linear-gradient(135deg, #eef2f7 0%, #ffffff 50%, #e6f7ff 100%);
-        }
+        body { font-family: var(--font-primary); line-height: 1.7; color: var(--text-dark-secondary); background-color: var(--bg-light); overflow-x: hidden; background: linear-gradient(135deg, #eef2f7 0%, #ffffff 50%, #e6f7ff 100%); }
         .container { max-width: 1200px; margin: auto; padding: 0 25px; }
         .fade-in { opacity: 0; transition: opacity 1s ease-out, transform 0.8s ease-out; }
         .slide-up { transform: translateY(40px); }
         .slide-left { transform: translateX(-40px); }
         .slide-right { transform: translateX(40px); }
         .visible { opacity: 1; transform: translate(0, 0) !important; }
-
         header { background: var(--header-bg-light); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text-dark-primary); padding: 0.5rem 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--card-border-light); transition: background-color var(--transition-speed) ease; height: var(--header-height); }
         header nav { display: flex; justify-content: space-between; align-items: center; height: 100%; }
         .logo-link { display: flex; align-items: center; height: 100%; }
-        .logo-img { display: block; max-height: calc(var(--header-height) - 25px); width: auto; transition: transform 0.3s ease; filter: none; /* Fjerner filter for lyst tema */ }
+        .logo-img { display: block; max-height: calc(var(--header-height) - 25px); width: auto; transition: transform 0.3s ease; }
         .logo-img:hover { transform: scale(1.05); }
         header ul { list-style: none; display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; margin-top: 0; padding: 0; height: 100%; }
         header ul li { margin-left: 20px; }
@@ -75,49 +60,37 @@
         header ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); transition: width var(--transition-speed) ease, left var(--transition-speed) ease; transform: translateX(-50%); }
         header ul li a:hover { color: var(--primary-accent-dark); }
         header ul li a:hover::after { width: 70%; left: 50%; }
-
-        .hero { min-height: 85vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 0 4rem 0; position: relative; overflow: hidden; background: linear-gradient(160deg, rgba(0, 198, 255, 0.1) 0%, rgba(255, 255, 255, 0.8) 70%), linear-gradient(135deg, #eef2f7 0%, #ffffff 100%); background-color: var(--bg-light); }
-        .hero::before { display: none; }
+        .hero { min-height: 85vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 0 4rem 0; position: relative; overflow: hidden; background: linear-gradient(160deg, rgba(0, 198, 255, 0.1) 0%, rgba(255, 255, 255, 0.8) 70%), linear-gradient(135deg, #eef2f7 0%, #ffffff 100%); }
         .hero .container { position: relative; z-index: 2; }
-        .hero h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; color: var(--text-dark-primary); /* Tilbake til vanlig farge */ background: none; -webkit-background-clip: unset; background-clip: unset; animation: text-focus-in 1.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both; }
+        .hero h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; color: var(--text-dark-primary); animation: text-focus-in 1.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both; }
         @keyframes text-focus-in { 0% { filter: blur(8px); opacity: 0; } 100% { filter: blur(0px); opacity: 1; } }
         .hero .typing-container { font-size: 1.4rem; color: var(--text-dark-secondary); margin-bottom: 2.5rem; min-height: 1.8em; }
         .typing-cursor { display: inline-block; width: 10px; height: 1.4rem; background-color: var(--primary-accent-dark); margin-left: 5px; animation: blink 0.7s infinite; vertical-align: bottom; }
         @keyframes blink { 50% { opacity: 0; } }
         .hero-cta-container { margin-top: 2.5rem; }
-        .cta-button { /* Gjelder både hero-knapp og kontaktskjema-knapp */
-            display: inline-flex; align-items: center; justify-content: center; gap: 0.8em; padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.1rem; white-space: nowrap; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); color: var(--text-on-dark-bg); /* Riktig tekstfarge for lys knapp */ box-shadow: 0 5px 15px var(--button-glow-color);
-        }
+        .cta-button { display: inline-flex; align-items: center; justify-content: center; gap: 0.8em; padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.1rem; white-space: nowrap; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); color: var(--text-on-dark-bg); box-shadow: 0 5px 15px var(--button-glow-color); }
         .cta-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px var(--glow-color); }
         .cta-button:disabled { background: #adb5bd; color: #6c757d; cursor: not-allowed; opacity: 0.7; transform: none; box-shadow: none; }
-
         .section { padding: 6rem 0; overflow: hidden; }
         .section-header { text-align: center; margin-bottom: 4rem; }
         .section-header span { display: block; font-size: 1rem; color: var(--primary-accent-dark); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 600; }
         .section-header h2 { font-size: 2.8rem; font-weight: 700; color: var(--text-dark-primary); margin-bottom: 1rem; position: relative; display: inline-block; }
         .section-header h2::after { content: ''; position: absolute; width: 60px; height: 4px; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); bottom: -15px; left: 50%; transform: translateX(-50%); border-radius: 2px; }
         .section-header p { max-width: 700px; margin: 1.5rem auto 0 auto; color: var(--text-dark-secondary); font-size: 1.1rem; }
-
-        /* Bakgrunner for seksjoner */
         .services-bg { background: var(--bg-soft-light); }
-        #om-oss { background: var(--bg-light); }
-        #hvorfor-moderne-data { background: var(--bg-light); }
-
+        #om-oss, #hvorfor-moderne-data { background: var(--bg-light); }
         .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
         .service-card { background: var(--bg-light); border: 1px solid var(--card-border-light); border-radius: 12px; padding: 2.5rem 2rem; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease; overflow: hidden; position: relative; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03); }
         .service-card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08); border-color: var(--primary-accent-light); }
-        .service-card::before { display: none; /* Fjerner glow-effekt for lyst tema */ }
         .service-card > * { position: relative; z-index: 1; }
         .service-icon-container { margin-bottom: 1.5rem; text-align: center; min-height: 65px; display: flex; justify-content: center; align-items: center; }
-        .service-icon { width: auto; max-width: 55px; height: 55px; object-fit: contain; filter: none; /* Fjerner filter/glow */ }
+        .service-icon { width: auto; max-width: 55px; height: 55px; object-fit: contain; }
         .service-icon.pbi-logo { max-width: 80px; height: auto; max-height: 55px; }
         .service-card h3 { font-size: 1.6rem; margin-bottom: 1rem; color: var(--text-dark-primary); text-align: center; }
         .service-card ul { list-style: none; padding: 0; margin-top: 1.5rem; }
         .service-card ul li { margin-bottom: 0.8rem; position: relative; padding-left: 25px; color: var(--text-dark-secondary); font-size: 0.95rem; }
         .service-card ul li::before { content: '>'; position: absolute; left: 0; color: var(--primary-accent-dark); font-weight: bold; font-size: 1.2rem; line-height: 1; top: 2px; transition: transform var(--transition-speed) ease; }
         .service-card:hover ul li::before { transform: translateX(3px); }
-
-        /* Accordion Styling */
         .accordion-list { max-width: 900px; margin: 2rem auto 0 auto; }
         .accordion-item { border-bottom: 1px solid transparent; margin-bottom: 1rem; background: var(--bg-light); border-radius: 8px; box-shadow: 0 3px 8px rgba(0,0,0,0.03); border: 1px solid var(--card-border-light); }
         .accordion-title { background: none; border: none; color: var(--text-dark-primary); cursor: pointer; padding: 1.5rem 1rem; width: 100%; text-align: left; font-size: 1.3rem; font-weight: 600; font-family: inherit; display: flex; justify-content: space-between; align-items: center; transition: color var(--transition-speed) ease; }
@@ -132,7 +105,6 @@
         .accordion-content ul { list-style: disc; padding-left: 25px; margin-top: 1rem; margin-bottom: 1rem; }
         .accordion-content ul li { margin-bottom: 0.5rem; padding-left: 0; color: var(--text-dark-secondary); }
         .accordion-content ul li::before { content: none; }
-
         #kontakt { background: var(--bg-soft-light); }
         #contact-form { max-width: 700px; margin: 0 auto; background: var(--bg-light); padding: 3rem; border-radius: 15px; border: 1px solid var(--card-border-light); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07); }
         .form-group { margin-bottom: 1.8rem; position: relative; }
@@ -140,9 +112,8 @@
         .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group textarea { width: 100%; padding: 1rem; border: 1px solid var(--card-border-light); border-radius: 8px; font-family: inherit; font-size: 1rem; background-color: #fff; color: var(--text-dark-primary); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-accent-dark); box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.15); }
         .form-group textarea { resize: vertical; min-height: 120px; }
-        #contact-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; } /* Inherits .cta-button */
+        #contact-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; }
         #form-error-message { color: var(--error-color); margin-top: 1rem; text-align: center; display: none; font-weight: 600; }
-
         footer { background-color: var(--footer-bg-light); color: var(--text-dark-muted); text-align: center; padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border-light); }
         footer p { margin-bottom: 1rem; font-size: 0.9rem; }
         .footer-links { margin-bottom: 1.5rem; }
@@ -150,265 +121,90 @@
         .footer-links img { width: 28px; height: 28px; vertical-align: middle; filter: grayscale(50%) opacity(70%); transition: filter var(--transition-speed) ease; }
         .footer-links a:hover img { filter: grayscale(0%) opacity(1); }
         .footer-links a:hover { transform: scale(1.15); opacity: 1; }
-
-        /* Suggestions Container (Brreg - Lyst Tema) */
         .suggestions-container { position: absolute; left: 0; right: 0; top: 100%; background-color: var(--suggestions-bg-light); border: 1px solid var(--card-border-light); border-top: none; border-radius: 0 0 8px 8px; z-index: 10; max-height: 200px; overflow-y: auto; display: none; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05); }
         .suggestions-container ul { list-style: none; margin: 0; padding: 0; }
         .suggestions-container li { padding: 0.8rem 1rem; cursor: pointer; color: var(--text-dark-primary); border-bottom: 1px solid var(--card-border-light); transition: background-color 0.2s ease; }
         .suggestions-container li:last-child { border-bottom: none; }
         .suggestions-container li:hover { background-color: var(--suggestions-hover-bg-light); color: var(--primary-accent-dark); }
         .suggestions-container .no-results { padding: 0.8rem 1rem; color: var(--text-dark-muted); font-style: italic; cursor: default; }
-
-        /* --- Animasjon for Sendt Skjema (Lyst Tema) --- */
         #animation-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(248, 249, 250, 0.9); display: none; justify-content: center; align-items: center; flex-direction: column; z-index: 1100; overflow: hidden; }
         #paper { background-color: #fff; width: 300px; height: 400px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); border: 1px solid #dee2e6; padding: 20px; box-sizing: border-box; opacity: 0; transform: scale(0.8); transition: opacity 0.5s ease-out, transform 0.5s ease-out; position: relative; overflow: hidden; }
         #paper-content { font-family: var(--font-primary); font-size: 0.9rem; color: var(--text-dark-primary); white-space: pre-wrap; word-wrap: break-word; max-height: 100%; overflow-y: auto; }
         #thank-you-message { margin-top: 20px; font-size: 1.5rem; color: var(--primary-accent-dark); font-weight: bold; text-align: center; display: none; opacity: 0; transition: opacity 0.5s ease-in 0.2s; }
         @keyframes fly-away { 0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translate(120vw, -120vh) rotate(720deg) scale(0.1); opacity: 0; } }
         #paper.flying { animation: fly-away 2s ease-in forwards; }
+        .resource-section { text-align: center; padding: 3rem 0 1rem 0; background-color: var(--bg-soft-light); }
+        .microsoft-calc-button { display: inline-flex; align-items: center; gap: 0.8em; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); color: var(--text-on-dark-bg); padding: 14px 30px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.05rem; box-shadow: 0 5px 15px var(--button-glow-color); white-space: nowrap; }
+        .microsoft-calc-button .ms-logo { width: 1.4em; height: 1.4em; vertical-align: middle; }
+        .microsoft-calc-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px var(--glow-color); }
 
-        /* --- Ressurser Seksjon (Lyst Tema) --- */
-         .resource-section { text-align: center; padding: 3rem 0 1rem 0; background-color: var(--bg-soft-light); }
-         .microsoft-calc-button { display: inline-flex; align-items: center; gap: 0.8em; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); color: var(--text-on-dark-bg); padding: 14px 30px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.05rem; box-shadow: 0 5px 15px var(--button-glow-color); white-space: nowrap; }
-         .microsoft-calc-button .ms-logo { width: 1.4em; height: 1.4em; vertical-align: middle; }
-         .microsoft-calc-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px var(--glow-color); }
+        /* === Karusell Styling for Fabric Updates (Slide som kort) === */
+        .fabric-updates-carousel-wrapper { max-width: 700px; margin: 4rem auto 0 auto !important; padding: 0 15px; text-align: left; }
+        .fabric-updates-carousel-wrapper h3 { font-size: 1.8rem; color: var(--text-dark-primary); margin-bottom: 1.5rem; text-align: center; }
+        .carousel-container { position: relative; }
+        .carousel-viewport { width: 100%; overflow: hidden; }
+        .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); min-height: 320px; align-items: stretch; /* gap fjernet */ }
+        .carousel-slide { width: 100%; /* Endret fra min-width */ flex-shrink: 0; background: var(--bg-light); border: 1px solid var(--card-border-light); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); border-radius: 12px; padding: 1.5rem; opacity: 0; transform: scale(0.95); animation: carousel-slide-fade-in 0.6s forwards; display: flex; flex-direction: column; }
+        @keyframes carousel-slide-fade-in { to { opacity: 1; transform: scale(1); } }
+        .carousel-slide h4 { font-size: 1.25rem; color: var(--text-dark-primary); margin-bottom: 0.75rem; font-weight: 600; line-height: 1.3; }
+        .carousel-slide .slide-date { font-size: 0.8em; color: var(--text-dark-muted); margin-bottom: 1rem; }
 
-        /* === Tidligere Fabric Updates List Styling (Fjernes eller kommenteres ut hvis ikke brukt andre steder) === */
-        /*
-        .fabric-updates-list {
-            background: var(--bg-light);
-            border: 1px solid var(--card-border-light);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-radius: 8px;
-            padding: 1.5rem 2rem;
-            font-size: 0.95rem;
-            max-width: 700px;
-            margin: 0 auto;
-            text-align: left;
-        }
-        .fabric-updates-list ul {
-             list-style-type: none;
-             padding-left: 0;
-             margin: 0;
-        }
-        .fabric-updates-list .fabric-update-item {
-            padding: 0.8rem 0;
-            border-bottom: 1px solid var(--card-border-light);
-        }
-        .fabric-updates-list .fabric-update-item:last-child {
-            border-bottom: none;
-        }
-        .fabric-updates-list .fabric-update-item a {
-            color: var(--text-dark-primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color var(--transition-speed) ease;
-            display: block;
-        }
-        .fabric-updates-list .fabric-update-item a:hover {
-            color: var(--primary-accent-dark);
-        }
-        .fabric-updates-list .fabric-update-date {
-            font-size: 0.8em;
-            color: var(--text-dark-muted);
-            display: block;
-            margin-top: 0.3rem;
-        }
-        .fabric-updates-list .loading-message,
-        .fabric-updates-list .error-message {
-            color: var(--text-dark-muted);
-            text-align: center;
-            padding: 1rem 0;
-            font-style: italic;
-        }
-        .fabric-updates-list .error-message {
-            color: var(--error-color);
-            font-weight: normal;
-            font-style: normal;
-        }
-        */
-
-        /* === Ny Karusell Styling for Fabric Updates === */
-        .fabric-updates-carousel-wrapper {
-            max-width: 700px; /* Samme bredde som tidligere liste */
-            margin: 4rem auto 0 auto !important; /* Sørg for at !important brukes hvis fade-in setter margin */
-            padding: 0 15px; /* Litt padding for mindre skjermer */
-            text-align: left;
-        }
-        .fabric-updates-carousel-wrapper h3 {
-            font-size: 1.8rem;
-            color: var(--text-dark-primary);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .carousel-container {
-            position: relative;
-            background: var(--bg-light);
-            border: 1px solid var(--card-border-light);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-radius: 12px; /* Mer avrundet for "fancy" look */
-            padding: 2rem; /* Mer intern padding */
-            overflow: hidden; /* Viktig for viewport */
-        }
-        .carousel-viewport {
-            width: 100%;
-            overflow: hidden;
-        }
-        .carousel-track {
-            display: flex;
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Smooth, litt spretten overgang */
-            min-height: 200px; /* Høyde for å romme innhold eller laste/feilmelding */
-            align-items: stretch; /* Sørger for at slides fyller høyden */
-        }
-        .carousel-slide {
-            min-width: 100%; /* Hver slide tar full bredde av viewport */
-            flex-shrink: 0;
-            padding: 0 10px; /* Litt mellomrom hvis man skulle vise deler av neste/forrige */
-            opacity: 0;
-            transform: scale(0.95);
-            animation: carousel-slide-fade-in 0.6s forwards;
-            display: flex; /* For å justere innholdet bedre */
-            flex-direction: column;
-        }
-        @keyframes carousel-slide-fade-in {
-            to { opacity: 1; transform: scale(1); }
-        }
-        .carousel-slide h4 {
-            font-size: 1.25rem; /* Større tittel */
-            color: var(--text-dark-primary);
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-        }
-        .carousel-slide .slide-date {
-            font-size: 0.8em;
-            color: var(--text-dark-muted);
-            margin-bottom: 1rem;
-        }
         .carousel-slide .slide-description {
             font-size: 0.9rem;
             line-height: 1.6;
             color: var(--text-dark-secondary);
             margin-bottom: 1.5rem;
-            flex-grow: 1; /* Lar beskrivelsen ta opp tilgjengelig plass */
-        }
-        .carousel-slide .slide-link {
-            display: inline-block;
-            text-decoration: none;
-            color: var(--primary-accent-dark);
-            font-weight: 600;
-            padding: 8px 15px;
-            border: 1px solid var(--primary-accent-dark);
-            border-radius: 20px;
-            transition: background-color var(--transition-speed), color var(--transition-speed);
-            align-self: flex-start; /* Knappen nederst */
-        }
-        .carousel-slide .slide-link:hover {
-            background-color: var(--primary-accent-dark);
-            color: var(--bg-light);
-        }
+            flex-grow: 1;
 
-        /* Placeholder for laste/feilmeldinger */
-        .carousel-message-placeholder {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            min-height: 150px; /* Sørg for at den har litt høyde */
-            font-style: italic;
+            overflow: hidden; /* Viktig for å skjule tekst utenfor max-height */
+            /* Juster denne max-height nøye basert på ønsket antall linjer og testing */
+            /* Ca. 4 linjer: 0.9rem * 1.6 * 4 = 5.76rem. Rund ned litt for sikkerhets skyld. */
+            max-height: 5.7rem;
+
+            word-wrap: break-word;
+            -webkit-hyphens: auto;
+            -ms-hyphens: auto;
+            hyphens: auto;
         }
+        .carousel-slide .slide-link { display: inline-block; text-decoration: none; color: var(--primary-accent-dark); font-weight: 600; padding: 8px 15px; border: 1px solid var(--primary-accent-dark); border-radius: 20px; transition: background-color var(--transition-speed), color var(--transition-speed); align-self: flex-start; margin-top: auto; }
+        .carousel-slide .slide-link:hover { background-color: var(--primary-accent-dark); color: var(--bg-light); }
+        .carousel-message-placeholder { width: 100%; display: flex; justify-content: center; align-items: center; padding: 2rem; min-height: 250px; font-style: italic; background: var(--bg-light); border: 1px solid var(--card-border-light); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); border-radius: 12px; }
         .carousel-message-placeholder .loading-message { color: var(--text-dark-muted); }
         .carousel-message-placeholder .error-message { color: var(--error-color); font-weight: normal; font-style: normal;}
+        .carousel-button { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.85); border: 1px solid var(--card-border-light); color: var(--text-dark-primary); border-radius: 50%; width: 40px; height: 40px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: background-color var(--transition-speed), color var(--transition-speed), box-shadow var(--transition-speed), opacity var(--transition-speed); box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+        .carousel-button:hover { background-color: var(--primary-accent-dark); color: var(--bg-light); box-shadow: 0 4px 12px rgba(0, 120, 212, 0.25); }
+        .carousel-button:disabled { opacity: 0.3; cursor: not-allowed; background-color: #e0e0e0; color: #9e9e9e; box-shadow: none; }
+        .carousel-button.prev { left: -20px; }
+        .carousel-button.next { right: -20px; }
+        .carousel-dots { text-align: center; margin-top: 1.5rem; }
+        .carousel-dot { display: inline-block; width: 10px; height: 10px; background-color: #ccc; border-radius: 50%; margin: 0 5px; cursor: pointer; transition: background-color var(--transition-speed), transform var(--transition-speed); }
+        .carousel-dot.active { background-color: var(--primary-accent-dark); transform: scale(1.3); }
 
-
-        .carousel-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.7); /* Litt gjennomsiktig */
-            border: 1px solid var(--card-border-light);
-            color: var(--text-dark-primary);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: background-color var(--transition-speed), color var(--transition-speed), box-shadow var(--transition-speed);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .carousel-button:hover {
-            background-color: var(--primary-accent-dark);
-            color: var(--bg-light);
-            box-shadow: 0 4px 10px rgba(0, 120, 212, 0.2);
-        }
-        .carousel-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background-color: #e9ecef;
-            color: #adb5bd;
-            box-shadow: none;
-        }
-        .carousel-button.prev { left: -15px; } /* Litt utenfor containeren */
-        .carousel-button.next { right: -15px; }
-
-        .carousel-dots {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-        .carousel-dot {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            background-color: #ccc;
-            border-radius: 50%;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: background-color var(--transition-speed), transform var(--transition-speed);
-        }
-        .carousel-dot.active {
-            background-color: var(--primary-accent-dark);
-            transform: scale(1.2);
-        }
-        /* === SLUTT Ny Karusell Styling === */
-
-
-        /* --- RESPONSIVITET (Lyst Tema) --- */
         @media (max-width: 992px) {
              header nav { flex-direction: column; align-items: center; height: auto; min-height: var(--header-height); }
-             .logo-link { margin-bottom: 10px; height: auto; }
-             .logo-img { max-height: 40px; }
+             .logo-link { margin-bottom: 10px; height: auto; } .logo-img { max-height: 40px; }
              header ul { justify-content: center; margin-top: 0; height: auto; flex-wrap: wrap; }
              header ul li { margin: 4px 6px; margin-left: 6px; }
              header ul li a { padding: 8px 12px; font-size: 0.9rem; white-space: normal; }
-             header ul li a::after { bottom: 4px; }
-             header ul li a:hover::after { width: 65%; }
-             .hero h1 { font-size: 3rem; }
-             .hero .typing-container { font-size: 1.2rem; }
+             header ul li a::after { bottom: 4px; } header ul li a:hover::after { width: 65%; }
+             .hero h1 { font-size: 3rem; } .hero .typing-container { font-size: 1.2rem; }
              .section-header h2 { font-size: 2.4rem; }
              .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-             .fabric-updates-carousel-wrapper { padding: 0 10px; } /* Mindre padding på wrapper */
-             .carousel-container { padding: 1.5rem; } /* Mindre padding inni */
-             .carousel-button.prev { left: 5px; } /* Knapper innenfor på mindre skjermer */
-             .carousel-button.next { right: 5px; }
+             .fabric-updates-carousel-wrapper { padding: 0 10px; }
+             .carousel-slide { padding: 1.25rem; }
+             .carousel-button.prev { left: -10px; } .carousel-button.next { right: -10px; }
+             .carousel-slide .slide-description { max-height: 5.7rem; /* Behold eller juster for 4 linjer */ }
         }
 	    @media (max-width: 768px) {
             header { height: auto; min-height: var(--header-height); }
 	        header ul li { margin: 3px 5px; margin-left: 5px; }
 	        header ul li a { padding: 6px 10px; font-size: 0.85rem; }
-	        header ul li a::after { bottom: 3px; }
-	        header ul li a:hover::after { width: 60%; }
-	        .hero { min-height: 75vh; padding: 6rem 0 3rem 0; }
-	        .hero h1 { font-size: 2.5rem; }
+	        header ul li a::after { bottom: 3px; } header ul li a:hover::after { width: 60%; }
+	        .hero { min-height: 75vh; padding: 6rem 0 3rem 0; } .hero h1 { font-size: 2.5rem; }
 	        .hero .typing-container { font-size: 1.1rem; }
 	        .cta-button { padding: 12px 30px; font-size: 1rem; }
-	        .section { padding: 4rem 0; }
-	        .section-header h2 { font-size: 2rem; }
-	        .section-header p { font-size: 1rem; }
-	        #contact-form { padding: 2rem; }
+	        .section { padding: 4rem 0; } .section-header h2 { font-size: 2rem; }
+	        .section-header p { font-size: 1rem; } #contact-form { padding: 2rem; }
 	        .service-grid { grid-template-columns: 1fr; }
 	        .accordion-title { font-size: 1.1rem; padding: 1.2rem 0.8rem; }
 	        .accordion-content { padding: 0 1rem; font-size: 0.95rem; }
@@ -419,49 +215,43 @@
             .microsoft-calc-button .ms-logo { width: 1.2em; height: 1.2em; }
             .resource-section .section-header h2 { font-size: 1.8rem; }
             .resource-section .section-header p { font-size: 0.95rem; }
-             .resource-section { padding: 2.5rem 0 0.5rem 0; }
-             .logo-img { max-height: 35px; }
-             /* Fabric updates responsivitet */
-             .fabric-updates-carousel-wrapper h3 { font-size: 1.6rem; }
-             .carousel-slide h4 { font-size: 1.1rem; }
-             .carousel-slide .slide-description { font-size: 0.85rem; }
-             .carousel-container { padding: 1rem; }
-             .carousel-button { width: 35px; height: 35px; font-size: 1rem; }
-             .carousel-button.prev { left: 2px; }
-             .carousel-button.next { right: 2px; }
+            .resource-section { padding: 2.5rem 0 0.5rem 0; } .logo-img { max-height: 35px; }
+            .fabric-updates-carousel-wrapper h3 { font-size: 1.6rem; }
+            .carousel-slide { padding: 1rem; } .carousel-slide h4 { font-size: 1.1rem; }
+            .carousel-slide .slide-description { font-size: 0.85rem; max-height: calc(0.85rem * 1.6 * 4); /* Ca. 4 linjer for mindre font */ }
+            .carousel-button { width: 35px; height: 35px; font-size: 1rem; }
+            .carousel-button.prev { left: 5px; } .carousel-button.next { right: 5px; }
+            .carousel-track { min-height: 340px; }
 	    }
         @media (max-width: 480px) {
             header ul li a { padding: 6px 8px; font-size: 0.8rem; }
-            .hero h1 { font-size: 2rem; }
-            .section-header h2 { font-size: 1.8rem; }
-            .footer-links img { width: 24px; height: 24px;}
-            .footer-links a { margin: 0 8px;}
+            .hero h1 { font-size: 2rem; } .section-header h2 { font-size: 1.8rem; }
+            .footer-links img { width: 24px; height: 24px;} .footer-links a { margin: 0 8px;}
             #paper { max-width: 240px; min-height: 300px; padding: 15px; }
-            #paper-content { font-size: 0.8rem;}
-            #thank-you-message { font-size: 1.1rem; }
+            #paper-content { font-size: 0.8rem;} #thank-you-message { font-size: 1.1rem; }
             .microsoft-calc-button { font-size: 0.9rem; padding: 10px 20px; gap: 0.5em; }
             .microsoft-calc-button .ms-logo { width: 1.1em; height: 1.1em; }
             .resource-section .section-header h2 { font-size: 1.6rem; }
             .resource-section .section-header p { font-size: 0.9rem; }
-             .resource-section { padding: 2rem 0 0.5rem 0; }
-             /* Fabric updates responsivitet */
-             .fabric-updates-carousel-wrapper h3 { font-size: 1.5rem; }
-             .carousel-slide h4 { font-size: 1rem; }
-             .carousel-slide .slide-description { font-size: 0.8rem; line-height: 1.5; }
-             .carousel-slide .slide-link { padding: 6px 12px; font-size: 0.9rem;}
-             .carousel-dots { margin-top: 1rem; }
-             .carousel-dot { width: 8px; height: 8px; margin: 0 4px; }
+            .resource-section { padding: 2rem 0 0.5rem 0; }
+            .fabric-updates-carousel-wrapper { padding: 0 5px; }
+            .fabric-updates-carousel-wrapper h3 { font-size: 1.5rem; }
+            .carousel-slide { padding: 0.8rem; } .carousel-slide h4 { font-size: 1rem; margin-bottom: 0.5rem; }
+            .carousel-slide .slide-date { margin-bottom: 0.75rem; }
+            .carousel-slide .slide-description { font-size: 0.8rem; line-height: 1.5; margin-bottom: 1rem; max-height: calc(0.8rem * 1.5 * 4); /* Ca. 4 linjer */ }
+            .carousel-slide .slide-link { padding: 6px 12px; font-size: 0.9rem;}
+            .carousel-dots { margin-top: 1rem; }
+            .carousel-dot { width: 8px; height: 8px; margin: 0 4px; }
+            .carousel-button.prev { left: 2px; } .carousel-button.next { right: 2px; }
+            .carousel-track { min-height: 350px; }
         }
         @media (min-width: 1800px) {
             header ul { flex-wrap: nowrap; }
             header ul li { margin-top: 0; margin-bottom: 0; margin-left: 20px; }
         }
     </style>
-    <!-- === CSS STILER SLUTT === -->
-
 </head>
 <body>
-
     <header id="main-header">
         <nav class="container">
             <a href="#hjem" class="logo-link">
@@ -722,25 +512,20 @@
 
                  <!-- === Siste Fabric Nyheter Karusell === -->
                  <div id="fabric-updates-carousel-wrapper" class="fabric-updates-carousel-wrapper fade-in" style="transition-delay: 0.4s;">
-                     <!-- Overskrift og selve karusellen legges her -->
                      <h3 style="font-size: 1.8rem; color: var(--text-dark-primary); margin-bottom: 1.5rem; text-align: center;">
                         Siste Oppdateringer om Microsoft Fabric
                      </h3>
                      <div class="carousel-container">
                          <div class="carousel-viewport">
                              <div class="carousel-track">
-                                 <!-- Slides vil bli injisert her av JavaScript -->
-                                 <!-- Placeholder for laste/feilmelding initiell tilstand -->
                                  <div class="carousel-message-placeholder">
                                      <p class="loading-message">Laster siste nytt...</p>
-                                     <!-- <p class="error-message">Kunne ikke laste...</p> -->
                                  </div>
                              </div>
                          </div>
                          <button class="carousel-button prev" aria-label="Forrige nyhet" disabled><i class="fas fa-chevron-left"></i></button>
                          <button class="carousel-button next" aria-label="Neste nyhet" disabled><i class="fas fa-chevron-right"></i></button>
                          <div class="carousel-dots">
-                             <!-- Prikker vil bli injisert her av JavaScript -->
                          </div>
                      </div>
                  </div>
@@ -797,37 +582,30 @@
         </div>
     </footer>
 
-    <!-- === ANIMASJONSELEMENTER === -->
     <div id="animation-container">
-        <div id="paper">
-            <pre id="paper-content"></pre>
-        </div>
+        <div id="paper"><pre id="paper-content"></pre></div>
         <div id="thank-you-message">Tusen takk! Vi tar kontakt snarest.</div>
     </div>
-    <!-- === SLUTT ANIMASJONSELEMENTER === -->
 
-
-    <!-- === JAVASCRIPT START === -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-
             // --- Intersection Observer ---
             const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-            const observerCallback = (entries, observer) => {
+            const observerCallback = (entries, obs) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
+                        obs.unobserve(entry.target);
                     }
                 });
             };
-            const observer = new IntersectionObserver(observerCallback, observerOptions);
+            const intersectionObserver = new IntersectionObserver(observerCallback, observerOptions);
             const elementsToAnimate = document.querySelectorAll('.fade-in, .slide-up, .slide-left, .slide-right');
             elementsToAnimate.forEach(el => {
                  if (el.classList.contains('slide-up') || el.classList.contains('slide-left') || el.classList.contains('slide-right')) {
                     if (!el.classList.contains('fade-in')) { el.classList.add('fade-in'); }
                  }
-                observer.observe(el);
+                intersectionObserver.observe(el);
             });
 
             // --- Smooth scrolling ---
@@ -838,37 +616,37 @@
                     let targetId = this.getAttribute('href');
                     if (targetId && targetId.startsWith('#') && targetId.length > 1) {
                         e.preventDefault();
-                         try {
-                             let targetElement = document.querySelector(targetId);
-                             if (targetElement) {
+                        try {
+                            let targetElement = document.querySelector(targetId);
+                            if (targetElement) {
                                 const headerOffset = header ? header.offsetHeight : 0;
                                 const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
                                 const stickyHeaderOffset = (window.getComputedStyle(header).position === 'sticky' && header.getBoundingClientRect().top <= 0) ? headerOffset : 0;
                                 const offsetPosition = elementPosition - stickyHeaderOffset - 20;
                                 window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                            } else { console.warn(`Smooth scroll target element not found for selector: ${targetId}`); }
+                            }
                         } catch (error) { console.error(`Error finding element for smooth scroll: ${targetId}`, error); }
                     } else if (targetId === '#hjem') {
-                         e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' });
+                        e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
                 });
             });
 
-             // --- Skrivemaskineffekt ---
-             const typingTextElement = document.getElementById('typing-text');
-             if (typingTextElement) {
-                 const textToType = "Følger trender. Implementerer løsninger. Skaper verdi. Fra Data & AI til Sky.";
-                 let charIndex = 0;
-                 function typeChar() {
-                     if (charIndex < textToType.length) {
-                         if (charIndex === 0) typingTextElement.textContent = '';
-                         typingTextElement.textContent += textToType.charAt(charIndex);
-                         charIndex++;
-                         setTimeout(typeChar, 60);
-                     }
-                 }
-                 setTimeout(typeChar, 1800);
-             }
+            // --- Skrivemaskineffekt ---
+            const typingTextElement = document.getElementById('typing-text');
+            if (typingTextElement) {
+                const textToType = "Følger trender. Implementerer løsninger. Skaper verdi. Fra Data & AI til Sky.";
+                let charIndex = 0;
+                function typeChar() {
+                    if (charIndex < textToType.length) {
+                        if (charIndex === 0) typingTextElement.textContent = '';
+                        typingTextElement.textContent += textToType.charAt(charIndex);
+                        charIndex++;
+                        setTimeout(typeChar, 60);
+                    }
+                }
+                setTimeout(typeChar, 1800);
+            }
 
             // --- Accordion Logikk ---
             const accordionTitles = document.querySelectorAll('.accordion-title');
@@ -900,7 +678,7 @@
                         this.classList.add('aktiv');
                         if (content) {
                             content.classList.add('aktiv');
-                             requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; });
+                            requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; });
                         }
                         if (icon) icon.textContent = '−';
                     }
@@ -924,7 +702,7 @@
             const companySuggestionsUl = companySuggestionsContainer?.querySelector('ul');
             const MIN_SEARCH_LENGTH = 3;
             const DEBOUNCE_DELAY = 350;
-             if (contactCompanyInput && companySuggestionsContainer && companySuggestionsUl) {
+            if (contactCompanyInput && companySuggestionsContainer && companySuggestionsUl) {
                 async function searchContactCompanyByName(searchTerm) {
                     const trimmedSearch = searchTerm.trim();
                     if (trimmedSearch.length < MIN_SEARCH_LENGTH) {
@@ -946,21 +724,19 @@
                                     companySuggestionsUl.appendChild(li);
                                 });
                             } else { companySuggestionsUl.innerHTML = '<li class="no-results">Ingen treff funnet.</li>'; }
-                        } else { console.error('Brreg name search API error:', response.status, response.statusText); companySuggestionsUl.innerHTML = '<li class="no-results">Feil ved søk.</li>'; }
-                    } catch (error) { console.error('Error fetching Brreg by name:', error); companySuggestionsUl.innerHTML = '<li class="no-results">Nettverksfeil.</li>'; }
+                        } else { companySuggestionsUl.innerHTML = '<li class="no-results">Feil ved søk.</li>'; }
+                    } catch (error) { companySuggestionsUl.innerHTML = '<li class="no-results">Nettverksfeil.</li>'; }
                     if (companySuggestionsUl.childNodes.length > 0 && companySuggestionsUl.firstElementChild?.textContent !== 'Ingen treff funnet.' && companySuggestionsUl.firstElementChild?.textContent !== 'Feil ved søk.' && companySuggestionsUl.firstElementChild?.textContent !== 'Nettverksfeil.') {
-                         companySuggestionsContainer.style.display = 'block';
+                        companySuggestionsContainer.style.display = 'block';
                     } else if(companySuggestionsUl.childNodes.length === 0) {
-                         companySuggestionsContainer.style.display = 'none';
+                        companySuggestionsContainer.style.display = 'none';
                     }
                 }
                 const debouncedContactNameSearch = debounce(searchContactCompanyByName, DEBOUNCE_DELAY);
                 contactCompanyInput.addEventListener('input', (event) => { debouncedContactNameSearch(event.target.value); });
                 contactCompanyInput.addEventListener('blur', () => { setTimeout(() => { if (companySuggestionsContainer) { companySuggestionsContainer.style.display = 'none'; } }, 150); });
                 companySuggestionsContainer.addEventListener('mousedown', (event) => { event.preventDefault(); });
-             } else {
-                  console.error("CRITICAL: Missing elements required for company search functionality in the contact form.");
-             }
+            }
 
             // === Kontaktskjema Animasjon & Formspree Submit ===
             const contactForm = document.getElementById('contact-form');
@@ -974,11 +750,11 @@
             const phoneInput = document.getElementById('phone');
             const submitButton = contactForm?.querySelector('button[type="submit"]');
             const formErrorMessage = document.getElementById('form-error-message');
-             if (contactForm && animationContainer && paper && paperContent && thankYouMessage && nameInput && emailInput && messageInput && contactCompanyInput && phoneInput && submitButton && formErrorMessage) {
+            if (contactForm && animationContainer && paper && paperContent && thankYouMessage && nameInput && emailInput && messageInput && contactCompanyInput && phoneInput && submitButton && formErrorMessage) {
                 async function handleSubmit(event) {
                     event.preventDefault();
                     const originalButtonText = submitButton.textContent; submitButton.disabled = true; submitButton.textContent = 'Sender...'; formErrorMessage.style.display = 'none';
-                    const formData = new FormData(contactForm); const formSpreeEndpoint = 'https://formspree.io/f/xyzenqnp'; // ERSTATT MED DIN FORMSPREE ENDPOINT
+                    const formData = new FormData(contactForm); const formSpreeEndpoint = 'https://formspree.io/f/xyzenqnp';
                     try {
                         const response = await fetch(formSpreeEndpoint, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
                         if (response.ok) {
@@ -988,13 +764,13 @@
                             setTimeout(() => { thankYouMessage.style.display = 'block'; thankYouMessage.offsetHeight; thankYouMessage.style.opacity = '1'; }, 800);
                             setTimeout(() => { paper.classList.add('flying'); }, 2500);
                         } else {
-                            const responseData = await response.json(); let errorMessageText = 'Kunne ikke sende meldingen. Prøv igjen senere.';
+                            const responseData = await response.json(); let errorMessageText = 'Kunne ikke sende meldingen.';
                             if (responseData && responseData.errors && responseData.errors.length > 0) { errorMessageText = responseData.errors.map(error => error.message).join(', '); } else if (response.status === 422) { errorMessageText = 'Vennligst sjekk at alle feltene er korrekt utfylt.'; }
-                            console.error('Formspree submission error:', response.status, responseData); formErrorMessage.textContent = errorMessageText; formErrorMessage.style.display = 'block';
+                            formErrorMessage.textContent = errorMessageText; formErrorMessage.style.display = 'block';
                             submitButton.disabled = false; submitButton.textContent = originalButtonText;
                         }
                     } catch (error) {
-                        console.error('Error submitting form:', error); formErrorMessage.textContent = 'En nettverksfeil oppstod. Sjekk tilkoblingen din og prøv igjen.'; formErrorMessage.style.display = 'block';
+                        formErrorMessage.textContent = 'En nettverksfeil oppstod. Prøv igjen.'; formErrorMessage.style.display = 'block';
                         submitButton.disabled = false; submitButton.textContent = originalButtonText;
                     }
                 }
@@ -1007,11 +783,7 @@
                         contactForm.reset(); submitButton.disabled = false; submitButton.textContent = 'Send Forespørsel om Konsultasjon';
                     }
                 });
-             } else {
-                  console.error("CRITICAL: Missing elements required for contact form submission or animation.");
-                  if (formErrorMessage) { formErrorMessage.textContent = "En feil oppstod med skjemaet. Prøv å laste siden på nytt."; formErrorMessage.style.display = "block"; }
-                  if (submitButton) submitButton.disabled = true;
-             }
+            }
 
             // === Logikk for Microsoft Fabric Nyhets-KARUSELL ===
             const fabricCarouselWrapper = document.getElementById('fabric-updates-carousel-wrapper');
@@ -1021,88 +793,109 @@
             const fabricCarouselDotsContainer = fabricCarouselWrapper?.querySelector('.carousel-dots');
             const fabricCarouselMessagePlaceholder = fabricCarouselWrapper?.querySelector('.carousel-message-placeholder');
 
-            const fabricMaxItems = 3; // Maks antall nyheter i karusellen
+            const fabricMaxItems = 10;
             const fabricRssFeedUrl = 'https://blog.fabric.microsoft.com/en-us/blog/feed/';
-            const fabricProxyUrl = 'https://api.allorigins.win/raw?url='; // Proxy for CORS
+            const fabricProxyUrl = 'https://api.allorigins.win/raw?url=';
 
             let fabricCarouselCurrentIndex = 0;
             let fabricCarouselSlides = [];
             let fabricTotalSlides = 0;
+            let autoSlideInterval = null;
 
-            function logFabricUpdate(message, isError = false) {
-                console[isError ? 'error' : 'log']("FabricCarousel: " + message);
-            }
+            function logFabricUpdate(message, isError = false) { console[isError ? 'error' : 'log']("FabricCarousel: " + message); }
 
-            function fabricCarousel_sanitizeAndTruncateDescription(htmlDescription, maxLength = 150) {
+            function fabricCarousel_sanitizeAndTruncateDescription(htmlDescription, targetLength = 160) {
                 if (!htmlDescription) return '';
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = htmlDescription;
                 let text = tempDiv.textContent || tempDiv.innerText || "";
-                text = text.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(); // Fjern HTML og ekstra mellomrom
-                if (text.length > maxLength) {
-                    return text.substring(0, maxLength) + '...';
+                text = text.replace(/\s+/g, ' ').trim();
+
+                if (text.length <= targetLength) {
+                    return text;
                 }
-                return text;
+
+                let cutOffPoint = -1;
+                let lastPeriod = text.lastIndexOf('.', targetLength + 15); // Se litt lenger for punktum
+                if (lastPeriod > targetLength * 0.6 && lastPeriod <= targetLength + 15) { // Sørg for at punktum er "fornuftig" plassert
+                    cutOffPoint = lastPeriod + 1;
+                } else {
+                    let lastSpace = text.lastIndexOf(' ', targetLength);
+                    if (lastSpace > targetLength * 0.6) { // Sørg for at mellomrom er "fornuftig" plassert
+                        cutOffPoint = lastSpace;
+                    }
+                }
+
+                if (cutOffPoint !== -1 && cutOffPoint < text.length) {
+                    // Hvis vi kutter og det er mer tekst, legg til "..."
+                    let truncatedText = text.substring(0, cutOffPoint).trimEnd();
+                    // Unngå doble punktum hvis vi kuttet ved et punktum
+                    if (truncatedText.endsWith('.')) {
+                        return truncatedText + ".."; // Blir til ...
+                    }
+                    return truncatedText + "...";
+                } else { // Fallback til hardere kutt hvis ingen god brytning
+                    let shortText = text.substring(0, targetLength);
+                    if (text.charAt(targetLength) !== ' ' && shortText.lastIndexOf(' ') > -1) {
+                        shortText = shortText.substring(0, shortText.lastIndexOf(' '));
+                    }
+                    return shortText.trimEnd() + "...";
+                }
             }
+
 
             function fabricCarousel_updateControls(animated = true) {
                 if (!fabricCarouselTrack || fabricCarouselSlides.length === 0) return;
-
-                const trackWidth = fabricCarouselTrack.offsetWidth;
+                const slideWidth = fabricCarouselSlides[0] ? fabricCarouselSlides[0].offsetWidth : fabricCarouselTrack.offsetWidth;
                 fabricCarouselTrack.style.transition = animated ? 'transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)' : 'none';
-                fabricCarouselTrack.style.transform = `translateX(-${fabricCarouselCurrentIndex * trackWidth}px)`;
-
-                // Oppdater knapper
+                fabricCarouselTrack.style.transform = `translateX(-${fabricCarouselCurrentIndex * slideWidth}px)`;
                 if (fabricCarouselPrevButton) fabricCarouselPrevButton.disabled = fabricCarouselCurrentIndex === 0;
-                if (fabricCarouselNextButton) fabricCarouselNextButton.disabled = fabricCarouselCurrentIndex === fabricTotalSlides - 1;
-
-                // Oppdater prikker
+                if (fabricCarouselNextButton) fabricCarouselNextButton.disabled = fabricCarouselCurrentIndex >= fabricTotalSlides - 1;
                 if (fabricCarouselDotsContainer) {
                     const dots = fabricCarouselDotsContainer.querySelectorAll('.carousel-dot');
-                    dots.forEach((dot, index) => {
-                        dot.classList.toggle('active', index === fabricCarouselCurrentIndex);
-                    });
+                    dots.forEach((dot, index) => dot.classList.toggle('active', index === fabricCarouselCurrentIndex));
                 }
             }
 
             function fabricCarousel_showSlide(index, animated = true) {
-                if (index < 0 || index >= fabricTotalSlides) return;
-                fabricCarouselCurrentIndex = index;
+                if (index >= fabricTotalSlides) { fabricCarouselCurrentIndex = 0; }
+                else if (index < 0) { fabricCarouselCurrentIndex = fabricTotalSlides - 1; }
+                else { fabricCarouselCurrentIndex = index; }
                 fabricCarousel_updateControls(animated);
             }
 
             function fabricCarousel_createDots() {
                 if (!fabricCarouselDotsContainer || fabricTotalSlides <= 1) {
-                    if(fabricCarouselDotsContainer) fabricCarouselDotsContainer.innerHTML = ''; // Fjern eventuelle gamle
-                    return;
+                    if(fabricCarouselDotsContainer) fabricCarouselDotsContainer.innerHTML = ''; return;
                 }
-                fabricCarouselDotsContainer.innerHTML = ''; // Tøm gamle prikker
+                fabricCarouselDotsContainer.innerHTML = '';
                 for (let i = 0; i < fabricTotalSlides; i++) {
                     const dot = document.createElement('button');
                     dot.classList.add('carousel-dot');
                     dot.setAttribute('aria-label', `Gå til nyhet ${i + 1}`);
-                    dot.addEventListener('click', () => fabricCarousel_showSlide(i));
+                    dot.addEventListener('click', () => {
+                        if (autoSlideInterval) clearInterval(autoSlideInterval);
+                        fabricCarousel_showSlide(i);
+                    });
                     fabricCarouselDotsContainer.appendChild(dot);
                 }
             }
 
             function fabricCarousel_populateAndInit(items) {
-                if (!fabricCarouselTrack || !fabricCarouselMessagePlaceholder) {
-                    logFabricUpdate("FEIL: Nødvendige karusellelementer mangler for populering.", true);
-                    return;
-                }
-
-                fabricCarouselTrack.innerHTML = ''; // Tøm eventuelle gamle slides eller placeholder
-                fabricCarouselSlides = []; // Reset
+                if (!fabricCarouselTrack || !fabricCarouselMessagePlaceholder) return;
+                fabricCarouselTrack.innerHTML = ''; fabricCarouselSlides = [];
                 fabricTotalSlides = Math.min(items.length, fabricMaxItems);
 
                 if (fabricTotalSlides === 0) {
                     fabricCarouselMessagePlaceholder.innerHTML = '<p class="loading-message">Ingen nylige oppdateringer funnet.</p>';
-                    fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder); // Vis meldingen i tracken
+                    fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder);
                     if (fabricCarouselPrevButton) fabricCarouselPrevButton.style.display = 'none';
                     if (fabricCarouselNextButton) fabricCarouselNextButton.style.display = 'none';
                     if (fabricCarouselDotsContainer) fabricCarouselDotsContainer.innerHTML = '';
                     return;
+                }
+                if (fabricCarouselMessagePlaceholder.parentNode === fabricCarouselTrack) {
+                    fabricCarouselTrack.removeChild(fabricCarouselMessagePlaceholder);
                 }
 
                 for (let i = 0; i < fabricTotalSlides; i++) {
@@ -1112,169 +905,81 @@
                         const link = item.querySelector("link")?.textContent.trim() || '#';
                         const pubDateStr = item.querySelector("pubDate")?.textContent.trim();
                         const descriptionHTML = item.querySelector("description")?.textContent.trim() || '';
-                        const descriptionText = fabricCarousel_sanitizeAndTruncateDescription(descriptionHTML, 180);
-
-
-                        const pubDate = pubDateStr
-                            ? new Date(pubDateStr).toLocaleDateString('no-NO', {
-                                year: 'numeric', month: 'short', day: 'numeric'
-                              })
-                            : '';
-
+                        const descriptionText = fabricCarousel_sanitizeAndTruncateDescription(descriptionHTML, 160); // targetLength på 160
+                        const pubDate = pubDateStr ? new Date(pubDateStr).toLocaleDateString('no-NO', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
                         const slideDiv = document.createElement('div');
                         slideDiv.classList.add('carousel-slide');
-                        slideDiv.innerHTML = `
-                            <h4>${title}</h4>
-                            ${pubDate ? `<p class="slide-date">${pubDate}</p>` : ''}
-                            <p class="slide-description">${descriptionText}</p>
-                            <a href="${link}" target="_blank" rel="noopener noreferrer" class="slide-link">Les mer</a>
-                        `;
+                        slideDiv.innerHTML = `<h4>${title}</h4> ${pubDate ? `<p class="slide-date">${pubDate}</p>` : ''} <p class="slide-description">${descriptionText}</p> <a href="${link}" target="_blank" rel="noopener noreferrer" class="slide-link">Les mer</a>`;
                         fabricCarouselTrack.appendChild(slideDiv);
                         fabricCarouselSlides.push(slideDiv);
-                    } catch (e) {
-                        logFabricUpdate(`Feil ved behandling av Fabric item ${i + 1}: ${e.message}`, true);
-                    }
+                    } catch (e) { logFabricUpdate(`Feil ved item ${i + 1}: ${e.message}`, true); }
                 }
-
-                fabricCarouselCurrentIndex = 0;
-                fabricCarousel_createDots();
-                fabricCarousel_updateControls(false); // Initial visning uten animasjon
-
-                // Vis knapper hvis det er mer enn én slide
+                fabricCarouselCurrentIndex = 0; fabricCarousel_createDots(); fabricCarousel_updateControls(false);
                 const displayNav = fabricTotalSlides > 1 ? 'flex' : 'none';
                 if (fabricCarouselPrevButton) fabricCarouselPrevButton.style.display = displayNav;
                 if (fabricCarouselNextButton) fabricCarouselNextButton.style.display = displayNav;
+                if (fabricTotalSlides > 1) {
+                    if (autoSlideInterval) clearInterval(autoSlideInterval);
+                    autoSlideInterval = setInterval(() => fabricCarousel_showSlide(fabricCarouselCurrentIndex + 1), 7000);
+                }
             }
 
-
             async function fetchFabricUpdates() {
-                logFabricUpdate(`Henter Fabric-oppdateringer fra: ${fabricRssFeedUrl}`);
-                if (!fabricCarouselTrack || !fabricCarouselMessagePlaceholder) {
-                    logFabricUpdate("FEIL: Nødvendige karusellelementer mangler for henting.", true);
-                    return;
-                }
-
+                if (!fabricCarouselTrack || !fabricCarouselMessagePlaceholder) { logFabricUpdate("Nødv. karusellelementer mangler.", true); return; }
                 fabricCarouselMessagePlaceholder.innerHTML = '<p class="loading-message">Laster siste nytt...</p>';
-                // Sørg for at placeholder er synlig i starten
-                if (fabricCarouselTrack.children.length === 0 ||
-                    (fabricCarouselTrack.children.length === 1 && fabricCarouselTrack.firstChild === fabricCarouselMessagePlaceholder)) {
-                    // Gjør ingenting hvis placeholder allerede er det eneste barnet
-                } else {
-                    fabricCarouselTrack.innerHTML = ''; // Tøm gamle slides
-                    fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder); // Sett inn på nytt
-                }
-
+                if (fabricCarouselTrack.children.length === 0 || (fabricCarouselTrack.children.length === 1 && fabricCarouselTrack.firstChild === fabricCarouselMessagePlaceholder)) {/*OK*/}
+                else { fabricCarouselTrack.innerHTML = ''; fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder); }
 
                 let response;
-                let usedProxy = false;
-
                 try {
-                    logFabricUpdate("Prøver direkte henting av Fabric-feed...");
                     response = await fetch(fabricRssFeedUrl);
-                    if (!response.ok) {
-                        throw new Error(`Direkte HTTP-feil: Status ${response.status}`);
-                    }
-                    logFabricUpdate("Direkte henting av Fabric-feed vellykket.");
+                    if (!response.ok) throw new Error(`Direkte HTTP-feil: ${response.status}`);
                 } catch (directError) {
                     logFabricUpdate(`Direkte henting feilet: ${directError.message}. Prøver proxy.`, true);
-                    usedProxy = true;
                     const proxyFetchUrl = `${fabricProxyUrl}${encodeURIComponent(fabricRssFeedUrl)}`;
-                    logFabricUpdate(`Fabric Proxy URL: ${proxyFetchUrl}`);
                     try {
                         response = await fetch(proxyFetchUrl);
-                        if (!response.ok) {
-                            throw new Error(`Proxy HTTP-feil: ${response.status}`);
-                        }
-                        logFabricUpdate("Proxy-henting av Fabric-feed vellykket.");
+                        if (!response.ok) throw new Error(`Proxy HTTP-feil: ${response.status}`);
                     } catch (proxyError) {
-                        logFabricUpdate(`Proxy-henting av Fabric-feed feilet: ${proxyError.message}`, true);
-                        fabricCarouselMessagePlaceholder.innerHTML = `<p class="error-message">Kunne ikke laste inn de siste oppdateringene for øyeblikket.</p>`;
-                        // Sørg for at feilmelding vises korrekt
-                         if (fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) {
-                            fabricCarouselTrack.innerHTML = '';
-                            fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder);
-                        }
+                        logFabricUpdate(`Proxy-henting feilet: ${proxyError.message}`, true);
+                        fabricCarouselMessagePlaceholder.innerHTML = `<p class="error-message">Kunne ikke laste oppdateringer.</p>`;
+                        if (fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) { fabricCarouselTrack.innerHTML = ''; fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder); }
                         if (fabricCarouselPrevButton) fabricCarouselPrevButton.style.display = 'none';
                         if (fabricCarouselNextButton) fabricCarouselNextButton.style.display = 'none';
                         return;
                     }
                 }
-
-                if (!response) {
-                     logFabricUpdate("Ingen gyldig respons etter direkte/proxy-forsøk.", true);
-                     fabricCarouselMessagePlaceholder.innerHTML = `<p class="error-message">Kunne ikke hente data (ingen respons).</p>`;
-                     if (fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) {
-                        fabricCarouselTrack.innerHTML = '';
-                        fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder);
-                    }
-                     return;
-                }
-
+                if (!response) { fabricCarouselMessagePlaceholder.innerHTML = `<p class="error-message">Ingen respons.</p>`; return; }
                 try {
                     const xmlData = await response.text();
-                    logFabricUpdate(`Mottok ${xmlData.length} bytes Fabric XML-data ${usedProxy ? 'via proxy' : 'direkte'}.`);
-
                     const parser = new DOMParser();
                     const xmlDoc = parser.parseFromString(xmlData.trim(), "text/xml");
                     const parserError = xmlDoc.getElementsByTagName("parsererror");
-
-                    if (parserError.length > 0) {
-                        let errorDetails = parserError[0]?.textContent || "Ukjent XML parsefeil";
-                        throw new Error("XML Parseringsfeil: " + errorDetails);
-                    }
-
-                    const items = Array.from(xmlDoc.querySelectorAll("item")); // Konverter NodeList til Array
+                    if (parserError.length > 0) throw new Error("XML Parsefeil: " + (parserError[0]?.textContent || "Ukjent"));
+                    const items = Array.from(xmlDoc.querySelectorAll("item"));
                     fabricCarousel_populateAndInit(items);
-
                 } catch (error) {
-                    logFabricUpdate(`Feil ved behandling av Fabric-respons: ${error.message}`, true);
-                    fabricCarouselMessagePlaceholder.innerHTML = `<p class="error-message">Klarte ikke behandle data fra nyhetsfeeden.</p>`;
-                    if (fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) {
-                        fabricCarouselTrack.innerHTML = '';
-                        fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder);
-                    }
+                    logFabricUpdate(`Feil ved behandling av respons: ${error.message}`, true);
+                    fabricCarouselMessagePlaceholder.innerHTML = `<p class="error-message">Klarte ikke behandle data.</p>`;
+                    if (fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) { fabricCarouselTrack.innerHTML = ''; fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder); }
                     if (fabricCarouselPrevButton) fabricCarouselPrevButton.style.display = 'none';
                     if (fabricCarouselNextButton) fabricCarouselNextButton.style.display = 'none';
                 }
             }
 
-            // Kjør funksjonen for å hente Fabric-nyheter kun hvis karusellelementene finnes
             if (fabricCarouselWrapper && fabricCarouselTrack && fabricCarouselPrevButton && fabricCarouselNextButton && fabricCarouselDotsContainer && fabricCarouselMessagePlaceholder) {
                 fetchFabricUpdates();
-
-                fabricCarouselPrevButton.addEventListener('click', () => {
-                    fabricCarousel_showSlide(fabricCarouselCurrentIndex - 1);
-                });
-                fabricCarouselNextButton.addEventListener('click', () => {
-                    fabricCarousel_showSlide(fabricCarouselCurrentIndex + 1);
-                });
-
-                // Optional: Auto-slide
-                let autoSlideInterval = setInterval(() => {
-                    let nextIndex = (fabricCarouselCurrentIndex + 1) % fabricTotalSlides;
-                    if (fabricTotalSlides > 0) fabricCarousel_showSlide(nextIndex);
-                }, 7000); // Change slide every 7 seconds
-
-                // Pause auto-slide on hover
-                fabricCarouselWrapper.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+                fabricCarouselPrevButton.addEventListener('click', () => { if (autoSlideInterval) clearInterval(autoSlideInterval); fabricCarousel_showSlide(fabricCarouselCurrentIndex - 1); });
+                fabricCarouselNextButton.addEventListener('click', () => { if (autoSlideInterval) clearInterval(autoSlideInterval); fabricCarousel_showSlide(fabricCarouselCurrentIndex + 1); });
+                fabricCarouselWrapper.addEventListener('mouseenter', () => { if (autoSlideInterval) clearInterval(autoSlideInterval); });
                 fabricCarouselWrapper.addEventListener('mouseleave', () => {
-                   if (fabricTotalSlides > 1) { // Only restart if there's something to slide
-                        autoSlideInterval = setInterval(() => {
-                            let nextIndex = (fabricCarouselCurrentIndex + 1) % fabricTotalSlides;
-                            if (fabricTotalSlides > 0) fabricCarousel_showSlide(nextIndex);
-                        }, 7000);
+                   if (fabricTotalSlides > 1) {
+                        if (autoSlideInterval) clearInterval(autoSlideInterval);
+                        autoSlideInterval = setInterval(() => fabricCarousel_showSlide(fabricCarouselCurrentIndex + 1), 7000);
                    }
                 });
-
-
-            } else {
-                logFabricUpdate("Nødvendige karusellelementer ikke funnet, hopper over henting av Fabric-nyheter.", true);
-            }
-            // === SLUTT på Logikk for Microsoft Fabric Nyhets-KARUSELL ===
-
-        }); // Slutt på DOMContentLoaded
+            } else { logFabricUpdate("Nødv. karusellelementer ikke funnet.", true); }
+        });
     </script>
-    <!-- === JAVASCRIPT SLUTT === -->
-
 </body>
 </html>
