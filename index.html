@@ -30,7 +30,7 @@
             --glow-color: rgba(0, 198, 255, 0.3);
             --button-glow-color: rgba(0, 198, 255, 0.2);
             --text-on-accent: #ffffff;
-            --text-on-dark-bg: #1f1f1f;
+            --text-on-dark-bg: #1f1f1f; /* Endret for bedre lesbarhet på gradient-knapp */
             --font-primary: 'Poppins', sans-serif;
             --transition-speed: 0.3s;
             --transition-slow: 0.5s;
@@ -75,10 +75,102 @@
         .section-header { text-align: center; margin-bottom: 4rem; }
         .section-header span { display: block; font-size: 1rem; color: var(--primary-accent-dark); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 600; }
         .section-header h2 { font-size: 2.8rem; font-weight: 700; color: var(--text-dark-primary); margin-bottom: 1rem; position: relative; display: inline-block; }
-        .section-header h2::after { content: ''; position: absolute; width: 60px; height: 4px; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); bottom: -15px; left: 50%; transform: translateX(-50%); border-radius: 2px; }
+        /* OPPDATERT FOR ANIMASJON: H2::AFTER */
+        .section-header h2::after { content: ''; position: absolute; width: 0; /* Starter med 0 bredde */ height: 4px; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); bottom: -15px; left: 50%; transform: translateX(-50%); border-radius: 2px; transition: width 0.6s cubic-bezier(0.25, 0.1, 0.25, 1); }
+        /* Styrer bredden via .visible klassen på seksjonen */
         .section-header p { max-width: 700px; margin: 1.5rem auto 0 auto; color: var(--text-dark-secondary); font-size: 1.1rem; }
+
+        /* === NY: "WOW-FAKTOR" Animasjoner for #om-oss og #hvorfor-moderne-data === */
+        /* --- #om-oss ("Hvem Vi Er") Animasjoner --- */
+        #om-oss .section-header > span,
+        #om-oss .section-header > h2,
+        #om-oss .section-header > p {
+            opacity: 0;
+            transition-property: opacity, transform;
+            transition-duration: 0.7s;
+            transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        #om-oss .section-header > span { transform: translateY(-30px); }
+        #om-oss .section-header > h2 { transform: translateY(15px) scale(0.95); }
+        #om-oss .section-header > p { transform: translateY(30px); }
+
+        #om-oss .section-header.visible > span,
+        #om-oss .section-header.visible > h2,
+        #om-oss .section-header.visible > p {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        #om-oss .section-header.visible > span { transition-delay: 0.2s; }
+        #om-oss .section-header.visible > h2 { transition-delay: 0.4s; }
+        #om-oss .section-header.visible > p:nth-of-type(1) { transition-delay: 0.65s; }
+        #om-oss .section-header.visible > p:nth-of-type(2) { transition-delay: 0.8s; }
+        #om-oss .section-header.visible h2::after {
+            width: 60px;
+            transition-delay: 0.7s; /* Etter h2-tekst */
+        }
+
+        /* --- #hvorfor-moderne-data ("Fremtiden for Dataanalyse") Animasjoner --- */
+        #hvorfor-moderne-data .section-header > span,
+        #hvorfor-moderne-data .section-header > h2,
+        #hvorfor-moderne-data .section-header > p {
+            opacity: 0;
+            transition-property: opacity, transform;
+            transition-duration: 0.7s;
+            transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        #hvorfor-moderne-data .section-header > span { transform: translateY(-30px); }
+        #hvorfor-moderne-data .section-header > h2 { transform: translateY(15px) scale(0.95); }
+        #hvorfor-moderne-data .section-header > p { transform: translateY(30px); }
+
+        #hvorfor-moderne-data .section-header.visible > span,
+        #hvorfor-moderne-data .section-header.visible > h2,
+        #hvorfor-moderne-data .section-header.visible > p {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        #hvorfor-moderne-data .section-header.visible > span { transition-delay: 0.2s; }
+        #hvorfor-moderne-data .section-header.visible > h2 { transition-delay: 0.4s; }
+        #hvorfor-moderne-data .section-header.visible > p { transition-delay: 0.65s; }
+        #hvorfor-moderne-data .section-header.visible h2::after {
+            width: 60px;
+            transition-delay: 0.7s; /* Etter h2-tekst */
+        }
+
+        .fabric-highlight {
+            position: relative;
+            display: inline-block;
+        }
+        .fabric-highlight::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(
+                100deg,
+                transparent 20%,
+                rgba(255, 255, 255, 0.6) 50%,
+                transparent 80%
+            );
+            opacity: 0;
+            transform: translateX(-110%);
+            pointer-events: none;
+        }
+        #hvorfor-moderne-data .section-header.visible .fabric-highlight::after {
+            animation: shimmer-effect 1.8s 1.1s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+        }
+        @keyframes shimmer-effect {
+            0% { opacity: 0; transform: translateX(-110%); }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; transform: translateX(110%); }
+        }
+        /* === SLUTT NY: "WOW-FAKTOR" Animasjoner === */
+
+
         .services-bg { background: var(--bg-soft-light); }
-        #om-oss, #hvorfor-moderne-data { background: var(--bg-light); }
+        #om-oss, #hvorfor-moderne-data { background: var(--bg-light); } /* Egen bakgrunn for disse om nødvendig, nå lik body */
         .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
         .service-card { background: var(--bg-light); border: 1px solid var(--card-border-light); border-radius: 12px; padding: 2.5rem 2rem; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease; overflow: hidden; position: relative; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03); }
         .service-card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08); border-color: var(--primary-accent-light); }
@@ -320,7 +412,7 @@
         <!-- Om Oss Seksjon -->
         <section id="om-oss" class="section">
              <div class="container">
-                 <div class="section-header fade-in">
+                 <div class="section-header fade-in"> <!-- fade-in brukes av IntersectionObserver for å legge til .visible -->
                      <span>Hvem Vi Er</span>
                      <h2>Teknologi som Skaper Verdi</h2>
                      <p>Hos TrendMe brenner vi for teknologi og hvordan den kan forbedre og effektivisere virksomheter. Vår misjon er å kontinuerlig følge med på de nyeste trendene – fra kunstig intelligens og avansert dataanalyse til skyteknologi og automatisering. Vi driver dette prosjektet med engasjement ved siden av studier og jobb, og hjelper våre kunder å velge og implementere teknologi som gir konkrete resultater.</p>
@@ -332,10 +424,10 @@
         <!-- Hvorfor Moderne Dataanalyse Seksjon -->
         <section id="hvorfor-moderne-data" class="section">
              <div class="container">
-                 <div class="section-header fade-in">
+                 <div class="section-header fade-in"> <!-- fade-in brukes av IntersectionObserver for å legge til .visible -->
                      <span>Fremtiden for Dataanalyse</span>
                      <h2>Verdien av Moderne Dataanalyse</h2>
-                     <p>Tradisjonell dataanalyse kan være kompleks og fragmentert. Moderne plattformer tilbyr en mer helhetlig tilnærming. Et ledende eksempel er <strong>Microsoft Fabric</strong> – en ende-til-ende, AI-drevet SaaS-plattform som samler dataintegrasjon, engineering, warehousing, datavitenskap, sanntidsanalyse og business intelligence på ett sted.</p>
+                     <p>Tradisjonell dataanalyse kan være kompleks og fragmentert. Moderne plattformer tilbyr en mer helhetlig tilnærming. Et ledende eksempel er <strong class="fabric-highlight">Microsoft Fabric</strong> – en ende-til-ende, AI-drevet SaaS-plattform som samler dataintegrasjon, engineering, warehousing, datavitenskap, sanntidsanalyse og business intelligence på ett sted.</p>
                  </div>
              </div>
          </section>
@@ -650,6 +742,10 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
+                        // For de spesifikke seksjonene vil .visible på .section-header
+                        // trigge CSS-animasjonene vi har definert for barn-elementene.
+                        // Den generelle .fade-in for hele blokken er fortsatt der, men
+                        // CSS-en for barna vil ta over med sine egne opasitets- og transformasjons-overganger.
                         obs.unobserve(entry.target);
                     }
                 });
