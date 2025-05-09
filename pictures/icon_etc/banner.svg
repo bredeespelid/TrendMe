@@ -1,0 +1,55 @@
+<svg width="1584" height="396" viewBox="0 0 1584 396" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Stiler for teksten -->
+    <style>
+      .core-values-text {
+        font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+        font-size: 24px;
+        font-weight: 400; /* Regular for litt bedre lesbarhet over farger */
+        fill: #333333;   /* En litt mørkere grå for kontrast */
+        text-anchor: end; /* Viktig for høyrejustering */
+      }
+    </style>
+
+    <!-- Gradienter for de kunstneriske formene -->
+    <linearGradient id="artGrad1" x1="0%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8F5FF; stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#CDEBFF; stop-opacity:0.5" />
+    </linearGradient>
+
+    <linearGradient id="artGrad2" x1="20%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#F5F0FF; stop-opacity:0.65" />
+      <stop offset="100%" style="stop-color:#E6D9FF; stop-opacity:0.45" />
+    </linearGradient>
+
+    <radialGradient id="artGrad3" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#E0FFF8; stop-opacity:0.65" />
+      <stop offset="100%" style="stop-color:#C0FDF0; stop-opacity:0.4" />
+    </radialGradient>
+
+    <filter id="artSoftBlur" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="60" /> <!-- Litt mindre blur for å ikke overvelde tekstområdet -->
+    </filter>
+  </defs>
+
+  <!-- Ren Hvit Bakgrunn -->
+  <rect width="1584" height="396" fill="#FFFFFF" />
+
+  <!-- Abstrakte Kunstneriske Former - Konsentrert mot høyre, litt mer dempet der teksten er -->
+  <g filter="url(#artSoftBlur)" opacity="0.85"> <!-- Litt redusert opasitet på hele gruppen -->
+    <!-- Form 1 - Blåaktig - Størst, starter lenger til høyre -->
+    <ellipse cx="1180" cy="180" rx="400" ry="280" fill="url(#artGrad1)" transform="rotate(-15 1180 180)" />
+
+    <!-- Form 2 - Lillaaktig - Overlapper, plassert for å støtte høyre side -->
+    <ellipse cx="1380" cy="250" rx="360" ry="240" fill="url(#artGrad2)" transform="rotate(25 1380 250)" />
+
+    <!-- Form 3 - Mint/Aqua - Mindre, aksent, også mot høyre -->
+    <ellipse cx="1050" cy="290" rx="320" ry="230" fill="url(#artGrad3)" transform="rotate(10 1050 290)"/>
+  </g>
+
+  <!-- Tekst for Kjerneverdier på høyre side -->
+  <!-- Plassert over det kunstneriske området på høyre -->
+  <!-- x="1504" (1584 - 80) for høyrejustering med 80px margin -->
+  <text x="1504" y="205" class="core-values-text">Data • AI • Sky • Moderne Teknologi</text>
+
+</svg>
