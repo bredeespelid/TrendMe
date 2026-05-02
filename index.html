@@ -1,1144 +1,437 @@
 <!DOCTYPE html>
-<html lang="no">
+<html lang="nb">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrendMe | Rådgivning & Implementering av Moderne Teknologi</title>
-    <meta name="description" content="TrendMe hjelper norske virksomheter med rådgivning og implementering innen data, AI, sky og moderne teknologi – inkludert Microsoft Fabric og Power BI.">
-    <link rel="icon" href="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189579/SVG_yqf4t8.svg" type="image/svg+xml">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189607/icon_rdwy3d.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TrendMe, dronefilm og nettsider for små bedrifter, eiendom, hytter, restauranter, kafeer, arrangementer og lokale prosjekter i Oslo og omegn." />
+  <meta name="theme-color" content="#0b0d10" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="TrendMe" />
+  <title>TrendMe, dronefilm og nettsider i Oslo og omegn</title>
 
-    <style>
-        :root {
-            --bg-light: #ffffff;
-            --bg-soft-light: #f8f9fa;
-            --text-dark-primary: #212529;
-            --text-dark-secondary: #495057;
-            --text-dark-muted: #6c757d;
-            --card-border-light: rgba(0, 0, 0, 0.1);
-            --header-bg-light: rgba(255, 255, 255, 0.85);
-            --suggestions-bg-light: rgba(255, 255, 255, 0.98);
-            --suggestions-hover-bg-light: #f1f3f5;
-            --footer-bg-light: #f1f3f5;
-            --primary-accent-dark: #0078d4;
-            --primary-accent-light: #00c6ff;
-            --secondary-accent: #9370db;
-            --glow-color: rgba(0, 198, 255, 0.3);
-            --button-glow-color: rgba(0, 198, 255, 0.2);
-            --text-on-accent: #ffffff;
-            --text-on-dark-bg: #1f1f1f; /* Endret for bedre lesbarhet på gradient-knapp */
-            --font-primary: 'Poppins', sans-serif;
-            --transition-speed: 0.3s;
-            --transition-slow: 0.5s;
-            --error-color: #dc3545;
-            --header-height: 70px;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--primary-accent-light) var(--bg-soft-light); }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-soft-light); }
-        ::-webkit-scrollbar-thumb { background-color: var(--primary-accent-light); border-radius: 10px; border: 2px solid var(--bg-soft-light); }
-        body { font-family: var(--font-primary); line-height: 1.7; color: var(--text-dark-secondary); background-color: var(--bg-light); overflow-x: hidden; background: linear-gradient(135deg, #eef2f7 0%, #ffffff 50%, #e6f7ff 100%); }
-        .container { max-width: 1200px; margin: auto; padding: 0 25px; }
-        .fade-in { opacity: 0; transition: opacity 1s ease-out, transform 0.8s ease-out; }
-        .slide-up { transform: translateY(40px); }
-        .slide-left { transform: translateX(-40px); }
-        .slide-right { transform: translateX(40px); }
-        .visible { opacity: 1; transform: translate(0, 0) !important; }
-        header { background: var(--header-bg-light); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--text-dark-primary); padding: 0.5rem 0; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--card-border-light); transition: background-color var(--transition-speed) ease; height: var(--header-height); }
-        header nav { display: flex; justify-content: space-between; align-items: center; height: 100%; }
-        .logo-link { display: flex; align-items: center; height: 100%; }
-        .logo-img { display: block; max-height: calc(var(--header-height) - 25px); width: auto; transition: transform 0.3s ease; }
-        .logo-img:hover { transform: scale(1.05); }
-        header ul { list-style: none; display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; margin-top: 0; padding: 0; height: 100%; }
-        header ul li { margin-left: 20px; }
-        header ul li a { display: flex; align-items: center; color: var(--text-dark-muted); text-decoration: none; padding: 10px 15px; transition: color var(--transition-speed) ease; border-radius: 5px; font-weight: 400; font-size: 0.95rem; letter-spacing: 0.5px; position: relative; overflow: hidden; white-space: nowrap; }
-        header ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 5px; left: 50%; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); transition: width var(--transition-speed) ease, left var(--transition-speed) ease; transform: translateX(-50%); }
-        header ul li a:hover { color: var(--primary-accent-dark); }
-        header ul li a:hover::after { width: 70%; left: 50%; }
-        .hero { min-height: 85vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 0 4rem 0; position: relative; overflow: hidden; background: linear-gradient(160deg, rgba(0, 198, 255, 0.1) 0%, rgba(255, 255, 255, 0.8) 70%), linear-gradient(135deg, #eef2f7 0%, #ffffff 100%); }
-        .hero .container { position: relative; z-index: 2; }
-        .hero h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; color: var(--text-dark-primary); animation: text-focus-in 1.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both; }
-        @keyframes text-focus-in { 0% { filter: blur(8px); opacity: 0; } 100% { filter: blur(0px); opacity: 1; } }
-        .hero .typing-container { font-size: 1.4rem; color: var(--text-dark-secondary); margin-bottom: 2.5rem; min-height: 1.8em; }
-        .typing-cursor { display: inline-block; width: 10px; height: 1.4rem; background-color: var(--primary-accent-dark); margin-left: 5px; animation: blink 0.7s infinite; vertical-align: bottom; }
-        @keyframes blink { 50% { opacity: 0; } }
-        .hero-cta-container { margin-top: 2.5rem; }
-        .cta-button { display: inline-flex; align-items: center; justify-content: center; gap: 0.8em; padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.1rem; white-space: nowrap; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); color: var(--text-on-dark-bg); box-shadow: 0 5px 15px var(--button-glow-color); }
-        .cta-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px var(--glow-color); }
-        .cta-button:disabled { background: #adb5bd; color: #6c757d; cursor: not-allowed; opacity: 0.7; transform: none; box-shadow: none; }
-        .section { padding: 6rem 0; overflow: hidden; }
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-header span { display: block; font-size: 1rem; color: var(--primary-accent-dark); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; font-weight: 600; }
-        .section-header h2 { font-size: 2.8rem; font-weight: 700; color: var(--text-dark-primary); margin-bottom: 1rem; position: relative; display: inline-block; }
-        /* OPPDATERT FOR ANIMASJON: H2::AFTER */
-        .section-header h2::after { content: ''; position: absolute; width: 0; /* Starter med 0 bredde */ height: 4px; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); bottom: -15px; left: 50%; transform: translateX(-50%); border-radius: 2px; transition: width 0.6s cubic-bezier(0.25, 0.1, 0.25, 1); }
-        /* Styrer bredden via .visible klassen på seksjonen */
-        .section-header p { max-width: 700px; margin: 1.5rem auto 0 auto; color: var(--text-dark-secondary); font-size: 1.1rem; }
+  <!-- Bytt URL-en under til ditt faktiske domene når siden er publisert -->
+  <link rel="canonical" href="https://trendme.no/" />
 
-        /* === NY: "WOW-FAKTOR" Animasjoner for #om-oss og #hvorfor-moderne-data === */
-        /* --- #om-oss ("Hvem Vi Er") Animasjoner --- */
-        #om-oss .section-header > span,
-        #om-oss .section-header > h2,
-        #om-oss .section-header > p {
-            opacity: 0;
-            transition-property: opacity, transform;
-            transition-duration: 0.7s;
-            transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-        #om-oss .section-header > span { transform: translateY(-30px); }
-        #om-oss .section-header > h2 { transform: translateY(15px) scale(0.95); }
-        #om-oss .section-header > p { transform: translateY(30px); }
+  <!-- Open Graph (Facebook, LinkedIn, iMessage osv.) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="nb_NO" />
+  <meta property="og:site_name" content="TrendMe" />
+  <meta property="og:title" content="TrendMe, dronefilm og nettsider i Oslo og omegn" />
+  <meta property="og:description" content="Dronefilm og enkle nettsider for små bedrifter, eiendom, hytter, restauranter og lokale prosjekter." />
+  <meta property="og:url" content="https://trendme.no/" />
+  <meta property="og:image" content="https://trendme.no/assets/portrait.jpg" />
 
-        #om-oss .section-header.visible > span,
-        #om-oss .section-header.visible > h2,
-        #om-oss .section-header.visible > p {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        #om-oss .section-header.visible > span { transition-delay: 0.2s; }
-        #om-oss .section-header.visible > h2 { transition-delay: 0.4s; }
-        #om-oss .section-header.visible > p:nth-of-type(1) { transition-delay: 0.65s; }
-        #om-oss .section-header.visible > p:nth-of-type(2) { transition-delay: 0.8s; }
-        #om-oss .section-header.visible h2::after {
-            width: 60px;
-            transition-delay: 0.7s; /* Etter h2-tekst */
-        }
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="TrendMe, dronefilm og nettsider i Oslo og omegn" />
+  <meta name="twitter:description" content="Dronefilm og enkle nettsider for små bedrifter og lokale prosjekter." />
+  <meta name="twitter:image" content="https://trendme.no/assets/portrait.jpg" />
 
-        /* --- #hvorfor-moderne-data ("Fremtiden for Dataanalyse") Animasjoner --- */
-        #hvorfor-moderne-data .section-header > span,
-        #hvorfor-moderne-data .section-header > h2,
-        #hvorfor-moderne-data .section-header > p {
-            opacity: 0;
-            transition-property: opacity, transform;
-            transition-duration: 0.7s;
-            transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-        #hvorfor-moderne-data .section-header > span { transform: translateY(-30px); }
-        #hvorfor-moderne-data .section-header > h2 { transform: translateY(15px) scale(0.95); }
-        #hvorfor-moderne-data .section-header > p { transform: translateY(30px); }
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
 
-        #hvorfor-moderne-data .section-header.visible > span,
-        #hvorfor-moderne-data .section-header.visible > h2,
-        #hvorfor-moderne-data .section-header.visible > p {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        #hvorfor-moderne-data .section-header.visible > span { transition-delay: 0.2s; }
-        #hvorfor-moderne-data .section-header.visible > h2 { transition-delay: 0.4s; }
-        #hvorfor-moderne-data .section-header.visible > p { transition-delay: 0.65s; }
-        #hvorfor-moderne-data .section-header.visible h2::after {
-            width: 60px;
-            transition-delay: 0.7s; /* Etter h2-tekst */
-        }
-
-        .fabric-highlight {
-            position: relative;
-            display: inline-block;
-        }
-        .fabric-highlight::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            background: linear-gradient(
-                100deg,
-                transparent 20%,
-                rgba(255, 255, 255, 0.6) 50%,
-                transparent 80%
-            );
-            opacity: 0;
-            transform: translateX(-110%);
-            pointer-events: none;
-        }
-        #hvorfor-moderne-data .section-header.visible .fabric-highlight::after {
-            animation: shimmer-effect 1.8s 1.1s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
-        }
-        @keyframes shimmer-effect {
-            0% { opacity: 0; transform: translateX(-110%); }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { opacity: 0; transform: translateX(110%); }
-        }
-        /* === SLUTT NY: "WOW-FAKTOR" Animasjoner === */
-
-
-        .services-bg { background: var(--bg-soft-light); }
-        #om-oss, #hvorfor-moderne-data { background: var(--bg-light); } /* Egen bakgrunn for disse om nødvendig, nå lik body */
-        .service-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
-        .service-card { background: var(--bg-light); border: 1px solid var(--card-border-light); border-radius: 12px; padding: 2.5rem 2rem; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease; overflow: hidden; position: relative; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03); }
-        .service-card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08); border-color: var(--primary-accent-light); }
-        .service-card > * { position: relative; z-index: 1; }
-        .service-icon-container { margin-bottom: 1.5rem; text-align: center; min-height: 65px; display: flex; justify-content: center; align-items: center; }
-        .service-icon { width: auto; max-width: 55px; height: 55px; object-fit: contain; }
-        .service-icon.pbi-logo { max-width: 80px; height: auto; max-height: 55px; }
-        .service-card h3 { font-size: 1.6rem; margin-bottom: 1rem; color: var(--text-dark-primary); text-align: center; }
-        .service-card ul { list-style: none; padding: 0; margin-top: 1.5rem; }
-        .service-card ul li { margin-bottom: 0.8rem; position: relative; padding-left: 25px; color: var(--text-dark-secondary); font-size: 0.95rem; }
-        .service-card ul li::before { content: '>'; position: absolute; left: 0; color: var(--primary-accent-dark); font-weight: bold; font-size: 1.2rem; line-height: 1; top: 2px; transition: transform var(--transition-speed) ease; }
-        .service-card:hover ul li::before { transform: translateX(3px); }
-        .accordion-list { max-width: 900px; margin: 2rem auto 0 auto; }
-        .accordion-item { border-bottom: 1px solid transparent; margin-bottom: 1rem; background: var(--bg-light); border-radius: 8px; box-shadow: 0 3px 8px rgba(0,0,0,0.03); border: 1px solid var(--card-border-light); }
-        .accordion-title { background: none; border: none; color: var(--text-dark-primary); cursor: pointer; padding: 1.5rem 1rem; width: 100%; text-align: left; font-size: 1.3rem; font-weight: 600; font-family: inherit; display: flex; justify-content: space-between; align-items: center; transition: color var(--transition-speed) ease; }
-        .accordion-title:hover, .accordion-title.aktiv { color: var(--primary-accent-dark); }
-        .accordion-title span.tittel-tekst { flex-grow: 1; margin-right: 1rem; }
-        .accordion-title span.ikon { font-size: 1.5rem; transition: transform var(--transition-slow) ease; transform-origin: center; display: inline-block; }
-        .accordion-title.aktiv span.ikon { transform: rotate(45deg); }
-        .accordion-content { max-height: 0; overflow: hidden; transition: max-height var(--transition-slow) ease-out, padding var(--transition-slow) ease-out, border-top var(--transition-slow) ease-out; padding: 0 1.5rem; color: var(--text-dark-secondary); font-size: 1rem; line-height: 1.8; border-top: 1px solid transparent; }
-        .accordion-content.aktiv { padding: 1.5rem 1.5rem 2.5rem 1.5rem; overflow-y: auto; border-top: 1px solid var(--card-border-light); }
-        .accordion-content img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 1.5rem; border: 1px solid var(--card-border-light); }
-        .accordion-content h4 { color: var(--text-dark-primary); margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.1rem; }
-        .accordion-content ul { list-style: disc; padding-left: 25px; margin-top: 1rem; margin-bottom: 1rem; }
-        .accordion-content ul li { margin-bottom: 0.5rem; padding-left: 0; color: var(--text-dark-secondary); }
-        .accordion-content ul li::before { content: none; }
-        #kontakt { background: var(--bg-soft-light); }
-        #contact-form { max-width: 700px; margin: 0 auto; background: var(--bg-light); padding: 3rem; border-radius: 15px; border: 1px solid var(--card-border-light); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07); }
-        .form-group { margin-bottom: 1.8rem; position: relative; }
-        .form-group label { display: block; margin-bottom: 0.7rem; font-weight: 600; color: var(--text-dark-muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group textarea { width: 100%; padding: 1rem; border: 1px solid var(--card-border-light); border-radius: 8px; font-family: inherit; font-size: 1rem; background-color: #fff; color: var(--text-dark-primary); transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-accent-dark); box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.15); }
-        .form-group textarea { resize: vertical; min-height: 120px; }
-        #contact-form button[type="submit"] { display: block; width: 100%; margin-top: 1rem; padding: 15px 30px; }
-        #form-error-message { color: var(--error-color); margin-top: 1rem; text-align: center; display: none; font-weight: 600; }
-        footer { background-color: var(--footer-bg-light); color: var(--text-dark-muted); text-align: center; padding: 3rem 0 2rem 0; margin-top: 4rem; border-top: 1px solid var(--card-border-light); }
-        footer p { margin-bottom: 1rem; font-size: 0.9rem; }
-        .footer-links { margin-bottom: 1.5rem; }
-        .footer-links a { display: inline-block; margin: 0 12px; transition: transform var(--transition-speed) ease, opacity var(--transition-speed) ease; opacity: 0.7; }
-        .footer-links img { width: 28px; height: 28px; vertical-align: middle; filter: grayscale(50%) opacity(70%); transition: filter var(--transition-speed) ease; }
-        .footer-links a:hover img { filter: grayscale(0%) opacity(1); }
-        .footer-links a:hover { transform: scale(1.15); opacity: 1; }
-        .suggestions-container { position: absolute; left: 0; right: 0; top: 100%; background-color: var(--suggestions-bg-light); border: 1px solid var(--card-border-light); border-top: none; border-radius: 0 0 8px 8px; z-index: 10; max-height: 200px; overflow-y: auto; display: none; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05); }
-        .suggestions-container ul { list-style: none; margin: 0; padding: 0; }
-        .suggestions-container li { padding: 0.8rem 1rem; cursor: pointer; color: var(--text-dark-primary); border-bottom: 1px solid var(--card-border-light); transition: background-color 0.2s ease; }
-        .suggestions-container li:last-child { border-bottom: none; }
-        .suggestions-container li:hover { background-color: var(--suggestions-hover-bg-light); color: var(--primary-accent-dark); }
-        .suggestions-container .no-results { padding: 0.8rem 1rem; color: var(--text-dark-muted); font-style: italic; cursor: default; }
-        #animation-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(248, 249, 250, 0.9); display: none; justify-content: center; align-items: center; flex-direction: column; z-index: 1100; overflow: hidden; }
-        #paper { background-color: #fff; width: 300px; height: 400px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); border: 1px solid #dee2e6; padding: 20px; box-sizing: border-box; opacity: 0; transform: scale(0.8); transition: opacity 0.5s ease-out, transform 0.5s ease-out; position: relative; overflow: hidden; }
-        #paper-content { font-family: var(--font-primary); font-size: 0.9rem; color: var(--text-dark-primary); white-space: pre-wrap; word-wrap: break-word; max-height: 100%; overflow-y: auto; }
-        #thank-you-message { margin-top: 20px; font-size: 1.5rem; color: var(--primary-accent-dark); font-weight: bold; text-align: center; display: none; opacity: 0; transition: opacity 0.5s ease-in 0.2s; }
-        @keyframes fly-away { 0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 1; } 100% { transform: translate(120vw, -120vh) rotate(720deg) scale(0.1); opacity: 0; } }
-        #paper.flying { animation: fly-away 2s ease-in forwards; }
-        .resource-section { text-align: center; padding: 3rem 0 1rem 0; background-color: var(--bg-soft-light); }
-        .microsoft-calc-button { display: inline-flex; align-items: center; gap: 0.8em; background: linear-gradient(90deg, var(--primary-accent-light), var(--secondary-accent)); color: var(--text-on-dark-bg); padding: 14px 30px; text-decoration: none; border-radius: 50px; font-weight: 600; transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background var(--transition-speed) ease; border: none; cursor: pointer; font-size: 1.05rem; box-shadow: 0 5px 15px var(--button-glow-color); white-space: nowrap; }
-        .microsoft-calc-button .ms-logo { width: 1.4em; height: 1.4em; vertical-align: middle; }
-        .microsoft-calc-button:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 10px 25px var(--glow-color); }
-
-        /* === Karusell Styling for Fabric Updates (Slide som kort) === */
-        .fabric-updates-carousel-wrapper { max-width: 700px; margin: 4rem auto 0 auto !important; padding: 0 15px; text-align: left; }
-        .fabric-updates-carousel-wrapper h3 { font-size: 1.8rem; color: var(--text-dark-primary); margin-bottom: 1.5rem; text-align: center; }
-        .carousel-container { position: relative; }
-        .carousel-viewport { width: 100%; overflow: hidden; }
-        .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); min-height: 320px; align-items: stretch; /* gap fjernet */ }
-        .carousel-slide { width: 100%; /* Endret fra min-width */ flex-shrink: 0; background: var(--bg-light); border: 1px solid var(--card-border-light); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); border-radius: 12px; padding: 1.5rem; opacity: 0; transform: scale(0.95); animation: carousel-slide-fade-in 0.6s forwards; display: flex; flex-direction: column; }
-        @keyframes carousel-slide-fade-in { to { opacity: 1; transform: scale(1); } }
-        .carousel-slide h4 { font-size: 1.25rem; color: var(--text-dark-primary); margin-bottom: 0.75rem; font-weight: 600; line-height: 1.3; }
-        .carousel-slide .slide-date { font-size: 0.8em; color: var(--text-dark-muted); margin-bottom: 1rem; }
-
-        .carousel-slide .slide-description {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: var(--text-dark-secondary);
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-
-            overflow: hidden; /* Viktig for å skjule tekst utenfor max-height */
-            /* Juster denne max-height nøye basert på ønsket antall linjer og testing */
-            /* Ca. 4 linjer: 0.9rem * 1.6 * 4 = 5.76rem. Rund ned litt for sikkerhets skyld. */
-            max-height: 5.7rem;
-
-            word-wrap: break-word;
-            -webkit-hyphens: auto;
-            -ms-hyphens: auto;
-            hyphens: auto;
-        }
-        .carousel-slide .slide-link { display: inline-block; text-decoration: none; color: var(--primary-accent-dark); font-weight: 600; padding: 8px 15px; border: 1px solid var(--primary-accent-dark); border-radius: 20px; transition: background-color var(--transition-speed), color var(--transition-speed); align-self: flex-start; margin-top: auto; }
-        .carousel-slide .slide-link:hover { background-color: var(--primary-accent-dark); color: var(--bg-light); }
-        .carousel-message-placeholder { width: 100%; display: flex; justify-content: center; align-items: center; padding: 2rem; min-height: 250px; /* font-style: italic; -- fjernet herfra, legges på p taggene inni */ background: var(--bg-light); border: 1px solid var(--card-border-light); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); border-radius: 12px; }
-        .carousel-message-placeholder .loading-message { color: var(--text-dark-muted); font-style: italic; }
-        .carousel-message-placeholder .error-message { color: var(--error-color); font-weight: normal; font-style: normal;}
-        .carousel-button { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(255, 255, 255, 0.85); border: 1px solid var(--card-border-light); color: var(--text-dark-primary); border-radius: 50%; width: 40px; height: 40px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: background-color var(--transition-speed), color var(--transition-speed), box-shadow var(--transition-speed), opacity var(--transition-speed); box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
-        .carousel-button:hover { background-color: var(--primary-accent-dark); color: var(--bg-light); box-shadow: 0 4px 12px rgba(0, 120, 212, 0.25); }
-        .carousel-button:disabled { opacity: 0.3; cursor: not-allowed; background-color: #e0e0e0; color: #9e9e9e; box-shadow: none; }
-        .carousel-button.prev { left: -20px; }
-        .carousel-button.next { right: -20px; }
-        .carousel-dots { text-align: center; margin-top: 1.5rem; }
-        .carousel-dot { display: inline-block; width: 10px; height: 10px; background-color: #ccc; border-radius: 50%; margin: 0 5px; cursor: pointer; transition: background-color var(--transition-speed), transform var(--transition-speed); }
-        .carousel-dot.active { background-color: var(--primary-accent-dark); transform: scale(1.3); }
-
-        /* === NYTT: RSS Feed Lasteanimasjon === */
-        .loading-animation {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 40px; /* Total høyde for animasjonsområdet */
-        }
-        .loading-animation .bar {
-            width: 6px;
-            height: 25px;
-            margin: 0 2px;
-            background-color: var(--primary-accent-dark);
-            border-radius: 3px;
-            animation: loading-bar-wave 1.2s infinite ease-in-out;
-        }
-        .loading-animation .bar:nth-child(1) { animation-delay: 0s; }
-        .loading-animation .bar:nth-child(2) { animation-delay: 0.1s; }
-        .loading-animation .bar:nth-child(3) { animation-delay: 0.2s; }
-        .loading-animation .bar:nth-child(4) { animation-delay: 0.3s; }
-        .loading-animation .bar:nth-child(5) { animation-delay: 0.4s; }
-
-        @keyframes loading-bar-wave {
-            0%, 40%, 100% {
-                transform: scaleY(0.4);
-            }
-            20% {
-                transform: scaleY(1.0);
-            }
-        }
-        /* === SLUTT: RSS Feed Lasteanimasjon === */
-
-
-        @media (max-width: 992px) {
-             header nav { flex-direction: column; align-items: center; height: auto; min-height: var(--header-height); }
-             .logo-link { margin-bottom: 10px; height: auto; } .logo-img { max-height: 40px; }
-             header ul { justify-content: center; margin-top: 0; height: auto; flex-wrap: wrap; }
-             header ul li { margin: 4px 6px; margin-left: 6px; }
-             header ul li a { padding: 8px 12px; font-size: 0.9rem; white-space: normal; }
-             header ul li a::after { bottom: 4px; } header ul li a:hover::after { width: 65%; }
-             .hero h1 { font-size: 3rem; } .hero .typing-container { font-size: 1.2rem; }
-             .section-header h2 { font-size: 2.4rem; }
-             .service-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-             .fabric-updates-carousel-wrapper { padding: 0 10px; }
-             .carousel-slide { padding: 1.25rem; }
-             .carousel-button.prev { left: -10px; } .carousel-button.next { right: -10px; }
-             .carousel-slide .slide-description { max-height: 5.7rem; /* Behold eller juster for 4 linjer */ }
-        }
-	    @media (max-width: 768px) {
-            header { height: auto; min-height: var(--header-height); }
-	        header ul li { margin: 3px 5px; margin-left: 5px; }
-	        header ul li a { padding: 6px 10px; font-size: 0.85rem; }
-	        header ul li a::after { bottom: 3px; } header ul li a:hover::after { width: 60%; }
-	        .hero { min-height: 75vh; padding: 6rem 0 3rem 0; } .hero h1 { font-size: 2.5rem; }
-	        .hero .typing-container { font-size: 1.1rem; }
-	        .cta-button { padding: 12px 30px; font-size: 1rem; }
-	        .section { padding: 4rem 0; } .section-header h2 { font-size: 2rem; }
-	        .section-header p { font-size: 1rem; } #contact-form { padding: 2rem; }
-	        .service-grid { grid-template-columns: 1fr; }
-	        .accordion-title { font-size: 1.1rem; padding: 1.2rem 0.8rem; }
-	        .accordion-content { padding: 0 1rem; font-size: 0.95rem; }
-	        .accordion-content.aktiv { padding: 1rem 1rem 2rem 1rem; }
-	        #paper { width: 90%; max-width: 280px; height: auto; min-height: 350px; }
-	        #thank-you-message { font-size: 1.2rem; }
-            .microsoft-calc-button { font-size: 0.95rem; padding: 12px 25px; white-space: normal; text-align: center; gap: 0.6em; }
-            .microsoft-calc-button .ms-logo { width: 1.2em; height: 1.2em; }
-            .resource-section .section-header h2 { font-size: 1.8rem; }
-            .resource-section .section-header p { font-size: 0.95rem; }
-            .resource-section { padding: 2.5rem 0 0.5rem 0; } .logo-img { max-height: 35px; }
-            .fabric-updates-carousel-wrapper h3 { font-size: 1.6rem; }
-            .carousel-slide { padding: 1rem; } .carousel-slide h4 { font-size: 1.1rem; }
-            .carousel-slide .slide-description { font-size: 0.85rem; max-height: calc(0.85rem * 1.6 * 4); /* Ca. 4 linjer for mindre font */ }
-            .carousel-button { width: 35px; height: 35px; font-size: 1rem; }
-            .carousel-button.prev { left: 5px; } .carousel-button.next { right: 5px; }
-            .carousel-track { min-height: 340px; }
-	    }
-        @media (max-width: 480px) {
-            header ul li a { padding: 6px 8px; font-size: 0.8rem; }
-            .hero h1 { font-size: 2rem; } .section-header h2 { font-size: 1.8rem; }
-            .footer-links img { width: 24px; height: 24px;} .footer-links a { margin: 0 8px;}
-            #paper { max-width: 240px; min-height: 300px; padding: 15px; }
-            #paper-content { font-size: 0.8rem;} #thank-you-message { font-size: 1.1rem; }
-            .microsoft-calc-button { font-size: 0.9rem; padding: 10px 20px; gap: 0.5em; }
-            .microsoft-calc-button .ms-logo { width: 1.1em; height: 1.1em; }
-            .resource-section .section-header h2 { font-size: 1.6rem; }
-            .resource-section .section-header p { font-size: 0.9rem; }
-            .resource-section { padding: 2rem 0 0.5rem 0; }
-            .fabric-updates-carousel-wrapper { padding: 0 5px; }
-            .fabric-updates-carousel-wrapper h3 { font-size: 1.5rem; }
-            .carousel-slide { padding: 0.8rem; } .carousel-slide h4 { font-size: 1rem; margin-bottom: 0.5rem; }
-            .carousel-slide .slide-date { margin-bottom: 0.75rem; }
-            .carousel-slide .slide-description { font-size: 0.8rem; line-height: 1.5; margin-bottom: 1rem; max-height: calc(0.8rem * 1.5 * 4); /* Ca. 4 linjer */ }
-            .carousel-slide .slide-link { padding: 6px 12px; font-size: 0.9rem;}
-            .carousel-dots { margin-top: 1rem; }
-            .carousel-dot { width: 8px; height: 8px; margin: 0 4px; }
-            .carousel-button.prev { left: 2px; } .carousel-button.next { right: 2px; }
-            .carousel-track { min-height: 350px; }
-        }
-        @media (min-width: 1800px) {
-            header ul { flex-wrap: nowrap; }
-            header ul li { margin-top: 0; margin-bottom: 0; margin-left: 20px; }
-        }
-    </style>
+  <!-- JSON-LD: forteller Google at du er en lokal bedrift i Oslo.
+       Bytt URL, telefon og adresseopplysninger om noe endrer seg. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "TrendMe",
+    "description": "Dronefilm og enkle nettsider for små bedrifter og lokale prosjekter i Oslo og omegn.",
+    "url": "https://trendme.no/",
+    "telephone": "+4797007745",
+    "image": "https://trendme.no/assets/portrait.jpg",
+    "areaServed": {
+      "@type": "Place",
+      "name": "Oslo og omegn"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Oslo",
+      "addressCountry": "NO"
+    },
+    "priceRange": "$$",
+    "sameAs": []
+  }
+  </script>
 </head>
 <body>
-    <header id="main-header">
-        <nav class="container">
-            <a href="#hjem" class="logo-link">
-                <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189579/SVG_yqf4t8.svg" alt="TrendMe Logo" class="logo-img">
-            </a>
-            <ul>
-                <li><a href="#hjem">Hjem</a></li>
-                <li><a href="#om-oss">Om Oss</a></li>
-		<li><a href="#hvorfor-moderne-data">Dataanalyse</a></li>
-                <li><a href="#fabric-tjenester">Fabric</a></li>
-                <li><a href="#powerbi-tjenester">Power BI</a></li>
-                <li><a href="#ressurser">Ressurser</a></li>
-                <li><a href="#kontakt">Kontakt</a></li>
-                <li><a href="/blogg">Blogg</a></li>
-                <li><a href="/faktura">Faktura</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <!-- Hero Seksjon -->
-        <section id="hjem" class="hero">
-            <div class="container">
-                <h1 class="fade-in">Naviger Fremtiden med Riktig Teknologi</h1>
-                <div class="typing-container fade-in" style="animation-delay: 0.5s;">
-                    <span id="typing-text"></span><span class="typing-cursor"></span>
-                </div>
-                <div class="hero-cta-container">
-                    <a href="#kontakt" class="cta-button fade-in" style="animation-delay: 1s;">Be om en Uforpliktende Konsultasjon</a>
-                </div>
-            </div>
-        </section>
+  <!-- ============================================================
+       NAVIGASJON
+       Logo: assets/logo.svg
+       ============================================================ -->
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="#top" class="nav__logo" aria-label="TrendMe, til toppen">
+        <img src="assets/logo.svg" alt="TrendMe" height="34" />
+      </a>
 
-       <!-- Hvorfor Moderne Dataanalyse Seksjon (nå "Dataanalyse") -->
-        <section id="dataanalyse" class="section">
-             <div class="container">
-                 <div class="section-header fade-in">
-                     <span>Forenkler Data</span>
-                     <h2>Effektiv Dataanalyse</h2>
-                     <p>Tradisjonell dataanalyse kan fort bli komplisert. Vi hjelper deg med å ta i bruk moderne plattformer som <strong class="fabric-highlight">Microsoft Fabric</strong> – en komplett plattform som samler alt fra dataintegrasjon til innsikt på ett sted.</p>
-                     <p style="margin-top: 1rem;">Målet er å gjøre dataarbeidet enklere og mer verdifullt for din virksomhet.</p>
-                 </div>
-             </div>
-         </section>
+      <nav class="nav__links" aria-label="Hovedmeny">
+        <a href="#tjenester">Tjenester</a>
+        <a href="#eksempel">Eksempel</a>
+        <a href="#for-hvem">For hvem</a>
+        <a href="#prosess">Prosess</a>
+        <a href="#om">Om meg</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
 
-		
-        <!-- Om Fabric Seksjon -->
-        <section id="om-fabric" class="section services-bg">
-             <div class="container">
-                 <div class="section-header fade-in">
-                     <span>Dypdykk Teknologi</span>
-                     <h2>Historien Bak Microsoft Fabric</h2>
-                     <p>Som en del av vår ekspertise innen dataanalyse, har vi inngående kjennskap til ledende plattformer som Microsoft Fabric. Her kan du lære mer om bakgrunnen for Fabric, problemene det løser, og hvorfor det representerer en viktig trend innen dataanalyse.</p>
-                 </div>
-                 <div class="accordion-list fade-in" style="transition-delay: 0.3s;">
-                    <!-- NYTT VIDEO ACCORDION ITEM START -->
-                    <div class="accordion-item">
-                        <button class="accordion-title">
-                            <span class="tittel-tekst">Hva er Microsoft Fabric? (Videooversikt)</span>
-                            <span class="ikon">+</span>
-                        </button>
-                        <div class="accordion-content">
-                            <p>Se Microsofts introduksjonsvideo for å få en rask oversikt over hva Microsoft Fabric er og hvilke muligheter plattformen tilbyr:</p>
-                            <div style="position: relative; padding-bottom: 56.25%; /* 16:9 aspect ratio */ height: 0; overflow: hidden; max-width: 100%; margin-top: 1rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                                <iframe
-                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;"
-                                    src="https://www.youtube.com/embed/X_c7gLfJz_Q"
-                                    title="Microsoft Fabric: Satya Nadella at Microsoft Build 2023"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerpolicy="strict-origin-when-cross-origin"
-                                    allowfullscreen>
-                                </iframe>
-                            </div>
-                            <p style="margin-top: 1rem;">Denne videoen gir et godt innblikk i Fabric's kjernekomponenter og hvordan de samles for å skape en enhetlig dataanalyseplattform.</p>
-                        </div>
-                    </div>
-                    <!-- NYTT VIDEO ACCORDION ITEM SLUTT -->
-                    <div class="accordion-item">
-                         <button class="accordion-title">
-                             <span class="tittel-tekst">Utfordringen Fabric Løser: Kompleksitet og Datasiloer</span>
-                             <span class="ikon">+</span>
-                         </button>
-                         <div class="accordion-content">
-                             <p>Før Microsoft Fabric sto mange bedrifter overfor et fragmentert dataøkosystem. De måtte sette sammen og administrere separate tjenester som:</p>
-                             <ul>
-                                 <li>Azure Data Factory for ETL/ELT</li>
-                                 <li>Azure Synapse Analytics for datavarehus og analyse</li>
-                                 <li>Azure Databricks for avansert analyse og datavitenskap</li>
-                                 <li>Azure Data Explorer for sanntidsanalyse</li>
-                                 <li>Power BI for visualisering og rapportering</li>
-                                 <li>Azure Data Lake Storage for lagring</li>
-                             </ul>
-                             <p>Dette førte ofte til <strong>datasiloer</strong>, duplisering av data, komplekse <strong>integrasjonsutfordringer</strong>, høye administrasjonskostnader og tregere "time-to-insight". Ulike team (data engineers, data scientists, BI-analytikere) jobbet ofte med ulike verktøy og kopier av data, noe som hindret effektivt samarbeid og governance.</p>
-                             <h4>Nøkkelutfordringer før Fabric:</h4>
-                             <ul>
-                                 <li>Fragmentert verktøylandskap</li>
-                                 <li>Høy integrasjonskompleksitet</li>
-                                 <li>Datasiloer og duplisering</li>
-                                 <li>Utfordringer med data governance og sikkerhet</li>
-                             </ul>
-                         </div>
-                     </div>
-                     <div class="accordion-item">
-                         <button class="accordion-title">
-                              <span class="tittel-tekst">Evolusjonen: Hvordan Microsoft Fabric Ble Til</span>
-                              <span class="ikon">+</span>
-                         </button>
-                         <div class="accordion-content">
-                             <p>Microsoft Fabric er ikke bygget fra bunnen av, men representerer en <strong>evolusjon og sammenslåing</strong> av Microsofts velprøvde og markedsledende datateknologier. Visjonen var å skape én enkelt, enhetlig analyseplattform levert som Software-as-a-Service (SaaS).</p>
-                             <p>Plattformen tar de beste egenskapene fra <strong>Azure Synapse Analytics</strong>, <strong>Azure Data Factory</strong>, og <strong>Power BI</strong>, og integrerer dem sømløst med nye innovasjoner.</p>
-                             <h4>Viktige Byggeklosser og Inspirasjon:</h4>
-                             <ul>
-                                 <li><strong>Power BI's SaaS-modell:</strong> Suksessen med Power BI som en brukervennlig, skalerbar SaaS-tjeneste la grunnlaget.</li>
-                                 <li><strong>Synapse Analytics' motorer:</strong> De kraftige SQL- og Spark-motorene fra Synapse ble integrert.</li>
-                                 <li><strong>Data Factory's integrasjonsevner:</strong> De robuste dataflyt- og pipeline-mulighetene ble modernisert og inkludert.</li>
-                                 <li><strong>Azure Data Lake Storage Gen2:</strong> Fundamentet for den åpne og skalerbare lagringen.</li>
-                             </ul>
-                             <p>Målet var å forenkle hele dataanalyseprosessen, fra dataintegrasjon til business intelligence, på en plattform som er enkel å administrere, bruke og skalere for alle data-roller i en bedrift.</p>
-                         </div>
-                     </div>
-                     <div class="accordion-item">
-                         <button class="accordion-title">
-                              <span class="tittel-tekst">Kjernekonseptene: Hva Gjør Fabric Unikt?</span>
-                              <span class="ikon">+</span>
-                         </button>
-                         <div class="accordion-content">
-                             <p>Microsoft Fabric introduserer flere nøkkelkonsepter som skiller det fra tidligere løsninger:</p>
-                              <ul>
-                                 <li><strong>OneLake:</strong> Ofte kalt "OneDrive for data". OneLake er en enkelt, enhetlig, logisk datasjø for hele organisasjonen, bygget på ADLS Gen2. Den eliminerer datasiloer ved å lagre data én gang og muliggjøre enkel deling og gjenbruk på tvers av ulike analysemotorer (Spark, SQL, KQL) og verktøy (Pipelines, Notebooks, Power BI) uten å flytte eller duplisere data. Bruker åpne formater som <strong>Delta Lake / Parquet</strong>.</li>
-                                 <li><strong>Unified SaaS Platform:</strong> Alle komponentene (Data Factory, Synapse Engineering/Warehouse/Real-Time Analytics, Data Activator, Power BI) er integrert i én enkelt brukeropplevelse og administrasjonsportal.</li>
-                                 <li><strong>Universal Compute Capacities:</strong> En forenklet modell der du kjøper én pool med regnekraft (Fabric Capacity) som deles på tvers av alle Fabric-workloads. Dette forenkler kostnadsstyring og ressursallokering.</li>
-                                 <li><strong>DirectLake Mode for Power BI:</strong> En banebrytende modus som lar Power BI analysere Delta-tabeller direkte i OneLake med ytelse som tidligere krevde import, uten å kopiere data. Dette gir rask innsikt på ferske data.</li>
-                                 <li><strong>Sentralisert Governance og Sikkerhet:</strong> Administreres gjennom Fabric-portalen og Microsoft Purview, noe som gir bedre kontroll og oversikt.</li>
-                                 <li><strong>AI-integrasjon (Copilot):</strong> Dyp integrasjon av AI-assistenter for å øke produktiviteten for alle roller.</li>
-                              </ul>
-                              <p>Disse konseptene jobber sammen for å levere en mer effektiv, kostnadsoptimalisert og brukervennlig plattform for ende-til-ende dataanalyse og business intelligence i skyen.</p>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-         </section>
+      <a href="#kontakt" class="btn btn--primary nav__cta">Ta kontakt</a>
 
-         <!-- Fabric Tjenester Seksjon -->
-         <section id="fabric-tjenester" class="section">
-             <div class="container">
-                  <div class="section-header fade-in">
-                     <span>Spesialiserte Tjenester</span>
-                     <h2>Våre Microsoft Fabric Tjenester</h2>
-                     <p>For virksomheter som velger å satse på Microsoft Fabric, tilbyr TrendMe dyptgående rådgivning og implementeringstjenester for å sikre maksimal verdiutnyttelse.</p>
-                 </div>
-                 <div class="service-grid">
-                    <div class="service-card fade-in slide-left" style="transition-delay: 0.2s;">
-                          <div class="service-icon-container">
-                              <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189619/lakehouse_put05u.png" alt="Microsoft Fabric Lakehouse ikon" class="service-icon">
-                          </div>
-                         <h3>Fabric Strategi & Arkitektur</h3>
-                         <ul>
-                             <li>Utvikling av skreddersydd Fabric-strategi og veikart</li>
-                             <li>Design og implementering av optimalisert OneLake- og Lakehouse-arkitektur (Medallion)</li>
-                             <li>Datamodellering for Delta Lake / Parquet</li>
-                             <li>Effektiv bruk av Shortcuts for datadeling</li>
-                              <li>Etablering av robust sikkerhets- og governance-modell i Fabric</li>
-                         </ul>
-                     </div>
-                     <div class="service-card fade-in" style="transition-delay: 0.4s;">
-                          <div class="service-icon-container">
-                              <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189635/data_factory_nv6wje.png" alt="Microsoft Fabric Data Factory ikon" class="service-icon">
-                          </div>
-                         <h3>Data Engineering & Migrering til Fabric</h3>
-                         <ul>
-                             <li>Effektiv dataintegrasjon med Data Factory Pipelines & Dataflows Gen2</li>
-                             <li>Utvikling og optimalisering av Spark Notebooks (PySpark, SQL)</li>
-                             <li>Implementering av skalerbart Data Warehouse i Fabric</li>
-                              <li>Orkestrering, overvåkning og feilhåndtering</li>
-                         </ul>
-                     </div>
-                     <div class="service-card fade-in slide-right" style="transition-delay: 0.6s;">
-                          <div class="service-icon-container">
-                              <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189644/real_time_analytics_misdlc.png" alt="Microsoft Fabric Real-time Analytics ikon" class="service-icon">
-                          </div>
-                         <h3>Sanntidsanalyse & AI i Fabric</h3>
-                         <ul>
-                              <li>Implementering av Eventstreams for sanntids datastrømmer</li>
-                             <li>Analyse av strømmedata med KQL (Kusto Query Language)</li>
-                             <li>Automatisering av handlinger med Data Activator</li>
-                             <li>Integrasjon med Azure AI & Machine Learning tjenester</li>
-                             <li>Strategisk utnyttelse av Copilot i Fabric</li>
-                         </ul>
-                     </div>
-                 </div>
-             </div>
-         </section>
+      <button class="nav__toggle" id="navToggle" aria-label="Åpne meny" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
 
-         <!-- Power BI Tjenester Seksjon -->
-          <section id="powerbi-tjenester" class="section services-bg">
-              <div class="container">
-                   <div class="section-header fade-in">
-                      <span>Spesialiserte Tjenester</span>
-                      <h2>Power BI Tjenester & Optimalisering</h2>
-                      <p>Som en sentral del av vår dataanalyse-ekspertise, leverer vi kvalitetssikre Power BI-løsninger – enten frittstående eller sømløst integrert med plattformer som Microsoft Fabric, inkludert bruk av DirectLake for rask innsikt.</p>
-                  </div>
-                   <div class="service-grid">
-                      <div class="service-card fade-in slide-left" style="transition-delay: 0.2s;">
-                          <div class="service-icon-container">
-                               <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189652/powerbi_logo_s9snvf.png" alt="Power BI rapport og dashboard ikon" class="service-icon pbi-logo">
-                           </div>
-                          <h3>Power BI Rapportering & Dashboard Design</h3>
-                          <ul>
-                              <li>Design av engasjerende og intuitive Power BI rapporter</li>
-                              <li>Utvikling av innsiktsdrevne, interaktive dashboards</li>
-                              <li>Optimalisering av ytelse med DirectLake modus mot Fabric OneLake</li>
-                               <li>Beste praksis for visualisering og brukeropplevelse</li>
-                              <li>Utvikling av mobilvennlige Power BI rapporter</li>
-                          </ul>
-                      </div>
-                      <div class="service-card fade-in" style="transition-delay: 0.4s;">
-                          <div class="service-icon-container">
-                               <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189662/powerbi_datamodellering_khn6sc.png" alt="Power BI datamodellering og DAX ikon" class="service-icon">
-                           </div>
-                          <h3>Datamodellering & DAX Optimalisering</h3>
-                          <ul>
-                              <li>Bygging av robuste og skalerbare Power BI datamodeller (Stjerneskjema/Snowflake)</li>
-                              <li>Utvikling og feilsøking av avanserte DAX-beregninger</li>
-                              <li>Optimalisering av datamodeller for DirectLake og import-modus</li>
-                              <li>Implementering av Row-Level Security (RLS) for datasikkerhet</li>
-                              <li>Anvendelse av beste praksis for Power BI utvikling</li>
-                          </ul>
-                      </div>
-                       <div class="service-card fade-in slide-right" style="transition-delay: 0.6s;">
-                          <div class="service-icon-container">
-                               <img src="https://res.cloudinary.com/dm2movu5v/image/upload/f_auto,q_auto/v1746189707/powerbi_governence_gcgm2o.png" alt="Power BI administrasjon og governance ikon" class="service-icon">
-                           </div>
-                          <h3>Power BI Governance</h3>
-                          <ul>
-                              <li>Etablering av Power BI Governance rammeverk</li>
-                              <li>Administrasjon av Fabric/Power BI kapasiteter og lisenser</li>
-                              <li>Implementering av datasett-sertifisering og delingsstrategier</li>
-                              <li>Leveranse av brukerstøtte og veiledning</li>
-                          </ul>
-                      </div>
-                   </div>
-              </div>
-          </section>
-
-         <!-- Ressurser Seksjon (Inkluderer nå Fabric Updates Carousel) -->
-         <section id="ressurser" class="resource-section section">
-             <div class="container">
-                  <div class="section-header fade-in">
-                      <span>Nyttige Ressurser</span>
-                      <h2>Verktøy og Oppdateringer</h2>
-                      <p>Bruk Microsofts offisielle verktøy for å estimere ditt kapasitetsbehov, og hold deg oppdatert på det siste fra Fabric-teamet.</p>
-                  </div>
-                 <a href="https://www.microsoft.com/en-us/microsoft-fabric/capacity-estimator"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="microsoft-calc-button fade-in"
-                    style="transition-delay: 0.2s;">
-                     <svg class="ms-logo" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                         <path fill="#f25022" d="M1 1h9v9H1z"></path>
-                         <path fill="#00a4ef" d="M1 11h9v9H1z"></path>
-                         <path fill="#7fba00" d="M11 1h9v9h-9z"></path>
-                         <path fill="#ffb900" d="M11 11h9v9h-9z"></path>
-                     </svg>
-                     <span>Microsoft Fabric Capacity Estimator</span>
-                 </a>
-                 <p style="margin-top: 1.5rem; color: var(--text-dark-muted); font-size: 0.9rem;" class="fade-in" style="transition-delay: 0.3s;">
-                     Åpner Microsofts offisielle verktøy i en ny fane.
-                 </p>
-
-                 <!-- === Siste Fabric Nyheter Karusell === -->
-                 <div id="fabric-updates-carousel-wrapper" class="fabric-updates-carousel-wrapper fade-in" style="transition-delay: 0.4s;">
-                     <h3 style="font-size: 1.8rem; color: var(--text-dark-primary); margin-bottom: 1.5rem; text-align: center;">
-                        Siste Oppdateringer om Microsoft Fabric
-                     </h3>
-                     <div class="carousel-container">
-                         <div class="carousel-viewport">
-                             <div class="carousel-track">
-                                 <div class="carousel-message-placeholder">
-                                     <!-- Innhold settes av JavaScript -->
-                                 </div>
-                             </div>
-                         </div>
-                         <button class="carousel-button prev" aria-label="Forrige nyhet" disabled><i class="fas fa-chevron-left"></i></button>
-                         <button class="carousel-button next" aria-label="Neste nyhet" disabled><i class="fas fa-chevron-right"></i></button>
-                         <div class="carousel-dots">
-                         </div>
-                     </div>
-                 </div>
-                 <!-- === SLUTT Siste Fabric Nyheter Karusell === -->
-
-             </div>
-         </section>
-
-        <!-- Kontakt Seksjon -->
-        <section id="kontakt" class="section">
-            <div class="container">
-                 <div class="section-header fade-in">
-                     <span>Ta Neste Steg</span>
-                    <h2>Ta kontakt for en uforpliktende prat</h2>
-                    <p>Fyll ut skjemaet for en uforpliktende samtale om hvordan vi kan hjelpe din bedrift med dataanalyse, AI, sky, Microsoft Fabric, Power BI eller andre teknologiske løsninger.</p>
-                </div>
-                <form id="contact-form" class="fade-in" style="transition-delay: 0.3s;">
-                    <div class="form-group">
-                        <label for="name">Navn:</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">E-post:</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Bedrift:</label>
-                        <input type="text" id="company" name="company" placeholder="Skriv for å søke..." autocomplete="off">
-                        <div id="company-suggestions-list" class="suggestions-container"><ul></ul></div>
-                        <small style="color: var(--text-dark-muted); display: block; margin-top: 5px;">Begynn å skrive for å søke etter bedrifter.</small>
-                    </div>
-                     <div class="form-group">
-                        <label for="phone">Telefon (valgfritt):</label>
-                        <input type="tel" id="phone" name="phone">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Hva kan vi hjelpe deg med?</label>
-                        <textarea id="message" name="message" rows="6" required placeholder="F.eks. behov for teknologistrategi, AI-muligheter, Fabric-vurdering, Power BI-optimalisering..."></textarea>
-                    </div>
-                    <button type="submit" class="cta-button">Send Forespørsel om Konsultasjon</button>
-                    <p id="form-error-message"></p>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>© <span id="year"></span> TrendMe. Alle rettigheter reservert.</p>
-            <p>Rådgivning og implementering av moderne teknologi.</p>
-		    <p>Org.nr.: 935 389 763</p>
-            <div class="footer-links">
-             </div>
-        </div>
-    </footer>
-
-    <div id="animation-container">
-        <div id="paper"><pre id="paper-content"></pre></div>
-        <div id="thank-you-message">Tusen takk! Vi tar kontakt snarest.</div>
+  <!-- ============================================================
+       HERO, Vimeo bakgrunnsvideo
+       Bytt video-ID i URL-en hvis du vil bruke en annen Vimeo-film.
+       Bruk ?background=1 for å skjule alle kontroller og auto-loope.
+       Lokalt fallback ligger i assets/hero-video.mp4.
+       ============================================================ -->
+  <section class="hero" id="top">
+    <div class="hero__media">
+      <div class="hero__video-wrap">
+        <iframe
+          class="hero__video"
+          src="https://player.vimeo.com/video/1188618070?background=1&autoplay=1&loop=1&muted=1&autopause=0&dnt=1"
+          frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          title="TrendMe drone reel"></iframe>
+      </div>
+      <div class="hero__overlay" aria-hidden="true"></div>
+      <div class="hero__grain" aria-hidden="true"></div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- Intersection Observer ---
-            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.1 };
-            const observerCallback = (entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        // For de spesifikke seksjonene vil .visible på .section-header
-                        // trigge CSS-animasjonene vi har definert for barn-elementene.
-                        // Den generelle .fade-in for hele blokken er fortsatt der, men
-                        // CSS-en for barna vil ta over med sine egne opasitets- og transformasjons-overganger.
-                        obs.unobserve(entry.target);
-                    }
-                });
-            };
-            const intersectionObserver = new IntersectionObserver(observerCallback, observerOptions);
-            const elementsToAnimate = document.querySelectorAll('.fade-in, .slide-up, .slide-left, .slide-right');
-            elementsToAnimate.forEach(el => {
-                 if (el.classList.contains('slide-up') || el.classList.contains('slide-left') || el.classList.contains('slide-right')) {
-                    if (!el.classList.contains('fade-in')) { el.classList.add('fade-in'); }
-                 }
-                intersectionObserver.observe(el);
-            });
+    <div class="container hero__content">
+      <p class="eyebrow reveal">Dronefilm og nettsider</p>
+      <h1 class="hero__title reveal">
+        Filming fra luften,<br />
+        <span class="hero__title-accent">og en nettside som passer til.</span>
+      </h1>
+      <p class="hero__lede reveal">
+        Jeg hjelper små bedrifter og lokale prosjekter med dronefilm og enkle nettsider.
+        Ta kontakt hvis du vil høre hva som er mulig.
+      </p>
+      <div class="hero__cta reveal">
+        <a href="#kontakt" class="btn btn--primary btn--lg">Ta kontakt</a>
+        <a href="tel:97007745" class="btn btn--ghost btn--lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          970 07 745
+        </a>
+      </div>
 
-            // --- Smooth scrolling ---
-            const navLinks = document.querySelectorAll('header nav a[href^="#"]');
-            const header = document.getElementById('main-header');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    let targetId = this.getAttribute('href');
-                    if (targetId && targetId.startsWith('#') && targetId.length > 1) {
-                        e.preventDefault();
-                        try {
-                            let targetElement = document.querySelector(targetId);
-                            if (targetElement) {
-                                const headerOffset = header ? header.offsetHeight : 0;
-                                const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                                const stickyHeaderOffset = (window.getComputedStyle(header).position === 'sticky' && header.getBoundingClientRect().top <= 0) ? headerOffset : 0;
-                                const offsetPosition = elementPosition - stickyHeaderOffset - 20;
-                                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-                            }
-                        } catch (error) { console.error(`Error finding element for smooth scroll: ${targetId}`, error); }
-                    } else if (targetId === '#hjem') {
-                        e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }
-                });
-            });
+      <div class="hero__meta reveal">
+        <span><span class="dot"></span> Oslo og omegn</span>
+        <span><span class="dot"></span> Lovlig droneflyging og forsikret</span>
+      </div>
+    </div>
 
-            // --- Skrivemaskineffekt ---
-            const typingTextElement = document.getElementById('typing-text');
-            if (typingTextElement) {
-                const textToType = "Følger trender. Implementerer løsninger. Skaper verdi. Fra Data & AI til Sky.";
-                let charIndex = 0;
-                function typeChar() {
-                    if (charIndex < textToType.length) {
-                        if (charIndex === 0) typingTextElement.textContent = '';
-                        typingTextElement.textContent += textToType.charAt(charIndex);
-                        charIndex++;
-                        setTimeout(typeChar, 60);
-                    }
-                }
-                setTimeout(typeChar, 1800);
-            }
+  </section>
 
-            // --- Accordion Logikk ---
-            const accordionTitles = document.querySelectorAll('.accordion-title');
-            accordionTitles.forEach(title => {
-                title.addEventListener('click', function() {
-                    const parentItem = this.closest('.accordion-item');
-                    if (!parentItem) return;
-                    const content = parentItem.querySelector('.accordion-content');
-                    const icon = this.querySelector('.ikon');
-                    const isAlreadyActive = this.classList.contains('aktiv');
-                    const parentList = this.closest('.accordion-list');
-                    if (parentList) {
-                        parentList.querySelectorAll('.accordion-item').forEach(otherItem => {
-                            const otherTitle = otherItem.querySelector('.accordion-title');
-                            const otherContent = otherItem.querySelector('.accordion-content');
-                            if (otherTitle !== this && otherTitle.classList.contains('aktiv')) {
-                                otherTitle.classList.remove('aktiv');
-                                if (otherContent) { otherContent.style.maxHeight = null; otherContent.classList.remove('aktiv'); }
-                                const otherIcon = otherTitle.querySelector('.ikon');
-                                if (otherIcon) otherIcon.textContent = '+';
-                            }
-                        });
-                    }
-                    if (isAlreadyActive) {
-                        this.classList.remove('aktiv');
-                        if (content) { content.style.maxHeight = null; content.classList.remove('aktiv'); }
-                        if (icon) icon.textContent = '+';
-                    } else {
-                        this.classList.add('aktiv');
-                        if (content) {
-                            content.classList.add('aktiv');
-                            requestAnimationFrame(() => { content.style.maxHeight = content.scrollHeight + "px"; });
-                        }
-                        if (icon) icon.textContent = '−';
-                    }
-                });
-            });
+  <!-- ============================================================
+       INTRO
+       ============================================================ -->
+  <section class="section intro" id="intro">
+    <div class="container intro__grid">
+      <div class="intro__left reveal">
+        <p class="eyebrow">Kort fortalt</p>
+        <h2 class="h2">
+          Én person tar prosjektet hele veien, fra droneflyging til ferdig nettside.
+        </h2>
+      </div>
+      <div class="intro__right reveal">
+        <p>
+          Mange små bedrifter trenger to ting samtidig, gode bilder av det de gjør og et sted å vise det fram.
+          Det er det jeg kan hjelpe med.
+        </p>
+        <p>
+          Du slipper å koordinere fotograf, redigerer og webdesigner. Du snakker med meg, vi blir enige om hva som trengs, og du får det levert.
+        </p>
+      </div>
+    </div>
+  </section>
 
-            // --- Footer årstall ---
-            const yearSpan = document.getElementById('year');
-            if (yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+  <!-- ============================================================
+       TJENESTER / PAKKER
+       Endre tekst, navn eller punkter i kortene under.
+       ============================================================ -->
+  <section class="section services" id="tjenester">
+    <div class="container">
+      <header class="section__head reveal">
+        <p class="eyebrow">Tjenester</p>
+        <h2 class="h2">Tre måter å starte på.</h2>
+        <p class="section__sub">Pakkene under er bare utgangspunkter. Vi tilpasser etter hva du faktisk trenger.</p>
+      </header>
 
-            // === Bedriftssøk (Brreg) ===
-            function debounce(func, wait) {
-                let timeout;
-                return function executedFunction(...args) {
-                    const later = () => { clearTimeout(timeout); func(...args); };
-                    clearTimeout(timeout); timeout = setTimeout(later, wait);
-                };
-            }
-            const contactCompanyInput = document.getElementById('company');
-            const companySuggestionsContainer = document.getElementById('company-suggestions-list');
-            const companySuggestionsUl = companySuggestionsContainer?.querySelector('ul');
-            const MIN_SEARCH_LENGTH = 3;
-            const DEBOUNCE_DELAY = 350;
-            if (contactCompanyInput && companySuggestionsContainer && companySuggestionsUl) {
-                async function searchContactCompanyByName(searchTerm) {
-                    const trimmedSearch = searchTerm.trim();
-                    if (trimmedSearch.length < MIN_SEARCH_LENGTH) {
-                        companySuggestionsUl.innerHTML = ''; companySuggestionsContainer.style.display = 'none'; return;
-                    }
-                    companySuggestionsUl.innerHTML = '<li class="no-results">Søker...</li>'; companySuggestionsContainer.style.display = 'block';
-                    const apiUrl = `https://data.brreg.no/enhetsregisteret/api/enheter?navn=${encodeURIComponent(trimmedSearch)}&size=10`;
-                    try {
-                        const response = await fetch(apiUrl);
-                        companySuggestionsUl.innerHTML = '';
-                        if (response.ok) {
-                            const data = await response.json(); const units = data._embedded?.enheter;
-                            if (units && units.length > 0) {
-                                units.forEach(unit => {
-                                    if (!unit.navn) return; const li = document.createElement('li'); li.textContent = unit.navn;
-                                    li.addEventListener('click', () => {
-                                        contactCompanyInput.value = unit.navn; companySuggestionsContainer.style.display = 'none'; companySuggestionsUl.innerHTML = ''; contactCompanyInput.classList.remove('error');
-                                    });
-                                    companySuggestionsUl.appendChild(li);
-                                });
-                            } else { companySuggestionsUl.innerHTML = '<li class="no-results">Ingen treff funnet.</li>'; }
-                        } else { companySuggestionsUl.innerHTML = '<li class="no-results">Feil ved søk.</li>'; }
-                    } catch (error) { companySuggestionsUl.innerHTML = '<li class="no-results">Nettverksfeil.</li>'; }
-                    if (companySuggestionsUl.childNodes.length > 0 && companySuggestionsUl.firstElementChild?.textContent !== 'Ingen treff funnet.' && companySuggestionsUl.firstElementChild?.textContent !== 'Feil ved søk.' && companySuggestionsUl.firstElementChild?.textContent !== 'Nettverksfeil.') {
-                        companySuggestionsContainer.style.display = 'block';
-                    } else if(companySuggestionsUl.childNodes.length === 0) {
-                        companySuggestionsContainer.style.display = 'none';
-                    }
-                }
-                const debouncedContactNameSearch = debounce(searchContactCompanyByName, DEBOUNCE_DELAY);
-                contactCompanyInput.addEventListener('input', (event) => { debouncedContactNameSearch(event.target.value); });
-                contactCompanyInput.addEventListener('blur', () => { setTimeout(() => { if (companySuggestionsContainer) { companySuggestionsContainer.style.display = 'none'; } }, 150); });
-                companySuggestionsContainer.addEventListener('mousedown', (event) => { event.preventDefault(); });
-            }
+      <div class="services__grid">
 
-            // === Kontaktskjema Animasjon & Formspree Submit ===
-            const contactForm = document.getElementById('contact-form');
-            const animationContainer = document.getElementById('animation-container');
-            const paper = document.getElementById('paper');
-            const paperContent = document.getElementById('paper-content');
-            const thankYouMessage = document.getElementById('thank-you-message');
-            const nameInput = document.getElementById('name');
-            const emailInput = document.getElementById('email');
-            const messageInput = document.getElementById('message');
-            const phoneInput = document.getElementById('phone');
-            const submitButton = contactForm?.querySelector('button[type="submit"]');
-            const formErrorMessage = document.getElementById('form-error-message');
-            if (contactForm && animationContainer && paper && paperContent && thankYouMessage && nameInput && emailInput && messageInput && contactCompanyInput && phoneInput && submitButton && formErrorMessage) {
-                async function handleSubmit(event) {
-                    event.preventDefault();
-                    const originalButtonText = submitButton.textContent; submitButton.disabled = true; submitButton.textContent = 'Sender...'; formErrorMessage.style.display = 'none';
-                    const formData = new FormData(contactForm); const formSpreeEndpoint = 'https://formspree.io/f/xyzenqnp';
-                    try {
-                        const response = await fetch(formSpreeEndpoint, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
-                        if (response.ok) {
-                            const formDataText = `Fra: ${nameInput.value}\nE-post: ${emailInput.value}\n` + (contactCompanyInput.value ? `Bedrift: ${contactCompanyInput.value}\n` : '') + (phoneInput.value ? `Telefon: ${phoneInput.value}\n` : '') + `\nMelding:\n--------------------------\n${messageInput.value}`;
-                            paperContent.textContent = formDataText; animationContainer.style.display = 'flex';
-                            setTimeout(() => { paper.style.opacity = '1'; paper.style.transform = 'scale(1)'; }, 100);
-                            setTimeout(() => { thankYouMessage.style.display = 'block'; thankYouMessage.offsetHeight; thankYouMessage.style.opacity = '1'; }, 800);
-                            setTimeout(() => { paper.classList.add('flying'); }, 2500);
-                        } else {
-                            const responseData = await response.json(); let errorMessageText = 'Kunne ikke sende meldingen.';
-                            if (responseData && responseData.errors && responseData.errors.length > 0) { errorMessageText = responseData.errors.map(error => error.message).join(', '); } else if (response.status === 422) { errorMessageText = 'Vennligst sjekk at alle feltene er korrekt utfylt.'; }
-                            formErrorMessage.textContent = errorMessageText; formErrorMessage.style.display = 'block';
-                            submitButton.disabled = false; submitButton.textContent = originalButtonText;
-                        }
-                    } catch (error) {
-                        formErrorMessage.textContent = 'En nettverksfeil oppstod. Prøv igjen.'; formErrorMessage.style.display = 'block';
-                        submitButton.disabled = false; submitButton.textContent = originalButtonText;
-                    }
-                }
-                contactForm.addEventListener('submit', handleSubmit);
-                paper.addEventListener('animationend', (event) => {
-                    if (event.animationName === 'fly-away' && paper.classList.contains('flying')) {
-                        animationContainer.style.display = 'none'; paper.classList.remove('flying');
-                        thankYouMessage.style.display = 'none'; thankYouMessage.style.opacity = '0';
-                        paper.style.opacity = '0'; paper.style.transform = 'scale(0.8)'; paperContent.textContent = '';
-                        contactForm.reset(); submitButton.disabled = false; submitButton.textContent = 'Send Forespørsel om Konsultasjon';
-                    }
-                });
-            }
+        <!-- PAKKE 1 -->
+        <article class="card reveal">
+          <div class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M3 7h2l1.5-2h11L19 7h2v12H3z"/></svg>
+          </div>
+          <h3 class="card__title">Drone</h3>
+          <p class="card__desc">Bare film. Passer hvis du allerede har en nettside og bare trenger nytt innhold til den eller sosiale medier.</p>
+          <ul class="card__list">
+            <li>Inntil én times flyging på lokasjon</li>
+            <li>Én ferdig film, 30 til 60 sekunder</li>
+            <li>Stående og liggende format</li>
+            <li>Lisensfri musikk hvis ønskelig</li>
+          </ul>
+          <p class="card__price">Pris etter avtale</p>
+          <a href="#kontakt" class="btn btn--ghost btn--sm">Be om tilbud</a>
+        </article>
 
-            // === Logikk for Microsoft Fabric Nyhets-KARUSELL ===
-            const fabricCarouselWrapper = document.getElementById('fabric-updates-carousel-wrapper');
-            const fabricCarouselTrack = fabricCarouselWrapper?.querySelector('.carousel-track');
-            const fabricCarouselPrevButton = fabricCarouselWrapper?.querySelector('.carousel-button.prev');
-            const fabricCarouselNextButton = fabricCarouselWrapper?.querySelector('.carousel-button.next');
-            const fabricCarouselDotsContainer = fabricCarouselWrapper?.querySelector('.carousel-dots');
-            const fabricCarouselMessagePlaceholder = fabricCarouselWrapper?.querySelector('.carousel-message-placeholder');
+        <!-- PAKKE 2 (FREMHEVET) -->
+        <article class="card card--featured reveal">
+          <span class="card__badge">Vanligste valg</span>
+          <div class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16v12H4z"/><path d="M4 10h16"/><circle cx="7" cy="8" r=".5" fill="currentColor"/></svg>
+          </div>
+          <h3 class="card__title">Drone og nettside</h3>
+          <p class="card__desc">Det de fleste trenger. Ny film, friske bilder og en enkel nettside som viser det du driver med.</p>
+          <ul class="card__list">
+            <li>Halvdags filming, drone og bakke</li>
+            <li>2 til 3 ferdig redigerte klipp</li>
+            <li>10 eller flere stillbilder til fri bruk</li>
+            <li>Enkel nettside (én side) med kontakt</li>
+            <li>Hjelp med domene og publisering</li>
+          </ul>
+          <p class="card__price">Ta kontakt for tilbud</p>
+          <a href="#kontakt" class="btn btn--primary btn--sm">Få et tilbud</a>
+        </article>
 
-            const fabricMaxItems = 10;
-            const fabricRssFeedUrl = 'https://blog.fabric.microsoft.com/en-us/blog/feed/';
-            const fabricProxyUrl = 'https://api.allorigins.win/raw?url=';
-            const FABRIC_RETRY_DELAY = 10000; // Vent 10 sekunder før nytt forsøk
+        <!-- PAKKE 3 -->
+        <article class="card reveal">
+          <div class="card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h18v14H3z"/><path d="M8 21h8M12 18v3"/></svg>
+          </div>
+          <h3 class="card__title">Full pakke</h3>
+          <p class="card__desc">For deg som starter fra null eller skal rebrande. Hele leveransen, film, foto og en større nettside.</p>
+          <ul class="card__list">
+            <li>Heldags produksjon på lokasjon</li>
+            <li>Hovedfilm og flere korte klipp</li>
+            <li>Profesjonell fotopakke</li>
+            <li>Nettside på 4 til 6 sider</li>
+            <li>Søkemotor-grunnpakke</li>
+          </ul>
+          <p class="card__price">Pris etter avtale</p>
+          <a href="#kontakt" class="btn btn--ghost btn--sm">Be om tilbud</a>
+        </article>
 
-            let fabricCarouselCurrentIndex = 0;
-            let fabricCarouselSlides = [];
-            let fabricTotalSlides = 0;
-            let autoSlideInterval = null;
+      </div>
+    </div>
+  </section>
 
-            function logFabricUpdate(message, isError = false) { console[isError ? 'error' : 'log']("FabricCarousel: " + message); }
+  <!-- ============================================================
+       EKSEMPEL, Vimeo embed (med kontroller)
+       Bytt video-ID i URL-en for å vise en annen film.
+       ============================================================ -->
+  <section class="section showreel" id="eksempel">
+    <div class="container">
+      <header class="section__head reveal">
+        <p class="eyebrow">Eksempel</p>
+        <h2 class="h2">Et lite klipp fra en av de siste turene.</h2>
+      </header>
 
-            function fabricCarousel_sanitizeAndTruncateDescription(htmlDescription, targetLength = 160) {
-                if (!htmlDescription) return '';
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = htmlDescription;
-                let text = tempDiv.textContent || tempDiv.innerText || "";
-                text = text.replace(/\s+/g, ' ').trim();
+      <div class="showreel__frame reveal">
+        <div class="showreel__ratio">
+          <iframe
+            class="showreel__video"
+            src="https://player.vimeo.com/video/1188618070?dnt=1&title=0&byline=0&portrait=0"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write"
+            allowfullscreen
+            title="TrendMe eksempelvideo"></iframe>
+        </div>
+      </div>
 
-                if (text.length <= targetLength) {
-                    return text;
-                }
+      <p class="showreel__caption reveal">
+        Filmet med drone i 4K. Klippes og tilpasses din historie og ditt format.
+      </p>
+    </div>
+  </section>
 
-                let cutOffPoint = -1;
-                let lastPeriod = text.lastIndexOf('.', targetLength + 15);
-                if (lastPeriod > targetLength * 0.6 && lastPeriod <= targetLength + 15) {
-                    cutOffPoint = lastPeriod + 1;
-                } else {
-                    let lastSpace = text.lastIndexOf(' ', targetLength);
-                    if (lastSpace > targetLength * 0.6) {
-                        cutOffPoint = lastSpace;
-                    }
-                }
+  <!-- ============================================================
+       FOR HVEM
+       ============================================================ -->
+  <section class="section audience" id="for-hvem">
+    <div class="container">
+      <header class="section__head reveal">
+        <p class="eyebrow">For hvem</p>
+        <h2 class="h2">Hvem dette passer for.</h2>
+      </header>
 
-                if (cutOffPoint !== -1 && cutOffPoint < text.length) {
-                    let truncatedText = text.substring(0, cutOffPoint).trimEnd();
-                    if (truncatedText.endsWith('.')) {
-                        return truncatedText + "..";
-                    }
-                    return truncatedText + "...";
-                } else {
-                    let shortText = text.substring(0, targetLength);
-                    if (text.charAt(targetLength) !== ' ' && shortText.lastIndexOf(' ') > -1) {
-                        shortText = shortText.substring(0, shortText.lastIndexOf(' '));
-                    }
-                    return shortText.trimEnd() + "...";
-                }
-            }
+      <div class="audience__grid">
+        <div class="audience__item reveal"><span>01</span><h3>Eiendomsmeglere</h3><p>Vis omgivelsene rundt boligen, ikke bare planløsningen.</p></div>
+        <div class="audience__item reveal"><span>02</span><h3>Hytter og utleie</h3><p>Folk booker det de kan se. Vis terrenget, naturen og avstandene.</p></div>
+        <div class="audience__item reveal"><span>03</span><h3>Restauranter og kafeer</h3><p>Korte stemningsklipp som funker både på nett og i sosiale medier.</p></div>
+        <div class="audience__item reveal"><span>04</span><h3>Arrangementer</h3><p>Et ferdig klipp etter eventet som kan deles og brukes til neste år.</p></div>
+        <div class="audience__item reveal"><span>05</span><h3>Reiseliv og opplevelser</h3><p>Vis stedet slik gjestene vil oppleve det.</p></div>
+        <div class="audience__item reveal"><span>06</span><h3>Lokale prosjekter</h3><p>Bygg, anlegg, gårder og bedrifter som vil dokumentere noe over tid.</p></div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ============================================================
+       HVORFOR
+       ============================================================ -->
+  <section class="section why">
+    <div class="container why__grid">
+      <div class="why__copy reveal">
+        <p class="eyebrow">Hvorfor velge meg</p>
+        <h2 class="h2">Lokal, tilgjengelig og ingen mellomledd.</h2>
+        <p>
+          Du snakker med personen som faktisk filmer og bygger nettsiden.
+          Det gjør at vi kommer raskt fra idé til levert, og at små endringer underveis ikke koster ekstra dager.
+        </p>
+      </div>
 
-            function fabricCarousel_updateControls(animated = true) {
-                if (!fabricCarouselTrack || fabricCarouselSlides.length === 0) return;
-                const slideWidth = fabricCarouselSlides[0] ? fabricCarouselSlides[0].offsetWidth : fabricCarouselTrack.offsetWidth;
-                fabricCarouselTrack.style.transition = animated ? 'transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55)' : 'none';
-                fabricCarouselTrack.style.transform = `translateX(-${fabricCarouselCurrentIndex * slideWidth}px)`;
-                if (fabricCarouselPrevButton) fabricCarouselPrevButton.disabled = fabricCarouselCurrentIndex === 0;
-                if (fabricCarouselNextButton) fabricCarouselNextButton.disabled = fabricCarouselCurrentIndex >= fabricTotalSlides - 1;
-                if (fabricCarouselDotsContainer) {
-                    const dots = fabricCarouselDotsContainer.querySelectorAll('.carousel-dot');
-                    dots.forEach((dot, index) => dot.classList.toggle('active', index === fabricCarouselCurrentIndex));
-                }
-            }
+      <ul class="why__list">
+        <li class="reveal">
+          <h4>Ryddig teknisk standard</h4>
+          <p>4K-opptak, fargegradering og lyd som er på plass, uten at det blir overprodusert.</p>
+        </li>
+        <li class="reveal">
+          <h4>Lovlig og forsikret</h4>
+          <p>Jeg flyr etter Luftfartstilsynets regler og har ansvarsforsikring på dronen.</p>
+        </li>
+        <li class="reveal">
+          <h4>Tydelig tidslinje</h4>
+          <p>Du vet hva du får og når. Ingen vage estimater eller åpne fakturaer.</p>
+        </li>
+        <li class="reveal">
+          <h4>Alt på ett sted</h4>
+          <p>Film, foto og nettside hos én person. Mindre å holde styr på for deg.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
 
-            function fabricCarousel_showSlide(index, animated = true) {
-                if (index >= fabricTotalSlides) { fabricCarouselCurrentIndex = 0; }
-                else if (index < 0) { fabricCarouselCurrentIndex = fabricTotalSlides - 1; }
-                else { fabricCarouselCurrentIndex = index; }
-                fabricCarousel_updateControls(animated);
-            }
+  <!-- ============================================================
+       PROSESS
+       ============================================================ -->
+  <section class="section process" id="prosess">
+    <div class="container">
+      <header class="section__head reveal">
+        <p class="eyebrow">Prosess</p>
+        <h2 class="h2">Slik foregår det.</h2>
+      </header>
 
-            function fabricCarousel_createDots() {
-                if (!fabricCarouselDotsContainer || fabricTotalSlides <= 1) {
-                    if(fabricCarouselDotsContainer) fabricCarouselDotsContainer.innerHTML = ''; return;
-                }
-                fabricCarouselDotsContainer.innerHTML = '';
-                for (let i = 0; i < fabricTotalSlides; i++) {
-                    const dot = document.createElement('button');
-                    dot.classList.add('carousel-dot');
-                    dot.setAttribute('aria-label', `Gå til nyhet ${i + 1}`);
-                    dot.addEventListener('click', () => {
-                        if (autoSlideInterval) clearInterval(autoSlideInterval);
-                        fabricCarousel_showSlide(i);
-                    });
-                    fabricCarouselDotsContainer.appendChild(dot);
-                }
-            }
+      <ol class="process__steps">
+        <li class="process__step reveal">
+          <span class="process__num">01</span>
+          <h3>Kontakt</h3>
+          <p>Ring eller send en melding. Vi prater kort om hva du trenger.</p>
+        </li>
+        <li class="process__step reveal">
+          <span class="process__num">02</span>
+          <h3>Planlegging</h3>
+          <p>Vi avtaler dato, lokasjon og innhold. Du får en pris og en plan.</p>
+        </li>
+        <li class="process__step reveal">
+          <span class="process__num">03</span>
+          <h3>Filming og nettside</h3>
+          <p>Jeg filmer på lokasjon og bygger nettsiden parallelt.</p>
+        </li>
+        <li class="process__step reveal">
+          <span class="process__num">04</span>
+          <h3>Levering</h3>
+          <p>Du får filer, publisert nettside og innhold klart for sosiale medier.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
 
-            function fabricCarousel_populateAndInit(items) {
-                if (!fabricCarouselTrack || !fabricCarouselMessagePlaceholder) return;
-                fabricCarouselTrack.innerHTML = ''; // Tømmer track, fjerner lasteanimasjon/placeholder
-                fabricCarouselSlides = [];
-                fabricTotalSlides = Math.min(items.length, fabricMaxItems);
+  <!-- ============================================================
+       OM MEG
+       Bytt portrettbilde: assets/portrait.jpg (og .webp)
+       Endre tekst i bio under.
+       ============================================================ -->
+  <section class="section about" id="om">
+    <div class="container about__grid">
+      <div class="about__photo reveal">
+        <picture>
+          <source srcset="assets/portrait.webp" type="image/webp" />
+          <img src="assets/portrait.jpg" alt="Gründeren bak TrendMe, dronefilm og nettsider i Oslo" loading="lazy" width="1200" height="1500" />
+        </picture>
+      </div>
 
-                if (fabricTotalSlides === 0) {
-                    fabricCarouselMessagePlaceholder.innerHTML = `
-                        <div style="text-align: center;">
-                            <p class="loading-message">Ingen nylige oppdateringer funnet.</p>
-                        </div>`;
-                    if (fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) {
-                         fabricCarouselTrack.innerHTML = '';
-                         fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder);
-                    }
-                    if (fabricCarouselPrevButton) fabricCarouselPrevButton.style.display = 'none';
-                    if (fabricCarouselNextButton) fabricCarouselNextButton.style.display = 'none';
-                    if (fabricCarouselDotsContainer) fabricCarouselDotsContainer.innerHTML = '';
-                    return;
-                }
+      <div class="about__copy reveal">
+        <p class="eyebrow">Om meg</p>
+        <h2 class="h2">Personen bak TrendMe.</h2>
+        <p>
+          Jeg er en ung gründer med interesse for teknologi og enkel, ærlig historiefortelling.
+          TrendMe begynte som et sideprosjekt og har blitt en måte å hjelpe lokale bedrifter på,
+          med dronefilm og enkle nettsider som funker.
+        </p>
+        <p>
+          Hvis du vurderer dronefilm eller en ny nettside, ta gjerne en uforpliktende prat.
+          Det koster ingenting å høre hva som er mulig.
+        </p>
+        <a href="tel:97007745" class="about__phone">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          970 07 745
+        </a>
+      </div>
+    </div>
+  </section>
 
-                for (let i = 0; i < fabricTotalSlides; i++) {
-                    const item = items[i];
-                    try {
-                        const title = item.querySelector("title")?.textContent.trim() || 'Ukjent tittel';
-                        const link = item.querySelector("link")?.textContent.trim() || '#';
-                        const pubDateStr = item.querySelector("pubDate")?.textContent.trim();
-                        const descriptionHTML = item.querySelector("description")?.textContent.trim() || '';
-                        const descriptionText = fabricCarousel_sanitizeAndTruncateDescription(descriptionHTML, 160);
-                        const pubDate = pubDateStr ? new Date(pubDateStr).toLocaleDateString('no-NO', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
-                        const slideDiv = document.createElement('div');
-                        slideDiv.classList.add('carousel-slide');
-                        slideDiv.innerHTML = `<h4>${title}</h4> ${pubDate ? `<p class="slide-date">${pubDate}</p>` : ''} <p class="slide-description">${descriptionText}</p> <a href="${link}" target="_blank" rel="noopener noreferrer" class="slide-link">Les mer</a>`;
-                        fabricCarouselTrack.appendChild(slideDiv);
-                        fabricCarouselSlides.push(slideDiv);
-                    } catch (e) { logFabricUpdate(`Feil ved item ${i + 1}: ${e.message}`, true); }
-                }
-                fabricCarouselCurrentIndex = 0; fabricCarousel_createDots(); fabricCarousel_updateControls(false);
-                const displayNav = fabricTotalSlides > 1 ? 'flex' : 'none';
-                if (fabricCarouselPrevButton) fabricCarouselPrevButton.style.display = displayNav;
-                if (fabricCarouselNextButton) fabricCarouselNextButton.style.display = displayNav;
-                if (fabricTotalSlides > 1) {
-                    if (autoSlideInterval) clearInterval(autoSlideInterval);
-                    autoSlideInterval = setInterval(() => fabricCarousel_showSlide(fabricCarouselCurrentIndex + 1), 7000);
-                }
-            }
+  <!-- ============================================================
+       KONTAKT
+       Endre telefonnummer her, søk og erstatt 97007745
+       ============================================================ -->
+  <section class="section contact" id="kontakt">
+    <div class="container contact__inner reveal">
+      <p class="eyebrow">Kontakt</p>
+      <h2 class="h2 contact__title">Klar til å sette i gang?</h2>
+      <p class="contact__lede">
+        Send en melding eller ring direkte. Jeg svarer så fort jeg kan.
+      </p>
 
-            // NY, MODIFISERT fetchFabricUpdates
-            async function fetchFabricUpdates(isInitialCall = true) {
-                if (!fabricCarouselTrack || !fabricCarouselMessagePlaceholder) {
-                    logFabricUpdate("Nødv. karusellelementer mangler. Kan ikke starte henting.", true);
-                    return;
-                }
+      <div class="contact__cta">
+        <a href="tel:97007745" class="btn btn--primary btn--lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Ring 970 07 745
+        </a>
+        <a href="sms:97007745" class="btn btn--ghost btn--lg">Send SMS</a>
+      </div>
 
-                const isLoadingAnimationVisible = fabricCarouselMessagePlaceholder.querySelector('.loading-animation');
-                if (isInitialCall || !isLoadingAnimationVisible) {
-                    fabricCarouselMessagePlaceholder.innerHTML = `
-                        <div style="text-align: center;">
-                            <p class="loading-message" style="margin-bottom: 15px;">Laster siste nytt...</p>
-                            <div class="loading-animation">
-                                <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
-                            </div>
-                        </div>`;
+      <dl class="contact__details">
+        <div>
+          <dt>Telefon</dt>
+          <dd><a href="tel:97007745">970 07 745</a></dd>
+        </div>
+        <div>
+          <dt>Område</dt>
+          <dd>Oslo og omegn</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
 
-                    if (fabricCarouselTrack.children.length === 0 || fabricCarouselTrack.firstChild !== fabricCarouselMessagePlaceholder) {
-                        fabricCarouselTrack.innerHTML = '';
-                        fabricCarouselTrack.appendChild(fabricCarouselMessagePlaceholder);
-                    }
-                }
-                
-                if (fabricCarouselPrevButton) fabricCarouselPrevButton.style.display = 'none';
-                if (fabricCarouselNextButton) fabricCarouselNextButton.style.display = 'none';
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="#top" class="footer__brand" aria-label="TrendMe">
+        <img src="assets/logo.svg" alt="TrendMe" height="28" />
+      </a>
+      <p class="footer__tag">Dronefilm og nettsider for lokale historier.</p>
+      <div class="footer__meta">
+        <a href="tel:97007745">970 07 745</a>
+        <span>Org.nr. 935 389 763</span>
+        <span>© <span id="year"></span> TrendMe</span>
+      </div>
+    </div>
+  </footer>
 
-
-                try {
-                    let response;
-                    try {
-                        response = await fetch(fabricRssFeedUrl);
-                        if (!response.ok) throw new Error(`Direkte HTTP-feil: ${response.status}`);
-                        logFabricUpdate("Hentet direkte fra RSS feed.");
-                    } catch (directError) {
-                        logFabricUpdate(`Direkte henting feilet: ${directError.message}. Prøver proxy.`, true);
-                        const proxyFetchUrl = `${fabricProxyUrl}${encodeURIComponent(fabricRssFeedUrl)}`;
-                        response = await fetch(proxyFetchUrl);
-                        if (!response.ok) throw new Error(`Proxy HTTP-feil: ${response.status}`);
-                        logFabricUpdate("Hentet via proxy.");
-                    }
-
-                    const xmlData = await response.text();
-                    const parser = new DOMParser();
-                    const xmlDoc = parser.parseFromString(xmlData.trim(), "text/xml");
-                    const parserError = xmlDoc.getElementsByTagName("parsererror");
-                    if (parserError.length > 0) {
-                        throw new Error("XML Parsefeil: " + (parserError[0]?.textContent || "Ukjent feil under XML parsing"));
-                    }
-
-                    const items = Array.from(xmlDoc.querySelectorAll("item"));
-                    logFabricUpdate(`Behandlet ${items.length} items fra feed.`);
-                    fabricCarousel_populateAndInit(items);
-
-                } catch (error) {
-                    logFabricUpdate(`Feil under henting/parsing: ${error.message}. Prøver igjen om ${FABRIC_RETRY_DELAY / 1000} sekunder.`, true);
-                    setTimeout(() => fetchFabricUpdates(false), FABRIC_RETRY_DELAY);
-                }
-            }
-
-            if (fabricCarouselWrapper && fabricCarouselTrack && fabricCarouselPrevButton && fabricCarouselNextButton && fabricCarouselDotsContainer && fabricCarouselMessagePlaceholder) {
-                fetchFabricUpdates(true); // Start det første forsøket
-                fabricCarouselPrevButton.addEventListener('click', () => { if (autoSlideInterval) clearInterval(autoSlideInterval); fabricCarousel_showSlide(fabricCarouselCurrentIndex - 1); });
-                fabricCarouselNextButton.addEventListener('click', () => { if (autoSlideInterval) clearInterval(autoSlideInterval); fabricCarousel_showSlide(fabricCarouselCurrentIndex + 1); });
-                fabricCarouselWrapper.addEventListener('mouseenter', () => { if (autoSlideInterval) clearInterval(autoSlideInterval); });
-                fabricCarouselWrapper.addEventListener('mouseleave', () => {
-                   if (fabricTotalSlides > 1) {
-                        if (autoSlideInterval) clearInterval(autoSlideInterval);
-                        autoSlideInterval = setInterval(() => fabricCarousel_showSlide(fabricCarouselCurrentIndex + 1), 7000);
-                   }
-                });
-            } else { logFabricUpdate("Nødv. karusellelementer ikke funnet for RSS-feed.", true); }
-        });
-    </script>
+  <script src="js/main.js"></script>
 </body>
 </html>

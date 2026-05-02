@@ -1,0 +1,14 @@
+<!-- TrendMe – kun logomark (firkant). Bruk 'currentColor' for å arve farge. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 56" fill="none" role="img" aria-label="TrendMe">
+  <g stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="14" y1="14" x2="22" y2="22"/>
+    <line x1="42" y1="14" x2="34" y2="22"/>
+    <line x1="14" y1="42" x2="22" y2="34"/>
+    <line x1="42" y1="42" x2="34" y2="34"/>
+    <circle cx="11" cy="11" r="4.2"/>
+    <circle cx="45" cy="11" r="4.2"/>
+    <circle cx="11" cy="45" r="4.2"/>
+    <circle cx="45" cy="45" r="4.2"/>
+    <rect x="22" y="22" width="12" height="12" rx="2.5" fill="currentColor"/>
+  </g>
+</svg>

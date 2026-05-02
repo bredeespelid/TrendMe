@@ -1,0 +1,50 @@
+<!--
+  TrendMe, kvadratisk logo for sosiale medier (LinkedIn, Instagram, Facebook).
+  Mørk bakgrunn + champagne aksentfarge. 1200x1200, eksporter til PNG ved behov.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" role="img" aria-label="TrendMe">
+  <!-- Bakgrunn -->
+  <rect width="1200" height="1200" fill="#0b0d10"/>
+
+  <!-- Subtil radial glød i midten -->
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#d4b483" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#0b0d10" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#glow)"/>
+
+  <!-- Logo-mark (drone sett ovenfra), sentrert, skalert -->
+  <g transform="translate(380 280) scale(8)" stroke="#d4b483" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <line x1="14" y1="14" x2="22" y2="22"/>
+    <line x1="42" y1="14" x2="34" y2="22"/>
+    <line x1="14" y1="42" x2="22" y2="34"/>
+    <line x1="42" y1="42" x2="34" y2="34"/>
+    <circle cx="11" cy="11" r="4.2"/>
+    <circle cx="45" cy="11" r="4.2"/>
+    <circle cx="11" cy="45" r="4.2"/>
+    <circle cx="45" cy="45" r="4.2"/>
+    <rect x="22" y="22" width="12" height="12" rx="2.5" fill="#d4b483"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text
+    x="600" y="970"
+    font-family="Fraunces, Georgia, serif"
+    font-weight="500"
+    font-size="150"
+    letter-spacing="-3"
+    text-anchor="middle"
+    fill="#f5efe3">Trend<tspan font-style="italic" font-weight="400">Me</tspan></text>
+
+  <!-- Tagline -->
+  <text
+    x="600" y="1060"
+    font-family="Inter, Helvetica, Arial, sans-serif"
+    font-weight="400"
+    font-size="42"
+    letter-spacing="6"
+    text-anchor="middle"
+    fill="#d4b483">DRONEFILM &#8226; NETTSIDER</text>
+</svg>
